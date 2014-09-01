@@ -1,14 +1,5 @@
 <?php
-    require_once ( "../php/DocInfo.php" );
-    
-    $docInfo = new wg\custom\DocInfo( );
-    $docInfo->SetTitle( "VP Desings" );
-    $docInfo->SetAuthor( "Wesley Garey" );
-    $docInfo->SetDescription( "Fashion Designs" );
-    
-    $docInfo->SetTags( array( "desings", "clothes" ) );
-    
-    include( "../includes/header.php" );
+    include(HEADER_FILE);
 ?>
 <!-- Start main content here -->
 
@@ -32,5 +23,5 @@
 
 <!-- End main content here -->
 <?php
-    include( "../includes/footer.php" ); 
+    include( FOOTER_FILE ); 
 ?>

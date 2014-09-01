@@ -1,4 +1,23 @@
 <?php
+    function Redirect( $url )
+    {
+        header( "Location:" . $url );
+    }
+    
+    function GetControllerScript( $action )
+    {
+        $script = CONTROLLER_FILE . "?" . ACTION_KEYWORD . "=" . $action;
+        
+        return $script;
+    }
+    
+    function GetRequestedURI( )
+    {
+        $uri = urlencode($_SERVER['REQUEST_URI']);
+        
+        return $uri;
+    }
+    
     function ToDisplayDate( $dateIn )
     {
         $phpDate = strtotime( $dateIn );
@@ -41,5 +60,14 @@
     function StripSlashes_GPC( &$value )
     {
         $value = stripslashes( $value );
+    }
+    
+    function SecureConnection( )
+    {
+        if ( !isset( $_SERVER['HTTPS'] ) )
+        {
+            $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            header("Location: " . $url);
+        }
     }
 ?>

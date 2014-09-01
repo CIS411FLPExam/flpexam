@@ -23,12 +23,26 @@
                 echo ( "<title>" . $dTitle . "</title>");
                 
                 //External page links.
-                echo ( "<link rel='shortcut icon' href='" . ICON_FILEPATH . "' />" );
-                echo ( "<script type='text/javascript' src='" . JQUERY_FILE_PATH . "'></script>" );
-                echo ( "<link rel='stylesheet' href='" .MAINCSS_FILE_PATH . "' />" );
-                echo ( "<link rel='stylesheet' href='" . NAVBARCSS_FILE_PATH . "' />" );
-                echo ( "<script type='text/javascript' src='" . MAINJS_FILE_PATH . "'></script>" );
+                echo ( "<link rel='shortcut icon' href='" . ICON_FILE . "' />" );
+                
+                echo ( "<link rel='stylesheet' href='" . VALIDATIONCSS_FILE . "' />" );
+                echo ( "<link rel='stylesheet' href='" . MAINCSS_FILE . "' />" );
+                echo ( "<link rel='stylesheet' href='" . NAVBARCSS_FILE . "' />" );
+                
+                echo ( "<script type='text/javascript' src='" . MAINJS_FILE . "'></script>" );
+                echo ( "<script type='text/javascript' src='" . NAVBARJS_FILE . "'></script>" );
+                echo ( "<script type='text/javascript' src='" . ATTRIBUTES_FILE . "'></script>" );
+                echo ( "<script type='text/javascript' src='" . JQUERYTABLESORTER_FILE . "'></script>" );
+                echo ( "<script type='text/javascript' src='" . JQUERYVALIDATE_FILE . "'></script>" );
+                echo ( "<script type='text/javascript' src='" . JQUERY_FILE . "'></script>" );
             ?>
     </head>
-
-    <body>
+    <body>        
+        <div id="wrapper">
+            <img src="<?php echo(LOGO_FILE) ?>" />
+            <h1>Foreign Language Placement Exam</h1>
+            <div class="clear"></div>
+            <div id="navbar">
+                <?php include( NAVBAR_FILE ); ?>
+            </div>
+            <div id="content">

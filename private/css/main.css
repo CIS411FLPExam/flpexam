@@ -1,39 +1,19 @@
 body
 {
-    background-color: #ffd8e2;
-}
-
-h1
-{
-    color: red;
-}
-
-#mainFooter, #mainHeader
-{
-    border: 2px black solid;
-    background-color: #ffb6c1;
-    border-radius: 10px;
-    padding: 5px;
-    text-align: center;
-    width: 960px;
-}
-
-#mainContent
-{
-    border: 2px #ffb6c1 solid;
-    border-radius: 10px;
-    border-top: thick red solid;
-    border-radius: 10px;
-    border-bottom: thick red solid;
-    padding: 5px;
-    margin: auto;
-    width: 960px;
+    background-color: #9e9489;
 }
 
 #wrapper
 {
     width: 960px;
     margin: 0 auto;
+}
+
+#content
+{
+    width: 760px;
+    float: left;
+    background-color: #FFFFFF
 }
 
 .testBackground { background-color: #004400; }
