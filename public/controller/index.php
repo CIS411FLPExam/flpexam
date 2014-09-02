@@ -232,7 +232,10 @@
         
         if ($errors == "")
         {
-            $UserID = $_POST["UserID"];
+            if(!empty($_POST["UserID"]))
+            {
+                $UserID = $_POST["UserID"];
+            }
             $firstName = $_POST["FirstName"];
             $lastName = $_POST["LastName"];
             $userName = $_POST["UserName"];
@@ -254,7 +257,13 @@
             {
                 if(userIsAuthorized(USEREDIT_ACTION))
                 {
-                    $hasAttributes = $_POST["hasAttributes"];
+                    $hasAttributes = array();
+                    
+                    if(!empty($_POST["hasAttributes"]))
+                    {
+                        $hasAttributes = $_POST["hasAttributes"];
+                    }
+                    
                     updateUser($UserID, $firstName, $lastName, $userName, $password, $email, $hasAttributes);
                 }
                 else
@@ -290,7 +299,6 @@
     
     function FunctionAdd()
     {
-        $randomQuote = GetRandomQuote( );
         if (!userIsAuthorized(FUNCTIONADD_ACTION))
         {
             include(NOTAUTHORIZED_FILE);
@@ -372,7 +380,11 @@
         
         if($errors == "")
         {
-            $FunctionID = $_POST["FunctionID"];
+            if(!empty($_POST["FunctionID"]))
+            {
+                $FunctionID = $_POST["FunctionID"];
+            }
+            
             $name = $_POST["Name"];
             $desc = $_POST["Description"];
             
@@ -499,7 +511,10 @@
         
         if($errors == "")
         {
-            $RoleID = $_POST["RoleID"];
+            if(!empty($_POST["RoleID"]))
+            {
+                $RoleID = $_POST["RoleID"];
+            }
             $name = $_POST["Name"];
             $desc = $_POST["Description"];
             
@@ -518,7 +533,13 @@
             {
                 if(userIsAuthorized( ROLEEDIT_ACTION))
                 {
-                    $hasAttributes = $_POST["hasAttributes"];
+                    $hasAttributes = array();
+                    
+                    if(!empty($_POST["hasAttributes"]))
+                    {
+                        $hasAttributes = $_POST["hasAttributes"];
+                    }
+                    
                     updateRole($RoleID, $name, $desc, $hasAttributes);
                 }
                 else

@@ -1,5 +1,9 @@
 
 <?php
+    
+    $has_attributes = array( );
+    $hasnt_attributes = array( );
+    
     $i = 0;
     foreach ($hasAttrResults as $row) {
         $has_attributes[$i]["id"] = $row["RoleID"];
@@ -30,17 +34,6 @@
     }
     $select2 .= "</select>";
     
-    require_once ( "../php/DocInfo.php" );
-    
-    $docInfo = new wg\custom\DocInfo( );
-    $docInfo->SetTitle( "VP Desings Control Panel - Modify User" );
-    $docInfo->SetAuthor( "Wesley Garey" );
-    $docInfo->SetDescription( "Fashion Designs" );
-    
-    $exLinks[] = '<script type="text/javascript" src="attributes.js"></script>';
-    $docInfo->SetLinks( $exLinks );
-    $docInfo->SetTags( array( "desings", "clothes" ) );
-    
     include( HEADER_FILE);
     include( CONTROLPANEL_FILE );
 ?>
@@ -52,15 +45,15 @@
 
     <input type="hidden" name="UserID" value="<?php echo $id; ?>"/>
 
-    First Name: <input type="text" name="FirstName" size="20" value="<?php echo $firstName; ?>"><br/>
+    First Name: <input type="text" name="FirstName" size="20" value="<?php echo htmlspecialchars($firstName); ?>"><br/>
 
-    Last Name: <input type="text" name="LastName" size="20" value="<?php echo $lastName; ?>"><br/>
+    Last Name: <input type="text" name="LastName" size="20" value="<?php echo htmlspecialchars($lastName); ?>"><br/>
 
-    User Name: <input type="text" name="UserName" size="20" value="<?php echo $userName; ?>"><br/>
+    User Name: <input type="text" name="UserName" size="20" value="<?php echo htmlspecialchars($userName); ?>"><br/>
 
     Password: <input type="password" name="Password" size="20" value=""> <br/>
 
-    Email: <input type="text" name="Email" size="20" value="<?php echo $email; ?>"><br/>
+    Email: <input type="text" name="Email" size="20" value="<?php echo htmlspecialchars($email); ?>"><br/>
 
     <table>
 

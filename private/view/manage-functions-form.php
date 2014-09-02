@@ -24,14 +24,14 @@
                 $function_ID = $record["FunctionID"];
 
                 echo "<tr>";
-                echo "<td>$name</td><td>$desc</td>";
+                echo "<td>" . htmlspecialchars($name) . "</td><td>" . htmlspecialchars($desc) . "</td>";
                 if (userIsAuthorized(FUNCTIONEDIT_ACTION)) {
-                    echo "<td><a href=\"" . GetControllerScript(FUNCTIONEDIT_ACTION) . "&id=$function_ID\">Edit</a></td>";
+                    echo "<td><a href=\"" . GetControllerScript(FUNCTIONEDIT_ACTION) . "&id=" . urlencode($function_ID) . "\">Edit</a></td>";
                 } else {
                     echo "<td></td>";
                 }
                 if (userIsAuthorized(FUNCTIONDELETE_ACTION)) {
-                    echo "<td><input type=\"checkbox\" name=\"record$j\" value=\"$function_ID\"/></td>";
+                    echo "<td><input type=\"checkbox\" name=\"record$j\" value=\"" . htmlspecialchars($function_ID) . "\"/></td>";
                 } else {
                     echo "<td></td>";
                 }

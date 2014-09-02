@@ -7,10 +7,10 @@
 
 <form action="<?php echo(GetControllerScript(PROCESSFUNCTIONADDEDIT)) ?>" method="post">
 
-        <input type="hidden" name="FunctionID" value="<?php echo $id; ?>"/>
+    <input type="hidden" name="FunctionID" value="<?php echo htmlspecialchars($id); ?>"/>
 
-        Name:  <input type="text" name="Name" size="20" value="<?php echo $name; ?>" /><br/>
-        Description: <input type="text" name="Description" size="20" value="<?php echo $desc; ?>" />
+    Name:  <input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" /><br/>
+        Description: <input type="text" name="Description" size="20" value="<?php echo htmlspecialchars($desc); ?>" />
 
         <br/>
 

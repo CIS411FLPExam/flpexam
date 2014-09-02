@@ -1,4 +1,7 @@
 <?php
+    $has_attributes = array( );
+    $hasnt_attributes = array( );
+    
     $i = 0;
     foreach ($hasAttrResults as $row) {
         $has_attributes[$i]["id"] = $row["FunctionID"];
@@ -37,9 +40,9 @@
 <h2>Modify Role</h2>
 
 <form action="<?php echo(GetControllerScript(PROCESSROLEADDEDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
-    <input type="hidden" name="RoleID" value="<?php echo $id; ?>"/>
-    Name:  <input type="text" name="Name" size="20" value="<?php echo $name; ?>" /><br/>
-    Description: <input type="text" name="Description" size="20" value="<?php echo $desc; ?>" />
+    <input type="hidden" name="RoleID" value="<?php echo htmlspecialchars($id); ?>"/>
+    Name:  <input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" /><br/>
+    Description: <input type="text" name="Description" size="20" value="<?php echo htmlspecialchars($desc); ?>" />
     <table>
         <tr>
             <td>

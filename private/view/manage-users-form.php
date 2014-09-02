@@ -29,14 +29,14 @@
             $user_ID = $record["UserID"];
 
             echo "<tr>";
-            echo "<td>$firstName</td> <td>$lastName</td> <td>$userName</td> <td>$email</td>";
+            echo "<td>" . htmlspecialchars($firstName) . "</td> <td>" . htmlspecialchars($lastName) . "</td> <td>" . htmlspecialchars($userName) . "</td> <td>" . htmlspecialchars($email) . "</td>";
             if (userIsAuthorized("UserEdit")) {
-                echo "<td><a href=\"" . GetControllerScript(USEREDIT_ACTION) . "&id=$user_ID\">Edit</a></td>";
+                echo "<td><a href=\"" . GetControllerScript(USEREDIT_ACTION) . "&id=" . urldecode($user_ID) . "\">Edit</a></td>";
             } else {
                 echo "<td></td>";
             }
             if (userIsAuthorized(USERDELETE_ACTION)) {
-                echo "<td><input type=\"checkbox\" name=\"record$j\" value=\"$user_ID\"/></td>";
+                echo "<td><input type=\"checkbox\" name=\"record$j\" value=\" " . htmlspecialchars($user_ID) . "\"/></td>";
             } else {
                 echo "<td></td>";
             }

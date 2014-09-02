@@ -26,12 +26,12 @@
                 echo "<tr>";
                 echo "<td>$name</td><td>$desc</td>";
                 if (userIsAuthorized(ROLEEDIT_ACTION)) {
-                    echo "<td><a href=\"" . GetControllerScript(ROLEEDIT_ACTION) . "&id=$role_ID\">Edit</a></td>";
+                    echo "<td><a href=\"" . GetControllerScript(ROLEEDIT_ACTION) . "&id=" . urldecode($role_ID) . "\">Edit</a></td>";
                 } else {
                     echo "<td></td>";
                 }
                 if (userIsAuthorized(ROLEDELETE_ACTION)) {
-                    echo "<td><input type=\"checkbox\" name=\"record$j\" value=\"$role_ID\"/></td>";
+                    echo "<td><input type=\"checkbox\" name=\"record$j\" value=\"" . htmlspecialchars($role_ID) . "\"/></td>";
                 } else {
                     echo "<td></td>";
                 }

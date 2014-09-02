@@ -5,7 +5,7 @@
 
 <?php
     echo('<p>');
-    echo( htmlspecialchars( $message ) );
+    echo( $message );
     echo('</p>');
     
     if ( !empty( $collection ) && is_array( $collection ) && count ( $collection ) > 0 )
@@ -14,7 +14,7 @@
         
         foreach ( $collection as $item )
         {
-            echo ( '<li>' . $item . '</li>' );
+            echo ( '<li>' . htmlspecialchars($item) . '</li>' );
         }
         
         echo( '</ul>' );
