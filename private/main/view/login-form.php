@@ -5,7 +5,7 @@
 
 <h1>Login</h1>
 
-<form action=<?php echo( GetControllerScript( PROCESSLOGIN_ACTION ) ); ?> method="post">
+<form action=<?php echo( GetControllerScript(MAINCONTROLLER_FILE, PROCESSLOGIN_ACTION ) ); ?> method="post">
 
     Username: <input type="text" name="username" /><br/>
     Password: <input type="password" name="password" /><br/><br/>

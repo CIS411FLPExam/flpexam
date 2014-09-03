@@ -7,9 +7,9 @@
 <h2>Manage Users</h2>
 
 <?php if (userIsAuthorized(USERADD_ACTION)){ ?>
-        <a href="<?php echo( GetControllerScript( USERADD_ACTION ) ); ?>">Add User</a>
+        <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION ) ); ?>">Add User</a>
 <?php    } ?>
-<form action="<?php echo( GetControllerScript( USERDELETE_ACTION ) ); ?>" method="post">
+<form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <table border>
         <tr>
             <td><b>First Name</b></td>
@@ -30,8 +30,8 @@
 
             echo "<tr>";
             echo "<td>" . htmlspecialchars($firstName) . "</td> <td>" . htmlspecialchars($lastName) . "</td> <td>" . htmlspecialchars($userName) . "</td> <td>" . htmlspecialchars($email) . "</td>";
-            if (userIsAuthorized("UserEdit")) {
-                echo "<td><a href=\"" . GetControllerScript(USEREDIT_ACTION) . "&id=" . urldecode($user_ID) . "\">Edit</a></td>";
+            if (userIsAuthorized(USEREDIT_ACTION)) {
+                echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION) . "&id=" . urldecode($user_ID) . "\">Edit</a></td>";
             } else {
                 echo "<td></td>";
             }

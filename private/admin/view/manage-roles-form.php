@@ -8,10 +8,10 @@
 
 <?php
     if (userIsAuthorized(ROLEADD_ACTION)) {
-        echo "<a href=\"" . GetControllerScript(ROLEADD_ACTION) . "\">Add Role</a><p/>";
+        echo "<a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,ROLEADD_ACTION) . "\">Add Role</a><p/>";
     }
 ?>
-<form action="<?php echo(GetControllerScript(ROLEDELETE_ACTION)) ?>" method="post">
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,ROLEDELETE_ACTION)) ?>" method="post">
     <table border>
         <tr>
                 <td><b>Name</b></td> <td><b>Description</b></td> <td></td> <td></td>
@@ -26,7 +26,7 @@
                 echo "<tr>";
                 echo "<td>$name</td><td>$desc</td>";
                 if (userIsAuthorized(ROLEEDIT_ACTION)) {
-                    echo "<td><a href=\"" . GetControllerScript(ROLEEDIT_ACTION) . "&id=" . urldecode($role_ID) . "\">Edit</a></td>";
+                    echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,ROLEEDIT_ACTION) . "&id=" . urldecode($role_ID) . "\">Edit</a></td>";
                 } else {
                     echo "<td></td>";
                 }

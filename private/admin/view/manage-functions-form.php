@@ -7,10 +7,10 @@
 <h2>Manage Functions</h2>
 <?php
     if (userIsAuthorized(FUNCTIONADD_ACTION)) {
-        echo "<a href=\"" . GetControllerScript( FUNCTIONADD_ACTION ). "\">Add Function</a><p/>";
+        echo "<a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONADD_ACTION ). "\">Add Function</a><p/>";
     }
 ?>
-<form action="<?php echo(GetControllerScript( FUNCTIONDELETE_ACTION)) ?>" method="post">
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONDELETE_ACTION)) ?>" method="post">
 
     <table border>
         <tr>
@@ -26,7 +26,7 @@
                 echo "<tr>";
                 echo "<td>" . htmlspecialchars($name) . "</td><td>" . htmlspecialchars($desc) . "</td>";
                 if (userIsAuthorized(FUNCTIONEDIT_ACTION)) {
-                    echo "<td><a href=\"" . GetControllerScript(FUNCTIONEDIT_ACTION) . "&id=" . urlencode($function_ID) . "\">Edit</a></td>";
+                    echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,FUNCTIONEDIT_ACTION) . "&id=" . urlencode($function_ID) . "\">Edit</a></td>";
                 } else {
                     echo "<td></td>";
                 }

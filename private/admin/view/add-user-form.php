@@ -5,7 +5,7 @@
 
 <h1>Add User</h1>
 
-<form action="<?php echo(GetControllerScript(PROCESSUSERADDEDIT_ACTION)) ?>" method="post">
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSERADDEDIT_ACTION)) ?>" method="post">
 
     First Name*: <input type="text" name="FirstName" size="20" value=""><br/>
 

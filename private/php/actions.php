@@ -1,5 +1,4 @@
 <?php
-
     //The action key word.
     define("ACTION_KEYWORD", "action");
     
@@ -23,7 +22,8 @@
     define("ROLEEDIT_ACTION", "RoleEdit");
     define("ROLEDELETE_ACTION", "RoleDelete");
     define("PROCESSROLEADDEDIT_ACTION", "PrcessRoleAddEdit");
-    define("SIGNUP_ACTION", "Signup");
+    define("SELFADD_ACTION", "SelfAdd");
+    define("SELFPROFILEADD_ACTION", "SelfProfileAdd");
     define("SELFEDIT_ACTION", "SelfEdit");
-    define("SELFPROFILEEDIT", "");
+    define("SELFPROFILEEDIT_ACTION", "SelfProfileEdit");
 ?>

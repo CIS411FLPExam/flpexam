@@ -3,10 +3,18 @@
     {
         header( "Location:" . $url );
     }
-    
+    /*
     function GetControllerScript( $action )
     {
         $script = CONTROLLER_FILE . "?" . ACTION_KEYWORD . "=" . $action;
+        
+        return $script;
+    }
+    */
+    
+    function GetControllerScript( $controller, $action )
+    {
+        $script = $controller . "?" . ACTION_KEYWORD . "=" . $action;
         
         return $script;
     }

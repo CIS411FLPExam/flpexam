@@ -5,7 +5,7 @@
 
 <h2>Modify Function</h2>
 
-<form action="<?php echo(GetControllerScript(PROCESSFUNCTIONADDEDIT)) ?>" method="post">
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSFUNCTIONADDEDIT)) ?>" method="post">
 
     <input type="hidden" name="FunctionID" value="<?php echo htmlspecialchars($id); ?>"/>
 

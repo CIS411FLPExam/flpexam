@@ -5,7 +5,7 @@
 
 <h2>Add Role</h2>
 
-<form action="<?php echo(GetControllerScript(PROCESSROLEADDEDIT_ACTION)) ?>" method="post">
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSROLEADDEDIT_ACTION)) ?>" method="post">
 
         Name: <input type="text" name="Name" size="20" value=""><br/>
         Description: <input type="text" name="Description" size="20" value=""><br/>

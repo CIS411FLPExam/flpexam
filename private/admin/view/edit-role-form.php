@@ -1,19 +1,17 @@
-
 <?php
-    
     $has_attributes = array( );
     $hasnt_attributes = array( );
     
     $i = 0;
     foreach ($hasAttrResults as $row) {
-        $has_attributes[$i]["id"] = $row["RoleID"];
+        $has_attributes[$i]["id"] = $row["FunctionID"];
         $has_attributes[$i]["name"] = $row["Name"];
         ++$i;
     }
 
     $i = 0;
     foreach ($hasNotAttrResults as $row) {
-        $hasnt_attributes[$i]["id"] = $row["RoleID"];
+        $hasnt_attributes[$i]["id"] = $row["FunctionID"];
         $hasnt_attributes[$i]["name"] = $row["Name"];
         ++$i;
     }
@@ -33,30 +31,19 @@
         $select2 .= "<option value=\"$attrid\">$attrname</option>\n";
     }
     $select2 .= "</select>";
-    
-    include( HEADER_FILE);
+
+    include( HEADER_FILE );
     include( CONTROLPANEL_FILE );
 ?>
 <!-- Start main content here -->
 
-<h2>Modify User</h2>
+<h2>Modify Role</h2>
 
-<form action="<?php echo(GetControllerScript(PROCESSUSERADDEDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
-
-    <input type="hidden" name="UserID" value="<?php echo $id; ?>"/>
-
-    First Name: <input type="text" name="FirstName" size="20" value="<?php echo htmlspecialchars($firstName); ?>"><br/>
-
-    Last Name: <input type="text" name="LastName" size="20" value="<?php echo htmlspecialchars($lastName); ?>"><br/>
-
-    User Name: <input type="text" name="UserName" size="20" value="<?php echo htmlspecialchars($userName); ?>"><br/>
-
-    Password: <input type="password" name="Password" size="20" value=""> <br/>
-
-    Email: <input type="text" name="Email" size="20" value="<?php echo htmlspecialchars($email); ?>"><br/>
-
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSROLEADDEDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
+    <input type="hidden" name="RoleID" value="<?php echo htmlspecialchars($id); ?>"/>
+    Name:  <input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" /><br/>
+    Description: <input type="text" name="Description" size="20" value="<?php echo htmlspecialchars($desc); ?>" />
     <table>
-
         <tr>
             <td>
                 <b>Is</b><br/>
@@ -74,13 +61,9 @@
                 <?php echo $select2; ?>
             </td>
         </tr>
-
     </table>
-
     <br/>
-
     <input type="submit" value="Submit" />
-
 </form>
 
 <!-- End main content here -->
