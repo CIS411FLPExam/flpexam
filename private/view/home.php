@@ -3,8 +3,8 @@
 ?>
 <!-- Start main content here -->
 
-<?php include(CONTROLPANEL_FILE); ?>
-
+<h3>Welcome to the Clarion University's Foreign Language Placement Exam website!</h3>
+<a href='<?php echo( GetControllerScript( USERADD_ACTION ) ); ?>'>Sign up!</a>
 <!-- End main content here -->
 <?php
     include( FOOTER_FILE ); 

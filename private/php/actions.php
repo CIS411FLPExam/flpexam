@@ -4,6 +4,7 @@
     define("ACTION_KEYWORD", "action");
     
     define("HOME_ACTION", "Home");
+    define("CONTROLPANEL_ACTION", "ControlPanel");
     define("LOGIN_ACTION", "Login");
     define("PROCESSLOGIN_ACTION", "ProcessLogin");
     define("LOGOUT_ACTION", "LogOut");
@@ -22,4 +23,7 @@
     define("ROLEEDIT_ACTION", "RoleEdit");
     define("ROLEDELETE_ACTION", "RoleDelete");
     define("PROCESSROLEADDEDIT_ACTION", "PrcessRoleAddEdit");
+    define("SIGNUP_ACTION", "Signup");
+    define("SELFEDIT_ACTION", "SelfEdit");
+    define("SELFPROFILEEDIT", "");
 ?>

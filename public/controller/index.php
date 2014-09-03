@@ -48,6 +48,9 @@
                 logOut();
                 Redirect(GetControllerScript(HOME_ACTION));
                 break;
+            case CONTROLPANEL_ACTION :
+                include(CONTROLPANELFORM_FILE);
+                break;
             case MANAGEUSERS_ACTION :
                 ManageUsers();
                 break;
