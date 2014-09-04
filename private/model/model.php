@@ -12,7 +12,7 @@
         catch ( PDOException $e )
         {
             $message = $e->getMessage( );
-            include ( MESSAGE_FILE );
+            displayError($message);
             die;
         }
         
@@ -105,6 +105,18 @@
 
         return $authorized;
     }
+    
+    function userIsAuthentic($userID)
+    {
+        $authentic = FALSE;
+        
+        if (loggedIn() && $userID == $_POST[USERID_IDENTIFIER])
+        {
+            $authentic = TRUE;
+        }
+        
+        return $authentic;
+    }
 
     function validateUser($username,$password) {
         try {
@@ -128,8 +140,8 @@
         $result = validateUser($username,$password);
         if($result['UserName'] == $username) // Make sure a User row was returned
         {
-            $_SESSION["UserName"] = $result['UserName'];
-            $_SESSION["UserID"] = $result['UserID'];
+            $_SESSION[USERNAME_IDENTIFIER] = $result[USERNAME_IDENTIFIER];
+            $_SESSION[USERID_IDENTIFIER] = $result[USERID_IDENTIFIER];
             return true;
         }
         return false;
@@ -148,8 +160,17 @@
     function displayError($error)
     {
         $message = $error;
-        include(MESSAGE_FILE);
+        include(MESSAGEFORM_FILE);
         
-        exit;
+        exit();
+    }
+    
+    function displayErrors($message, $errors)
+    {
+        $collection = $errors;
+        
+        include(MESSAGEFORM_FILE);
+        
+        exit();
     }
 ?>

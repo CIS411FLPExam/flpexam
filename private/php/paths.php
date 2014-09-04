@@ -2,7 +2,7 @@
 //ALL PATHS ARE RELATIVE TO ./flpexam/public/controller/
 
 //Base paths
-/**************************************************************************/
+/******************************************************************************/
 
     //Base directories.
     define("PUBLIC_DIR", "../../public/");
@@ -27,6 +27,7 @@
     define("DEFAULTTEMPLATE_FILE", INCLUDES_DIR . "default-template.php");
     define("FOOTER_FILE", INCLUDES_DIR . "footer.php");
     define("HEADER_FILE", INCLUDES_DIR . "header.php");
+    define("MESSAGEFORM_FILE", INCLUDES_DIR . "message-form.php");
     define("MESSAGE_FILE", INCLUDES_DIR . "message.php");
     define("NAVBAR_FILE", INCLUDES_DIR . "navbar.php");
     define("ATTRIBUTES_FILE", JAVASCRIPT_DIR . "attributes.js");
@@ -38,8 +39,11 @@
     define("ACTIONS_FILE", PHP_DIR . "actions.php");
     define("GENERALFUNCTIONS_FILE", PHP_DIR . "general-functions.php");
     define("PATHS_FILE", PHP_DIR . "paths.php");
+    define("IDENTIFIER_FILE", PHP_DIR . "identifiers.php");
+
+//Main paths.
+/******************************************************************************/
     
-    /**************************************************************************/
     //Main directories.
     define("MAIN_DIR", PRIVATE_DIR . "main/");
     define("MAINVIEW_DIR", MAIN_DIR . "view/");
@@ -50,8 +54,10 @@
     define("MAINMODEL_FILE", MAINMODEL_DIR . "model.php");
     define("HOME_FILE", MAINVIEW_DIR . "home.php");
     define("LOGINFORM_FILE", MAINVIEW_DIR . "login-form.php");
+    define("ADDEDITSELFFORM_FILE", MAINVIEW_DIR . "add-edit-self.php");
     
-    /**************************************************************************/
+//Admin paths.
+/******************************************************************************/
     
     //Admin directories.
     define("ADMIN_DIR", PRIVATE_DIR . "admin/");
@@ -72,7 +78,4 @@
     define("MANAGEROLESFORM_FILE", ADMINVIEW_DIR . "manage-roles-form.php");
     define("MANAGEUSERSFORM_FILE", ADMINVIEW_DIR . "manage-users-form.php");
     define("NOTAUTHORIZED_FILE", ADMINVIEW_DIR . "not-authorized.php");
-    
-    /**************************************************************************/
-    
 ?>

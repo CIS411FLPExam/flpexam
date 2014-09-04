@@ -2,6 +2,7 @@
     require_once('../../private/php/paths.php');
     require_once(ADMINMODEL_FILE);
     require_once(PATHS_FILE);
+    require_once(IDENTIFIER_FILE);
     require_once(GENERALFUNCTIONS_FILE);
     require_once(ACTIONS_FILE);
     
@@ -130,7 +131,7 @@
                 
                 if ($row == false)
                 {
-                    displayError("<p>User ID is not on file.</p> ");
+                    displayError("User ID is not on file.");
                 }
                 else
                 {
@@ -175,29 +176,33 @@
     }
     function ProcessUserAddEdit()
     {
-        $errors = "";
-
+        $collection = array();
+        
         if (empty($_POST["FirstName"]))
         {
-            $errors .= "<li>Error, field \"First Name\" is blank.</li>";
+            $message = "Errors";
+            $collection[] = "Error, field \"First Name\" is blank.";
         }
         
         if (empty($_POST["LastName"]))
         {
-            $errors .= "<li>Error, field \"Last Name\" is blank.</li>";
+            $message = "Errors";
+            $collection[] = "Error, field \"Last Name\" is blank.";
         }
         
         if (empty($_POST["UserName"]))
         {
-            $errors .= "<li>Error, field \"User Name\" is blank.</li>";
+            $message = "Errors";
+            $collection[] = "Error, field \"User Name\" is blank.";
         }
         
         if (empty($_POST["Email"]))
         {
-            $errors .= "<li>Error, field \"Email\" is blank.</li>";
+            $message = "Errors";
+            $collection[] = "Error, field \"Email\" is blank.";
         }
         
-        if ($errors == "")
+        if ($message == "")
         {
             if(!empty($_POST["UserID"]))
             {
@@ -246,7 +251,7 @@
         }
         else
         {
-            displayError($errors);
+            displayErrors($message, $collection);
         }
     }
 
@@ -296,7 +301,7 @@
                 
                 if ($row == false)
                 {
-                    displayError("<p>Function ID is not on file.</p> ");
+                    displayError("Function ID is not on file.");
                 }
                 else
                 {
@@ -338,14 +343,16 @@
     
     function ProcessFunctionAddEdit()
     {
-        $errors = "";
-
+        $message = "";
+        $errors = array( );
+        
         if(empty($_POST["Name"]))
         {
-            $errors .= "<li>Error, field \"Name\" is blank.</li>";
+            $message = "Error";
+            $errors[] = "Error, field \"Name\" is blank.";
         }
         
-        if($errors == "")
+        if($message == "")
         {
             if(!empty($_POST["FunctionID"]))
             {
@@ -384,7 +391,7 @@
         }
         else
         {
-            displayError($errors);
+            displayErrors($message, $errors);
         }
     }
 
@@ -427,7 +434,7 @@
             
             if ($row == false)
             {
-                displayError("<p>Role ID is not on file.</p> ");
+                displayError("Role ID is not on file.");
             }
             else
             {
@@ -469,14 +476,16 @@
     
     function ProcessRoleAddEdit()
     {
-        $errors = "";
+        $message = "";
+        $errors = array( );
         
         if(empty($_POST["Name"]))
         {
-            $errors .= "<li>Error, field \"Name\" is blank.</li>";
+            $mesage = "Error";
+            $errors[] = "Error, field \"Name\" is blank.";
         }
         
-        if($errors == "")
+        if($message == "")
         {
             if(!empty($_POST["RoleID"]))
             {
@@ -521,6 +530,6 @@
         }
         else
         {
-            displayError($errors);
+            displayErrors($message, $errors);
         }
     }

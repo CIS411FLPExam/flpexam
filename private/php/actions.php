@@ -1,12 +1,25 @@
 <?php
-    //The action key word.
+    //The action key word for all actions.
     define("ACTION_KEYWORD", "action");
     
+//Actions available through the main controller.
+/******************************************************************************/
+
     define("HOME_ACTION", "Home");
-    define("CONTROLPANEL_ACTION", "ControlPanel");
     define("LOGIN_ACTION", "Login");
-    define("PROCESSLOGIN_ACTION", "ProcessLogin");
     define("LOGOUT_ACTION", "LogOut");
+    define("SELFADD_ACTION", "SelfAdd");
+    define("SELFEDIT_ACTION", "SelfEdit");
+    define("PROCESSSELFADDEDIT_ACTION", "ProcessSelfAddEdit");
+    define("SELFPROFILEADD_ACTION", "SelfProfileAdd");
+    define("SELFPROFILEEDIT_ACTION", "SelfProfileEdit");
+    define("PROCESSSELFPROFILEADDEDIT_ACTION", "ProcessSelfProfileAddEdit");
+    
+//Actions available through the admin controller.
+/******************************************************************************/
+    
+    define("CONTROLPANEL_ACTION", "ControlPanel");
+    define("PROCESSLOGIN_ACTION", "ProcessLogin");
     define("MANAGEUSERS_ACTION", "ManageUsers");
     define("USERADD_ACTION", "UserAdd");
     define("USEREDIT_ACTION", "UserEdit");
@@ -22,8 +35,4 @@
     define("ROLEEDIT_ACTION", "RoleEdit");
     define("ROLEDELETE_ACTION", "RoleDelete");
     define("PROCESSROLEADDEDIT_ACTION", "PrcessRoleAddEdit");
-    define("SELFADD_ACTION", "SelfAdd");
-    define("SELFPROFILEADD_ACTION", "SelfProfileAdd");
-    define("SELFEDIT_ACTION", "SelfEdit");
-    define("SELFPROFILEEDIT_ACTION", "SelfProfileEdit");
 ?>
