@@ -1,5 +1,5 @@
 <?php
-    require_once('../../private/php/paths.php');
+    require_once('../../private/definitions/paths.php');
     require_once(ADMINMODEL_FILE);
     require_once(PATHS_FILE);
     require_once(IDENTIFIER_FILE);

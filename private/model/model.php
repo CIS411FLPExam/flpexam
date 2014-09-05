@@ -1,4 +1,7 @@
 <?php
+    
+    require_once(VALIDATIONINFOCLASS_FILE);
+    
     function GetDBConnection( )
     {
         $dsn = 'mysql:host=localhost;dbname=flpexam';
@@ -27,12 +30,6 @@
         }
     }
     
-    function connectToMySQL() {
-
-        $db = GetDBConnection( );	// Should be provided in other model.php file for your project
-        return $db;
-    }
-
     function userIsAuthorized($function) {
         
         $authorized = false;
@@ -44,7 +41,7 @@
             $userID = $_SESSION["UserID"];       // Get current userid from session variable to check access.
 
             try {
-                $db = connectToMySQL();
+                $db = GetDBConnection();
                 $query = "select functions.Name
                     from users inner join userroles on users.UserID = userroles.UserID
                     inner join roles on userroles.RoleID = roles.RoleID
@@ -71,7 +68,7 @@
     function guestAccess($function) {
         $authorized = false;
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "select functions.Name
                 from roles inner join rolefunctions on roles.RoleID = rolefunctions.RoleID
                 inner join functions on rolefunctions.FunctionID = functions.FunctionID
@@ -120,7 +117,7 @@
 
     function validateUser($username,$password) {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT UserID, UserName FROM users where UserName = :Username AND Password = :Password";
             $statement = $db->prepare($query);
             $statement->bindValue(':Username', $username);

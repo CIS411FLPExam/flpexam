@@ -4,7 +4,7 @@
     
     function getUserRoles($ID) {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT roles.RoleID, roles.Name
 		   FROM roles, userroles
 		   WHERE userroles.UserID = :ID AND roles.RoleID = userroles.RoleID
@@ -22,7 +22,7 @@
     
     function getNotUserRoles($ID) {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT RoleID, Name
 		   FROM roles WHERE RoleID NOT IN
 			(SELECT roles.RoleID
@@ -42,7 +42,7 @@
     
     function getAllUsers() {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT FirstName, LastName, UserName, Password, Email, UserID FROM users order by LastName";
             $statement = $db->prepare($query);
             $statement->execute();
@@ -71,7 +71,7 @@
     
     function addUser($firstName, $lastName, $userName, $password, $email){
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = 'INSERT INTO users (FirstName, LastName, UserName, Password, Email)
                       VALUES (:FirstName, :LastName, :UserName, :Password, :Email)';
             $statement = $db->prepare($query);
@@ -95,7 +95,7 @@
     
     function updateUser($userID, $firstName, $lastName, $userName, $password, $email, $hasAttributes){
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = 'UPDATE users SET FirstName = :FirstName,
                                        LastName = :LastName,
                                        UserName = :UserName,
@@ -155,7 +155,7 @@
 
     function getAllFunctions() {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT FunctionID, Name, Description FROM functions ORDER BY Name";
             $statement = $db->prepare($query);
             $statement->execute();
@@ -184,7 +184,7 @@
     
     function addFunction($name, $desc){
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = 'INSERT INTO functions (Name, Description)
                       VALUES (:Name, :Description)';
             $statement = $db->prepare($query);
@@ -203,7 +203,7 @@
     
     function updateFunction($functionID, $name, $desc){
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = 'UPDATE functions SET Name = :Name,
                                        Description = :Description
                                    WHERE FunctionID = :FunctionID';
@@ -234,7 +234,7 @@
 
     function getAllRoles() {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT RoleID, Name, Description FROM roles ORDER BY Name";
             $statement = $db->prepare($query);
             $statement->execute();
@@ -263,7 +263,7 @@
     
     function addRole($name, $desc){
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = 'INSERT INTO roles (Name, Description)
                       VALUES (:Name, :Description)';
             $statement = $db->prepare($query);
@@ -281,7 +281,7 @@
     
     function updateRole($roleID, $name, $desc, $hasAttributes){
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = 'UPDATE roles SET Name = :Name,
                                        Description = :Description
                                    WHERE RoleID = :RoleID';
@@ -328,7 +328,7 @@
     
     function getRoleFunctions($ID) {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT functions.FunctionID, functions.Name
 		 FROM functions, rolefunctions
 		 WHERE rolefunctions.RoleID = :ID AND functions.FunctionID = rolefunctions.FunctionID
@@ -346,7 +346,7 @@
     
     function getNotRoleFunctions($ID) {
         try {
-            $db = connectToMySQL();
+            $db = GetDBConnection();
             $query = "SELECT FunctionID, Name
 		   FROM functions WHERE FunctionID NOT IN
 		   (SELECT functions.FunctionID

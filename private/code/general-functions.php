@@ -1,4 +1,7 @@
 <?php
+
+    define( "VALID_EMAIL_PATTERN", "/^[^@]*@[^@]*\.[^@]*$/" );
+    
     function Redirect( $url )
     {
         header( "Location:" . $url );

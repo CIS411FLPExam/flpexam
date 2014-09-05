@@ -10,11 +10,12 @@
     define("CSS_DIR", PRIVATE_DIR . "css/");
     define("JAVASCRIPT_DIR", PRIVATE_DIR . "js/");
     define("INCLUDES_DIR", PRIVATE_DIR . "includes/");
-    define("PHP_DIR", PRIVATE_DIR . "php/");
+    define("DEFINITIONS_DIR", PRIVATE_DIR . "definitions/");
     define("CONTROLLER_DIR", PUBLIC_DIR . "controller/");
     define("IMAGE_DIR", PRIVATE_DIR . "images/");
     define("ICONS_DIR", IMAGE_DIR . "icons/");
     define("MODEL_DIR", PRIVATE_DIR . "model/");
+    define("CODE_DIR", PRIVATE_DIR . "code/");
     
     //Base file paths.
     define("MODEL_FILE", MODEL_DIR . "model.php");
@@ -36,10 +37,11 @@
     define("JQUERYVALIDATE_FILE", JAVASCRIPT_DIR . "jquery.validate.js");
     define("MAINJS_FILE", JAVASCRIPT_DIR . "main.js");
     define("NAVBARJS_FILE", JAVASCRIPT_DIR . "navabar.js");
-    define("ACTIONS_FILE", PHP_DIR . "actions.php");
-    define("GENERALFUNCTIONS_FILE", PHP_DIR . "general-functions.php");
-    define("PATHS_FILE", PHP_DIR . "paths.php");
-    define("IDENTIFIER_FILE", PHP_DIR . "identifiers.php");
+    define("ACTIONS_FILE", DEFINITIONS_DIR . "actions.php");
+    define("GENERALFUNCTIONS_FILE", CODE_DIR . "general-functions.php");
+    define("PATHS_FILE", DEFINITIONS_DIR . "paths.php");
+    define("IDENTIFIER_FILE", DEFINITIONS_DIR . "identifiers.php");
+    define("VALIDATIONINFOCLASS_FILE", CODE_DIR . "validation-info-class.php");
 
 //Main paths.
 /******************************************************************************/

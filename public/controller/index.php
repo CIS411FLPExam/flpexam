@@ -1,11 +1,11 @@
 <?php
 
-    require_once('../../private/php/paths.php');
-    require_once(MAINMODEL_FILE);
+    require_once('../../private/definitions/paths.php');
     require_once(PATHS_FILE);
     require_once(IDENTIFIER_FILE);
     require_once(GENERALFUNCTIONS_FILE);
     require_once(ACTIONS_FILE);
+    require_once(MAINMODEL_FILE);
     
     //error_reporting(E_ALL ^ E_NOTICE);
     
@@ -72,7 +72,7 @@
         
         include(LOGINFORM_FILE);
     }
-
+    
     function ProcessLogin()
     {
         $username = $_POST["username"];
@@ -112,7 +112,6 @@
     
     function ProcessSelfAddEdit()
     {
-        $valid = FALSE;
         $errors = array();
         
         $firstName = $_POST[FIRSTNAME_IDENTIFIER];
@@ -120,56 +119,48 @@
         $userName = $_POST[USERNAME_IDENTIFIER];
         $email = $_POST[EMAIL_IDENTIFIER];
         
-        if (empty($firstName))
+        if (isset($_POST[USERID_IDENTIFIER]))
         {
-            $valid = FALSE;
-            $errors[] = "\"First Name\" is blank.";
-        }
-        else if (strlen($firstName) > 32)
-        {
-            $valid = FALSE;
-            $errors[] = "\"First Name\" is too long.";
+            $userID = $_POST[USERID_IDENTIFIER];
         }
         
-        if (empty($lastName))
+        $firstNameVI = ValidateFirstName($firstName);
+        $lastNameVI = ValidateLastName($lastName);
+        $userNameVI = ValidateUsername($userName);
+        $emailVI = ValidateEmail($email);
+        
+        if(!$firstNameVI->IsValid())
         {
-            $valid = FALSE;
-            $errors[] = "\"Last Name\" is blank.";
-        }
-        else if (strlen($lastName) > 32)
-        {
-            $valid = FALSE;
-            $errors[] = "\"Last Name\" is too long.";
+            $errors = array_merge($errors, $firstNameVI->GetErrors());
         }
         
-        if (empty($userName))
+        if(!$lastNameVI->IsValid())
         {
-            $valid = FALSE;
-            $errors[] = "\"User Name\" is blank.";
-        }
-        else if (strlen($userName) > 32)
-        {
-            $valid = FALSE;
-            $errors[] = "\"User Name\" is too long.";
+            $errors = array_merge($errors, $lastNameVI->GetErrors());
         }
         
-        if (empty($email))
+        if(!$userNameVI->IsValid())
         {
-            $valid = FALSE;
-            $errors[] = "\"Email\" is blank.";
-        }
-        else if (strlen($email) > 32)
-        {
-            $valid = FALSE;
-            $errors[] = "\"Email\" is too long.";
+            $errors = array_merge($errors, $userNameVI->GetErrors());
         }
         
-        if ($valid == TRUE)
+        if(!$emailVI->IsValid())
+        {
+            $errors = array_merge($errors, $emailVI->GetErrors());
+        }
+        
+        if (count($errors) > 0)
+        {
+            $message = "Errors";
+            $collection = $errors;
+            
+            include(ADDEDITSELFFORM_FILE);
+        }
+        else
         {
             //Checking to see if we are doing an add or an edit.
-            if (isset($_POST[USERID_IDENTIFIER]))
+            if (isset($userID))
             {//We are doing an EDIT.
-                $userID = $_POST[USERID_IDENTIFIER];
                 
                 if(userIsAuthentic($userID))
                 {
@@ -180,13 +171,6 @@
             {//We are doing and ADD.
                 
             }
-        }
-        else
-        {
-            $message = "Errors";
-            $errors = $errors;
-
-            include(ADDEDITSELFFORM_FILE);
         }
     }
 ?>

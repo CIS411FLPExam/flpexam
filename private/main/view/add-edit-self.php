@@ -28,7 +28,7 @@
     Password*: <input type="password" name="<?php echo(PASSWORD_IDENTIFIER); ?>" size="40" value="" /><br/>
     
     Re-type Password*: <input type="password" name="<?php echo(PASSWORDRETYPE_IDENTIFIER); ?>" size="40" value="" /><br />
-    <?php } else if ($type == EDIT_IDENTIFER) { ?>
+    <?php } else { ?>
     
     <?php } ?>
     
