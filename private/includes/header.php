@@ -40,7 +40,10 @@
     <body>        
         <div id="wrapper">
             <img src="<?php echo(LOGO_FILE) ?>" />
-            <h1>Foreign Language Placement Exam</h1>
+            <span class="banner">Foreign Language Placement Exam</span>
+            <?php if(loggedIn()) { ?>
+            <span id="username"><?php echo($_SESSION[USERNAME_IDENTIFIER]); ?></span>
+            <?php }?>
             <div class="clear"></div>
             <div id="navbar">
                 <?php include( NAVBAR_FILE ); ?>

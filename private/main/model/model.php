@@ -1,6 +1,13 @@
 <?php
+
+    //Need this file because it contains functions that will be use here.
     include(MODEL_FILE);
     
+    /**
+     * Validates that the given string is a valid first name.
+     * @param string $firstName The given string.
+     * @return \ValidationInfo Validation info about the first name.
+     */
     function ValidateFirstName($firstName)
     {
         $valid = TRUE;
@@ -25,6 +32,11 @@
         return $vi;
     }
     
+    /**
+     * Validates that the given string is a last name.
+     * @param string $lastName The given string.
+     * @return \ValidationInfo Validation info about the last name.
+     */
     function ValidateLastName($lastName)
     {
         $valid = TRUE;
@@ -49,6 +61,11 @@
         return $vi;
     }
     
+    /**
+     * Validates that the given string is a valid user name.
+     * @param string $userName The given name.
+     * @return \ValidationInfo Validation info about the user name.
+     */
     function ValidateUsername($userName)
     {
         $valid = TRUE;
@@ -79,6 +96,12 @@
         return $vi;
     }
     
+    /**
+     * Validates that the given string is a valid password.
+     * @param string $password The string.
+     * @param string $retype The retyped string.
+     * @return \ValidationInfo Validation info about the password.
+     */
     function ValidatePassword($password, $retype)
     {
         $valid = TRUE;
@@ -109,6 +132,11 @@
         return $vi;
     }
     
+    /**
+     * Validates that the given string is a valid email.
+     * @param string $email The given string.
+     * @return \ValidationInfo Validation info about the email.
+     */
     function ValidateEmail($email)
     {
         $valid = TRUE;
@@ -139,6 +167,11 @@
         return $vi;
     }
     
+    /**
+     * Checks if the given user name already exists in the records.
+     * @param string $userName The user name.
+     * @return boolean True, if the user name already exists, or false it does not.
+     */
     function UserNameExists($userName)
     {
         $exists = FALSE;

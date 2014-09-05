@@ -118,7 +118,7 @@ body
 .divider
 {
     width: 100%;
-    border-top: red 1px solid;
+    border-top: gold 1px solid;
     height: 2px;
 }
 
@@ -130,4 +130,19 @@ body
 #summary
 {
     width:100%;
+}
+
+.banner
+{
+    display: inline-block;
+    font-size: 300%;
+    width: 870px;
+}
+
+#username
+{
+    text-align: right;
+    display: inline;
+    font-size: 150%;
+    width: 90px;
 }

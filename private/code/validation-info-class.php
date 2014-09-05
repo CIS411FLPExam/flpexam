@@ -1,26 +1,53 @@
 <?php
 
+/**
+ * Holds information about a validation.
+ */
 class ValidationInfo
 {
+    /**
+     * The flag that indicates whether or not there were errors.
+     * @var boolean 
+     */
     private $valid;
     
+    /**
+     * The collection of errors that were recorded.
+     * @var array 
+     */
     private $errors;
     
+    /**
+     * Gets the valid data member.
+     * @return boolean True if valid, or false otherwise.
+     */
     public function GetValid()
     {
         return $this->valid;
     }
     
+    /**
+     * Sets the valid data member.
+     * @param boolean $valid The value to set valid to.
+     */
     public function SetValid($valid)
     {
         $this->valid = $valid;
     }
     
+    /**
+     * Gets errors data member.
+     * @return array The collection of recorded errors.
+     */
     public function GetErrors()
     {
         return $this->errors;
     }
     
+    /**
+     * Sets the errors data member.
+     * @param array $errors The collection of recorded errors.
+     */
     public function SetErrors($errors)
     {
         $this->errors = $errors;
@@ -39,7 +66,7 @@ class ValidationInfo
     
     /**
      * Indicates whether or not the there are errors.
-     * @return boolean
+     * @return boolean True if valid, or false otherwise.
      */
     public function IsValid()
     {
