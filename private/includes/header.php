@@ -40,7 +40,7 @@
             <img src="<?php echo(LOGO_FILE) ?>" />
             <span class="banner">Foreign Language Placement Exam</span>
             <?php if(loggedIn()) { ?>
-            <span id="username"><?php echo($_SESSION[USERNAME_IDENTIFIER]); ?></span>
+            <span id="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); ?></span>
             <?php }?>
             <div class="clear"></div>
             <div id="navbar">

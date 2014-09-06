@@ -57,6 +57,16 @@
      */
     define("PROCESSSELFPROFILEADDEDIT_ACTION", "ProcessSelfProfileAddEdit");
     
+    /**
+     * The action word to use to view user information.
+     */
+    define("SELFVIEW_ACTION", "SelfView");
+    
+    /**
+     * The action word to use to change a user's password.
+     */
+    define("CHANGEPASSWORD_ACTION", "ChangePassword");
+    
 //Actions available through the admin controller.
 /******************************************************************************/
     
@@ -84,6 +94,11 @@
      * The action word to use to delete a user's account.
      */
     define("USERDELETE_ACTION", "UserDelete");
+    
+    /**
+     * The action word to use to view a user's account information.
+     */
+    define("USERVIEW_ACTION", "UserView");
     
     /**
      * The action word to use to process a user add or edit.

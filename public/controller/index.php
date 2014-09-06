@@ -56,6 +56,12 @@
             case PROCESSSELFADDEDIT_ACTION :
                 ProcessSelfAddEdit();
                 break;
+            case SELFVIEW_ACTION :
+                ProcessSelfView();
+                break;
+            case SELFEDIT_ACTION :
+                ProcessSelfEdit();
+                break;
             default :
                 include(HOME_FILE);
                 break;
@@ -87,6 +93,36 @@
         {
             $url = GetControllerScript(MAINCONTROLLER_FILE, LOGIN_ACTION ) . "&LoginFailure&RequestedPage=" . urlencode($_POST["RequestedPage"]);
             Redirect( $url );
+        }
+    }
+    
+    function ProcessSelfView()
+    {
+        $userID = "";
+        
+        if(!loggedIn())
+        {   //Then we don't want to show a guest anyones user infmormation.
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        else if (isset($_POST[USERID_IDENTIFIER]) && userIsAuthorized(USERVIEW_ACTION))
+        {   //Then an adminsitrator is trying to view a user's infomration.
+            $userID = $_POST[USERID_IDENTIFIER];
+        }
+        else
+        {   //A user is trying to view their own information.
+            $userID = $_SESSION[USERID_IDENTIFIER];
+        }
+        
+        if (!empty($userID))
+        {
+            $user = getUser($userID);
+        
+            $firstName = $user[FIRSTNAME_IDENTIFIER];
+            $lastName = $user[LASTNAME_IDENTIFIER];
+            $userName = $user[USERNAME_IDENTIFIER];
+            $email = $user[EMAIL_IDENTIFIER];
+            
+            include(VIEWSELFFORM_FILE);
         }
     }
     
@@ -132,6 +168,8 @@
         $lastName = $user[LASTNAME_IDENTIFIER];
         $userName = $user[USERNAME_IDENTIFIER];
         $email = $user[EMAIL_IDENTIFIER];
+        
+        include(ADDEDITSELFFORM_FILE);
     }
     
     function ProcessSelfAddEdit()

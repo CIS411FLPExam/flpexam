@@ -246,7 +246,7 @@
     {
         $authentic = FALSE;
         
-        if (loggedIn() && $userID == $_POST[USERID_IDENTIFIER])
+        if (loggedIn() && $userID == $_SESSION[USERID_IDENTIFIER])
         {
             $authentic = TRUE;
         }

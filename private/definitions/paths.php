@@ -236,6 +236,16 @@
      */
     define("ADDEDITSELFFORM_FILE", MAINVIEW_DIR . "add-edit-self.php");
     
+    /**
+     * The file path of the view self file.
+     */
+    define("VIEWSELFFORM_FILE", MAINVIEW_DIR . "view-self.php");
+    
+    /**
+     * The file path of the change password file.
+     */
+    define("CHANGEPASSWORD_FILE", MAINVIEW_DIR . "change-password.php");
+    
 //Admin paths.
 /******************************************************************************/
     
