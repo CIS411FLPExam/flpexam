@@ -1,41 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-            <?php
-                if ( !isset( $dCharset ) ) { $dCharset = "UTF-8"; }
-                if ( !isset( $dDescription ) ) { $dDescription = "Clarion University foreign language placement exam."; }
-                if ( !isset( $dTags ) || !is_array( $dTags ) ) { $dTags = array( "Clarion", "University", "foreign", "language", "placement", "exam" ); }
-                if ( !isset( $dAuthor) ) { $dAuthor = "FLP Exam Project Group"; }
-                if ( !isset( $dTitle ) ) { $dTitle = "Foreign Language Placement Exam"; }
-                
-                $tags = "";
-                foreach ( $dTags as $tag )
-                {
-                    $tags .= $tag . " ";
-                }
-                
-                echo ( "<meta charset='" . $dCharset . "' />" );
-                echo ( "<meta name='description' content='" . $dDescription . "' />" );
-                echo ( "<meta name='keywords' content='" . $tags . "' /> "  );
-                echo ( "<meta name='author' content='" . $dAuthor . "' /> " );
-                
-                //The page title.
-                echo ( "<title>" . $dTitle . "</title>");
-                
-                //External page links.
-                echo ( "<link rel='shortcut icon' href='" . ICON_FILE . "' />" );
-                
-                echo ( "<link rel='stylesheet' href='" . VALIDATIONCSS_FILE . "' />" );
-                echo ( "<link rel='stylesheet' href='" . MAINCSS_FILE . "' />" );
-                echo ( "<link rel='stylesheet' href='" . NAVBARCSS_FILE . "' />" );
-                
-                echo ( "<script type='text/javascript' src='" . MAINJS_FILE . "'></script>" );
-                echo ( "<script type='text/javascript' src='" . NAVBARJS_FILE . "'></script>" );
-                echo ( "<script type='text/javascript' src='" . ATTRIBUTES_FILE . "'></script>" );
-                echo ( "<script type='text/javascript' src='" . JQUERYTABLESORTER_FILE . "'></script>" );
-                echo ( "<script type='text/javascript' src='" . JQUERYVALIDATE_FILE . "'></script>" );
-                echo ( "<script type='text/javascript' src='" . JQUERY_FILE . "'></script>" );
-            ?>
+        <?php
+            if ( !isset( $dCharset ) ) { $dCharset = "UTF-8"; }
+            if ( !isset( $dDescription ) ) { $dDescription = "Clarion University foreign language placement exam."; }
+            if ( !isset( $dTags ) || !is_array( $dTags ) ) { $dTags = array( "Clarion", "University", "foreign", "language", "placement", "exam" ); }
+            if ( !isset( $dAuthor) ) { $dAuthor = "FLP Exam Project Group"; }
+            if ( !isset( $dTitle ) ) { $dTitle = "Foreign Language Placement Exam"; }
+
+            $tags = "";
+            foreach ( $dTags as $tag )
+            {
+                $tags .= $tag . " ";
+            }
+        ?>
+
+        <meta charset='<?php echo($dCharset); ?>' />
+        <meta name='description' content='<?php echo($dDescription); ?>' />
+        <meta name='keywords' content='<?php echo($tags); ?>' />
+        <meta name='author' content='<?php echo($dAuthor); ?>' />
+
+        <title><?php echo($dTitle); ?></title>
+
+        <link rel='shortcut icon' href='<?php echo(ICON_FILE); ?>' />
+
+        <link rel='stylesheet' href='<?php echo(VALIDATIONCSS_FILE); ?>' />
+        <link rel='stylesheet' href='<?php echo(MAINCSS_FILE); ?>' />
+        <link rel='stylesheet' href='<?php echo(NAVBARCSS_FILE); ?>' />
+
+        <script type='text/javascript' src='<?php echo(JQUERY_FILE); ?>'></script>
+        <script type='text/javascript' src='<?php echo(MAINJS_FILE); ?>'></script>
+        <script type='text/javascript' src='<?php echo(NAVBARJS_FILE); ?>'></script>
+        <script type='text/javascript' src='<?php echo(ATTRIBUTES_FILE); ?>'></script>
+        <script type='text/javascript' src='<?php echo(JQUERYTABLESORTER_FILE); ?>'></script>
+        <script type='text/javascript' src='<?php echo(JQUERYVALIDATE_FILE); ?>'></script>
     </head>
     <body>        
         <div id="wrapper">

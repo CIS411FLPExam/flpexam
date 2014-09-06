@@ -1,6 +1,41 @@
 <?php
 
     /**
+     * The admin role name.
+     */
+    define("ADMINROLE_IDENTIFIER", "admin");
+    
+    /**
+     * The manager role name.
+     */
+    define("MANAGERROLE_IDENTIFIER", "manager");
+    
+    /**
+     * The record of roles identifier.
+     */
+    define("ROLES_IDENTIFIER", "roles");
+
+    /**
+     * The record of users identifier.
+     */
+    define("USERS_IDENTIFIER", "users");
+    
+    /**
+     * The record of user roles identifier.
+     */
+    define("USERROLES_IDENTIFIER", "userroles");
+    
+    /**
+     * The role ID identifier.
+     */
+    define("ROLEID_IDENTIFIER", "RoleID");
+    
+    /**
+     * The role name identifier
+     */
+    define("ROLENAME_IDENTIFIER", "Name");
+    
+    /**
      * The user ID identifier.
      */
     define("USERID_IDENTIFIER", "UserID");

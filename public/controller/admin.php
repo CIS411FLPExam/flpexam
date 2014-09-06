@@ -27,7 +27,7 @@
     {
         if(!loggedIn())
         {
-            $url = GetControllerScript(ADMINCONTROLLER_FILE,LOGIN_ACTION) . "&RequestedPage=" . GetRequestedURI( );
+            $url = GetControllerScript(MAINCONTROLLER_FILE,LOGIN_ACTION) . "&RequestedPage=" . GetRequestedURI( );
             Redirect( $url );
         }
         else

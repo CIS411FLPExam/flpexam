@@ -90,33 +90,6 @@
     }
     
     /**
-     * Gets a user's account information.
-     * @param int $UserID The user's id.
-     * @return array The user's information.
-     */
-    function getUser($UserID)
-    {
-        try
-        {
-            $db = getDBConnection();
-            
-            $query = 'select * from users where UserID = :UserID';
-            $statement = $db->prepare($query);
-            $statement->bindValue(':UserID', $UserID);
-            $statement->execute();
-            $result = $statement->fetch();  // Should be zero or one row
-            $statement->closeCursor();
-            
-            return $result;
-        
-        }
-        catch (PDOException $e)
-        {
-            displayDBError($e->getMessage());
-        }
-    }
-    
-    /**
      * Adds a user account to the records.
      * @param string $firstName The first name of the user.
      * @param string $lastName The last name of the user.
@@ -157,11 +130,11 @@
     /**
      * Updates a user's account information.
      * @param int $userID The user ID of the user account to update.
-     * @param type $firstName The new first name of the user.
-     * @param type $lastName The new last name of the user.
-     * @param type $userName The new user name that the user will use with the site.
-     * @param type $password The new password that the user will use for authentication.
-     * @param type $email The new e-mail address of the user.
+     * @param string $firstName The new first name of the user.
+     * @param string $lastName The new last name of the user.
+     * @param string $userName The new user name that the user will use with the site.
+     * @param string $password The new password that the user will use for authentication.
+     * @param string $email The new e-mail address of the user.
      * @param array $hasAttributes The new collection of role ID's that the user will have.
      */
     function updateUser($userID, $firstName, $lastName, $userName, $password, $email, $hasAttributes)
@@ -306,7 +279,7 @@
     /**
      * Adds a function to the records.
      * @param string $name The name of the function.
-     * @param type $desc The function's description.
+     * @param string $desc The function's description.
      * @return int The ID of the newly added function.
      */
     function addFunction($name, $desc)

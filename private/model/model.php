@@ -41,6 +41,91 @@
     }
     
     /**
+     * Gets a user's account information.
+     * @param int $UserID The user's id.
+     * @return array The user's information.
+     */
+    function getUser($UserID)
+    {
+        try
+        {
+            $db = getDBConnection();
+            
+            $query = 'select * from users where UserID = :UserID';
+            $statement = $db->prepare($query);
+            $statement->bindValue(':UserID', $UserID);
+            $statement->execute();
+            $result = $statement->fetch();  // Should be zero or one row
+            $statement->closeCursor();
+            
+            return $result;
+        
+        }
+        catch (PDOException $e)
+        {
+            displayDBError($e->getMessage());
+        }
+    }
+    
+    /**
+     * Indicates whether or not the current user is the given role.
+     * @param string $roleName The name of the role.
+     * @return boolean True, if the current user is that of a certain role.
+     */
+    function userIs($roleName)
+    {
+        $is = FALSE;
+        
+        if(loggedIn())
+        {
+            $userID = $_SESSION[USERID_IDENTIFIER];
+            
+            try
+            {
+                $db = GetDBConnection();
+                
+                $query = "SELECT * FROM " . USERROLES_IDENTIFIER 
+                        . " INNER JOIN " . USERS_IDENTIFIER 
+                        . " ON " . USERS_IDENTIFIER 
+                        . "." . USERID_IDENTIFIER 
+                        . " = " . USERROLES_IDENTIFIER 
+                        . "." . USERID_IDENTIFIER 
+                        . " INNER JOIN " . ROLES_IDENTIFIER 
+                        . " ON " . USERROLES_IDENTIFIER 
+                        . "." . ROLEID_IDENTIFIER 
+                        . " = " .ROLES_IDENTIFIER 
+                        . "." . ROLEID_IDENTIFIER 
+                        . " WHERE " . ROLES_IDENTIFIER 
+                        . "." . ROLENAME_IDENTIFIER 
+                        . " = :" . ROLENAME_IDENTIFIER
+                        . " AND " . USERS_IDENTIFIER
+                        . "." . USERID_IDENTIFIER
+                        . " = :". USERID_IDENTIFIER;
+                
+                $statement = $db->prepare($query);
+                $statement->bindValue(':' . ROLENAME_IDENTIFIER, $roleName);
+                $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+                $statement->execute();
+                
+                $results = $statement->fetchAll();
+                
+                $statement->closeCursor();
+                
+                if (count($results) > 0)
+                {   // This means the user has been assigned the given role.
+                    $is = true;
+                }
+            }
+            catch (PDOException $e)
+            {
+                displayError($e->getMessage());
+            }
+        }
+        
+        return $is;
+    }
+    
+    /**
      * Indicates whether or not the current user can carry out the given function.
      * @param string $function The name of the function.
      * @return boolean True, if the user can carry out the given function, or false otherwise.
@@ -53,8 +138,8 @@
             $authorized = true;                   // all Users have access even if not logged in. 
         }
         else if(!isset($_SESSION[USERID_IDENTIFIER]))
-        {  // If no current user then don't have access as a guest
-                $authorized = false;
+        {   // If no current user then don't have access as a guest
+            $authorized = false;
         }
         else
         {                  

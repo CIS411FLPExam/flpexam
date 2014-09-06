@@ -15,24 +15,24 @@
 <form action="<?php echo(GetControllerScript(MAINCONTROLLER_FILE,PROCESSSELFADDEDIT_ACTION)) ?>" method="post">
     
     <?php if (isset($userID)) { ?>
-    <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo($userID); ?>" />
+        <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo($userID); ?>" />
     <?php } ?>
     
-    First Name*: <input type="text" name="<?php echo(FIRSTNAME_IDENTIFIER); ?>" size="32" value="<?php echo($firstName); ?>" /><br/>
+        First Name*: <input type="text" name="<?php echo(FIRSTNAME_IDENTIFIER); ?>" maxlength="32" value="<?php echo($firstName); ?>" /><br/>
 
-    Last Name*: <input type="text" name="<?php echo(LASTNAME_IDENTIFIER); ?>" size="32" value="<?php echo($lastName); ?>" /><br/>
+    Last Name*: <input type="text" name="<?php echo(LASTNAME_IDENTIFIER); ?>" maxlength="32" value="<?php echo($lastName); ?>" /><br/>
 
-    User Name*: <input type="text" name="<?php echo(USERNAME_IDENTIFIER); ?>" size="32" value="<?php echo($userName); ?>" /><br/>
+    User Name*: <input type="text" name="<?php echo(USERNAME_IDENTIFIER); ?>" maxlength="32" value="<?php echo($userName); ?>" /><br/>
 
     <?php if (isset($userID)) { ?>
-    Password*: <input type="password" name="<?php echo(PASSWORD_IDENTIFIER); ?>" size="40" value="" /><br/>
-    
-    Re-type Password*: <input type="password" name="<?php echo(PASSWORDRETYPE_IDENTIFIER); ?>" size="40" value="" /><br />
+   
     <?php } else { ?>
+        Password*: <input type="password" name="<?php echo(PASSWORD_IDENTIFIER); ?>" maxlength="40" value="" /><br/>
     
+        Re-type Password*: <input type="password" name="<?php echo(PASSWORDRETYPE_IDENTIFIER); ?>" maxlength="40" value="" /><br />
     <?php } ?>
     
-    Email*: <input type="text" name="<?php echo(EMAIL_IDENTIFIER); ?>" size="32" value="<?php echo($email); ?>" /><br/>
+    Email*: <input type="text" name="<?php echo(EMAIL_IDENTIFIER); ?>" maxlength="32" value="<?php echo($email); ?>" /><br/>
 
     <br/>
 

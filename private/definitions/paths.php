@@ -134,7 +134,7 @@
     /**
      * The file path of the jquery javascript file.
      */
-    define("JQUERY_FILE", JAVASCRIPT_DIR . "jquery-1.9.1.min.js");
+    define("JQUERY_FILE", JAVASCRIPT_DIR . "jquery-1.11.1-min.js");
     
     /**
      * The file path of the jquery table sorter javasctipt file.
@@ -154,7 +154,7 @@
     /**
      * The file path of the navbar's javascript file.
      */
-    define("NAVBARJS_FILE", JAVASCRIPT_DIR . "navabar.js");
+    define("NAVBARJS_FILE", JAVASCRIPT_DIR . "navbar.js");
     
     /**
      * The file path of the actions file.

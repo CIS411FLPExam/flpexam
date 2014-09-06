@@ -100,13 +100,35 @@
     }
     
     /**
-     * Redircts the user through a secure connection.
+     * Redircts the user through a secured connection.
      */
     function SecureConnection( )
     {
         if ( !isset( $_SERVER['HTTPS'] ) )
         {
             $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            Redirect($url);
+        }
+    }
+    
+    /**
+     * Redirects the user through an un-secure connection.
+     */
+    function UnsecureConnection($requestedPage = "")
+    {
+        if (isset($_SERVER['HTTPS']))
+        {
+            $url = "";
+            
+            if(empty($requestedPage))
+            {
+                $url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            }
+            else
+            {
+                $url = 'http://' . $_SERVER['HTTP_HOST'] .$requestedPage;
+            }
+            
             Redirect($url);
         }
     }

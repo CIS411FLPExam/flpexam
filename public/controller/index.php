@@ -21,14 +21,14 @@
     }
     else
     {
-        $action ="";
+        $action = "";
     }
-
+    
     if ($action != PROCESSLOGIN_ACTION && !userIsAuthorized($action))
     {
         if(!loggedIn())
         {
-            $url = GetControllerScript(ADMINCONTROLLER_FILE,LOGIN_ACTION) . "&RequestedPage=" . GetRequestedURI( );
+            $url = GetControllerScript(MAINCONTROLLER_FILE,LOGIN_ACTION) . "&RequestedPage=" . GetRequestedURI( );
             Redirect( $url );
         }
         else
@@ -78,19 +78,26 @@
         $username = $_POST["username"];
         $password = $_POST["password"];
         
-        echo("username=" . $username);
-        echo("password=" . $password);
-
-        if(login($username,$password)){
-            header("Location:" . $_POST["RequestedPage"]);
-        } else {
-            $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION ) . "&LoginFailure&RequestedPage=" . urlencode($_POST["RequestedPage"]);
+        if(login($username,$password))
+        {
+            $requestedPage = $_POST["RequestedPage"];
+            UnsecureConnection($requestedPage);
+        }
+        else
+        {
+            $url = GetControllerScript(MAINCONTROLLER_FILE, LOGIN_ACTION ) . "&LoginFailure&RequestedPage=" . urlencode($_POST["RequestedPage"]);
             Redirect( $url );
         }
     }
     
     function ProcessSelfAdd()
     {
+        if(loggedIn() && !userIsAuthorized(USERADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $firstName = "";
         $lastName = "";
         $userName = "";
@@ -101,13 +108,30 @@
     
     function ProcessSelfEdit()
     {
-        //Get id, first name, last name, user name, and email from the database.
         $userID = "";
         
-        $firstName = "";
-        $lastName = "";
-        $userName = "";
-        $email = "";
+        if(loggedIn())
+        {
+            $userID = $_POST[USERID_IDENTIFIER];
+            
+            if(!userIsAuthentic($userID) && !userIsAuthorized(USEREDIT_ACTION))
+            {
+                include(NOTAUTHORIZED_FILE);
+                exit();
+            } 
+        }
+        
+        if(empty($userID))
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        
+        $user = getUser($userID);
+        
+        $firstName = $user[FIRSTNAME_IDENTIFIER];
+        $lastName = $user[LASTNAME_IDENTIFIER];
+        $userName = $user[USERNAME_IDENTIFIER];
+        $email = $user[EMAIL_IDENTIFIER];
     }
     
     function ProcessSelfAddEdit()
@@ -160,16 +184,48 @@
         {
             //Checking to see if we are doing an add or an edit.
             if (isset($userID))
-            {//We are doing an EDIT.
+            {   //We are doing an EDIT.
                 
-                if(userIsAuthentic($userID))
+                if(userIsAuthentic($userID) || userIsAuthorized(USEREDIT_ACTION))
                 {
-                    
+                    UpdateUser($userID, $firstName, $lastName, $userName, $email);
+                    Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                    UnsecureConnection();
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
                 }
             }
             else
-            {//We are doing and ADD.
+            {   //We are doing and ADD.
                 
+                $password = $_POST[PASSWORD_IDENTIFIER];
+                $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
+                
+                $passwordVI = ValidatePassword($password, $passwordRetype);
+                
+                if($passwordVI->IsValid())
+                {
+                    if(!loggedIn() || userIsAuthorized(USERADD_ACTION))
+                    {
+                        AddUser($firstName, $lastName, $userName, $password, $email);
+                        login($userName, $password);
+                        Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                        UnsecureConnection();
+                    }
+                    else
+                    {
+                        include(NOTAUTHORIZED_FILE);
+                    }
+                }
+                else
+                {
+                    $message = "Errors";
+                    $collection = $passwordVI->GetErrors();
+
+                    include(ADDEDITSELFFORM_FILE);
+                }
             }
         }
     }
