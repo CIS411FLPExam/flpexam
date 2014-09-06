@@ -22,7 +22,7 @@ User Name: <label><?php echo(htmlspecialchars($userName)); ?></label>
     </form>
 <?php } ?>
 
-Email*: <label><?php echo(htmlspecialchars($email)); ?></label>
+Email: <label><?php echo(htmlspecialchars($email)); ?></label>
 
 <br />
 

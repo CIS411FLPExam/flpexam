@@ -81,11 +81,6 @@
     define("MANAGEUSERS_ACTION", "ManageUsers");
     
     /**
-     * The action word to use add a new user.
-     */
-    define("USERADD_ACTION", "UserAdd");
-    
-    /**
      * The action word to use to edit a current user's information.
      */
     define("USEREDIT_ACTION", "UserEdit");

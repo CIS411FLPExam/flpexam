@@ -45,9 +45,6 @@
             case MANAGEUSERS_ACTION :
                 ManageUsers();
                 break;
-            case USERADD_ACTION :
-                UserAdd();
-                break;
             case USEREDIT_ACTION :
                 UserEdit();
                 break;
@@ -99,18 +96,6 @@
         include(MANAGEUSERSFORM_FILE);
     }
     
-    function UserAdd()
-    {
-        if (!userIsAuthorized(USERADD_ACTION))
-        {
-            include(NOTAUTHORIZED_FILE);
-        }
-        else
-        {
-            include(ADDUSERFORM_FILE);
-        }
-    }
-    
     function UserEdit()
     {
         if (!userIsAuthorized(USEREDIT_ACTION))
@@ -119,7 +104,7 @@
         }
         else
         {
-            $id = $_GET["id"];
+            $id = $_GET[USERID_IDENTIFIER];
             
             if (empty($id))
             {
@@ -137,11 +122,11 @@
                 {
                     $hasAttrResults = getUserRoles($id);
                     $hasNotAttrResults = getNotUserRoles($id);
-                    $userID = $row["UserID"];
-                    $firstName = $row["FirstName"];
-                    $lastName = $row["LastName"];
-                    $userName = $row["UserName"];
-                    $email = $row["Email"];
+                    $userID = $row[USERID_IDENTIFIER];
+                    $firstName = $row[FIRSTNAME_IDENTIFIER];
+                    $lastName = $row[LASTNAME_IDENTIFIER];
+                    $userName = $row[USERNAME_IDENTIFIER];
+                    $email = $row[EMAIL_IDENTIFIER];
                     
                     include(EDITUSERFORM_FILE);
                 }

@@ -104,10 +104,6 @@
         {   //Then we don't want to show a guest anyones user infmormation.
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
-        else if (isset($_POST[USERID_IDENTIFIER]) && userIsAuthorized(USERVIEW_ACTION))
-        {   //Then an adminsitrator is trying to view a user's infomration.
-            $userID = $_POST[USERID_IDENTIFIER];
-        }
         else
         {   //A user is trying to view their own information.
             $userID = $_SESSION[USERID_IDENTIFIER];
@@ -128,10 +124,9 @@
     
     function ProcessSelfAdd()
     {
-        if(loggedIn() && !userIsAuthorized(USERADD_ACTION))
+        if(loggedIn())
         {
-            include(NOTAUTHORIZED_FILE);
-            exit();
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
         
         $firstName = "";
@@ -148,9 +143,12 @@
         
         if(loggedIn())
         {
-            $userID = $_POST[USERID_IDENTIFIER];
+            if(isset($_POST[USERID_IDENTIFIER]))
+            {
+                $userID = $_POST[USERID_IDENTIFIER];
+            }
             
-            if(!userIsAuthentic($userID) && !userIsAuthorized(USEREDIT_ACTION))
+            if(!userIsAuthentic($userID))
             {
                 include(NOTAUTHORIZED_FILE);
                 exit();
@@ -224,11 +222,10 @@
             if (isset($userID))
             {   //We are doing an EDIT.
                 
-                if(userIsAuthentic($userID) || userIsAuthorized(USEREDIT_ACTION))
+                if(userIsAuthentic($userID))
                 {
-                    UpdateUser($userID, $firstName, $lastName, $userName, $email);
-                    Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
-                    UnsecureConnection();
+                    SelfUpdate($userID, $firstName, $lastName, $userName, $email);
+                    Redirect(GetControllerScript(MAINCONTROLLER_FILE, SELFVIEW_ACTION));
                 }
                 else
                 {
@@ -237,20 +234,30 @@
             }
             else
             {   //We are doing and ADD.
+                $addErrors = array();
                 
                 $password = $_POST[PASSWORD_IDENTIFIER];
                 $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
                 
                 $passwordVI = ValidatePassword($password, $passwordRetype);
                 
-                if($passwordVI->IsValid())
+                if(UserNameExists($userName))
                 {
-                    if(!loggedIn() || userIsAuthorized(USERADD_ACTION))
+                    $addErrors[] = "The User Name \"" . $userName . "\" already exists.";
+                }
+                
+                if(!$passwordVI->IsValid())
+                {
+                    array_merge($addErrors, $passwordVI->GetErrors());
+                }
+                
+                if(count($addErrors) < 1)
+                {
+                    if(!loggedIn())
                     {
-                        AddUser($firstName, $lastName, $userName, $password, $email);
+                        SelfAdd($firstName, $lastName, $userName, $password, $email);
                         login($userName, $password);
                         Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
-                        UnsecureConnection();
                     }
                     else
                     {
@@ -260,7 +267,7 @@
                 else
                 {
                     $message = "Errors";
-                    $collection = $passwordVI->GetErrors();
+                    $collection = $addErrors;
 
                     include(ADDEDITSELFFORM_FILE);
                 }

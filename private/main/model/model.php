@@ -12,7 +12,7 @@
      * @param string $email The user's e-mail address.
      * @return int The user id of the added user.
      */
-    function AddUser($firstName, $lastName, $userName, $password, $email)
+    function SelfAdd($firstName, $lastName, $userName, $password, $email)
     {
         try
         {
@@ -62,20 +62,19 @@
      * @param string $userName The new user name that the user will use with the site.
      * @param string $password The new password that the user will use for authentication.
      * @param string $email The new e-mail address of the user.
-     * @param array $hasAttributes The new collection of role ID's that the user will have.
      */
-    function UpdateUser($userID, $firstName, $lastName, $userName, $email, $password = "", $hasAttributes = array())
+    function SelfUpdate($userID, $firstName, $lastName, $userName, $email, $password = "")
     {
         try
         {
             $db = GetDBConnection();
             
-            $query = "UPDATE " . USERS_IDENTIFIER . " SET "
-                    . FIRSTNAME_IDENTIFIER . " = :" . FIRSTNAME_IDENTIFIER
-                    . LASTNAME_IDENTIFIER . " = :" . LASTNAME_IDENTIFIER
-                    . USERNAME_IDENTIFIER . " = :" . USERNAME_IDENTIFIER
-                    . EMAIL_IDENTIFIER . " = :" . EMAIL_IDENTIFIER . " WHERE "
-                    . USERID_IDENTIFIER . " = :" . USERID_IDENTIFIER . ";";
+            $query = "UPDATE " . USERS_IDENTIFIER . " SET"
+                    . " " . FIRSTNAME_IDENTIFIER . " = :" . FIRSTNAME_IDENTIFIER
+                    . ", " .LASTNAME_IDENTIFIER . " = :" . LASTNAME_IDENTIFIER
+                    . ", " .USERNAME_IDENTIFIER . " = :" . USERNAME_IDENTIFIER
+                    . ", " .EMAIL_IDENTIFIER . " = :" . EMAIL_IDENTIFIER . " WHERE"
+                    . " " .USERID_IDENTIFIER . " = :" . USERID_IDENTIFIER . ";";
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
@@ -98,33 +97,7 @@
                 
                 $success = $statement->execute();
             }
-
-            // Now we must remove all old Roles and add in the new ones.
-            $query = "DELETE FROM " . USERROLES_IDENTIFIER . " WHERE "
-                    . USERID_IDENTIFIER . " = :" . USERID_IDENTIFIER . ";";
             
-            $statement = $db->prepare($query);
-            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
-            $row_count = $statement->execute();
-
-            for($i = 0; $i < count($hasAttributes); ++$i)
-            {
-                $attribute = $hasAttributes[$i];
-                
-                $query = "INSERT INTO " . USERROLES_IDENTIFIER
-                        . " (" . USERID_IDENTIFIER
-                        . ", " . ROLEID_IDENTIFIER . ") VALUES "
-                        . "(:" . USERID_IDENTIFIER
-                        . ", :" . ROLEID_IDENTIFIER . ");";
-                
-                
-                $statement = $db->prepare($query);
-                $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
-                $statement->bindValue(':' . ROLEID_IDENTIFIER, $attribute);
-                
-                $success = $statement->execute();
-            }
-
             $statement->closeCursor();
         }
         catch (PDOException $e)
@@ -212,12 +185,6 @@
             {
                 $valid = FALSE;
                 $errors[] = "The entered user name is too long.";
-            }
-
-            if(UserNameExists($userName))
-            {
-                $valid = FALSE;
-                $errors[] = "The User Name \"" . $userName . "\" already exists.";
             }
         }
         

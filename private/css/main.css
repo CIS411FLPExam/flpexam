@@ -76,14 +76,15 @@ body
     text-decoration: underline;
 }
 
+
 .row1
 {
-    background-color: #ffb6c1;
+    background-color: #00ccff;
 }
 
 .row2
 {
-    background-color: #ffa8c4;
+    background-color: #0099ff;
 }
 
 .formGroup

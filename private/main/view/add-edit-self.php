@@ -3,7 +3,12 @@
 ?>
 <!-- Start main content here -->
 
-<h1>Sign up</h1>
+
+<?php if (isset($userID)) { ?>
+        <h1>Edit</h1>
+<?php } else { ?>
+        <h1>Sign up</h1>
+<?php } ?>
 
 <?php
     if (isset($message) && !empty($message))
@@ -12,7 +17,7 @@
     }
 ?>
 
-<form action="<?php echo(GetControllerScript(MAINCONTROLLER_FILE,PROCESSSELFADDEDIT_ACTION)) ?>" method="post">
+<form action="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, PROCESSSELFADDEDIT_ACTION)) ?>" method="post">
     
     <?php if (isset($userID)) { ?>
         <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($userID)); ?>" />

@@ -1,64 +1,89 @@
 <?php
-    include( HEADER_FILE );
+    include(HEADER_FILE);
     include(CONTROLPANEL_FILE);
 ?>
 <!-- Start main content here -->
 
 <h2>Manage Users</h2>
 
-<?php if (userIsAuthorized(USERADD_ACTION)){ ?>
-        <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION ) ); ?>">Add User</a>
-<?php    } ?>
+<?php
+    $userCanEdit = userIsAuthorized(USEREDIT_ACTION);
+    $userCanView = userIsAuthorized(USERVIEW_ACTION);
+    $userCanDelete = userIsAuthorized(USERDELETE_ACTION);
+?>
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
-    <table border>
-        <tr>
-            <td><b>First Name</b></td>
-            <td><b>Last Name</b></td>
-            <td><b>User Name</b></td>
-            <td><b>Email</b></td>
-            <td></td>
-            <td></td>
-        </tr>
-    <?php
-        $j = 0;
-        foreach ($results as $record) {
-            $firstName = $record["FirstName"];
-            $lastName = $record["LastName"];
-            $userName = $record["UserName"];
-            $email = $record["Email"];
-            $user_ID = $record["UserID"];
+    <div class="datatable">
+        <table id="users" class="tablesorter">
+            <thead>
+                <tr>
+                    <th><b>First Name</b></th>
+                    <th><b>Last Name</b></th>
+                    <th><b>User Name</b></th>
+                    <th><b>Email</b></th>
+                    <?php if ($userCanView) { ?><th><b>View</b></th><?php } ?>
+                    <?php if ($userCanEdit) { ?><th><b>Edit</b></th><?php } ?>
+                    <?php if ($userCanDelete) { ?><th><b>Select</b></th><?php } ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $j = 0;
+                    foreach ($results as $record)
+                    {
+                        $firstName = $record[FIRSTNAME_IDENTIFIER];
+                        $lastName = $record[LASTNAME_IDENTIFIER];
+                        $userName = $record[USERNAME_IDENTIFIER];
+                        $email = $record[EMAIL_IDENTIFIER];
+                        $user_ID = $record[USERID_IDENTIFIER];
+                ?>
 
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($firstName) . "</td> <td>" . htmlspecialchars($lastName) . "</td> <td>" . htmlspecialchars($userName) . "</td> <td>" . htmlspecialchars($email) . "</td>";
-            if (userIsAuthorized(USEREDIT_ACTION)) {
-                echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION) . "&id=" . urldecode($user_ID) . "\">Edit</a></td>";
-            } else {
-                echo "<td></td>";
-            }
-            if (userIsAuthorized(USERDELETE_ACTION)) {
-                echo "<td><input type=\"checkbox\" name=\"record$j\" value=\" " . htmlspecialchars($user_ID) . "\"/></td>";
-            } else {
-                echo "<td></td>";
-            }
-            echo "</tr>\n";
 
-            ++$j;
-        }
+                <tr class="<?php if ($j % 2 == 0) { echo("row1"); } else { echo("row2"); }?>">
+                    <td><?php echo(htmlspecialchars($firstName)); ?></td>
+                    <td><?php echo(htmlspecialchars($lastName)); ?></td>
+                    <td><?php echo(htmlspecialchars($userName)); ?></td>
+                    <td><?php echo(htmlspecialchars($email)); ?></td>
 
-    ?>
-
-    </table>
-    <br/>
-
-    <input type="hidden" name="numListed" value="<?php echo count($results); ?>"/>
-    <?php
-        if (userIsAuthorized(USERDELETE_ACTION)) {
-            echo "<input type=\"submit\" value=\"Delete Selected\"/>";
-        }
-    ?>
+                    <?php if ($userCanView) { ?>
+                        <td>
+                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . "&". USERID_IDENTIFIER . "=" . urldecode($user_ID))) ?>">
+                                <input type="button" value="View" />
+                            </a>
+                        </td>
+                    <?php } ?>
+                    <?php if ($userCanEdit) { ?>
+                        <td>
+                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urldecode($user_ID))) ?>">
+                                <input type="button" value="Edit" />
+                            </a>
+                        </td>
+                    <?php } ?>
+                    <?php if ($userCanDelete) { ?>
+                        <td>
+                            <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($user_ID)); ?>" />
+                        </td>
+                    <?php } ?>
+                </tr>
+                <?php
+                        ++$j;
+                    }
+                ?>
+            </tbody>
+        </table>
+    </div>
+    <input type="hidden" name="numListed" value="<?php echo count($results); ?>" />
+    <?php if ($userCanDelete) { ?>
+            <input type="submit" value="Delete Selected" />
+    <?php } ?>
 </form>
 
 <!-- End main content here -->
 <?php
     include( FOOTER_FILE ); 
 ?>
+<script>
+    $( document ).ready( function( ) 
+    { 
+        $( "#users" ).tablesorter( ); 
+    });   
+</script>
