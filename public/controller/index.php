@@ -62,10 +62,76 @@
             case SELFEDIT_ACTION :
                 ProcessSelfEdit();
                 break;
+            case LANGUAGEPROFILESVIEW_ACTION :
+                ProcessLanguageProfilesView();
+                break;
+            case LANGUAGEPROFILEADD_ACTION :
+                ProcessLanguageProfileAdd();
+                break;
+            case LANGUAGEPROFILEEDIT_ACTION :
+                ProcessLanguageProfileEdit();
+                break;
             default :
                 include(HOME_FILE);
                 break;
         }
+    }
+    
+    function ProcessLanguageProfileAdd()
+    {
+        if(!loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        
+        $userID = $_SESSION[USERID_IDENTIFIER];
+        
+        $availableLanguages = array('Spanish', 'French');
+        $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
+        
+        $language = $availableLanguages[0];
+        $spokenAtHome = FALSE;
+        $jrHighExp = $experiences[0];
+        $srHighExp = $experiences[0];
+        $collegeExp = $experiences[0];
+        
+        include(ADDEDITLANGUAGEPROFILEFORM_FILE);
+    }
+    
+    function ProcessLanguageProfileEdit()
+    {
+        if(!loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        
+        $userID = $_SESSION[USERID_IDENTIFIER];
+        $profileID = $_POST['ProfileID'];
+        
+        $availableLanguages = array('Spanish', 'French');
+        $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
+        
+        $language = $availableLanguages[0];
+        $spokenAtHome = FALSE;
+        $jrHighExp = $experiences[0];
+        $srHighExp = $experiences[0];
+        $collegeExp = $experiences[0];
+        
+        include(ADDEDITLANGUAGEPROFILEFORM_FILE);
+    }
+    
+    function ProcessLanguageProfilesView()
+    {
+        if(!loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        
+        $userID = $_SESSION[USERID_IDENTIFIER];
+        
+        $languageProfiles = array();
+        
+        include(VIEWLANGUAGEPROFILESFORM_FILE);
     }
     
     function HandleLogin( )

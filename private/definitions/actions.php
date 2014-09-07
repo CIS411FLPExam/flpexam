@@ -43,21 +43,6 @@
     define("PROCESSSELFADDEDIT_ACTION", "ProcessSelfAddEdit");
     
     /**
-     * The action word to use to add a user profile.
-     */
-    define("SELFPROFILEADD_ACTION", "SelfProfileAdd");
-    
-    /**
-     * The action word to use to edit a user profile.
-     */
-    define("SELFPROFILEEDIT_ACTION", "SelfProfileEdit");
-    
-    /**
-     * The action word to use to process a user profile add or edit.
-     */
-    define("PROCESSSELFPROFILEADDEDIT_ACTION", "ProcessSelfProfileAddEdit");
-    
-    /**
      * The action word to use to view user information.
      */
     define("SELFVIEW_ACTION", "SelfView");
@@ -76,6 +61,31 @@
      * The action word to use to view the site's information.
      */
     define("ABOUT_ACTION", "About");
+    
+    /**
+     * The action word for a user to use to add a language profile.
+     */
+    define("LANGUAGEPROFILEADD_ACTION", "LanguageProfileAdd");
+    
+    /**
+     * The action word for a user to use to edit a language profile.
+     */
+    define("LANGUAGEPROFILEEDIT_ACTION", "LanguageProfileEdit");
+    
+    /**
+     * The action word for a user to use to view a lanauage profile.
+     */
+    define("LANGUAGEPROFILEVIEW_ACTION", "LanguageProfileView");
+    
+    /**
+     * The action word to use to process a user profile add or edit.
+     */
+    define("PROCESSLANGUAGEPROFILEADDEDIT_ACTION", "ProcessLanguageProfileAddEdit");
+    
+    /**
+     * The action word for a user to use to view all of their profiles.
+     */
+    define("LANGUAGEPROFILESVIEW_ACTION", "LanguageProfilesView");
     
 //Actions available through the admin controller.
 /******************************************************************************/

@@ -40,6 +40,16 @@
         }
     }
     
+    function GetAllLanguages()
+    {
+        
+    }
+    
+    function GetAllActiveLanguages()
+    {
+        
+    }
+    
     /**
      * Gets a user's account information.
      * @param int $UserID The user's id.

@@ -2,7 +2,7 @@
     include( HEADER_FILE );
 ?>
 <!-- Start main content here -->
-
+<h1>Account Information</h1>
 <div class="formGroup">
     <div class="formSection">
         First Name: <label><?php echo(htmlspecialchars($firstName)); ?></label>

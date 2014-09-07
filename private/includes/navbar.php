@@ -6,7 +6,7 @@
             <li class='active has-sub'><a href='#'><span>Account</span></a>
                 <ul>
                     <li><a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, SELFVIEW_ACTION)) ?>"><span>Information</span></a></li>
-                   <li class='last'><a href='#'><span>Language Profiles</span></a></li>
+                    <li class='last'><a href='<?php echo(GetControllerScript(MAINCONTROLLER_FILE, LANGUAGEPROFILESVIEW_ACTION)); ?>'><span>Language Profiles</span></a></li>
                 </ul>
             </li>
             <?php if (userIs(MANAGERROLE_IDENTIFIER) || userIs(ADMINROLE_IDENTIFIER)) {  ?>

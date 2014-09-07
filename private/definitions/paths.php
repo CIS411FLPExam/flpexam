@@ -246,6 +246,21 @@
      */
     define("CHANGEPASSWORD_FILE", MAINVIEW_DIR . "change-password.php");
     
+    /**
+     * The file path of the add edit language profile file.
+     */
+    define("ADDEDITLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "add-edit-languageprofile.php");
+    
+    /**
+     * The file path of the view language profile form file.
+     */
+    define("VIEWLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "view-languageprofile.php");
+    
+    /**
+     * the file path of the view language profiles form file.
+     */
+    define("VIEWLANGUAGEPROFILESFORM_FILE", MAINVIEW_DIR . "view-languageprofiles.php");
+    
 //Admin paths.
 /******************************************************************************/
     
