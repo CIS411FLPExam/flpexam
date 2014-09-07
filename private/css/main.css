@@ -155,14 +155,14 @@ footer
 .banner
 {
     display: inline-block;
-    font-size: 300%;
-    width: 870px;
+    font-size: 250%;
+    //background-color: red;
 }
 
-#username
+.username
 {
-    text-align: right;
-    display: inline;
+    float: right;
+    display: inline-block;
     font-size: 150%;
-    width: 90px;
+    color: #ddc873;
 }

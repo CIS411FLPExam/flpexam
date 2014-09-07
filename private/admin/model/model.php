@@ -15,7 +15,7 @@
         $query = "SELECT * FROM " . USERS_IDENTIFIER . " WHERE"
                 . " MATCH (" . FIRSTNAME_IDENTIFIER 
                 . ", " . LASTNAME_IDENTIFIER. ") AGAINST" 
-                . " (:" . NAME_IDENTIFIER . " IN NATURAL LANGUAGE MODE);";
+                . " (:" . NAME_IDENTIFIER . " IN BOOLEAN MODE);";
         
         $statement = $db->prepare($query);
         $statement->bindValue(':' . NAME_IDENTIFIER, $name);

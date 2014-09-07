@@ -38,10 +38,10 @@
     <body>        
         <div id="wrapper">
             <header>
-                <img src="<?php echo(LOGO_FILE) ?>" />
+                <img src="<?php echo(LOGO_FILE) ?>" width="200" height="100"/>
                 <span class="banner">Foreign Language Placement Exam</span>
                 <?php if(loggedIn()) { ?>
-                <span id="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); ?></span>
+                <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); //echo('wwwwwwwwwwwwwwwwwwww'); ?></span>
                 <?php }?>
                 <div class="clear"></div>
             </header>

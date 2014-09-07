@@ -34,15 +34,15 @@
             <label>Last Name*:</label><input class="formInput" type="text" name="<?php echo(LASTNAME_IDENTIFIER); ?>" maxlength="32" value="<?php echo(htmlspecialchars($lastName)); ?>" /><br/>
         </div>
         
-        <div class="divider"></div>
         
-        <div class="formSection">
-            <label>User Name*:</label><input class="formInput" type="text" name="<?php echo(USERNAME_IDENTIFIER); ?>" maxlength="32" value="<?php echo(htmlspecialchars($userName)); ?>" /><br/>
-        </div>
         
-        <?php if (isset($userID)) { ?>
-
-        <?php } else { ?>
+        <?php if (!isset($userID)) { ?>            
+            <div class="divider"></div>
+        
+            <div class="formSection">
+                <label>User Name*:</label><input class="formInput" type="text" name="<?php echo(USERNAME_IDENTIFIER); ?>" maxlength="32" value="<?php echo(htmlspecialchars($userName)); ?>" /><br/>
+            </div>
+            
             <div class="divider"></div>
             
             <div class="formSection">

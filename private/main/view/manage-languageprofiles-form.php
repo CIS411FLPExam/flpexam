@@ -8,7 +8,6 @@
 </form>
 
 <?php if(is_array($languageProfiles) && count($languageProfiles) > 0) { ?>
-
     <?php foreach ($languageProfiles as $profile) { ?>
     <?php }?>
 <?php } else { ?>

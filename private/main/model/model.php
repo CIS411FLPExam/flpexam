@@ -59,11 +59,9 @@
      * @param int $userID The user ID of the user account to update.
      * @param string $firstName The new first name of the user.
      * @param string $lastName The new last name of the user.
-     * @param string $userName The new user name that the user will use with the site.
-     * @param string $password The new password that the user will use for authentication.
      * @param string $email The new e-mail address of the user.
      */
-    function SelfUpdate($userID, $firstName, $lastName, $userName, $email, $password = "")
+    function SelfUpdate($userID, $firstName, $lastName, $email)
     {
         try
         {
@@ -72,7 +70,6 @@
             $query = "UPDATE " . USERS_IDENTIFIER . " SET"
                     . " " . FIRSTNAME_IDENTIFIER . " = :" . FIRSTNAME_IDENTIFIER
                     . ", " .LASTNAME_IDENTIFIER . " = :" . LASTNAME_IDENTIFIER
-                    . ", " .USERNAME_IDENTIFIER . " = :" . USERNAME_IDENTIFIER
                     . ", " .EMAIL_IDENTIFIER . " = :" . EMAIL_IDENTIFIER . " WHERE"
                     . " " .USERID_IDENTIFIER . " = :" . USERID_IDENTIFIER . ";";
             
@@ -80,24 +77,10 @@
             $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
             $statement->bindValue(':' . FIRSTNAME_IDENTIFIER, $firstName);
             $statement->bindValue(':' . LASTNAME_IDENTIFIER, $lastName);
-            $statement->bindValue(':' . USERNAME_IDENTIFIER, $userName);
             $statement->bindValue(':' . EMAIL_IDENTIFIER, $email);
             
             $row_count = $statement->execute();
 
-            if (!empty($password))
-            {    // Only change password if one is provided
-                $query = 'UPDATE users SET Password = :Password
-                                       WHERE UserID = :UserID';
-                
-                $statement = $db->prepare($query);
-                
-                $statement->bindValue(':' . PASSWORD_IDENTIFIER, sha1($password));
-                $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
-                
-                $success = $statement->execute();
-            }
-            
             $statement->closeCursor();
         }
         catch (PDOException $e)

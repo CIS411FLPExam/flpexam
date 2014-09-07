@@ -62,8 +62,8 @@
             case SELFEDIT_ACTION :
                 ProcessSelfEdit();
                 break;
-            case LANGUAGEPROFILESVIEW_ACTION :
-                ProcessLanguageProfilesView();
+            case MANAGELANGUAGEPROFILES_ACTION :
+                ManageLanguageProfiles();
                 break;
             case LANGUAGEPROFILEADD_ACTION :
                 ProcessLanguageProfileAdd();
@@ -71,10 +71,26 @@
             case LANGUAGEPROFILEEDIT_ACTION :
                 ProcessLanguageProfileEdit();
                 break;
+            case PROCESSLANGUAGEPROFILEADDEDIT_ACTION :
+                ProcessLanguageProfileAddEdit();
+                break;
+            case LANGUAGEDELETE_ACTION :
+                ProcessLanguageProfileDelete();
+                break;
             default :
                 include(HOME_FILE);
                 break;
         }
+    }
+    
+    function ProcessLanguageProfileDelete()
+    {
+        
+    }
+    
+    function ProcessLanguageProfileAddEdit()
+    {
+        
     }
     
     function ProcessLanguageProfileAdd()
@@ -120,7 +136,7 @@
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
     
-    function ProcessLanguageProfilesView()
+    function ManageLanguageProfiles()
     {
         if(!loggedIn())
         {
@@ -131,7 +147,7 @@
         
         $languageProfiles = array();
         
-        include(VIEWLANGUAGEPROFILESFORM_FILE);
+        include(MANAGELANGUAGEPROFILESFORM_FILE);
     }
     
     function HandleLogin( )
@@ -242,7 +258,6 @@
         
         $firstName = $_POST[FIRSTNAME_IDENTIFIER];
         $lastName = $_POST[LASTNAME_IDENTIFIER];
-        $userName = $_POST[USERNAME_IDENTIFIER];
         $email = $_POST[EMAIL_IDENTIFIER];
         
         if (isset($_POST[USERID_IDENTIFIER]))
@@ -252,7 +267,6 @@
         
         $firstNameVI = ValidateFirstName($firstName);
         $lastNameVI = ValidateLastName($lastName);
-        $userNameVI = ValidateUsername($userName);
         $emailVI = ValidateEmail($email);
         
         if(!$firstNameVI->IsValid())
@@ -263,11 +277,6 @@
         if(!$lastNameVI->IsValid())
         {
             $errors = array_merge($errors, $lastNameVI->GetErrors());
-        }
-        
-        if(!$userNameVI->IsValid())
-        {
-            $errors = array_merge($errors, $userNameVI->GetErrors());
         }
         
         if(!$emailVI->IsValid())
@@ -290,7 +299,7 @@
                 
                 if(userIsAuthentic($userID))
                 {
-                    SelfUpdate($userID, $firstName, $lastName, $userName, $email);
+                    SelfUpdate($userID, $firstName, $lastName, $email);
                     Redirect(GetControllerScript(MAINCONTROLLER_FILE, SELFVIEW_ACTION));
                 }
                 else
@@ -302,19 +311,27 @@
             {   //We are doing and ADD.
                 $addErrors = array();
                 
+                
+                $userName = $_POST[USERNAME_IDENTIFIER];
+                
                 $password = $_POST[PASSWORD_IDENTIFIER];
                 $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
                 
                 $passwordVI = ValidatePassword($password, $passwordRetype);
+                $userNameVI = ValidateUsername($userName);
                 
-                if(UserNameExists($userName))
+                if(!$userNameVI->IsValid())
+                {
+                    $addErrors = array_merge($addErrors, $userNameVI->GetErrors());
+                }
+                else if(UserNameExists($userName))
                 {
                     $addErrors[] = "The User Name \"" . $userName . "\" already exists.";
                 }
                 
                 if(!$passwordVI->IsValid())
                 {
-                    array_merge($addErrors, $passwordVI->GetErrors());
+                    $addErrors = array_merge($addErrors, $passwordVI->GetErrors());
                 }
                 
                 if(count($addErrors) < 1)

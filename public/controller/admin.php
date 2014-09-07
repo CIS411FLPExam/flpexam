@@ -90,9 +90,69 @@
             case USERVIEW_ACTION :
                 ProcessUserView();
                 break;
+            case MANAGELANGUAGES_ACTION :
+                ManageLanguages();
+                break;
+            case LANGUAGEADD_ACTION :
+                ProcessLanguageAdd();
+                break;
+            case LANGUAGEEDIT_ACTION :
+                ProcessLanguageEdit();
+                break;
+            case LANGUAGEVIEW_ACTION :
+                ProcessLanguageView();
+                break;
+            case LANGUAGEDELETE_ACTION :
+                ProcessLanguageDelete();
+                break;
+            case PROCESSLANGUAGEADDEDIT_ACTION :
+                ProcessLanguageAddEdit();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function ProcessLanguageAdd()
+    {
+        $name = "";
+        
+        include(ADDEDITLANGUAGEFORM_FILE);
+    }
+    
+    function ProcessLanguageEdit()
+    {
+        $languageID = $_POST['LanguageID'];
+        
+        $name = "";
+        $active = FALSE;
+        
+        include(ADDEDITLANGUAGEFORM_FILE);
+    }
+    
+    function ProcessLanguageView()
+    {
+        $languageID = $_POST['LanguageID'];
+        
+        $name = "";
+        $active = FALSE;
+    }
+    
+    function ProcessLanguageDelete()
+    {
+        
+    }
+    
+    function ProcessLanguageAddEdit()
+    {
+        
+    }
+    
+    function ManageLanguages()
+    {
+        $languages = array('French', 'Spanish');
+        
+        include(MANAGELANGUAGESFORM_FILE);
     }
     
     function ProcessUserView()

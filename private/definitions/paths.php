@@ -244,8 +244,12 @@
     /**
      * The file path of the change password file.
      */
-    define("CHANGEPASSWORD_FILE", MAINVIEW_DIR . "change-password.php");
+    define("CHANGEPASSWORDFORM_FILE", MAINVIEW_DIR . "change-password-form.php");
+    /**
+     * the file path of the view language profiles form file.
+     */
     
+    define("MANAGELANGUAGEPROFILESFORM_FILE", MAINVIEW_DIR . "manage-languageprofiles-form.php");
     /**
      * The file path of the add edit language profile file.
      */
@@ -254,12 +258,7 @@
     /**
      * The file path of the view language profile form file.
      */
-    define("VIEWLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "view-languageprofile.php");
-    
-    /**
-     * the file path of the view language profiles form file.
-     */
-    define("VIEWLANGUAGEPROFILESFORM_FILE", MAINVIEW_DIR . "view-languageprofiles.php");
+    define("VIEWLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "view-languageprofile-form.php");
     
 //Admin paths.
 /******************************************************************************/
@@ -342,7 +341,28 @@
     define("MANAGEUSERSFORM_FILE", ADMINVIEW_DIR . "manage-users-form.php");
     
     /**
+     * The file path of the manage languages form file.
+     */
+    define("MANAGELANGUAGESFORM_FILE", ADMINVIEW_DIR . "manage-languages-form.php");
+    
+    /**
      * The path of the view user form file.
      */
     define("VIEWUSERFORM_FILE", ADMINVIEW_DIR . "view-user-form.php");
+    
+    /**
+     * The path of the add/edit language form file.
+     */
+    define("ADDEDITLANGUAGEFORM_FILE", ADMINVIEW_DIR . "add-edit-language.php");
+    
+    /**
+     * The file path of the view language form file.
+     */
+    define("VIEWLANGUAGEFORM_FILE", ADMINVIEW_DIR . "view-language-form.php");
+    
+    /**
+     * The file path of the view question form file.
+     */
+    define("VIEWQUESTIONFORM_FILE", ADMINVIEW_DIR . "view-question-form.php");
+    
 ?>

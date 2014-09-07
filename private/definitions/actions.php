@@ -78,6 +78,11 @@
     define("LANGUAGEPROFILEVIEW_ACTION", "LanguageProfileView");
     
     /**
+     * The action word for a user to use to delete a language profile.
+     */
+    define("LANGUAGEPROFILEDELETE_ACTION", "LanguageProfileDelete");
+    
+    /**
      * The action word to use to process a user profile add or edit.
      */
     define("PROCESSLANGUAGEPROFILEADDEDIT_ACTION", "ProcessLanguageProfileAddEdit");
@@ -85,7 +90,8 @@
     /**
      * The action word for a user to use to view all of their profiles.
      */
-    define("LANGUAGEPROFILESVIEW_ACTION", "LanguageProfilesView");
+    define("MANAGELANGUAGEPROFILES_ACTION", "ManageLanguageProfiles");
+    
     
 //Actions available through the admin controller.
 /******************************************************************************/
@@ -174,4 +180,34 @@
      * The action word to use to process a role add or edit.
      */
     define("PROCESSROLEADDEDIT_ACTION", "PrcessRoleAddEdit");
+    
+    /**
+     * The action word to use to manage languages.
+     */
+    define("MANAGELANGUAGES_ACTION", "ManageLanguages");
+    
+    /**
+     * The action word to use to add a language.
+     */
+    define("LANGUAGEADD_ACTION", "LanguageAdd");
+    
+    /**
+     * The action to word to use to edit an existing language.
+     */
+    define("LANGUAGEEDIT_ACTION", "LanguageEdit");
+    
+    /**
+     * The action word to use to view a language.
+     */
+    define("LANGUAGEVIEW_ACTION", "LanguageView");
+    
+    /**
+     * The action word to use to delete a language.
+     */
+    define("LANGUAGEDELETE_ACTION", "LanguageDelete");
+    
+    /**
+     * The action word to use to process a language add/edit.
+     */
+    define("PROCESSLANGUAGEADDEDIT_ACTION", "ProcessLanguageAddEdit");
 ?>
