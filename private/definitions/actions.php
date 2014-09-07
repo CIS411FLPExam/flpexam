@@ -67,6 +67,16 @@
      */
     define("CHANGEPASSWORD_ACTION", "ChangePassword");
     
+    /**
+     * The action word to use to contact someone from the site.
+     */
+    define("CONTACT_ACTION", "Contact");
+    
+    /**
+     * The action word to use to view the site's information.
+     */
+    define("ABOUT_ACTION", "About");
+    
 //Actions available through the admin controller.
 /******************************************************************************/
     

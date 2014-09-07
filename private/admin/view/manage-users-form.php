@@ -13,10 +13,16 @@
 ?>
 
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
-    <input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
+    <label>Name:</label><input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
     <input type="submit" value="Search" />
 </form>
 
+<br />
+            
+<div class="divider"></div>
+
+<br />
+            
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <div class="datatable">
         <table id="users" class="tablesorter">
@@ -65,7 +71,7 @@
                         </td>
                     <?php } ?>
                     <?php if ($userCanDelete) { ?>
-                        <td>
+                        <td class="centerText">
                             <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($user_ID)); ?>" />
                         </td>
                     <?php } ?>
@@ -79,6 +85,13 @@
     </div>
     <input type="hidden" name="numListed" value="<?php echo count($results); ?>" />
     <?php if ($userCanDelete) { ?>
+            
+            <br />
+            
+            <div class="divider"></div>
+
+            <br />
+            
             <input type="submit" value="Delete Selected" />
     <?php } ?>
 </form>

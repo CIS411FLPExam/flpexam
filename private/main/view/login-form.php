@@ -7,8 +7,15 @@
 
 <form action=<?php echo( GetControllerScript(MAINCONTROLLER_FILE, PROCESSLOGIN_ACTION ) ); ?> method="post">
 
-    Username: <input type="text" name="username" /><br/>
-    Password: <input type="password" name="password" /><br/><br/>
+    <div class="formGroup">
+        <div class="formSection">
+            <label>Username:</label><input class="formInput" type="text" name="username" />
+            
+            <br />
+            
+            <label>Password:</label><input class="formInput" type="password" name="password" />
+        </div>
+    </div>
     <input type="hidden" name="RequestedPage" value="<?php echo $_GET['RequestedPage'] ?>" />
 
     <input type="submit" value="Login"/>

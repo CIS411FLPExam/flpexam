@@ -3,6 +3,19 @@ body
     background-color: #9e9489;
 }
 
+footer
+{
+    background-color: #ffffff;
+    padding: 5px;
+    text-align: center;
+}
+
+#navbar
+{
+    float: left;
+    width: 200px;
+}
+
 #wrapper
 {
     width: 960px;
@@ -13,7 +26,7 @@ body
 {
     width: 760px;
     float: left;
-    background-color: #FFFFFF
+    background-color: #ffffff;
 }
 
 .testBackground { background-color: #004400; }
@@ -79,35 +92,41 @@ body
 
 .row1
 {
-    background-color: #00ccff;
+    background-color: #ddc873;
 }
 
 .row2
 {
-    background-color: #0099ff;
+    background-color: #ddc873;
 }
 
 .formGroup
 {
     width: 371px;
-    margin: auto;
+    padding-left: 5px;
 }
 
 .formSection
 {
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
 .formSection label
 {
     font-weight: bold;
-    width: 145px;
+    width: 100px;
     display: inline-block;
+}
+
+.formSection form
+{
+    display: inline;
 }
 
 .formInput
 {
-    width: 150px;
+    width: 200px;
     display: inline-block;
 }
 
@@ -119,7 +138,7 @@ body
 .divider
 {
     width: 100%;
-    border-top: gold 1px solid;
+    border-top: #ddc873 1px solid;
     height: 2px;
 }
 
