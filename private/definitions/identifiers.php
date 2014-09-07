@@ -41,6 +41,11 @@
     define("USERID_IDENTIFIER", "UserID");
     
     /**
+     * The name identifier.
+     */
+    define("NAME_IDENTIFIER", "Name");
+    
+    /**
      * The first name identifier.
      */
     define("FIRSTNAME_IDENTIFIER", "FirstName");

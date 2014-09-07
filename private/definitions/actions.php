@@ -71,6 +71,11 @@
 /******************************************************************************/
     
     /**
+     * The action word to use to search for a users.
+     */
+    define("USERSEARCH_ACTION", "UserSearch");
+    
+    /**
      * The action word to use to access the control panel.
      */
     define("CONTROLPANEL_ACTION", "ControlPanel");

@@ -4,6 +4,29 @@
     include(MODEL_FILE);
     
     /**
+     * Searches all users for the given name.
+     * @param string $name The user's first and/or last name.
+     * @return array The collection of users found in the search.
+     */
+    function SearchForUser($name)
+    {
+        $db = GetDBConnection();
+        
+        $query = "SELECT * FROM " . USERS_IDENTIFIER . " WHERE"
+                . " MATCH (" . FIRSTNAME_IDENTIFIER 
+                . ", " . LASTNAME_IDENTIFIER. ") AGAINST" 
+                . " (:" . NAME_IDENTIFIER . " IN NATURAL LANGUAGE MODE);";
+        
+        $statement = $db->prepare($query);
+        $statement->bindValue(':' . NAME_IDENTIFIER, $name);
+        $statement->execute();
+        $results = $statement->fetchAll();
+        $statement->closeCursor();
+
+        return $results;
+    }
+    
+    /**
      * Gets the roles that are currently assigned to a user.
      * @param int $ID The user ID of the user.
      * @return array The collection of roles assigned to the user.

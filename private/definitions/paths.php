@@ -325,4 +325,9 @@
      * The file path of the manage users form file.
      */
     define("MANAGEUSERSFORM_FILE", ADMINVIEW_DIR . "manage-users-form.php");
+    
+    /**
+     * The path of the view user form file.
+     */
+    define("VIEWUSERFORM_FILE", ADMINVIEW_DIR . "view-user-form.php");
 ?>

@@ -11,6 +11,12 @@
     $userCanView = userIsAuthorized(USERVIEW_ACTION);
     $userCanDelete = userIsAuthorized(USERDELETE_ACTION);
 ?>
+
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
+    <input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
+    <input type="submit" value="Search" />
+</form>
+
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <div class="datatable">
         <table id="users" class="tablesorter">

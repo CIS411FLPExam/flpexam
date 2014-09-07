@@ -22,7 +22,7 @@
     {
         $action ="";
     }
-
+    
     if ($action != PROCESSLOGIN_ACTION && !userIsAuthorized($action))
     {
         if(!loggedIn())
@@ -84,12 +84,42 @@
             case PROCESSROLEADDEDIT_ACTION :
                 ProcessRoleAddEdit();
                 break;
+            case USERSEARCH_ACTION :
+                ProcessUserSearch();
+                break;
+            case USERVIEW_ACTION :
+                ProcessUserView();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
     }
     
-
+    function ProcessUserView()
+    {
+        $userID = $_GET[USERID_IDENTIFIER];
+        
+        $row = getUser($userID);
+        
+        $hasAttrResults = getUserRoles($userID);
+        
+        $firstName = $row[FIRSTNAME_IDENTIFIER];
+        $lastName = $row[LASTNAME_IDENTIFIER];
+        $userName = $row[USERNAME_IDENTIFIER];
+        $email = $row[EMAIL_IDENTIFIER];
+        
+        include(VIEWUSERFORM_FILE);
+    }
+    
+    function ProcessUserSearch()
+    {
+        $name = $_POST[NAME_IDENTIFIER];
+        
+        $results = SearchForUser($name);
+        
+        include(MANAGEUSERSFORM_FILE);
+    }
+    
     function ManageUsers()
     {
         $results = getAllUsers();
@@ -161,27 +191,28 @@
     }
     function ProcessUserAddEdit()
     {
+        $message = "";
         $collection = array();
         
-        if (empty($_POST["FirstName"]))
+        if (empty($_POST[FIRSTNAME_IDENTIFIER]))
         {
             $message = "Errors";
             $collection[] = "Error, field \"First Name\" is blank.";
         }
         
-        if (empty($_POST["LastName"]))
+        if (empty($_POST[LASTNAME_IDENTIFIER]))
         {
             $message = "Errors";
             $collection[] = "Error, field \"Last Name\" is blank.";
         }
         
-        if (empty($_POST["UserName"]))
+        if (empty($_POST[USERNAME_IDENTIFIER]))
         {
             $message = "Errors";
             $collection[] = "Error, field \"User Name\" is blank.";
         }
         
-        if (empty($_POST["Email"]))
+        if (empty($_POST[EMAIL_IDENTIFIER]))
         {
             $message = "Errors";
             $collection[] = "Error, field \"Email\" is blank.";
@@ -189,15 +220,15 @@
         
         if ($message == "")
         {
-            if(!empty($_POST["UserID"]))
+            if(!empty($_POST[USERID_IDENTIFIER]))
             {
-                $UserID = $_POST["UserID"];
+                $UserID = $_POST[USERID_IDENTIFIER];
             }
-            $firstName = $_POST["FirstName"];
-            $lastName = $_POST["LastName"];
-            $userName = $_POST["UserName"];
-            $password = $_POST["Password"];
-            $email = $_POST["Email"];
+            $firstName = $_POST[FIRSTNAME_IDENTIFIER];
+            $lastName = $_POST[LASTNAME_IDENTIFIER];
+            $userName = $_POST[USERNAME_IDENTIFIER];
+            $password = $_POST[PASSWORD_IDENTIFIER];
+            $email = $_POST[EMAIL_IDENTIFIER];
             
             if (empty($UserID))
             {   // No UserID means we are processing an ADD

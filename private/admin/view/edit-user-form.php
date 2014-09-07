@@ -45,15 +45,19 @@
 
     <input type="hidden" name="UserID" value="<?php echo $id; ?>"/>
 
-    First Name: <input type="text" name="FirstName" size="20" value="<?php echo htmlspecialchars($firstName); ?>"><br/>
+    First Name: <label><?php echo(htmlspecialchars($firstName)); ?></label>
 
-    Last Name: <input type="text" name="LastName" size="20" value="<?php echo htmlspecialchars($lastName); ?>"><br/>
+    <br />
 
-    User Name: <input type="text" name="UserName" size="20" value="<?php echo htmlspecialchars($userName); ?>"><br/>
+    Last Name: <label><?php echo(htmlspecialchars($lastName)); ?></label>
 
-    Password: <input type="password" name="Password" size="20" value=""> <br/>
+    <br />
 
-    Email: <input type="text" name="Email" size="20" value="<?php echo htmlspecialchars($email); ?>"><br/>
+    User Name: <label><?php echo(htmlspecialchars($userName)); ?></label>
+
+    <br />
+
+    Email: <label><?php echo(htmlspecialchars($email)); ?></label>
 
     <table>
 
