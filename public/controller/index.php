@@ -88,7 +88,15 @@
     
     function ProcessLanguageProfileView()
     {
+        $profileID = '-1';
         
+        $language = 'Spanish';
+        $spokenAtHome = TRUE;
+        $jrHighExp = "None";
+        $srHighExp = "1 - 2 years";
+        $collegeExp = "4+ years";
+        
+        include(VIEWLANGUAGEPROFILEFORM_FILE);
     }
     
     function ProcessLanguageProfileDelete()
@@ -98,7 +106,16 @@
     
     function ProcessLanguageProfileAddEdit()
     {
+        $availableLanguages = array('Spanish', 'French');
+        $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
         
+        $language = $availableLanguages[0];
+        $spokenAtHome = FALSE;
+        $jrHighExp = $experiences[0];
+        $srHighExp = $experiences[0];
+        $collegeExp = $experiences[0];
+        
+        include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
     
     function ProcessLanguageProfileAdd()
@@ -130,7 +147,7 @@
         }
         
         $userID = $_SESSION[USERID_IDENTIFIER];
-        $profileID = $_POST[LANGUAGEPROFILEID_IDENTIFIER];
+        $profileID = -1;
         
         $availableLanguages = array('Spanish', 'French');
         $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
@@ -154,6 +171,8 @@
         $userID = $_SESSION[USERID_IDENTIFIER];
         
         $languageProfiles = array();
+        $languageProfiles[] = array('ProfileID' => '-1', 'Name' => 'French', 'LanguageID' => '-1');
+        $languageProfiles[] = array('ProfileID' => '-1', 'Name' => 'Spanish', 'LanguageID' => '-1');
         
         include(MANAGELANGUAGEPROFILESFORM_FILE);
     }

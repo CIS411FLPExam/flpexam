@@ -5,9 +5,9 @@ function AddItem()
     index = count;
     var collection = document.getElementById('collection');
 
-    collection.innerHTML += "<label id='lbl" + index + "'>label:</label>";
-    collection.innerHTML += "<input id='input" + index + "' type='text' name='input" + index + "' />";
-    collection.innerHTML += "<input id='btn" + index +"' type='button' value='Remove' onclick='RemoveItem(" + index + ");' />";
+    collection.innerHTML += "<label id='lbl" + index + "'>Answer:</label>";
+    collection.innerHTML += "<textarea id='input" + index + "' type='text' name='input" + index + "' />";
+    collection.innerHTML += "<input id='btn" + index +"' type='button' value='Remove Answer' onclick='RemoveItem(" + index + ");' />";
 
     count++;
 }

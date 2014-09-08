@@ -7,7 +7,7 @@
             <label>Language:</label><label><?php echo($language); ?></label>
         </div>
         <div class="formSection">
-            <label>Home Spoken:</label>
+            <label>Home <br /> Spoken:</label>
             <label><b><?php if ($spokenAtHome) { echo('Yes'); } else { echo('No'); }?></b></label>
         </div>
         <div class="formSection">

@@ -108,9 +108,81 @@
             case PROCESSLANGUAGEADDEDIT_ACTION :
                 ProcessLanguageAddEdit();
                 break;
+            case QUESTIONADD_ACTION :
+                ProcessQuestionAdd();
+                break;
+            case QUESTIONEDIT_ACTION :
+                ProcessQuestionEdit();
+                break;
+            case QUESTIONVIEW_ACTION:
+                ProcessQuestionView();
+                break;
+            case QUESTIONDELETE_ACTION :
+                ProcessQuestionDelete();
+                break;
+            case PROCESSQUESTIONADDEDIT_ACTION :
+                ProcessQuestionAddEdit();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function ProcessQuestionAdd()
+    {
+        $name = 'How are you?';
+        
+        $answers = array();
+        $answers[] = 'Fine.';
+        $answers[] = 'Good.';
+        $answers[] = 'Well.';
+        
+        include(ADDEDITQUESTIONFORM_FILE);
+    }
+    
+    function ProcessQuestionEdit()
+    {
+        
+        $questionID = '-1';
+        $name = 'How are you?';
+        
+        $answers = array();
+        $answers[] = 'Fine.';
+        $answers[] = 'Good.';
+        $answers[] = 'Well.';
+        
+        include(ADDEDITQUESTIONFORM_FILE);
+    }
+    
+    function ProcessQuestionView()
+    {
+        $questionID = '-1';
+        $name = 'How are you?';
+        
+        $answers = array();
+        $answers[] = 'Fine.';
+        $answers[] = 'Good.';
+        $answers[] = 'Well.';
+        
+        include(VIEWQUESTIONFORM_FILE);
+    }
+    
+    function ProcessQuestionDelete()
+    {
+        
+    }
+    
+    function ProcessQuestionAddEdit()
+    {
+        $questionID = '-1';
+        $name = 'How are you?';
+        
+        $answers = array();
+        $answers[] = 'Fine.';
+        $answers[] = 'Good.';
+        $answers[] = 'Well.';
+        
+        include(VIEWQUESTIONFORM_FILE);
     }
     
     function ProcessLanguageAdd()
@@ -124,7 +196,7 @@
     {
         $languageID = $_GET[LANGUAGEID_IDENTIFIER];
         
-        $name = "";
+        $name = "French";
         $active = FALSE;
         
         include(ADDEDITLANGUAGEFORM_FILE);
@@ -134,8 +206,14 @@
     {
         $languageID = $_GET[LANGUAGEID_IDENTIFIER];
         
-        $name = "";
+        $name = "French";
         $active = FALSE;
+        
+        $questions = array();
+        $questions[] = array('QuestionID' => '-1', 'Name' => 'How are you?');
+        $questions[] = array('QuestionID' => '-1', 'Name' => 'What are you doing?');
+        
+        include(VIEWLANGUAGEFORM_FILE);
     }
     
     function ProcessLanguageDelete()
@@ -145,7 +223,14 @@
     
     function ProcessLanguageAddEdit()
     {
+        $name = "French";
+        $active = FALSE;
         
+        $questions = array();
+        $questions[] = array(['QuestionID'] => '-1', ['Name'] => 'How are you?');
+        $questions[] = array(['QuestionID'] => '-1', ['Name'] => 'What are you doing?');
+        
+        include(ADDEDITLANGUAGEFORM_FILE);
     }
     
     function ManageLanguages()

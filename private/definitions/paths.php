@@ -370,4 +370,9 @@
      */
     define("VIEWQUESTIONFORM_FILE", ADMINVIEW_DIR . "view-question-form.php");
     
+    /**
+     * The file path of the add/edit question form file.
+     */
+    define("ADDEDITQUESTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-question.php");
+    
 ?>
