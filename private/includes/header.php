@@ -34,11 +34,12 @@
         <script type='text/javascript' src='<?php echo(ATTRIBUTES_FILE); ?>'></script>
         <script type='text/javascript' src='<?php echo(JQUERYTABLESORTER_FILE); ?>'></script>
         <script type='text/javascript' src='<?php echo(JQUERYVALIDATE_FILE); ?>'></script>
+        <script type='text/javascript' src='<?php echo(DYNAMICCOLLECTIONJS_FILE); ?>'></script>
     </head>
     <body>        
         <div id="wrapper">
             <header>
-                <img src="<?php echo(LOGO_FILE) ?>" width="200" height="100"/>
+                <img src="<?php echo(LOGO_FILE) ?>" width="200" height="70"/>
                 <span class="banner">Foreign Language Placement Exam</span>
                 <?php if(loggedIn()) { ?>
                 <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); //echo('wwwwwwwwwwwwwwwwwwww'); ?></span>

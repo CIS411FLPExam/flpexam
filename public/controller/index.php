@@ -74,13 +74,21 @@
             case PROCESSLANGUAGEPROFILEADDEDIT_ACTION :
                 ProcessLanguageProfileAddEdit();
                 break;
-            case LANGUAGEDELETE_ACTION :
+            case LANGUAGEPROFILEDELETE_ACTION :
                 ProcessLanguageProfileDelete();
+                break;
+            case LANGUAGEPROFILEVIEW_ACTION :
+                ProcessLanguageProfileView();
                 break;
             default :
                 include(HOME_FILE);
                 break;
         }
+    }
+    
+    function ProcessLanguageProfileView()
+    {
+        
     }
     
     function ProcessLanguageProfileDelete()
@@ -122,7 +130,7 @@
         }
         
         $userID = $_SESSION[USERID_IDENTIFIER];
-        $profileID = $_POST['ProfileID'];
+        $profileID = $_POST[LANGUAGEPROFILEID_IDENTIFIER];
         
         $availableLanguages = array('Spanish', 'French');
         $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');

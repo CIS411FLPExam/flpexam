@@ -157,6 +157,11 @@
     define("NAVBARJS_FILE", JAVASCRIPT_DIR . "navbar.js");
     
     /**
+     * The file path of the dynamic collection javascript file.
+     */
+    define("DYNAMICCOLLECTIONJS_FILE", JAVASCRIPT_DIR . "dynamic-collection.js");
+    
+    /**
      * The file path of the actions file.
      */
     define("ACTIONS_FILE", DEFINITIONS_DIR . "actions.php");

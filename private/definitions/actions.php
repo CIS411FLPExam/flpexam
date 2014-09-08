@@ -210,4 +210,29 @@
      * The action word to use to process a language add/edit.
      */
     define("PROCESSLANGUAGEADDEDIT_ACTION", "ProcessLanguageAddEdit");
+    
+    /**
+     * The action word to use to add a questoin.
+     */
+    define("QUESTIONADD_ACTION", "QuestionAdd");
+    
+    /**
+     * The action to word to use to edit an existing question.
+     */
+    define("QUESTIONEDIT_ACTION", "QuestionEdit");
+    
+    /**
+     * The action word to use to view a question.
+     */
+    define("QUESTIONVIEW_ACTION", "QuestionView");
+    
+    /**
+     * The action word to use to delete a question.
+     */
+    define("QUESTIONDELETE_ACTION", "QuestionDelete");
+    
+    /**
+     * The action word to use to process a question add/edit.
+     */
+    define("PROCESSQUESTIONADDEDIT_ACTION", "ProcessQuestionAddEdit");
 ?>

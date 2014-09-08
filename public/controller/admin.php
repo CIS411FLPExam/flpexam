@@ -122,7 +122,7 @@
     
     function ProcessLanguageEdit()
     {
-        $languageID = $_POST['LanguageID'];
+        $languageID = $_GET[LANGUAGEID_IDENTIFIER];
         
         $name = "";
         $active = FALSE;
@@ -132,7 +132,7 @@
     
     function ProcessLanguageView()
     {
-        $languageID = $_POST['LanguageID'];
+        $languageID = $_GET[LANGUAGEID_IDENTIFIER];
         
         $name = "";
         $active = FALSE;
@@ -150,7 +150,15 @@
     
     function ManageLanguages()
     {
-        $languages = array('French', 'Spanish');
+        $french = array();
+        $french[LANGUAGEID_IDENTIFIER] = '1';
+        $french[NAME_IDENTIFIER] = 'French';
+        
+        $spanish = array();
+        $spanish[LANGUAGEID_IDENTIFIER] = '2';
+        $spanish[NAME_IDENTIFIER] = 'Spanish';
+        
+        $languages = array($french, $spanish);
         
         include(MANAGELANGUAGESFORM_FILE);
     }

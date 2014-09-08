@@ -1,5 +1,20 @@
 <?php
-
+    
+    /**
+     * The question I.D. identifier.
+     */
+    define("QUESTIONID_IDENTIFIER", "QuestionID");
+    
+    /**
+     * The language profile I.D. identifier.
+     */
+    define("LANGUAGEPROFILEID_IDENTIFIER", "ProfileID");
+    
+    /**
+     * The language I.D. identifier.
+     */
+    define("LANGUAGEID_IDENTIFIER", "LanguageID");
+    
     /**
      * The admin role name.
      */

@@ -50,7 +50,7 @@
                 ?>
 
 
-                <tr class="<?php if ($j % 2 == 0) { echo("row1"); } else { echo("row2"); }?>">
+                <tr class="row1">
                     <td><?php echo(htmlspecialchars($firstName)); ?></td>
                     <td><?php echo(htmlspecialchars($lastName)); ?></td>
                     <td><?php echo(htmlspecialchars($userName)); ?></td>
