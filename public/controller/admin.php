@@ -131,7 +131,7 @@
     function ProcessQuestionAdd()
     {
         $name = 'How are you?';
-        
+        $level = '1';
         $answers = array();
         $answers[] = 'Fine.';
         $answers[] = 'Good.';
@@ -145,6 +145,7 @@
         
         $questionID = '-1';
         $name = 'How are you?';
+        $level = 2;
         
         $answers = array();
         $answers[] = 'Fine.';
@@ -158,6 +159,8 @@
     {
         $questionID = '-1';
         $name = 'How are you?';
+        
+        $level = 3;
         
         $answers = array();
         $answers[] = 'Fine.';
@@ -176,6 +179,8 @@
     {
         $questionID = '-1';
         $name = 'How are you?';
+        
+        $level = 0;
         
         $answers = array();
         $answers[] = 'Fine.';

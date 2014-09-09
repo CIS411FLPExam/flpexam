@@ -1,13 +1,20 @@
 var count = 0;
-
+			
 function AddItem()
 {
     index = count;
     var collection = document.getElementById('collection');
 
-    collection.innerHTML += "<label id='lbl" + index + "'>Answer:</label>";
-    collection.innerHTML += "<textarea id='input" + index + "' type='text' name='input" + index + "' />";
-    collection.innerHTML += "<input id='btn" + index +"' type='button' value='Remove Answer' onclick='RemoveItem(" + index + ");' />";
+    collection.innerHTML += "<div id='contnr" + index + "'>";
+    collection.innerHTML += "</div>";
+
+    var container = document.getElementById('contnr' + index);
+
+    container.innerHTML += "<label id='lbl" + index + "'>Answer: </label>";
+    container.innerHTML += "<textarea id='input" + index + "' type='text' class='qa' name='input" + index + "'></textarea>";
+    container.innerHTML += "<input id='btn" + index +"' type='button' value='Remove Answer' onclick='RemoveItem(" + index + ");' />";
+    container.innerHTML += "<br />";
+    container.innerHTML += "<div class='divider'></div>";
 
     count++;
 }
@@ -15,13 +22,12 @@ function AddItem()
 function RemoveItem(index)
 {
     var collection = document.getElementById('collection');
+    var container = document.getElementById('contnr' + index);
     var text = document.getElementById('input' + index);
     var btn = document.getElementById('btn' + index);
     var lbl = document.getElementById('lbl' + index);
 
-    collection.removeChild(text);
-    collection.removeChild(btn);
-    collection.removeChild(lbl);
+    collection.removeChild(container);
 
     var i = 0;
     var j = 0;
@@ -33,15 +39,12 @@ function RemoveItem(index)
             j++;
         }
 
+        container = document.getElementById('contnr' + j);
         text = document.getElementById('input' + j);
         btn = document.getElementById('btn' + j);
         lbl = document.getElementById('lbl' + j);
 
-        if(!btn)
-        {
-                alert("I'm null.");
-        }
-
+        container.id = "contnr" + i;
         text.id = 'input' + i;
         text.name = text.id;
         btn.id = 'btn' + i;
@@ -51,6 +54,6 @@ function RemoveItem(index)
         j++;
         i++;
     }
-
+    
     count--;
 }

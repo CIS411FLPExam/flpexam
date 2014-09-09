@@ -156,7 +156,6 @@ footer
 {
     display: inline-block;
     font-size: 250%;
-    //background-color: red;
 }
 
 .username
@@ -165,4 +164,9 @@ footer
     display: inline-block;
     font-size: 150%;
     color: #ddc873;
+}
+
+.qa
+{
+    display: block;
 }
