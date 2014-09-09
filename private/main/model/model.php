@@ -1,7 +1,7 @@
 <?php
 
     //Need this file because it contains functions that will be use here.
-    include(MODEL_FILE);
+    require_once(MODEL_FILE);
     
     /**
      * Adds a user account to the records.

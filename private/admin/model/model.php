@@ -1,7 +1,7 @@
 <?php
 
     //Include the base model file becasue functions from that files will be used here.
-    include(MODEL_FILE);
+    require_once(MODEL_FILE);
     
     /**
      * Searches all users for the given name.
