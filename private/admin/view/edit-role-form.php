@@ -41,29 +41,41 @@
 
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSROLEADDEDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
     <input type="hidden" name="RoleID" value="<?php echo htmlspecialchars($id); ?>"/>
-    Name:  <input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" /><br/>
-    Description: <input type="text" name="Description" size="20" value="<?php echo htmlspecialchars($desc); ?>" />
-    <table>
-        <tr>
-            <td>
-                <b>Is</b><br/>
-                <?php echo $select1; ?>
-            </td>
+    <div class="formGroup">
+        <div class="formSection">
+            <label>Name:</label><input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" /><br/>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>Description:</label><input type="text" name="Description" size="20" value="<?php echo htmlspecialchars($desc); ?>" />
+        </div>
+        
+        <div class="divider"></div>
+        
+        <table>
+            <tr>
+                <td>
+                    <b>Is</b><br/>
+                    <?php echo $select1; ?>
+                </td>
 
-            <td>
-                <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
-                <br/>
-                <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
-            </td>
+                <td>
+                    <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
+                    <br/>
+                    <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
+                </td>
 
-            <td>
-                <b>Is Not</b><br/>
-                <?php echo $select2; ?>
-            </td>
-        </tr>
-    </table>
-    <br/>
-    <input type="submit" value="Submit" />
+                <td>
+                    <b>Is Not</b><br/>
+                    <?php echo $select2; ?>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <input type="submit" value="Submit" />
+    </div>
 </form>
 
 <!-- End main content here -->

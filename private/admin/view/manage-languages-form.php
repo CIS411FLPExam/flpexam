@@ -1,5 +1,6 @@
 <?php
-    include( HEADER_FILE );
+    include(HEADER_FILE);
+    include(CONTROLPANEL_FILE);
 ?>
 <!-- Start main content here -->
 <h1>Languages</h1>
@@ -24,9 +25,9 @@
             <thead>
                 <tr>
                     <th><b>Name</b></th>
-                    <?php if ($userCanView) { ?><th><b>View</b></th><?php } ?>
-                    <?php if ($userCanEdit) { ?><th><b>Edit</b></th><?php } ?>
-                    <?php if ($userCanDelete) { ?><th><b>Select</b></th><?php } ?>
+                    <?php if ($userCanView) { ?><th></th><?php } ?>
+                    <?php if ($userCanEdit) { ?><th></th><?php } ?>
+                    <?php if ($userCanDelete) { ?><th></th><?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -42,14 +43,14 @@
                     <?php if ($userCanView) { ?>
                         <td>
                             <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))) ?>">
-                                <input type="button" value="View" />
+                                View
                             </a>
                         </td>
                     <?php } ?>
                     <?php if ($userCanEdit) { ?>
                         <td>
                             <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))) ?>">
-                                <input type="button" value="Edit" />
+                                Edit
                             </a>
                         </td>
                     <?php } ?>

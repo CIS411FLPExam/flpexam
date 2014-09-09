@@ -24,9 +24,10 @@ footer
 
 #content
 {
-    width: 760px;
+    width: 750px;
     float: left;
     background-color: #ffffff;
+    padding: 5px;
 }
 
 .testBackground { background-color: #004400; }

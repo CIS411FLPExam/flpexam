@@ -44,47 +44,57 @@
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSERADDEDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
 
     <input type="hidden" name="UserID" value="<?php echo $id; ?>"/>
+    <div class="formGroup">
+        <div class="formSection">
+            <label>First Name:</label><label><?php echo(htmlspecialchars($firstName)); ?></label>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>Last Name:</label><label><?php echo(htmlspecialchars($lastName)); ?></label>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>User Name:</label><label><?php echo(htmlspecialchars($userName)); ?></label>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>Email:</label><label><?php echo(htmlspecialchars($email)); ?></label>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <table>
 
-    First Name: <label><?php echo(htmlspecialchars($firstName)); ?></label>
+            <tr>
+                <td>
+                    <b>Is</b><br/>
+                    <?php echo $select1; ?>
+                </td>
 
-    <br />
+                <td>
+                    <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
+                    <br/>
+                    <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
+                </td>
 
-    Last Name: <label><?php echo(htmlspecialchars($lastName)); ?></label>
+                <td>
+                    <b>Is Not</b><br/>
+                    <?php echo $select2; ?>
+                </td>
+            </tr>
 
-    <br />
+        </table>
 
-    User Name: <label><?php echo(htmlspecialchars($userName)); ?></label>
+        <br/>
 
-    <br />
-
-    Email: <label><?php echo(htmlspecialchars($email)); ?></label>
-
-    <table>
-
-        <tr>
-            <td>
-                <b>Is</b><br/>
-                <?php echo $select1; ?>
-            </td>
-
-            <td>
-                <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
-                <br/>
-                <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
-            </td>
-
-            <td>
-                <b>Is Not</b><br/>
-                <?php echo $select2; ?>
-            </td>
-        </tr>
-
-    </table>
-
-    <br/>
-
-    <input type="submit" value="Submit" />
-
+        <input type="submit" value="Submit" />
+    </div>
 </form>
 
 <!-- End main content here -->

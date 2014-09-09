@@ -1,8 +1,18 @@
-var count = 0;
-			
+function GetCount()
+{
+    var count = 0;
+    
+    while(document.getElementById('contnr' + count))
+    {
+        count++;
+    }
+    
+    return count;
+}
+
 function AddItem()
 {
-    index = count;
+    var index = GetCount();
     var collection = document.getElementById('collection');
 
     collection.innerHTML += "<div id='contnr" + index + "'>";
@@ -14,13 +24,13 @@ function AddItem()
     container.innerHTML += "<textarea id='input" + index + "' type='text' class='qa' name='input" + index + "'></textarea>";
     container.innerHTML += "<input id='btn" + index +"' type='button' value='Remove Answer' onclick='RemoveItem(" + index + ");' />";
     container.innerHTML += "<br />";
+    container.innerHTML += "<br />";
     container.innerHTML += "<div class='divider'></div>";
-
-    count++;
 }
 
 function RemoveItem(index)
 {
+    var count = GetCount();
     var collection = document.getElementById('collection');
     var container = document.getElementById('contnr' + index);
     var text = document.getElementById('input' + index);
@@ -54,6 +64,4 @@ function RemoveItem(index)
         j++;
         i++;
     }
-    
-    count--;
 }

@@ -32,9 +32,9 @@
                     <th><b>Last Name</b></th>
                     <th><b>User Name</b></th>
                     <th><b>Email</b></th>
-                    <?php if ($userCanView) { ?><th><b>View</b></th><?php } ?>
-                    <?php if ($userCanEdit) { ?><th><b>Edit</b></th><?php } ?>
-                    <?php if ($userCanDelete) { ?><th><b>Select</b></th><?php } ?>
+                    <?php if ($userCanView) { ?><th></th><?php } ?>
+                    <?php if ($userCanEdit) { ?><th></th><?php } ?>
+                    <?php if ($userCanDelete) { ?><th></th><?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -59,14 +59,14 @@
                     <?php if ($userCanView) { ?>
                         <td>
                             <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . "&". USERID_IDENTIFIER . "=" . urldecode($user_ID))) ?>">
-                                <input type="button" value="View" />
+                                View
                             </a>
                         </td>
                     <?php } ?>
                     <?php if ($userCanEdit) { ?>
                         <td>
                             <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urldecode($user_ID))) ?>">
-                                <input type="button" value="Edit" />
+                                Edit
                             </a>
                         </td>
                     <?php } ?>
@@ -85,11 +85,6 @@
     </div>
     <input type="hidden" name="numListed" value="<?php echo count($results); ?>" />
     <?php if ($userCanDelete) { ?>
-            
-            <br />
-            
-            <div class="divider"></div>
-
             <br />
             
             <input type="submit" value="Delete Selected" />

@@ -14,7 +14,7 @@
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,ROLEDELETE_ACTION)) ?>" method="post">
     <table border>
         <tr>
-                <td><b>Name</b></td> <td><b>Description</b></td> <td></td> <td></td>
+            <td><b>Name</b></td> <td><b>Description</b></td> <td></td> <td></td>
         </tr>
         <?php
             $j = 0;

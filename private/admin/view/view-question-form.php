@@ -36,7 +36,9 @@
                 
         <br />
     
-        <input type="submit" value="Submit" />
+        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . $questionID)); ?>">
+            Edit
+        </a>
     </div>
 </form>
 <!-- End main content here -->
