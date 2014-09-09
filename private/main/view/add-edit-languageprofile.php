@@ -22,10 +22,16 @@
                 <?php } ?>
             </select>
         </div>
+        
+        <div class="divider"></div>
+        
         <div class="formSection">
             <label>Home Spoken:</label>
             <input name="SpokenAtHome" type="checkbox" <?php if($spokenAtHome) { echo('checked'); } ?>>
         </div>
+        
+        <div class="divider"></div>
+        
         <div class="formSection">
             <label>Jr High Experience:</label>
             <select name="JrHighExp" class="formInput">
@@ -36,6 +42,9 @@
                 <?php } ?>
             </select>
         </div>
+        
+        <div class="divider"></div>
+        
         <div class="formSection">
             <label>High School Experience:</label>
             <select name="SrHighExp" class="formInput">
@@ -46,6 +55,9 @@
                 <?php } ?>
             </select>
         </div>
+        
+        <div class="divider"></div>
+        
         <div class="formSection">
             <label>College Experience:</label>
             <select name="CollegeExp" class="formInput">
@@ -56,11 +68,11 @@
                 <?php } ?>
             </select>
         </div>
+        
+        <br />
+
+        <input type="submit" value="Add Profile" />
     </div>
-    
-    <br />
-    
-    <input type="submit" value="Add Profile" />
 </form>
 <!-- End main content here -->
 <?php

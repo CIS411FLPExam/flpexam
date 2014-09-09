@@ -34,8 +34,6 @@
             <label>Last Name*:</label><input class="formInput" type="text" name="<?php echo(LASTNAME_IDENTIFIER); ?>" maxlength="32" value="<?php echo(htmlspecialchars($lastName)); ?>" /><br/>
         </div>
         
-        
-        
         <?php if (!isset($userID)) { ?>            
             <div class="divider"></div>
         
@@ -61,14 +59,11 @@
         <div class="formSection">
             <label>Email*:</label><input class="formInput" type="text" name="<?php echo(EMAIL_IDENTIFIER); ?>" maxlength="32" value="<?php echo(htmlspecialchars($email)); ?>" /><br/>
         </div>
-        
-        <div class="divider"></div>
-    </div>
-        
-    <br />
-        
-    <input type="submit" value="Submit" />
+            
+        <br />
 
+        <input type="submit" value="Submit" />
+    </div>
 </form>
 
 <!-- End main content here -->

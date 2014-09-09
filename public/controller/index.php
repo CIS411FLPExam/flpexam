@@ -179,6 +179,11 @@
     
     function HandleLogin( )
     {
+        if(loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE,HOME_ACTION));
+        }
+        
         if (!isset($_SERVER['HTTPS']))
         {
             SecureConnection( );

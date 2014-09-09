@@ -15,8 +15,8 @@
         <thead>
             <tr>
                 <th><b>Language</b></th>
-                <th><b>View</b></th>
-                <th><b>Edit</b></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -32,12 +32,12 @@
                 <td><?php echo(htmlspecialchars($name)); ?></td>
                 <td>
                     <a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, LANGUAGEPROFILEVIEW_ACTION . "&". LANGUAGEPROFILEID_IDENTIFIER . "=" . urldecode($profileID))) ?>">
-                        <input type="button" value="View" />
+                        View
                     </a>
                 </td>
                 <td>
                     <a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, LANGUAGEPROFILEEDIT_ACTION . "&". LANGUAGEPROFILEID_IDENTIFIER . "=" . urldecode($profileID))) ?>">
-                        <input type="button" value="Edit" />
+                        Edit
                     </a>
                 </td>
             </tr>

@@ -17,7 +17,10 @@
             <label>Name:</label>
             <input type="text" name="Name" class="formInput" value="<?php echo(htmlspecialchars($name)); ?>" />
         </div>
+        
         <?php if (isset($languageID)) { ?>
+                <div class="divider"></div>
+        
                 <div class="formSection">
                     <label>Active:</label>
                     <input type="checkbox" name="Active" <?php if ($active) { echo('checked'); } ?> />
