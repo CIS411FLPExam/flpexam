@@ -2,6 +2,7 @@
     include( HEADER_FILE );
 ?>
 <!-- Start main content here -->
+<h1>Language Profile</h1>
 <div class="formGroup">
     <div class="formSection">
         <label>Language:</label><label><?php echo($language); ?></label>
