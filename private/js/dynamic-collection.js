@@ -12,20 +12,43 @@ function GetCount()
 
 function AddItem()
 {
+    var textAreas = document.getElementsByTagName('textarea');
+    
     var index = GetCount();
     var collection = document.getElementById('collection');
-
-    collection.innerHTML += "<div id='contnr" + index + "'>";
-    collection.innerHTML += "</div>";
-
-    var container = document.getElementById('contnr' + index);
-
-    container.innerHTML += "<label id='lbl" + index + "'>Answer: </label>";
-    container.innerHTML += "<textarea id='input" + index + "' type='text' class='qa' name='input" + index + "'></textarea>";
-    container.innerHTML += "<input id='btn" + index +"' type='button' value='Remove Answer' onclick='RemoveItem(" + index + ");' />";
-    container.innerHTML += "<br />";
-    container.innerHTML += "<br />";
-    container.innerHTML += "<div class='divider'></div>";
+    
+    var contnr = document.createElement('div');
+    var lbl = document.createElement('label');
+    var txt = document.createElement('textarea');
+    var btn = document.createElement('input');
+    var newLine = document.createElement('br');
+    var newLine1 = document.createElement('br');
+    var divider = document.createElement('div');
+    
+    contnr.id = 'contnr' + index;
+    
+    lbl.id = 'lbl' + index;
+    lbl.innerHTML = '<b>Answer:</b> ';
+    
+    txt.id = 'input' + index;
+    txt.name = txt.id;
+    txt.setAttribute('class', 'qa');
+    
+    btn.setAttribute('type', 'button');
+    btn.id = 'btn' + index;
+    btn.setAttribute('onclick','RemoveItem(' + index + ')');
+    btn.value = 'Remove Answer';
+    
+    divider.setAttribute('class', 'divider');
+    
+    contnr.appendChild(lbl);
+    contnr.appendChild(txt);
+    contnr.appendChild(btn);
+    contnr.appendChild(newLine);
+    contnr.appendChild(newLine1);
+    contnr.appendChild(divider);
+    
+    collection.appendChild(contnr);
 }
 
 function RemoveItem(index)
