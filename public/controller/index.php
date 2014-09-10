@@ -92,6 +92,8 @@
         $jrHighExp = "None";
         $srHighExp = "1 - 2 years";
         $collegeExp = "4+ years";
+        $major = 'English';
+        $highSchool = 'Clarion';
         
         include(VIEWLANGUAGEPROFILEFORM_FILE);
     }
@@ -103,9 +105,11 @@
         
         $language = $availableLanguages[0];
         $spokenAtHome = FALSE;
-        $jrHighExp = $experiences[0];
-        $srHighExp = $experiences[0];
+        $jrHighExp = $experiences[1];
+        $srHighExp = $experiences[2];
         $collegeExp = $experiences[0];
+        $major = 'English';
+        $highSchool = 'Clarion';
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
@@ -127,6 +131,8 @@
         $jrHighExp = $experiences[0];
         $srHighExp = $experiences[0];
         $collegeExp = $experiences[0];
+        $major = '';
+        $highSchool = '';
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
@@ -146,9 +152,11 @@
         
         $language = $availableLanguages[0];
         $spokenAtHome = FALSE;
-        $jrHighExp = $experiences[0];
-        $srHighExp = $experiences[0];
+        $jrHighExp = $experiences[1];
+        $srHighExp = $experiences[2];
         $collegeExp = $experiences[0];
+        $major = 'English';
+        $highSchool = 'Clarion';
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }

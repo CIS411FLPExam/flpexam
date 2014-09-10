@@ -11,9 +11,11 @@
      * @param string $jrHighExp The amount of junior high experience.
      * @param string $srHighExp The amount of high school exerpience.
      * @param string $collegeExp The amount of college experience.
+     * @param string $highSchool The high school that the user is attending.
+     * @param string $major The major that the student wishes to pursue.
      * @return int The ID of the newly inserted profile.
      */
-    function AddLanguageProfile($userID, $language, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp)
+    function AddLanguageProfile($userID, $language, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp, $highSchool, $major)
     {
         try
         {
@@ -25,12 +27,16 @@
                     . ', ' . 'SpokenAtHome'
                     . ', ' . 'JrHighExp'
                     . ', ' . 'SrHighExp'
+                    . ', ' . 'HighSchool'
+                    . ', ' . 'Major'
                     . ', ' . 'CollegeExp' . ') Values '
                     . '(:' . USERID_IDENTIFIER
                     . ', :' . 'Language'
                     . ', :' . 'SpokenAtHome'
                     . ', :' . 'JrHighExp'
                     . ', :' . 'SrHighExp'
+                    . ', :' . 'HighSchool'
+                    . ', :' . 'Major'
                     . ', :' . 'CollegeExp' . ');';
             
             $statement = $db->prepare($query);
@@ -41,6 +47,8 @@
             $statement->bindValue(':' . 'JrHighExp', $jrHighExp);
             $statement->bindValue(':' . 'SrHighExp', $srHighExp);
             $statement->bindValue(':' . 'CollegeExp', $collegeExp);
+            $statement->bindValue(':' . 'HighSchool', $highSchool);
+            $statement->bindValue(':' . 'Major', $major);
             
             $statement->execute();
 
@@ -63,9 +71,11 @@
      * @param string $jrHighExp The amount of junior high experience.
      * @param string $srHighExp The amount of high school exerpience.
      * @param string $collegeExp The amount of college experience.
+     * @param string $highSchool The high school that the user is attending.
+     * @param string $major The major that the student wishes to pursue.
      * @return int The number of profiles effected by the update.
      */
-    function UpdateLanguageProfile($profileID, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp)
+    function UpdateLanguageProfile($profileID, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp, $highSchool, $major)
     {
         try
         {
@@ -75,6 +85,8 @@
                     . ' ' . 'SpokenAtHome = :SpokenAtHome'
                     . ', ' . 'JrHighExp' . ' = :' . 'JrHighExp'
                     . ', ' . 'SrHighExp' . ' = :' . 'SrHighExp'
+                    . ', ' . 'HighSchool' . ' = :' . 'HighSchool'
+                    . ', ' . 'Major' . ' = :' . 'Major'
                     . ', ' . 'CollegeExp' . ' = :' . 'CollegeExp' . ' WHERE'
                     . ' ' . LANGUAGEPROFILEID_IDENTIFIER . ' = :' . LANGUAGEPROFILEID_IDENTIFIER . ';';
             
@@ -85,6 +97,8 @@
             $statement->bindValue(':' . 'JrHighExp', $jrHighExp);
             $statement->bindValue(':' . 'SrHighExp', $srHighExp);
             $statement->bindValue(':' . 'CollegeExp', $collegeExp);
+            $statement->bindValue(':' . 'HighSchool', $highSchool);
+            $statement->bindValue(':' . 'Major', $major);
             
             $effectedCount = $statement->execute();
 

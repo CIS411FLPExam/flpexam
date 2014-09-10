@@ -31,7 +31,21 @@
         
         <div class="formSection">
             <label>Home Spoken:</label>
-            <input name="SpokenAtHome" type="checkbox" <?php if($spokenAtHome) { echo('checked'); } ?>>
+            <input name="SpokenAtHome" type="checkbox" <?php if($spokenAtHome) { echo('checked'); } ?> />
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>High School:</label>
+            <input name="HighSchool" type="text" value='<?php echo(htmlspecialchars($highSchool)); ?>' />
+        </div>
+        
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>Major:</label>
+            <input name="Major" type="text" value='<?php echo(htmlspecialchars($major)); ?>' />
         </div>
         
         <div class="divider"></div>
