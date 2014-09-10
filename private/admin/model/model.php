@@ -3,6 +3,297 @@
     //Include the base model file becasue functions from that files will be used here.
     require_once(MODEL_FILE);
     
+    function AddLanguage()
+    {
+        
+    }
+    
+    function UpdateLanguage()
+    {
+        
+    }
+    
+    function DeleteLanguage()
+    {
+        
+    }
+    
+    /**
+     * Gets question from the records.
+     * @param int $questionID The I.D. of the question to get.
+     * @return array The question.
+     */
+    function GetQuestion($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER .';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $question = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            return $question;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Deletes a question and it's answers from the records.
+     * @param int $questionID The I.D. of the question to delete.
+     * @return int The number of questions that were deleted.
+     */
+    function DeleteQuestion($questionID)
+    {
+        try
+        {
+            DeleteQuestionAnswers($questionID);
+            
+            $db = GetDBConnection();
+            
+            $query = 'DELETE FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER , $questionID);
+
+            $questionsDeleted = $statement->execute();
+
+            $statement->closeCursor();
+            
+            return $questionsDeleted;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Updates an existing question.
+     * @param int $questionID The I.D. of the questio nto update.
+     * @param string $name The name of the question.
+     * @param int $level The difficulty of the question.
+     * @param array $answers The question's collection of answers.
+     * @return int The number of questions effected by the update.
+     */
+    function UpdateQuestion($questionID, $name, $level, $answers)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
+                    . ' ' . '`Level`'
+                    . ' = :' . 'Level'
+                    . ', ' . '`Name`'
+                    . ' = :' . 'Name WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . 'Name', $name);
+            $statement->bindValue(':' . 'Level', $level);
+            
+            $effectedCount = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            UpdateQuestionAnswers($questionID, $answers);
+            
+            return $effectedCount;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Adds a question to the record of questions.
+     * @param string $name The question.
+     * @param int $level The questions level.
+     * @param array $answers The answers to the question.
+     * @return int The I.D. of the new question.
+     */
+    function AddQuestion($name, $level, $answers)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'INSERT INTO ' . QUESTIONS_IDENTIFIER
+                    . ' (' . '`Level`'
+                    . ', ' . '`Name`' . ') VALUES'
+                    . ' (:' . 'Level'
+                    . ', :' . 'Name' . ');';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . 'Name', $name);
+            $statement->bindValue(':' . 'Level', $level);
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+            
+            $questionID = $db->lastInsertId();
+            
+            UpdateQuestionAnswers($questionID, $answers);
+            
+            return $questionID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets all possible answers for a question.
+     * @param int $questionID The I.D. of the question.
+     * @return array The collection of answers.
+     */
+    function GetQuestionAnswers($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            //Order by Correct because WE ALWAYS WANT THE CORRECT ANSWER FIRST.
+            $query = 'SELECT * FROM ' . ANSWERS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER
+                    . ' ORDER BY Correct DESC';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $answers = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $answers;
+            
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Removes any existing answers and inserts the given answers for a question.
+     * @param int $questionID The I.D. of the question's answer to change.
+     * @param array $answers The collection of answers.
+     */
+    function UpdateQuestionAnswers($questionID, $answers)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            if(is_array($answers) && count($answers) > 0)
+            {
+                DeleteQuestionAnswers($questionID);
+                
+                //Answer, $answers[0], is the first answer SO IT IS THE CORRECT ANSWER.
+                $answer = $answers[0];
+                
+                //Insert the first answer and set CORRECT = TRUE since it is the correct answer.
+                $query = 'INSER INTO ' . ANSWERS_IDENTIFIER
+                            . '(' . QUESTIONID_IDENTIFIER
+                            . ', ' . 'Correct'
+                            . ', ' . '`Name`' . ') VALUES'
+                            . ' (: ' . QUESTIONID_IDENTIFIER
+                            . ', :' .'Correct'
+                            . ', :' . 'Name' . ');';
+                
+                $statement = $db->prepare($query);
+                $statement->bindValue(':' . QUESTIONID_IDENTIFIER ,$questionID);
+                $statement->bindValue(':' . 'Correct', 'TRUE');
+                $statement->bindValue(':' . 'Name', $answer);
+                
+                $statement->execute();
+                
+                $statement->closeCursor();
+                
+                //Now answer all of the other answers which are inccorect.
+                for($i = 1; $i < count($answers); $i++)
+                {
+                    $answer = $answers[$i];
+                    
+                    $query = 'INSER INTO ' . ANSWERS_IDENTIFIER
+                            . '(' . QUESTIONID_IDENTIFIER
+                            . ', ' . 'Correct'
+                            . ', ' . '`Name`' . ') VALUES'
+                            . ' (: ' . QUESTIONID_IDENTIFIER
+                            . ', :' .'Correct'
+                            . ', :' . 'Name' . ');';
+                
+                    $statement = $db->prepare($query);
+                    $statement->bindValue(':' . QUESTIONID_IDENTIFIER , $questionID);
+                    $statement->bindValue(':' . 'Correct', 'FALSE');
+                    $statement->bindValue(':' . 'Name', $answer);
+
+                    $statement->execute();
+                    
+                    $statement->closeCursor();
+                }
+            }
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Deletes all answers associated with a question.
+     * @param int $questionID The I.D. of the question's answers to delete.
+     * @return int The number of answers that were deleted.
+     */
+    function DeleteQuestionAnswers($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'DELETE FROM ' . ANSWERS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER , $questionID);
+
+            $answersDeleted = $statement->execute();
+
+            $statement->closeCursor();
+            
+            return $answersDeleted;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
     /**
      * Searches all users for the given name.
      * @param string $name The user's first and/or last name.
@@ -10,20 +301,27 @@
      */
     function SearchForUser($name)
     {
-        $db = GetDBConnection();
-        
-        $query = "SELECT * FROM " . USERS_IDENTIFIER . " WHERE"
-                . " MATCH (" . FIRSTNAME_IDENTIFIER 
-                . ", " . LASTNAME_IDENTIFIER. ") AGAINST" 
-                . " (:" . NAME_IDENTIFIER . " IN BOOLEAN MODE);";
-        
-        $statement = $db->prepare($query);
-        $statement->bindValue(':' . NAME_IDENTIFIER, $name);
-        $statement->execute();
-        $results = $statement->fetchAll();
-        $statement->closeCursor();
+        try
+        {
+            $db = GetDBConnection();
 
-        return $results;
+            $query = "SELECT * FROM " . USERS_IDENTIFIER . " WHERE"
+                    . " MATCH (" . FIRSTNAME_IDENTIFIER 
+                    . ", " . LASTNAME_IDENTIFIER. ") AGAINST" 
+                    . " (:" . NAME_IDENTIFIER . " IN BOOLEAN MODE);";
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . NAME_IDENTIFIER, $name);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $statement->closeCursor();
+
+            return $results;
+        }
+        catch(PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**
@@ -146,7 +444,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -217,7 +515,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -327,7 +625,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -358,7 +656,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -476,7 +774,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -529,7 +827,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     

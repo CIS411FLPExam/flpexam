@@ -16,9 +16,34 @@
     define("LANGUAGEID_IDENTIFIER", "LanguageID");
     
     /**
+     * The answer I.D. identifier.
+     */
+    define("ANSWERID_IDENTIFIER", "AnswerID");
+    
+    /**
      * The admin role name.
      */
     define("ADMINROLE_IDENTIFIER", "admin");
+    
+    /**
+     * The recrod of answers identifier.
+     */
+    define("ANSWERS_IDENTIFIER", "answers");
+    
+    /**
+     * The record of questions identifier.
+     */
+    define("QUESTIONS_IDENTIFIER", "questions");
+    
+    /**
+     * The record of language profiles identifier.
+     */
+    define("LANGUAGEPROFILES_IDENTIFIER", "languageprofiles");
+    
+    /**
+     * The record of language experiences identifier.
+     */
+    define("LANGUAGEEXPERIENCES_IDENTIFIER", "languageexperiences");
     
     /**
      * The manager role name.
@@ -39,6 +64,16 @@
      * The record of user roles identifier.
      */
     define("USERROLES_IDENTIFIER", "userroles");
+    
+    /**
+     * The record of languages identifier.
+     */
+    define("LANGUAGES_IDENTIFIER", "languages");
+    
+    /**
+     * The language experience ID identifier.
+     */
+    define("LANGUAGEEXPERIENCEID_IDENTIFIER", 'ExperienceID');
     
     /**
      * The role ID identifier.

@@ -108,6 +108,9 @@
             case PROCESSLANGUAGEADDEDIT_ACTION :
                 ProcessLanguageAddEdit();
                 break;
+            case MANAGEQUESTIONS_ACTION :
+                ManageQuestions();
+                break;
             case QUESTIONADD_ACTION :
                 ProcessQuestionAdd();
                 break;
@@ -127,6 +130,18 @@
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
     }
+    
+    function ManageQuestions()
+    {
+        $language = 'French';
+        
+        $questions = array();
+        $questions[] = array('QuestionID' => '-1', 'Name' => 'How are you?');
+        $questions[] = array('QuestionID' => '-1', 'Name' => 'What are you doing?');
+        
+        include(MANAGEQUESTIONSFORM_FILE);
+    }
+    
     
     function ProcessQuestionAdd()
     {
@@ -213,10 +228,6 @@
         
         $name = "French";
         $active = FALSE;
-        
-        $questions = array();
-        $questions[] = array('QuestionID' => '-1', 'Name' => 'How are you?');
-        $questions[] = array('QuestionID' => '-1', 'Name' => 'What are you doing?');
         
         include(VIEWLANGUAGEFORM_FILE);
     }

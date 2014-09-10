@@ -4,6 +4,101 @@
     require_once(MODEL_FILE);
     
     /**
+     * Adds a new language profile to the records.
+     * @param int $userID The language profile's user's ID.
+     * @param string $language The language that the profile is for.
+     * @param string $spokenAtHome Flag to indicate whether or not the language is spoken at home.
+     * @param string $jrHighExp The amount of junior high experience.
+     * @param string $srHighExp The amount of high school exerpience.
+     * @param string $collegeExp The amount of college experience.
+     * @return int The ID of the newly inserted profile.
+     */
+    function AddLanguageProfile($userID, $language, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp)
+    {
+        try
+        {
+            $db = GetDBConnection( );
+            
+            $query = 'INSERT INTO ' . LANGUAGEPROFILES_IDENTIFIER
+                    .' (' . USERID_IDENTIFIER
+                    . ', ' . '`Language`'
+                    . ', ' . 'SpokenAtHome'
+                    . ', ' . 'JrHighExp'
+                    . ', ' . 'SrHighExp'
+                    . ', ' . 'CollegeExp' . ') Values '
+                    . '(:' . USERID_IDENTIFIER
+                    . ', :' . 'Language'
+                    . ', :' . 'SpokenAtHome'
+                    . ', :' . 'JrHighExp'
+                    . ', :' . 'SrHighExp'
+                    . ', :' . 'CollegeExp' . ');';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . 'Language', $language);
+            $statement->bindValue(':' . 'SpokenAtHome', $spokenAtHome);
+            $statement->bindValue(':' . 'JrHighExp', $jrHighExp);
+            $statement->bindValue(':' . 'SrHighExp', $srHighExp);
+            $statement->bindValue(':' . 'CollegeExp', $collegeExp);
+            
+            $statement->execute();
+
+            $statement->closeCursor();
+            
+            $profileID = $db->lastInsertId();
+            
+            return $profileID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Updates an existing language profile.
+     * @param int $profileID The ID of the profile to update.
+     * @param string $spokenAtHome Flag to indicate whether or not the language is spoken at home.
+     * @param string $jrHighExp The amount of junior high experience.
+     * @param string $srHighExp The amount of high school exerpience.
+     * @param string $collegeExp The amount of college experience.
+     * @return int The number of profiles effected by the update.
+     */
+    function UpdateLanguageProfile($profileID, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp)
+    {
+        try
+        {
+            $db = GetDBConnection( );
+            
+            $query = 'UPDATE ' . LANGUAGEPROFILES_IDENTIFIER . ' SET'
+                    . ' ' . 'SpokenAtHome = :SpokenAtHome'
+                    . ', ' . 'JrHighExp' . ' = :' . 'JrHighExp'
+                    . ', ' . 'SrHighExp' . ' = :' . 'SrHighExp'
+                    . ', ' . 'CollegeExp' . ' = :' . 'CollegeExp' . ' WHERE'
+                    . ' ' . LANGUAGEPROFILEID_IDENTIFIER . ' = :' . LANGUAGEPROFILEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->bindValue(':' . LANGUAGEPROFILEID_IDENTIFIER, $profileID);
+            $statement->bindValue(':' . 'SpokenAtHome', $spokenAtHome);
+            $statement->bindValue(':' . 'JrHighExp', $jrHighExp);
+            $statement->bindValue(':' . 'SrHighExp', $srHighExp);
+            $statement->bindValue(':' . 'CollegeExp', $collegeExp);
+            
+            $effectedCount = $statement->execute();
+
+            $statement->closeCursor();
+            
+            return $effectedCount;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Adds a user account to the records.
      * @param string $firstName The first name of the user.
      * @param string $lastName The last name of the user.
@@ -50,7 +145,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -85,7 +180,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -274,7 +369,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
         
         return $exists;

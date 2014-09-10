@@ -366,6 +366,11 @@
     define("VIEWLANGUAGEFORM_FILE", ADMINVIEW_DIR . "view-language-form.php");
     
     /**
+     * The file path of the manage languages form file.
+     */
+    define("MANAGEQUESTIONSFORM_FILE", ADMINVIEW_DIR . "manage-questions-form.php");
+    
+    /**
      * The file path of the view question form file.
      */
     define("VIEWQUESTIONFORM_FILE", ADMINVIEW_DIR . "view-question-form.php");

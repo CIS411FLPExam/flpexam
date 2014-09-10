@@ -74,9 +74,6 @@
             case PROCESSLANGUAGEPROFILEADDEDIT_ACTION :
                 ProcessLanguageProfileAddEdit();
                 break;
-            case LANGUAGEPROFILEDELETE_ACTION :
-                ProcessLanguageProfileDelete();
-                break;
             case LANGUAGEPROFILEVIEW_ACTION :
                 ProcessLanguageProfileView();
                 break;
@@ -97,11 +94,6 @@
         $collegeExp = "4+ years";
         
         include(VIEWLANGUAGEPROFILEFORM_FILE);
-    }
-    
-    function ProcessLanguageProfileDelete()
-    {
-        
     }
     
     function ProcessLanguageProfileAddEdit()

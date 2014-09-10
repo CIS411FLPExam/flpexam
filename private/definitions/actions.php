@@ -78,11 +78,6 @@
     define("LANGUAGEPROFILEVIEW_ACTION", "LanguageProfileView");
     
     /**
-     * The action word for a user to use to delete a language profile.
-     */
-    define("LANGUAGEPROFILEDELETE_ACTION", "LanguageProfileDelete");
-    
-    /**
      * The action word to use to process a user profile add or edit.
      */
     define("PROCESSLANGUAGEPROFILEADDEDIT_ACTION", "ProcessLanguageProfileAddEdit");
@@ -212,7 +207,12 @@
     define("PROCESSLANGUAGEADDEDIT_ACTION", "ProcessLanguageAddEdit");
     
     /**
-     * The action word to use to add a questoin.
+     * The action word to use to manage questions.
+     */
+    define("MANAGEQUESTIONS_ACTION", "ManageQuestions");
+    
+    /**
+     * The action word to use to add a question.
      */
     define("QUESTIONADD_ACTION", "QuestionAdd");
     

@@ -14,13 +14,17 @@
     <div class="formGroup">
         <div class="formSection">
             <label>Language:</label>
-            <select name="Language" class="formInput">
-                <?php foreach ($availableLanguages as $availableLanguage) { ?>
-                <option <?php if($language == $availableLanguage) { echo("selected='selected'"); } ?>>
-                    <?php echo(htmlspecialchars($availableLanguage)); ?>
-                </option>
-                <?php } ?>
-            </select>
+            <?php if (isset($profileID)) { ?>
+                <label><?php echo(htmlspecialchars($language)); ?></label>
+            <?php } else {?>
+                <select name="Language" class="formInput">
+                    <?php foreach ($availableLanguages as $availableLanguage) { ?>
+                    <option <?php if($language == $availableLanguage) { echo("selected='selected'"); } ?>>
+                        <?php echo(htmlspecialchars($availableLanguage)); ?>
+                    </option>
+                    <?php } ?>
+                </select>
+            <?php } ?>
         </div>
         
         <div class="divider"></div>

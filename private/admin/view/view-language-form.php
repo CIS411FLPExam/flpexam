@@ -1,103 +1,32 @@
 <?php
     include( HEADER_FILE );
 ?>
-
+ <!-- Start main content here -->
+ 
 <div class="formGroup">
     <h1>Language</h1>
-
-    <!-- Start main content here -->
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(htmlspecialchars(LANGUAGEID_IDENTIFIER)); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
-        <div class="formGroup">
-            <div class="formSection">
-                <label>Name:</label>
-                <label><?php echo(htmlspecialchars($name)); ?></label>
-            </div>
-
-            <div class="divider"></div>
-
-            <div class="formSection">
-                <label>Active:</label><label><?php if ($active) { echo('Yes'); } else { echo ('No'); } ?></label>
-            </div>
-
-            <div class="divider"></div>
-
+    <div class="formGroup">
+        <div class="formSection">
+            <label>Name:</label>
+            <label><?php echo(htmlspecialchars($name)); ?></label>
         </div>
-    </form>
 
-    <h3>Questions</h3>
+        <div class="divider"></div>
 
-    <?php
-        $userCanAdd = userIsAuthorized(QUESTIONADD_ACTION);
-        $userCanEdit = userIsAuthorized(QUESTIONEDIT_ACTION);
-        $userCanView = userIsAuthorized(QUESTIONVIEW_ACTION);
-        $userCanDelete = userIsAuthorized(QUESTIONDELETE_ACTION);
-    ?>
-
-    <?php if($userCanAdd) { ?>
-        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
-            <input type="submit" value="Add Question" />
-        </form>
-
-        <br />
+        <div class="formSection">
+            <label>Active:</label><label><?php if ($active) { echo('Yes'); } else { echo ('No'); } ?></label>
+        </div>
+    </div>
+    <?php if (userIsAuthorized(LANGUAGEEDIT_ACTION)) {?>
+        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . '=' .htmlspecialchars($languageID))); ?>">
+            Edit
+        </a> &nbsp;
     <?php } ?>
-
-    <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONDELETE_ACTION ) ); ?>" method="post">
-        <div class="datatable">
-            <table id="questions" class="tablesorter">
-                <thead>
-                    <tr>
-                        <th><b>Question</b></th>
-                        <?php if ($userCanView) { ?><th></th><?php } ?>
-                        <?php if ($userCanEdit) { ?><th></th><?php } ?>
-                        <?php if ($userCanDelete) { ?><th></th><?php } ?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        $j = 0;
-                        foreach ($questions as $question)
-                        {
-                            $questionID = $question[QUESTIONID_IDENTIFIER];
-                            $questionName = $question[NAME_IDENTIFIER];
-                    ?>
-
-                    <tr class="row1">
-                        <td><?php echo(htmlspecialchars($questionName)); ?></td>
-
-                        <?php if ($userCanView) { ?>
-                            <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urldecode($questionID))) ?>">
-                                    View
-                                </a>
-                            </td>
-                        <?php } ?>
-                        <?php if ($userCanEdit) { ?>
-                            <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urldecode($questionID))) ?>">
-                                    Edit
-                                </a>
-                            </td>
-                        <?php } ?>
-                        <?php if ($userCanDelete) { ?>
-                            <td class="centerText">
-                                <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
-                            </td>
-                        <?php } ?>
-                    </tr>
-                    <?php
-                            ++$j;
-                        }
-                    ?>
-                </tbody>
-            </table>
-        </div>
-        <input type="hidden" name="numListed" value="<?php echo count($results); ?>" />
-        <?php if ($userCanDelete) { ?>
-                <br />
-                <input type="submit" value="Delete Selected" />
-        <?php } ?>
-    </form>
+    <?php if (userIsAuthorized(MANAGEQUESTIONS_ACTION)) {?>
+        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>">
+            Manage Questions
+        </a>
+    <?php } ?>
 </div>
 <!-- End main content here -->
 <?php

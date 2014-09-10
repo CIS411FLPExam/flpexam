@@ -30,6 +30,16 @@
     <input type="submit" value="Submit" />
 </form>
     
+<div class="formGroup">
+    <div class="formSection">
+        <?php if (userIsAuthorized(MANAGEQUESTIONS_ACTION)) {?>
+            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>">
+                Manage Questions
+            </a>
+        <?php } ?>
+    </div>
+</div>
+    
 <!-- End main content here -->
 <?php
     include( FOOTER_FILE ); 

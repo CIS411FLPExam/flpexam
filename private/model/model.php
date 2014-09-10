@@ -21,9 +21,8 @@
         }
         catch ( PDOException $e )
         {
-            $message = $e->getMessage( );
-            displayError($message);
-            die;
+            LogError($e);
+            die();
         }
         
         return $db;            
@@ -38,16 +37,6 @@
         {
             session_start( );
         }
-    }
-    
-    function GetAllLanguages()
-    {
-        
-    }
-    
-    function GetAllActiveLanguages()
-    {
-        
     }
     
     /**
@@ -128,7 +117,7 @@
             }
             catch (PDOException $e)
             {
-                displayError($e->getMessage());
+                LogError($e);
             }
         }
         
@@ -182,7 +171,7 @@
             }
             catch (PDOException $e)
             {
-                displayError($e->getMessage());
+                LogError($e);
             }
         }
 
@@ -241,7 +230,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($e->getMessage());
+            LogError($e);
         }
 
         return $authorized;
@@ -291,7 +280,7 @@
         }
         catch (PDOException $e)
         {
-            displayError($query . "\n" . $e->getMessage());
+            LogError($e);
         }
     }
 
@@ -358,5 +347,225 @@
         include(MESSAGEFORM_FILE);
         
         exit();
+    }
+    
+    /**
+     * Logs a database error.
+     * @param PDOException $error The sql error.
+     */
+    function LogError($error)
+    {
+        displayError($error->getMessage());
+    }
+    
+    /**
+     * Gets a language from the record of languages.
+     * @param int $langaugeID The ID of the language to get.
+     * @return array The language.
+     */
+    function GetLanguage($langaugeID)
+    {
+        try
+        {
+            $db = GetDBConnection( );
+            
+            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $langaugeID);
+            
+            $statement->execute();
+            
+            $language = $statement->fetch();
+            
+            return $language;
+        } 
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets all active languages on record.
+     * @return array The collection of all active languages.
+     */
+    function GetAllActiveLanguages()
+    {
+        try
+        {
+            $db = GetDBConnection( );
+            
+            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
+                    . ' Active = TRUE;';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $languages = $statement->fetchAll();
+            
+            return $languages;
+        } 
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets all languages on record.
+     * @return array The collection of all languages.
+     */
+    function GetAllLanguages()
+    {
+        try
+        {
+            $db = GetDBConnection( );
+            
+            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $languages = $statement->fetchAll();
+            
+            return $languages;
+        } 
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets language experience.
+     * @param int $experienceID The ID of the language experience.
+     * @return array The language experience.
+     */
+    function GetLanguageExperience($experienceID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+        
+            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER 
+                    . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER  . ';';
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experienceID);
+            
+            $statement->execute();
+            
+            $experiences = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            return $experiences;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the collection of all language experiences on record.
+     * @return array The collection of all language experiences.
+     */
+    function GetAllLanguageExperiences()
+    {
+        try
+        {
+            $db = GetDBConnection();
+        
+            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ';';
+
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $experiences = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $experiences;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the language profile of a specific user.
+     * @param int $userID The ID of the user.
+     * @param int $profileID The ID of the profile.
+     * @return array The profile.
+     */
+    function GetLanguageProfile($userID, $profileID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+        
+            $query = 'SELECT * FROM ' . LANGUAGEPROFILES_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER 
+                    . ' = :' . USERID_IDENTIFIER . ' AND'
+                    . ' ' . LANGUAGEPROFILEID_IDENTIFIER
+                    . ' = :'. LANGUAGEPROFILEID_IDENTIFIER;
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . LANGUAGEPROFILEID_IDENTIFIER, $profileID);
+
+            $statement->execute();
+            
+            $languageProfile = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            return $languageProfile;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets and returns the collection of language profiles on record.
+     * @param int $userID The ID of the user whose profiles to get.
+     * @return array The collection of language profiles.
+     */
+    function GetLanguageProfiles($userID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+        
+            $query = 'SELECT * FROM ' . LANGUAGEPROFILES_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER 
+                    . ' = :'. USERID_IDENTIFIER;
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+
+            $statement->execute();
+            
+            $languageProfiles = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $languageProfiles;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
 ?>
