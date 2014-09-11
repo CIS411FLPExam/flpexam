@@ -42,18 +42,6 @@ class User
     private $email;
 
     /**
-     * The major of the user.
-     * @var string 
-     */
-    private $major;
-
-    /**
-     * The high school the user went to.
-     * @var string the name of the high school
-     */
-    private $highSchool;
-
-    /**
      * Gets the user's I.D.
      * @return int The I.D.
      */
@@ -162,42 +150,6 @@ class User
     }
 
     /**
-     * Gets the name of the user's major.
-     * @return string The name of the major.
-     */
-    public function GetMajor()
-    {
-        return $this->major;
-    }
-
-    /**
-     * Sets the name of the user's major.
-     * @param string $major The name of the major.
-     */
-    public function SetMajor($major)
-    {
-        $this->major = $major;
-    }
-
-    /**
-     * Gets the name of the user's high school.
-     * @return string The name of the high school.
-     */
-    public function GetHighSchool()
-    {
-        return $this->highSchool;
-    }
-
-    /**
-     * Sets the name of the user's high school.
-     * @param string $highSchool The name of the high school.
-     */
-    public function SetHighSchool($highSchool)
-    {
-        $this->highSchool = $highSchool;
-    }
-
-    /**
      * Creates an instance of a user.
      * @param int $id The I.D. of the user.
      * @param string $firstName The user's first name.
@@ -205,10 +157,8 @@ class User
      * @param string $userName The user's user name.
      * @param string $password The user's password.
      * @param string $email The user's email.
-     * @param string $major The user's major.
-     * @param string $highSchool The user's high school.
      */
-    public function User($id = 0, $firstName = '', $lastName = '', $userName = '', $password = '', $email = '', $major = '', $highSchool = '')
+    public function User($id = 0, $firstName = '', $lastName = '', $userName = '', $password = '', $email = '')
     {
         $this->SetID($id);
         $this->SetFirstName($firstName);
@@ -216,8 +166,43 @@ class User
         $this->SetUserName($userName);
         $this->SetPassword($password);
         $this->SetEmail($email);
-        $this->SetMajor($major);
-        $this->SetHighSchool($highSchool);
+    }
+    
+    /**
+     * The user record.
+     * @param array $record The collection of user attributes.
+     */
+    public function Initialize($record)
+    {
+        $userIdIndex = $this->GetUserNameIndex();
+        $firstNameIndex = $this->GetFirstNameIndex();
+        $lastNameIndex = $this->GetLastNameIndex();
+        $userNameIndex = $this->GetUserNameIndex();
+        $passwordIndex = $this->GetPasswordIndex();
+        $emailIndex = $this->GetEmailIndex();
+        
+        $userID = $record[$userIdIndex];
+        $firstName = $record[$firstNameIndex];
+        $lastName = $record[$lastNameIndex];
+        $userName = $record[$userNameIndex];
+        $password = $record[$passwordIndex];
+        $email = $record[$emailIndex];
+        
+        $this->SetID($userID);
+        $this->SetFirstName($firstName);
+        $this->SetLastName($lastName);
+        $this->SetUserName($userName);
+        $this->SetPassword($password);
+        $this->SetEmail($email);
+    }
+    
+    /**
+     * Gets the name of the table user's are stored on.
+     * @return string The table name.
+     */
+    public function GetTableName()
+    {
+        return 'users';
     }
     
     /**
@@ -253,7 +238,7 @@ class User
      */
     public function GetUserNameIndex()
     {
-            return 'UserName';
+        return 'UserName';
     }
 
     /**
@@ -272,24 +257,6 @@ class User
     public function GetEmailIndex()
     {
         return 'Email';
-    }
-    
-    /**
-     * Gets the major identifier.
-     * @return string The major identifier.
-     */
-    public function GetMajorIndex()
-    {
-        return 'Major';
-    }
-    
-    /**
-     * Gets the high school identifier.
-     * @return string The high school identifier.
-     */
-    public function GetHighSchoolIndex()
-    {
-        return 'HighSchool';
     }
 }
 ?>

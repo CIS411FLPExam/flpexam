@@ -576,47 +576,14 @@
     /**
      * Updates a user's account information.
      * @param int $userID The user ID of the user account to update.
-     * @param string $firstName The new first name of the user.
-     * @param string $lastName The new last name of the user.
-     * @param string $userName The new user name that the user will use with the site.
-     * @param string $password The new password that the user will use for authentication.
-     * @param string $email The new e-mail address of the user.
      * @param array $hasAttributes The new collection of role ID's that the user will have.
      */
-    function updateUser($userID, $firstName, $lastName, $userName, $password, $email, $hasAttributes)
+    function updateUser($userID, $hasAttributes)
     {
         try
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE users SET FirstName = :FirstName,
-                                       LastName = :LastName,
-                                       UserName = :UserName,
-                                       Email = :Email
-                                   WHERE UserID = :UserID';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':UserID', $userID);
-            $statement->bindValue(':FirstName', $firstName);
-            $statement->bindValue(':LastName', $lastName);
-            $statement->bindValue(':UserName', $userName);
-            $statement->bindValue(':Email', $email);
-            
-            $row_count = $statement->execute();
-
-            if (!empty($password))
-            {    // Only change password if one is provided
-                $query = 'UPDATE users SET Password = :Password
-                                       WHERE UserID = :UserID';
-                
-                $statement = $db->prepare($query);
-                
-                $statement->bindValue(':Password',  sha1($password));
-                $statement->bindValue(':UserID', $userID);
-                
-                $success = $statement->execute();
-            }
-
             // Now we must remove all old Roles and add in the new ones.
             $query = "DELETE FROM userroles WHERE UserID = :UserID";
             $statement = $db->prepare($query);
