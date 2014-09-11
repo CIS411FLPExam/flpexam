@@ -85,13 +85,36 @@
     
     function ProcessLanguageProfileView()
     {
-        $profileID = '-1';
+        /*
+        if(!loggedIn())
+        {   //Then we don't want to show a guest anyones user infmormation.
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        else
+        {   //A user is trying to view their own information.
+            $userID = $_SESSION[USERID_IDENTIFIER];
+        }
         
-        $language = 'Spanish';
+        $profileID = $_GET[LANGUAGEPROFILEID_IDENTIFIER];
+        
+        $profile = GetLanguageProfile($userID, $profileID);
+        
+        $language = $profile['Language'];
+        $spokenAtHome = $profile['SpokenAtHome'];
+        $jrHighExp = $profile['JrHighExp'];
+        $srHighExp = $profile['SrHighExp'];
+        $collegeExp = $profile['CollegeExp'];
+        $major = $profile['Major'];
+        $highSchool = $profile['HighSchool'];
+        */
+        
+        $profileID = -1;
+        
+        $language = 'French';
         $spokenAtHome = TRUE;
-        $jrHighExp = "None";
-        $srHighExp = "1 - 2 years";
-        $collegeExp = "4+ years";
+        $jrHighExp = '1 - 2 Years';
+        $srHighExp = '3 - 4 Years';
+        $collegeExp = 'None';
         $major = 'English';
         $highSchool = 'Clarion';
         
@@ -150,7 +173,7 @@
         $availableLanguages = array('Spanish', 'French');
         $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
         
-        $language = $availableLanguages[0];
+        $language = $availableLanguages[1];
         $spokenAtHome = FALSE;
         $jrHighExp = $experiences[1];
         $srHighExp = $experiences[2];

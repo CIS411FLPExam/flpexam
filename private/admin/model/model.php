@@ -3,19 +3,144 @@
     //Include the base model file becasue functions from that files will be used here.
     require_once(MODEL_FILE);
     
-    function AddLanguage()
+    /**
+     * Activates a language.
+     * @param int $languageID The I.D. of the language to Activate.
+     */
+    function ActivateLanguage($languageID)
     {
-        
+        SetLanguageState($languageID, 'TRUE');
     }
     
-    function UpdateLanguage()
+    /**
+     * Deactivates a language.
+     * @param int $languageID The I.D. of the language to deactivate.
+     */
+    function DeactivateLanguage($languageID)
     {
-        
+        SetLanguageState($languageID, 'FALSE');
     }
     
-    function DeleteLanguage()
+    /**
+     * Sets a languages state to either TRUE or FALSE.
+     * @param int $languageID The I.D. of the language to activate/deactivate.
+     * @param int $active The flag that indicates whether the language should be active or deactive.
+     * @return int The number of languages that were activated/deactivated
+     */
+    function SetLanguageState($languageID, $active)
     {
-        
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' SET'
+                    . ' ' . 'Active'
+                    . ' = :' . 'Active WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . 'Active', $active);
+            
+            $effectedCount = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $effectedCount;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Adds a language to the records.
+     * @param string $name The name of the new language.
+     * @return int The I.D. of the new language.
+     */
+    function AddLanguage($name)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'INSERT INTO ' . LANGUAGES_IDENTIFIER
+                    . ' (' . '`Name`' . ') VALUES'
+                    . '(:' . 'Name' . ');';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . 'Name', $name);
+            
+            $statement->execute();
+            
+            $languageID = $db->lastInsertId();
+            
+            $statement->closeCursor();
+            
+            return $languageID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Updates an existing language.
+     * @param int $languageID The I.D. of the language to udpate.
+     * @param string $name The new name of the language.
+     * @param boolean $active Flag indicating whether or not the language is active.
+     * @return int The number of languages updated.
+     */
+    function UpdateLanguage($languageID, $name, $active)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' SET'
+                    . ' ' . '`Name`'
+                    . ' = :' . 'Name'
+                    . ', ' . 'Active'
+                    . ' = :' . 'Active WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . 'Name', $name);
+            $statement->bindValue(':' . 'Active', $active);
+            
+            $effectedCount = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $effectedCount;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex); 
+        }
+    }
+    
+    /**
+     * Deletes a language from the records.
+     * @param int $languageID The I.D. of the language to delete.
+     */
+    function DeleteLanguage($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            
+        }
+        catch(PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**
