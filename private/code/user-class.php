@@ -10,19 +10,19 @@ class User
      * @var int 
      */
     private $id;
-    
+
     /**
      * The user's first name.
      * @var string 
      */
     private $firstName;
-    
+
     /**
      * The user's last name.
      * @var string 
      */
     private $lastName;
-    
+
     /**
      * The user's user name.
      * @var string 
@@ -30,23 +30,29 @@ class User
     private $userName;
     
     /**
+     * The user's password.
+     * @var string 
+     */
+    private $password;
+
+    /**
      * The user's email.
      * @var string
      */
     private $email;
-    
+
     /**
      * The major of the user.
      * @var string 
      */
     private $major;
-    
+
     /**
      * The high school the user went to.
      * @var string the name of the high school
      */
     private $highSchool;
-    
+
     /**
      * Gets the user's I.D.
      * @return int The I.D.
@@ -55,7 +61,7 @@ class User
     {
         return $this->id;
     }
-    
+
     /**
      * Set's the user's I.D.
      * @param int $id The I.D.
@@ -64,7 +70,7 @@ class User
     {
         $this->id = $id;
     }
-    
+
     /**
      * Gets the user's first name.
      * @return string The first name.
@@ -73,7 +79,7 @@ class User
     {
         return $this->firstName;
     }
-    
+
     /**
      * Sets the user's first name.
      * @param string $firstName The first name.
@@ -82,7 +88,7 @@ class User
     {
         $this->firstName = $firstName;
     }
-    
+
     /**
      * Gets the user's last name.
      * @return string The last name.
@@ -91,7 +97,7 @@ class User
     {
         return $this->lastName;
     }
-    
+
     /**
      * Sets the user's last name.
      * @param string $lastName The last name.
@@ -100,7 +106,7 @@ class User
     {
         $this->lastName = $lastName;
     }
-    
+
     /**
      * Gets the user's user name.
      * @return string The user name.
@@ -109,7 +115,7 @@ class User
     {
         return $this->userName;
     }
-    
+
     /**
      * Sets the user's user name.
      * @param string $userName The user name.
@@ -120,6 +126,24 @@ class User
     }
     
     /**
+     * Gets the user's password.
+     * @return string The password.
+     */
+    public function GetPassword()
+    {
+        return $this->password;
+    }
+    
+    /**
+     * Sets the user's password
+     * @param string $password The password.
+     */
+    public function SetPassword($password)
+    {
+        $this->password = $password;
+    }
+    
+    /**
      * Gets the user's email.
      * @return string The email.
      */
@@ -127,7 +151,7 @@ class User
     {
         return $this->email;
     }
-    
+
     /**
      * Sets the user's email.
      * @param string $email The email.
@@ -136,7 +160,7 @@ class User
     {
         $this->email = $email;
     }
-    
+
     /**
      * Gets the name of the user's major.
      * @return string The name of the major.
@@ -145,7 +169,7 @@ class User
     {
         return $this->major;
     }
-    
+
     /**
      * Sets the name of the user's major.
      * @param string $major The name of the major.
@@ -154,7 +178,7 @@ class User
     {
         $this->major = $major;
     }
-    
+
     /**
      * Gets the name of the user's high school.
      * @return string The name of the high school.
@@ -163,7 +187,7 @@ class User
     {
         return $this->highSchool;
     }
-    
+
     /**
      * Sets the name of the user's high school.
      * @param string $highSchool The name of the high school.
@@ -172,27 +196,100 @@ class User
     {
         $this->highSchool = $highSchool;
     }
-    
+
     /**
      * Creates an instance of a user.
      * @param int $id The I.D. of the user.
      * @param string $firstName The user's first name.
      * @param string $lastName The user's last name.
      * @param string $userName The user's user name.
+     * @param string $password The user's password.
      * @param string $email The user's email.
      * @param string $major The user's major.
      * @param string $highSchool The user's high school.
      */
-    public function User($id = 0, $firstName = '', $lastName = '', $userName = '', $email = '', $major = '', $highSchool = '')
+    public function User($id = 0, $firstName = '', $lastName = '', $userName = '', $password = '', $email = '', $major = '', $highSchool = '')
     {
         $this->SetID($id);
         $this->SetFirstName($firstName);
         $this->SetLastName($lastName);
         $this->SetUserName($userName);
+        $this->SetPassword($password);
         $this->SetEmail($email);
         $this->SetMajor($major);
         $this->SetHighSchool($highSchool);
     }
-}
+    
+    /**
+     * Gets the user I.D. identifier.
+     * @return string The I.D. identifier.
+     */
+    public function GetIdIndex()
+    {
+        return 'UserID';
+    }
 
+    /**
+     * Gets the first name identifier.
+     * @return string The first name identifier.
+     */
+    public function GetFirstNameIndex()
+    {
+        return 'FirstName';
+    }
+
+    /**
+     * Gets the last name identifier.
+     * @return string The last name identifier.
+     */
+    public function GetLastNameIndex()
+    {
+        return 'LastName';
+    }
+
+    /**
+     * Gets the user name identifier.
+     * @return string The user name identifier.
+     */
+    public function GetUserNameIndex()
+    {
+            return 'UserName';
+    }
+
+    /**
+     * Gets the password identifier.
+     * @return string The password identifier.
+     */
+    public function GetPasswordIndex()
+    {
+        return 'Password';
+    }
+    
+    /**
+     * Gets the email identifier.
+     * @return string The email identifier.
+     */
+    public function GetEmailIndex()
+    {
+        return 'Email';
+    }
+    
+    /**
+     * Gets the major identifier.
+     * @return string The major identifier.
+     */
+    public function GetMajorIndex()
+    {
+        return 'Major';
+    }
+    
+    /**
+     * Gets the high school identifier.
+     * @return string The high school identifier.
+     */
+    public function GetHighSchoolIndex()
+    {
+        return 'HighSchool';
+    }
+}
 ?>
