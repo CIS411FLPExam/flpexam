@@ -360,83 +360,31 @@
     }
     function ProcessUserAddEdit()
     {
-        $message = "";
-        $collection = array();
-        
-        if (empty($_POST[FIRSTNAME_IDENTIFIER]))
+        if(!empty($_POST[USERID_IDENTIFIER]))
         {
-            $message = "Errors";
-            $collection[] = "Error, field \"First Name\" is blank.";
-        }
-        
-        if (empty($_POST[LASTNAME_IDENTIFIER]))
-        {
-            $message = "Errors";
-            $collection[] = "Error, field \"Last Name\" is blank.";
-        }
-        
-        if (empty($_POST[USERNAME_IDENTIFIER]))
-        {
-            $message = "Errors";
-            $collection[] = "Error, field \"User Name\" is blank.";
-        }
-        
-        if (empty($_POST[EMAIL_IDENTIFIER]))
-        {
-            $message = "Errors";
-            $collection[] = "Error, field \"Email\" is blank.";
-        }
-        
-        if ($message == "")
-        {
-            if(!empty($_POST[USERID_IDENTIFIER]))
-            {
-                $UserID = $_POST[USERID_IDENTIFIER];
-            }
-            $firstName = $_POST[FIRSTNAME_IDENTIFIER];
-            $lastName = $_POST[LASTNAME_IDENTIFIER];
-            $userName = $_POST[USERNAME_IDENTIFIER];
-            $password = $_POST[PASSWORD_IDENTIFIER];
-            $email = $_POST[EMAIL_IDENTIFIER];
-            
-            if (empty($UserID))
-            {   // No UserID means we are processing an ADD
-                if(userIsAuthorized(USERADD_ACTION))
-                {
-                    $UserID = addUser($firstName, $lastName, $userName, $password, $email);
-                }
-                else
-                {
-                    include(NOTAUTHORIZED_FILE);
-                }
-            }
-            else
-            {
-                if(userIsAuthorized(USEREDIT_ACTION))
-                {
-                    $hasAttributes = array();
-                    
-                    if(!empty($_POST["hasAttributes"]))
-                    {
-                        $hasAttributes = $_POST["hasAttributes"];
-                    }
-                    
-                    updateUser($UserID, $firstName, $lastName, $userName, $password, $email, $hasAttributes);
-                }
-                else
-                {
-                    include(NOTAUTHORIZED_FILE);
-                }
-            }
-            
-            $results = getAllUsers();
-            
-            include(MANAGEUSERSFORM_FILE);
-            
+            $UserID = $_POST[USERID_IDENTIFIER];
         }
         else
         {
-            displayErrors($message, $collection);
+            displayError('User ID could not be resolved.');
+        }
+        
+        if(userIsAuthorized(USEREDIT_ACTION))
+        {
+            $hasAttributes = array();
+
+            if(!empty($_POST["hasAttributes"]))
+            {
+                $hasAttributes = $_POST["hasAttributes"];
+            }
+            
+            updateUser($UserID, $hasAttributes);
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($UserID)));
+        }
+        else
+        {
+            include(NOTAUTHORIZED_FILE);
         }
     }
 

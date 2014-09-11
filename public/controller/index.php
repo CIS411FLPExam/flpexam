@@ -268,7 +268,7 @@
         {
             $user = getUser($userID);
         
-            $firstName = $user[FIRSTNAME_IDENTIFIER];
+            $firstName = $user->Get;
             $lastName = $user[LASTNAME_IDENTIFIER];
             $userName = $user[USERNAME_IDENTIFIER];
             $email = $user[EMAIL_IDENTIFIER];
