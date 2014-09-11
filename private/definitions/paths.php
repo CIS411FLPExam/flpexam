@@ -237,17 +237,17 @@
     define("LOGINFORM_FILE", MAINVIEW_DIR . "login-form.php");
     
     /**
-     * The file path of the add edit self file.
+     * The file path of the add edit self form file.
      */
-    define("ADDEDITSELFFORM_FILE", MAINVIEW_DIR . "add-edit-self.php");
+    define("ADDEDITSELFFORM_FILE", MAINVIEW_DIR . "add-edit-self-form.php");
     
     /**
-     * The file path of the view self file.
+     * The file path of the view self form file.
      */
-    define("VIEWSELFFORM_FILE", MAINVIEW_DIR . "view-self.php");
+    define("VIEWSELFFORM_FILE", MAINVIEW_DIR . "view-self-form.php");
     
     /**
-     * The file path of the change password file.
+     * The file path of the change password form file.
      */
     define("CHANGEPASSWORDFORM_FILE", MAINVIEW_DIR . "change-password-form.php");
     /**
@@ -256,14 +256,24 @@
     
     define("MANAGELANGUAGEPROFILESFORM_FILE", MAINVIEW_DIR . "manage-languageprofiles-form.php");
     /**
-     * The file path of the add edit language profile file.
+     * The file path of the add edit language profile form file.
      */
-    define("ADDEDITLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "add-edit-languageprofile.php");
+    define("ADDEDITLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "add-edit-languageprofile-form.php");
     
     /**
      * The file path of the view language profile form file.
      */
     define("VIEWLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "view-languageprofile-form.php");
+    
+    /**
+     * The file path of the add edit profile form file.
+     */
+    define("ADDEDITPROFILEFORM_FIE", MAINVIEW_DIR . "add-edit-profile-form.php");
+    
+    /**
+     * The file path of the view form file.
+     */
+    define("VIEWPROFILEFORM_FILE", MAINVIEW_DIR . "view-profile-form.php");
     
 //Admin paths.
 /******************************************************************************/

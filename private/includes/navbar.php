@@ -5,7 +5,8 @@
         <?php if (loggedIn()) {  ?>
             <li class='active has-sub'><a href='#'><span>Account</span></a>
                 <ul>
-                    <li><a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, SELFVIEW_ACTION)) ?>"><span>Information</span></a></li>
+                    <li><a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, SELFVIEW_ACTION)) ?>"><span>Info</span></a></li>
+                    <li><a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, PROFILEVIEW_ACTION)) ?>"><span>Profile</span></a></li>
                     <li class='last'><a href='<?php echo(GetControllerScript(MAINCONTROLLER_FILE, MANAGELANGUAGEPROFILES_ACTION)); ?>'><span>Language Profiles</span></a></li>
                 </ul>
             </li>

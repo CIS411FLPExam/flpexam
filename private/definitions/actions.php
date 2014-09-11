@@ -87,6 +87,26 @@
      */
     define("MANAGELANGUAGEPROFILES_ACTION", "ManageLanguageProfiles");
     
+    /**
+     * The action word to use to add a user profile.
+     */
+    define("PROFILEADD_ACTION", "ProfileAdd");
+    
+    /**
+     * The action word to use to edit a user profile.
+     */
+    define("PROFILEEDIT_ACTION", "ProfileEdit");
+    
+    /**
+     * The action word to use to view a user profile.
+     */
+    define("PROFILEVIEW_ACTION", "ProfileView");
+    
+    /**
+     * The action word to use to process an add/edit profile.
+     */
+    define("PROCESSPROFILEADDEDIT_ACTION", "ProcessProfileAddEdit");
+    
     
 //Actions available through the admin controller.
 /******************************************************************************/

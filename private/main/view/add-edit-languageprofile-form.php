@@ -37,20 +37,6 @@
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>High School:</label>
-            <input name="HighSchool" type="text" value='<?php echo(htmlspecialchars($highSchool)); ?>' />
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
-            <label>Major:</label>
-            <input name="Major" type="text" value='<?php echo(htmlspecialchars($major)); ?>' />
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
             <label>Jr High Experience:</label>
             <select name="JrHighExp" class="formInput">
                 <?php foreach ($experiences as $experience) { ?>

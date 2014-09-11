@@ -1,6 +1,11 @@
 <?php
     
     /**
+     * The record of profiles identifier.
+     */
+    define("PROFILES_IDENTIFIER", 'profiles');
+
+    /**
      * The question I.D. identifier.
      */
     define("QUESTIONID_IDENTIFIER", "QuestionID");
@@ -26,7 +31,7 @@
     define("ADMINROLE_IDENTIFIER", "admin");
     
     /**
-     * The recrod of answers identifier.
+     * The record of answers identifier.
      */
     define("ANSWERS_IDENTIFIER", "answers");
     

@@ -605,4 +605,36 @@
             LogError($ex);
         }
     }
+    
+    /**
+     * Gets a user's profile.
+     * @param int $userID The I.D. of the user's profile to get.
+     * @return array The profile record.
+     */
+    function GetProfile($userID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM `' . PROFILES_IDENTIFIER . '` WHERE'
+                    . ' ' . USERID_IDENTIFIER
+                    . ' = :' . USERID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            
+            $statement->execute();
+            
+            $profile = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            return $profile;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
 ?>

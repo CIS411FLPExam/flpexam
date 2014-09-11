@@ -77,10 +77,38 @@
             case LANGUAGEPROFILEVIEW_ACTION :
                 ProcessLanguageProfileView();
                 break;
+            case PROFILEADD_ACTION :
+                break;
+            case PROFILEEDIT_ACTION :
+                break;
+            case PROFILEVIEW_ACTION :
+                break;
+            case PROCESSPROFILEADDEDIT_ACTION:
+                break;
             default :
                 include(HOME_FILE);
                 break;
         }
+    }
+    
+    function ProcessProfileAdd()
+    {
+        
+    }
+    
+    function ProcessProfileEdit()
+    {
+        
+    }
+    
+    function ProcessProfileView()
+    {
+        
+    }
+    
+    function ProcessProfileAddEdit()
+    {
+        
     }
     
     function ProcessLanguageProfileView()
@@ -104,8 +132,6 @@
         $jrHighExp = $profile['JrHighExp'];
         $srHighExp = $profile['SrHighExp'];
         $collegeExp = $profile['CollegeExp'];
-        $major = $profile['Major'];
-        $highSchool = $profile['HighSchool'];
         */
         
         $profileID = -1;
@@ -115,8 +141,6 @@
         $jrHighExp = '1 - 2 Years';
         $srHighExp = '3 - 4 Years';
         $collegeExp = 'None';
-        $major = 'English';
-        $highSchool = 'Clarion';
         
         include(VIEWLANGUAGEPROFILEFORM_FILE);
     }
@@ -149,8 +173,6 @@
         $jrHighExp = $experiences[1];
         $srHighExp = $experiences[2];
         $collegeExp = $experiences[0];
-        $major = 'English';
-        $highSchool = 'Clarion';
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
@@ -172,8 +194,6 @@
         $jrHighExp = $experiences[0];
         $srHighExp = $experiences[0];
         $collegeExp = $experiences[0];
-        $major = '';
-        $highSchool = '';
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }

@@ -16,20 +16,6 @@
     </div>
 
     <div class="divider"></div>
-
-    <div class="formSection">
-        <label>High School:</label>
-        <label><?php echo(htmlspecialchars($highSchool)); ?></label>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="formSection">
-        <label>Major:</label>
-        <label><?php echo(htmlspecialchars($major)); ?></label>
-    </div>
-
-    <div class="divider"></div>
         
     <div class="formSection">
         <label>Jr High Experience:</label><label><?php echo($jrHighExp); ?></label>
