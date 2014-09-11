@@ -66,6 +66,43 @@
         }
     }
     
+    function userOwnsProfile($userID, $profileID)
+    {
+        $ownsProfile = FALSE;
+        
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . LANGUAGEPROFILES_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER
+                    . ' = :' . USERID_IDENTIFIER . ' AND'
+                    . ' ' . LANGUAGEPROFILEID_IDENTIFIER
+                    . ' = :' . LANGUAGEPROFILEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . LANGUAGEPROFILEID_IDENTIFIER, $profileID);
+            
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            if ($results > 0)
+            {//If we find at least one profile then the user must own this profile.
+                $ownsProfile = TRUE;
+            }
+            
+            return $ownsProfile;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
     /**
      * Indicates whether or not the current user is the given role.
      * @param string $roleName The name of the role.

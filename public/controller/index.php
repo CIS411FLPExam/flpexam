@@ -123,6 +123,24 @@
     
     function ProcessLanguageProfileAddEdit()
     {
+        /*
+        if(!loggedIn())
+        {   //Then we don't want to show a guest anyones user infmormation.
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        else
+        {
+            $userID = $_SESSION[USERID_IDENTIFIER];
+        }
+        
+        $profileID = $_GET[LANGUAGEPROFILEID_IDENTIFIER];
+        
+        if (!userOwnsProfile($userID, $profileID))
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        */
+        
         $availableLanguages = array('Spanish', 'French');
         $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
         
