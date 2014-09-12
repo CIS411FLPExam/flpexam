@@ -77,11 +77,24 @@
         else
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, SELECTEXAMLANGUAGE_ACTION));
+            exit();
         }
         
-        Redirect(GetControllerScript(MAINCONTROLLER_FILE, PROFILEADD_ACTION) . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . GetRequestedURI());
+        $userID = $_SESSION[USERID_IDENTIFIER];
         
-        Redirect(GetControllerScript(MAINCONTROLLER_FILE, LANGUAGEPROFILEADD_ACTION) . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . GetRequestedURI());
+        $profile = GetProfile($userID);
+        
+        if(empty($profile))
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, PROFILEADD_ACTION) . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . GetRequestedURI());
+            exit();
+        }
+        
+        if(!userLanguageProfileExists($userID, $language))
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, LANGUAGEPROFILEADD_ACTION) . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . GetRequestedURI());
+            exit();
+        }
         
         echo('Exam');
     }
