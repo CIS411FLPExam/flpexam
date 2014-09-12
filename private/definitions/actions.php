@@ -255,4 +255,22 @@
      * The action word to use to process a question add/edit.
      */
     define("PROCESSQUESTIONADDEDIT_ACTION", "ProcessQuestionAddEdit");
+    
+//Actions available through the exam controller.
+/******************************************************************************/
+    
+    /**
+     * The action word to use to start an exam.
+     */
+    define("STARTEXAM_ACTION", "StartExam");
+    
+    /**
+     * The action word to use select a language for the exam.
+     */
+    define("SELECTEXAMLANGUAGE_ACTION", "SelectExamLanguage");
+    
+    /**
+     * The action word to use to process a language select for an exam.
+     */
+    define("PROCESSEXAMLANGUAGESELECT_ACTION", "ProcessSelectExamLanguage");
 ?>

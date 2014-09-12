@@ -11,6 +11,9 @@
     <?php if (isset($profileID)) { ?>
         <input type="hidden" name="<?php echo(LANGUAGEPROFILEID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($profileID)); ?>" />
     <?php } ?>
+    <?php if (isset($requestedPage)) { ?>
+        <input type="hidden" name="<?php echo(REQUESTEDPAGE_IDENTIFIER); ?>" value="<?php echo($requestedPage); ?>" />
+    <?php } ?>
     <div class="formGroup">
         <div class="formSection">
             <label>Language:</label>

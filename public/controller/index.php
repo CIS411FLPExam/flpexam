@@ -102,6 +102,15 @@
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
         
+        if(isset($_POST[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_POST[REQUESTEDPAGE_IDENTIFIER];
+        }
+        else if(isset($_GET[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_GET[REQUESTEDPAGE_IDENTIFIER];
+        }
+        
         $major = '';
         $highSchool = '';
         
@@ -149,6 +158,11 @@
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
         
+        if(isset($_POST[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_POST[REQUESTEDPAGE_IDENTIFIER];
+        }
+        
         $major = $_POST['Major'];
         $highSchool = $_POST['HighSchool'];
         
@@ -173,6 +187,11 @@
                 $userID = $_SESSION[USERID_IDENTIFIER];
                 
                 AddProfile($userID, $major, $highSchool);
+                
+                if(isset($requestedPage))
+                {
+                    Redirect($requestedPage);
+                }
             }
             
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, PROFILEVIEW_ACTION));
@@ -218,6 +237,11 @@
             $userID = $_SESSION[USERID_IDENTIFIER];
         }
         
+        if(isset($_POST[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_POST[REQUESTEDPAGE_IDENTIFIER];
+        }
+        
         $language = $_POST['Language'];
         $spokenAtHome = isset($_POST['SpokenAtHome']);
         $jrHighExp = $_POST['JrHighExp'];
@@ -241,6 +265,11 @@
             else
             {
                $profileID = AddLanguageProfile($userID, $language, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp);
+               
+               if(isset($requestedPage))
+               {
+                    Redirect($requestedPage);
+               }
             }
             
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, LANGUAGEPROFILEVIEW_ACTION . '&' . LANGUAGEPROFILEID_IDENTIFIER . '=' . urlencode($profileID)));
@@ -257,6 +286,15 @@
         if(!loggedIn())
         {
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        
+        if(isset($_POST[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_POST[REQUESTEDPAGE_IDENTIFIER];
+        }
+        else if(isset($_GET[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_GET[REQUESTEDPAGE_IDENTIFIER];
         }
         
         $availableLanguages = GetAllLanguages();
@@ -390,6 +428,15 @@
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
         
+        if(isset($_POST[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_POST[REQUESTEDPAGE_IDENTIFIER];
+        }
+        else if(isset($_GET[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_GET[REQUESTEDPAGE_IDENTIFIER];
+        }
+        
         $firstName = "";
         $lastName = "";
         $userName = "";
@@ -437,11 +484,22 @@
         
         $firstName = $_POST[FIRSTNAME_IDENTIFIER];
         $lastName = $_POST[LASTNAME_IDENTIFIER];
+        
         $email = $_POST[EMAIL_IDENTIFIER];
         
         if (isset($_POST[USERID_IDENTIFIER]))
         {
             $userID = $_POST[USERID_IDENTIFIER];
+        }
+        
+        if(isset($_POST[REQUESTEDPAGE_IDENTIFIER]))
+        {
+            $requestedPage = $_POST[REQUESTEDPAGE_IDENTIFIER];
+        }
+        
+        if(isset($_POST[USERNAME_IDENTIFIER]))
+        {
+            $userName = $_POST[USERNAME_IDENTIFIER];
         }
         
         $firstNameVI = ValidateFirstName($firstName);
@@ -519,12 +577,19 @@
                     {
                         SelfAdd($firstName, $lastName, $userName, $password, $email);
                         login($userName, $password);
-                        Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                        
                     }
                     else
                     {
                         include(NOTAUTHORIZED_FILE);
                     }
+                    
+                    if(!isset($requestedPage))
+                    {
+                        $requestedPage = GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION);
+                    }
+                    
+                    Redirect($requestedPage);
                 }
                 else
                 {

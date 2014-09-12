@@ -426,6 +426,45 @@
     }
     
     /**
+     * Gets a languages I.D.
+     * @param string $language The name of the language.
+     * @return int The I.D. of the language or 0 if the language was not found.
+     */
+    function GetLanguageID($language)
+    {
+        try
+        {
+            $languageID = 0;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . LANGUAGEID_IDENTIFIER . ' FROM'
+                    . ' ' . LANGUAGES_IDENTIFIER . ' WHERE'
+                    . ' ' . NAME_IDENTIFIER
+                    . ' = :' . NAME_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . NAME_IDENTIFIER, $language);
+            
+            $statement->execute();
+            
+            $language = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if(!empty($language))
+            {
+                $languageID = $language[LANGUAGEID_IDENTIFIER];
+            }
+            
+            return $languageID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Gets all active languages on record.
      * @return array The collection of all active languages.
      */
@@ -531,6 +570,40 @@
             $statement->closeCursor();
             
             return $experiences;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    function userLanguageProfileExists($userID, $language)
+    {
+        try
+        {
+            $languageProfileExists = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELCT * FROM ' . LANGUAGEPROFILES_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER
+                    . ' = :'  . USERID_IDENTIFIER . ' AND'
+                    . ' ' . 'Language'
+                    . ' = :' . 'Language' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . 'Language', $language);
+            
+            $statement->execute();
+            
+            $profiles = $statement->fetchAll();
+            
+            if(count($profiles) > 0)
+            {
+                $languageProfileExists = TRUE;
+            }
+            
+            return $languageProfileExists;
         }
         catch (PDOException $ex)
         {

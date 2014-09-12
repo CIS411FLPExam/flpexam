@@ -390,4 +390,23 @@
      */
     define("ADDEDITQUESTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-question.php");
     
+//Exam paths.
+/******************************************************************************/
+    
+    define("EXAM_DIR", PRIVATE_DIR . 'exam/');
+    
+    /**
+     * The file path of the exam view directory.
+     */
+    define("EXAMVIEW_DIR", EXAM_DIR . 'view/');
+    
+    /**
+     * The file path of the exam controller file.
+     */
+    define("EXAMCONTROLLER_FILE", CONTROLLER_DIR . "exam.php");
+    
+    /**
+     * The file path of the select language form file.
+     */
+    define("SELECTLANGUAGEFORM_FILE", EXAMVIEW_DIR . "select-language-form.php");
 ?>

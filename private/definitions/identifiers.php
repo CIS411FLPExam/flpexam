@@ -1,6 +1,11 @@
 <?php
     
     /**
+     * The identifier for a requested page.
+     */
+    define("REQUESTEDPAGE_IDENTIFIER", "RequestedPage");
+
+    /**
      * The profile I.D. identifier.
      */
     define("PROFILEID_IDENTIFIER", 'ProfileID');

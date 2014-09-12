@@ -22,6 +22,9 @@
     <?php if (isset($userID)) { ?>
         <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($userID)); ?>" />
     <?php } ?>
+    <?php if (isset($requestedPage)) { ?>
+        <input type="hidden" name="<?php echo(REQUESTEDPAGE_IDENTIFIER); ?>" value="<?php echo($requestedPage); ?>" />
+    <?php } ?>
     
     <div class="formGroup">
         <div class="formSection">
