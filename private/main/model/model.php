@@ -67,7 +67,7 @@
             $statement = $db->prepare($query);
             $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
             $statement->bindValue(':'. 'Major', $major);
-            $statement->bindValue(':', $highschool);
+            $statement->bindValue(':' . 'HighSchool', $highschool);
             
             $profilesEffected = $statement->execute();
             

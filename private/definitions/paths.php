@@ -268,7 +268,7 @@
     /**
      * The file path of the add edit profile form file.
      */
-    define("ADDEDITPROFILEFORM_FIE", MAINVIEW_DIR . "add-edit-profile-form.php");
+    define("ADDEDITPROFILEFORM_FILE", MAINVIEW_DIR . "add-edit-profile-form.php");
     
     /**
      * The file path of the view form file.

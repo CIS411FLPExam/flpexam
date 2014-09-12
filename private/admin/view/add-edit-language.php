@@ -30,14 +30,13 @@
     <input type="submit" value="Submit" />
 </form>
     
-<div class="formGroup">
-    <div class="formSection">
-        <?php if (userIsAuthorized(MANAGEQUESTIONS_ACTION)) {?>
-            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>">
-                Manage Questions
-            </a>
-        <?php } ?>
-    </div>
+<div class="formSection">
+    <?php if (isset($languageID) && userIsAuthorized(MANAGEQUESTIONS_ACTION)) {?>
+        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Manage Questions" />
+        </form>
+    <?php } ?>
 </div>
     
 <!-- End main content here -->

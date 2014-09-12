@@ -11,7 +11,15 @@
                 </ul>
             </li>
             <?php if (userIs(MANAGERROLE_IDENTIFIER) || userIs(ADMINROLE_IDENTIFIER)) {  ?>
-                <li><a href="<?php echo( GetControllerScript( ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION ) ); ?>"><span>Admin</span></a></li>
+                <li class='active has-sub'><a href='#'><span>Admin</span></a>
+                <ul>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION)) ?>"><span>Control Panel</span></a></li>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION)) ?>"><span>Manage Roles</span></a></li>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>"><span>Manage Users</span></a></li>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)) ?>"><span>Manage Languages</span></a></li>
+                    <li class='last'><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION)) ?>"><span>Manage Functions</span></a></li>
+                </ul>
+                </li>
             <?php } ?>
             <li><a href="<?php echo( GetControllerScript( MAINCONTROLLER_FILE, LOGOUT_ACTION ) ) ?>"><span>Logout</span></a></li>
             

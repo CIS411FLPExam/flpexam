@@ -11,7 +11,9 @@
 
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSQUESTIONADDEDIT_ACTION)); ?>" method="post">
     <?php if (isset($questionID)) { ?>
-    <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+        <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+    <?php } else {?>
+        <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
     <?php } ?>
     <div class="formGroup">
         <div class="formSection">
@@ -37,7 +39,7 @@
             ?>      
                 <div id='contnr<?php echo($i); ?>' class="formSection">
                     <label id='lbl<?php echo($i); ?>'>Answer:</label>
-                    <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>'><?php echo(htmlspecialchars($answer)); ?></textarea>
+                    <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>'><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></textarea>
                     <input id='btn<?php echo($i); ?>' type='button' value='Remove Answer' onclick='RemoveItem(<?php echo($i); ?>);' />
                     <br />
                     <br />

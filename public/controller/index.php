@@ -78,12 +78,16 @@
                 ProcessLanguageProfileView();
                 break;
             case PROFILEADD_ACTION :
+                ProcessProfileAdd();
                 break;
             case PROFILEEDIT_ACTION :
+                ProcessProfileEdit();
                 break;
             case PROFILEVIEW_ACTION :
+                ProcessProfileView();
                 break;
             case PROCESSPROFILEADDEDIT_ACTION:
+                ProcessProfileAddEdit();
                 break;
             default :
                 include(HOME_FILE);
@@ -93,27 +97,94 @@
     
     function ProcessProfileAdd()
     {
+        if(!loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
         
+        $major = '';
+        $highSchool = '';
+        
+        include(ADDEDITPROFILEFORM_FILE);
     }
     
     function ProcessProfileEdit()
     {
+        if(!loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
         
+        $userID = $_SESSION[USERID_IDENTIFIER];
+        
+        $profile = GetProfile($userID);
+        
+        $major = $profile['Major'];
+        $highSchool = $profile['HighSchool'];
+        
+        include(ADDEDITPROFILEFORM_FILE);
     }
     
     function ProcessProfileView()
     {
+        if(!loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
         
+        $userID = $_SESSION[USERID_IDENTIFIER];
+        
+        $profile = GetProfile($userID);
+        
+        $major = $profile['Major'];
+        $highSchool = $profile['HighSchool'];
+        
+        include(VIEWPROFILEFORM_FILE);
     }
     
     function ProcessProfileAddEdit()
     {
+        if(!loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
         
+        $major = $_POST['Major'];
+        $highSchool = $_POST['HighSchool'];
+        
+        if(true)
+        {
+            if(isset($_POST[USERID_IDENTIFIER]))
+            {
+                $userID = $_POST[USERID_IDENTIFIER];
+                
+                if(userIsAuthentic($userID))
+                {
+                    UpdateProfile($userID, $major, $highSchool);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
+            }
+            else
+            {
+                $userID = $_SESSION[USERID_IDENTIFIER];
+                
+                AddProfile($userID, $major, $highSchool);
+            }
+            
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, PROFILEVIEW_ACTION));
+        }
+        else
+        {
+            include(VIEWPROFILEFORM_FILE);
+        }
     }
     
     function ProcessLanguageProfileView()
     {
-        /*
         if(!loggedIn())
         {   //Then we don't want to show a guest anyones user infmormation.
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
@@ -132,22 +203,12 @@
         $jrHighExp = $profile['JrHighExp'];
         $srHighExp = $profile['SrHighExp'];
         $collegeExp = $profile['CollegeExp'];
-        */
-        
-        $profileID = -1;
-        
-        $language = 'French';
-        $spokenAtHome = TRUE;
-        $jrHighExp = '1 - 2 Years';
-        $srHighExp = '3 - 4 Years';
-        $collegeExp = 'None';
         
         include(VIEWLANGUAGEPROFILEFORM_FILE);
     }
     
     function ProcessLanguageProfileAddEdit()
     {
-        /*
         if(!loggedIn())
         {   //Then we don't want to show a guest anyones user infmormation.
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
@@ -157,22 +218,36 @@
             $userID = $_SESSION[USERID_IDENTIFIER];
         }
         
-        $profileID = $_GET[LANGUAGEPROFILEID_IDENTIFIER];
+        $language = $_POST['Language'];
+        $spokenAtHome = isset($_POST['SpokenAtHome']);
+        $jrHighExp = $_POST['JrHighExp'];
+        $srHighExp = $_POST['SrHighExp'];
+        $collegeExp = $_POST['CollegeExp'];
         
-        if (!userOwnsProfile($userID, $profileID))
+        if(true)
         {
-            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+            if(isset($_POST[LANGUAGEPROFILEID_IDENTIFIER]))
+            {
+                $id = $_SESSION[USERID_IDENTIFIER];
+                $profileID = $_POST[LANGUAGEPROFILEID_IDENTIFIER];
+
+                if (!userOwnsProfile($id, $profileID))
+                {
+                    Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                }
+                
+                UpdateLanguageProfile($profileID, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp);
+            }
+            else
+            {
+               $profileID = AddLanguageProfile($userID, $language, $spokenAtHome, $jrHighExp, $srHighExp, $collegeExp);
+            }
+            
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, LANGUAGEPROFILEVIEW_ACTION . '&' . LANGUAGEPROFILEID_IDENTIFIER . '=' . urlencode($profileID)));
         }
-        */
         
-        $availableLanguages = array('Spanish', 'French');
-        $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
-        
-        $language = $availableLanguages[0];
-        $spokenAtHome = FALSE;
-        $jrHighExp = $experiences[1];
-        $srHighExp = $experiences[2];
-        $collegeExp = $experiences[0];
+        $availableLanguages = GetAllLanguages();
+        $experiences = GetAllExpeirences();
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
@@ -184,16 +259,20 @@
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
         
-        $userID = $_SESSION[USERID_IDENTIFIER];
+        $availableLanguages = GetAllLanguages();
         
-        $availableLanguages = array('Spanish', 'French');
-        $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
+        if (count($availableLanguages) < 1)
+        {
+            displayError("No languages available at this time.");
+        }
         
-        $language = $availableLanguages[0];
+        $experiences = GetAllLanguageExperiences();
+        
+        $language = $availableLanguages[0][NAME_IDENTIFIER];
         $spokenAtHome = FALSE;
-        $jrHighExp = $experiences[0];
-        $srHighExp = $experiences[0];
-        $collegeExp = $experiences[0];
+        $jrHighExp = $experiences[0][NAME_IDENTIFIER];
+        $srHighExp = $experiences[0][NAME_IDENTIFIER];
+        $collegeExp = $experiences[0][NAME_IDENTIFIER];
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
@@ -205,19 +284,28 @@
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
         
+        if(isset($_POST[LANGUAGEPROFILEID_IDENTIFIER]))
+        {
+            $profileID = $_POST[LANGUAGEPROFILEID_IDENTIFIER];
+        }
+        else
+        {
+            $profileID = $_GET[LANGUAGEPROFILEID_IDENTIFIER];
+        }
+        
+        
+        
         $userID = $_SESSION[USERID_IDENTIFIER];
-        $profileID = -1;
         
-        $availableLanguages = array('Spanish', 'French');
-        $experiences = array('None', '1 - 2 years', ' 3 - 4 years', '4+ years');
+        $experiences = GetAllLanguageExperiences();
         
-        $language = $availableLanguages[1];
-        $spokenAtHome = FALSE;
-        $jrHighExp = $experiences[1];
-        $srHighExp = $experiences[2];
-        $collegeExp = $experiences[0];
-        $major = 'English';
-        $highSchool = 'Clarion';
+        $profile = GetLanguageProfile($userID, $profileID);
+        
+        $language = $profile['Language'];
+        $spokenAtHome = $profile['SpokenAtHome'];
+        $jrHighExp = $profile['JrHighExp'];
+        $srHighExp = $profile['SrHighExp'];
+        $collegeExp = $profile['CollegeExp'];
         
         include(ADDEDITLANGUAGEPROFILEFORM_FILE);
     }
@@ -231,9 +319,7 @@
         
         $userID = $_SESSION[USERID_IDENTIFIER];
         
-        $languageProfiles = array();
-        $languageProfiles[] = array('ProfileID' => '-1', 'Name' => 'French', 'LanguageID' => '-1');
-        $languageProfiles[] = array('ProfileID' => '-1', 'Name' => 'Spanish', 'LanguageID' => '-1');
+        $languageProfiles = GetLanguageProfiles($userID);
         
         include(MANAGELANGUAGEPROFILESFORM_FILE);
     }
@@ -288,7 +374,7 @@
         {
             $user = getUser($userID);
         
-            $firstName = $user->Get;
+            $firstName = $user[FIRSTNAME_IDENTIFIER];
             $lastName = $user[LASTNAME_IDENTIFIER];
             $userName = $user[USERNAME_IDENTIFIER];
             $email = $user[EMAIL_IDENTIFIER];

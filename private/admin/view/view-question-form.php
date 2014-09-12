@@ -25,7 +25,7 @@
         ?>
             <div class="formSection">
                 <label>Answer <?php echo(htmlspecialchars($i)); ?>:</label>
-                <label><?php echo(htmlspecialchars($answer)); ?></label>
+                <label><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></label>
             </div>
         
             <div class="divider"></div>
@@ -35,10 +35,8 @@
         ?>
                 
         <br />
-    
-        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . $questionID)); ?>">
-            Edit
-        </a>
+        
+        <input type="submit" value="Edit" />
     </div>
 </form>
 <!-- End main content here -->

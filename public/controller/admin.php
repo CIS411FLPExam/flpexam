@@ -133,11 +133,19 @@
     
     function ManageQuestions()
     {
-        $language = 'French';
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
         
-        $questions = array();
-        $questions[] = array('QuestionID' => '-1', 'Name' => 'How are you?');
-        $questions[] = array('QuestionID' => '-1', 'Name' => 'What are you doing?');
+        $lang = GetLanguage($languageID);
+        $questions = GetQuestions($languageID);
+        
+        $language = $lang[NAME_IDENTIFIER];
         
         include(MANAGEQUESTIONSFORM_FILE);
     }
@@ -145,42 +153,61 @@
     
     function ProcessQuestionAdd()
     {
-        $name = 'How are you?';
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        
+        $name = '';
         $level = '1';
         $answers = array();
-        $answers[] = 'Fine.';
-        $answers[] = 'Good.';
-        $answers[] = 'Well.';
+        $answers[] = array(NAME_IDENTIFIER => '');
         
         include(ADDEDITQUESTIONFORM_FILE);
     }
     
     function ProcessQuestionEdit()
     {
+        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
         
-        $questionID = '-1';
-        $name = 'How are you?';
-        $level = 2;
+        $question = GetQuestion($questionID);
         
-        $answers = array();
-        $answers[] = 'Fine.';
-        $answers[] = 'Good.';
-        $answers[] = 'Well.';
+        $name = $question[NAME_IDENTIFIER];
+        $level = $question['Level'];
+        
+        $answers = GetQuestionAnswers($questionID);
         
         include(ADDEDITQUESTIONFORM_FILE);
     }
     
     function ProcessQuestionView()
     {
-        $questionID = '-1';
-        $name = 'How are you?';
+        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
         
-        $level = 3;
+        $question = GetQuestion($questionID);
         
-        $answers = array();
-        $answers[] = 'Fine.';
-        $answers[] = 'Good.';
-        $answers[] = 'Well.';
+        $name = $question[NAME_IDENTIFIER];
+        $level = $question['Level'];
+        
+        $answers = GetQuestionAnswers($questionID);
         
         include(VIEWQUESTIONFORM_FILE);
     }
@@ -192,15 +219,36 @@
     
     function ProcessQuestionAddEdit()
     {
-        $questionID = '-1';
-        $name = 'How are you?';
         
-        $level = 0;
+        $name = $_POST[NAME_IDENTIFIER];
         
+        $level = $_POST['Level'];
         $answers = array();
-        $answers[] = 'Fine.';
-        $answers[] = 'Good.';
-        $answers[] = 'Well.';
+        
+        $answerNumber = 0;
+        while(isset($_POST['input' . $answerNumber]))
+        {
+            $answers[] = $_POST['input' . $answerNumber];
+            $answerNumber++;
+        }
+        
+        if(true)
+        {
+            if (isset($_POST[QUESTIONID_IDENTIFIER]))
+            {
+                $questionID = $_POST[QUESTIONID_IDENTIFIER];
+                
+                UpdateQuestion($questionID, $name, $level, $answers);
+            }
+            else
+            {
+                $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+                
+                $questionID = AddQuestion($languageID, $name, $level, $answers);
+            }
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . urldecode($questionID)));
+        }
         
         include(VIEWQUESTIONFORM_FILE);
     }
@@ -214,20 +262,38 @@
     
     function ProcessLanguageEdit()
     {
-        $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
         
-        $name = "French";
-        $active = FALSE;
+        $language = GetLanguage($languageID);
+        
+        $name = $language[NAME_IDENTIFIER];
+        $active = $language['Active'];
         
         include(ADDEDITLANGUAGEFORM_FILE);
     }
     
     function ProcessLanguageView()
     {
-        $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
         
-        $name = "French";
-        $active = FALSE;
+        $language = GetLanguage($languageID);
+        
+        $name = $language[NAME_IDENTIFIER];
+        $active = $language['Active'];
         
         include(VIEWLANGUAGEFORM_FILE);
     }
@@ -239,27 +305,31 @@
     
     function ProcessLanguageAddEdit()
     {
-        $name = "French";
-        $active = FALSE;
+        $name = $_POST[NAME_IDENTIFIER];
+        $active = isset($_POST['Active']);
         
-        $questions = array();
-        $questions[] = array(['QuestionID'] => '-1', ['Name'] => 'How are you?');
-        $questions[] = array(['QuestionID'] => '-1', ['Name'] => 'What are you doing?');
+        if(true)
+        {
+            if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+            {
+                $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+                
+                UpdateLanguage($languageID, $name, $active);
+            }
+            else
+            {
+                $languageID = AddLanguage($name);
+            }
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID)));
+        }
         
         include(ADDEDITLANGUAGEFORM_FILE);
     }
     
     function ManageLanguages()
     {
-        $french = array();
-        $french[LANGUAGEID_IDENTIFIER] = '1';
-        $french[NAME_IDENTIFIER] = 'French';
-        
-        $spanish = array();
-        $spanish[LANGUAGEID_IDENTIFIER] = '2';
-        $spanish[NAME_IDENTIFIER] = 'Spanish';
-        
-        $languages = array($french, $spanish);
+        $languages = GetAllLanguages();
         
         include(MANAGELANGUAGESFORM_FILE);
     }

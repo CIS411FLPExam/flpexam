@@ -177,6 +177,38 @@
     }
     
     /**
+     * Gets all the questions of a specific language.
+     * @param int $languageID The I.D. of the language questions to get.
+     * @return array The collection of questions.
+     */
+    function GetQuestions($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            $statement->execute();
+            
+            $questions = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $questions;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Deletes a question and it's answers from the records.
      * @param int $questionID The I.D. of the question to delete.
      * @return int The number of questions that were deleted.
@@ -251,26 +283,32 @@
     
     /**
      * Adds a question to the record of questions.
+     * @param int $languageID The I.D. of the language the question belongs to.
      * @param string $name The question.
      * @param int $level The questions level.
      * @param array $answers The answers to the question.
      * @return int The I.D. of the new question.
      */
-    function AddQuestion($name, $level, $answers)
+    function AddQuestion($languageID, $name, $level, $answers)
     {
         try
         {
             $db = GetDBConnection();
             
             $query = 'INSERT INTO ' . QUESTIONS_IDENTIFIER
-                    . ' (' . '`Level`'
-                    . ', ' . '`Name`' . ') VALUES'
+                    . ' (' . 'Level'
+                    . ', ' . LANGUAGEID_IDENTIFIER
+                    . ', ' . 'Name' . ') VALUES'
                     . ' (:' . 'Level'
+                    . ', :' . LANGUAGEID_IDENTIFIER
                     . ', :' . 'Name' . ');';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . 'Name', $name);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
             $statement->bindValue(':' . 'Level', $level);
+            
+            
             
             $statement->execute();
             
@@ -342,17 +380,17 @@
                 $answer = $answers[0];
                 
                 //Insert the first answer and set CORRECT = TRUE since it is the correct answer.
-                $query = 'INSER INTO ' . ANSWERS_IDENTIFIER
-                            . '(' . QUESTIONID_IDENTIFIER
-                            . ', ' . 'Correct'
-                            . ', ' . '`Name`' . ') VALUES'
-                            . ' (: ' . QUESTIONID_IDENTIFIER
-                            . ', :' .'Correct'
-                            . ', :' . 'Name' . ');';
+                $query = 'INSERT INTO ' . ANSWERS_IDENTIFIER
+                        . ' ('. QUESTIONID_IDENTIFIER
+                        . ', ' . 'Correct'
+                        . ', ' . 'Name' . ') VALUES'
+                        . ' (:' . QUESTIONID_IDENTIFIER
+                        . ', :' . 'Correct'
+                        . ', :' . 'Name' . ');';
                 
                 $statement = $db->prepare($query);
                 $statement->bindValue(':' . QUESTIONID_IDENTIFIER ,$questionID);
-                $statement->bindValue(':' . 'Correct', 'TRUE');
+                $statement->bindValue(':' . 'Correct', '1');
                 $statement->bindValue(':' . 'Name', $answer);
                 
                 $statement->execute();
@@ -364,17 +402,17 @@
                 {
                     $answer = $answers[$i];
                     
-                    $query = 'INSER INTO ' . ANSWERS_IDENTIFIER
-                            . '(' . QUESTIONID_IDENTIFIER
-                            . ', ' . 'Correct'
-                            . ', ' . '`Name`' . ') VALUES'
-                            . ' (: ' . QUESTIONID_IDENTIFIER
-                            . ', :' .'Correct'
-                            . ', :' . 'Name' . ');';
+                    $query = 'INSERT INTO ' . ANSWERS_IDENTIFIER
+                        . ' ('. QUESTIONID_IDENTIFIER
+                        . ', ' . 'Correct'
+                        . ', ' . 'Name' . ') VALUES'
+                        . ' (:' . QUESTIONID_IDENTIFIER
+                        . ', :' . 'Correct'
+                        . ', :' . 'Name' . ');';
                 
                     $statement = $db->prepare($query);
                     $statement->bindValue(':' . QUESTIONID_IDENTIFIER , $questionID);
-                    $statement->bindValue(':' . 'Correct', 'FALSE');
+                    $statement->bindValue(':' . 'Correct', '0');
                     $statement->bindValue(':' . 'Name', $answer);
 
                     $statement->execute();

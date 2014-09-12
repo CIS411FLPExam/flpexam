@@ -9,7 +9,7 @@
 <!-- Start main content here -->
 <form action="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, PROCESSLANGUAGEPROFILEADDEDIT_ACTION));?>" method="post">
     <?php if (isset($profileID)) { ?>
-        <input type="hidden" name="ProfileID" value="<?php echo(htmlspecialchars($profileID)); ?>" />
+        <input type="hidden" name="<?php echo(LANGUAGEPROFILEID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($profileID)); ?>" />
     <?php } ?>
     <div class="formGroup">
         <div class="formSection">
@@ -19,8 +19,8 @@
             <?php } else {?>
                 <select name="Language" class="formInput">
                     <?php foreach ($availableLanguages as $availableLanguage) { ?>
-                    <option <?php if($language == $availableLanguage) { echo("selected='selected'"); } ?>>
-                        <?php echo(htmlspecialchars($availableLanguage)); ?>
+                    <option <?php if($language == $availableLanguage[NAME_IDENTIFIER]) { echo("selected='selected'"); } ?>>
+                        <?php echo(htmlspecialchars($availableLanguage[NAME_IDENTIFIER])); ?>
                     </option>
                     <?php } ?>
                 </select>
@@ -40,8 +40,8 @@
             <label>Jr High Experience:</label>
             <select name="JrHighExp" class="formInput">
                 <?php foreach ($experiences as $experience) { ?>
-                <option <?php if($jrHighExp == $experience) { echo('selected'); } ?>>
-                    <?php echo(htmlspecialchars($experience)); ?>
+                <option <?php if($jrHighExp == $experience[NAME_IDENTIFIER]) { echo('selected'); } ?>>
+                    <?php echo(htmlspecialchars($experience[NAME_IDENTIFIER])); ?>
                 </option>
                 <?php } ?>
             </select>
@@ -53,8 +53,8 @@
             <label>High School Experience:</label>
             <select name="SrHighExp" class="formInput">
                 <?php foreach ($experiences as $experience) { ?>
-                <option <?php if($srHighExp == $experience) { echo('selected'); } ?>>
-                    <?php echo(htmlspecialchars($experience)); ?>
+                <option <?php if($srHighExp == $experience[NAME_IDENTIFIER]) { echo('selected'); } ?>>
+                    <?php echo(htmlspecialchars($experience[NAME_IDENTIFIER])); ?>
                 </option>
                 <?php } ?>
             </select>
@@ -66,8 +66,8 @@
             <label>College Experience:</label>
             <select name="CollegeExp" class="formInput">
                 <?php foreach ($experiences as $experience) { ?>
-                <option <?php if($collegeExp == $experience) { echo('selected'); } ?>>
-                    <?php echo(htmlspecialchars($experience)); ?>
+                <option <?php if($collegeExp == $experience[NAME_IDENTIFIER]) { echo('selected'); } ?>>
+                    <?php echo(htmlspecialchars($experience[NAME_IDENTIFIER])); ?>
                 </option>
                 <?php } ?>
             </select>
@@ -75,7 +75,7 @@
         
         <br />
 
-        <input type="submit" value="Add Profile" />
+        <input type="submit" value="Submit" />
     </div>
 </form>
 <!-- End main content here -->

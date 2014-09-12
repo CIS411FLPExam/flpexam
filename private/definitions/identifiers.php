@@ -1,6 +1,11 @@
 <?php
     
     /**
+     * The profile I.D. identifier.
+     */
+    define("PROFILEID_IDENTIFIER", 'ProfileID');
+
+    /**
      * The record of profiles identifier.
      */
     define("PROFILES_IDENTIFIER", 'profiles');

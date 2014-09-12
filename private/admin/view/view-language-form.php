@@ -18,14 +18,16 @@
         </div>
     </div>
     <?php if (userIsAuthorized(LANGUAGEEDIT_ACTION)) {?>
-        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . '=' .htmlspecialchars($languageID))); ?>">
-            Edit
-        </a> &nbsp;
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Edit" />
+        </form>
     <?php } ?>
     <?php if (userIsAuthorized(MANAGEQUESTIONS_ACTION)) {?>
-        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>">
-            Manage Questions
-        </a>
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Manage Questions" />
+        </form>
     <?php } ?>
 </div>
 <!-- End main content here -->
