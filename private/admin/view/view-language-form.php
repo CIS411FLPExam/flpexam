@@ -8,14 +8,13 @@
     <h1>Language</h1>
     <div class="formGroup">
         <div class="formSection">
-            <label>Name:</label>
-            <label><?php echo(htmlspecialchars($name)); ?></label>
+            <label>Name:</label><?php echo(htmlspecialchars($name)); ?>
         </div>
 
         <div class="divider"></div>
 
         <div class="formSection">
-            <label>Active:</label><label><?php if ($active) { echo('Yes'); } else { echo ('No'); } ?></label>
+            <label>Active:</label><?php if ($active) { echo('Yes'); } else { echo ('No'); } ?>
         </div>
     </div>
     <?php if (userIsAuthorized(LANGUAGEEDIT_ACTION)) {?>

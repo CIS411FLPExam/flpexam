@@ -196,6 +196,11 @@
      */
     define("NOTAUTHORIZED_FILE", VIEW_DIR . "not-authorized.php");
     
+    /**
+     * The file path of the exam parameters class file.
+     */
+    define("EXAMPARAMETERSCLASS_FILE", CODE_DIR . "examparameters-class.php");
+    
 //Main paths.
 /******************************************************************************/
     
@@ -350,4 +355,14 @@
      * The file path of the add/edit question form file.
      */
     define("ADDEDITQUESTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-question-form.php");
+    
+    /**
+     * The file path of the edit exam parameters form file.
+     */
+    define("EDITEXAMPARAMETERSFORM_FILE", ADMINVIEW_DIR . "edit-examparameters-form.php");
+    
+    /**
+     * The file path of the view exam parameters form file.
+     */
+    define("VIEWEXAMPARAMETERSFORM_FILE", ADMINVIEW_DIR . "view-examparameters-form.php");
 ?>

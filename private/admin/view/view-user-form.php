@@ -6,7 +6,7 @@
 <div class="formGroup">
     
     <div class="formSection">
-        <label>User Name:</label><label><?php echo(htmlspecialchars($userName)); ?></label>
+        <label>User Name:</label><?php echo(htmlspecialchars($userName)); ?>
     </div>
     
     <div class="divider"></div>

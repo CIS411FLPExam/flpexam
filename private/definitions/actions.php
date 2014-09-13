@@ -200,4 +200,19 @@
      * The action word to use to search for question.
      */
     define("QUESTIONSEARCH_ACTION", "QuestionSearch");
+    
+    /**
+     * The action word to use to view exam parameters.
+     */
+    define("EXAMPARAMETERSVIEW_ACTION", "ExamParametersView");
+    
+    /**
+     * The action word to use to edit exam parameters.
+     */
+    define("EXAMPARAMETERSEDIT_ACTION", "ExamParametersEdit");
+    
+    /**
+     * The action word to use to process the edit of exam parameters.
+     */
+    define("PROCESSEXAMPARAMETERSEDIT_ACTION", "ProccesExamParametersEdit");
 ?>

@@ -114,8 +114,7 @@ footer
 
 .formGroup
 {
-    width: 371px;
-    padding-left: 5px;
+    padding: 5px;
 }
 
 .formSection
@@ -127,7 +126,7 @@ footer
 .formSection label
 {
     font-weight: bold;
-    width: 100px;
+    width: 140px;
     display: inline-block;
 }
 

@@ -1,5 +1,7 @@
 <?php
     
+    require_once(EXAMPARAMETERSCLASS_FILE);
+
     /**
      * Require this file because we use the ValidationInfo class for validation here.
      */

@@ -1,5 +1,14 @@
 <?php
+    /**
+     * The exam paramter I.D. identifier.
+     */
+    define("EXAMPARAMETERSID_IDENTIFIER", "ParameterID");
     
+    /**
+     * The identifier for the record of exam parameters.
+     */
+    define("EXAMPARAMETERS_IDENTIFIER", "examparameters");
+
     /**
      * The identifier for a requested page.
      */

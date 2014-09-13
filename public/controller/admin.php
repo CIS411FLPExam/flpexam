@@ -142,9 +142,66 @@
             case QUESTIONSEARCH_ACTION :
                 ProcessQuestionSearch();
                 break;
+            case EXAMPARAMETERSVIEW_ACTION :
+                ExamParametersView();
+                break;
+            case EXAMPARAMETERSEDIT_ACTION :
+                ExamParametersEdit();
+                break;
+            case PROCESSEXAMPARAMETERSEDIT_ACTION :
+                ProcessExamParametersEdit();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function ExamParametersView()
+    {
+        $parameters = GetExamParameters();
+        
+        $keyCode = $parameters->GetKeyCode();
+        $questionCount = $parameters->GetQuestionCount();
+        $incLevelScore =  $parameters->GetIncLevelScorePercent();
+        $decLevelScore =  $parameters->GetDecLevelScorePercent();
+        
+        include(VIEWEXAMPARAMETERSFORM_FILE);
+    }
+    
+    function ExamParametersEdit()
+    {
+        $parameters = GetExamParameters();
+        
+        $keyCode = $parameters->GetKeyCode();
+        $questionCount = $parameters->GetQuestionCount();
+        $incLevelScore =  $parameters->GetIncLevelScorePercent();
+        $decLevelScore =  $parameters->GetDecLevelScorePercent();
+        
+        include(EDITEXAMPARAMETERSFORM_FILE);
+    }
+    
+    function ProcessExamParametersEdit()
+    {
+        if(userIsAuthorized(EXAMPARAMETERSEDIT_ACTION))
+        {
+            $parameters = new ExamParameters();
+
+            $parameters->Initialize($_POST);
+            
+            SetExamParameters($parameters);
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION));
+        }
+        else
+        {
+            include(NOTAUTHORIZED_FILE);
+        }
+        
+        $keyCode = $parameters->GetKeyCode();
+        $questionCount = $parameters->GetQuestionCount();
+        $incLevelScore =  $parameters->GetIncLevelScorePercent();
+        $decLevelScore =  $parameters->GetDecLevelScorePercent();
+        
+        include(EDITEXAMPARAMETERSFORM_FILE);
     }
     
     function HandleLogin( )

@@ -4,6 +4,80 @@
     require_once(MODEL_FILE);
     
     /**
+     * Gets the exam parameters.
+     * @return type
+     */
+    function GetExamParameters()
+    {
+        try
+        {
+            $examParameters = new ExamParameters();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM'
+                    . ' ' . EXAMPARAMETERS_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            $examParameters->Initialize($row);
+            
+            return $examParameters;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Sets the exam parameters.
+     * @param ExamParameters $parameters The parameters.
+     * @return int The number of exam parameter rows effected by the update.
+     */
+    function SetExamParameters(ExamParameters $parameters)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $keyCodeIndex = $parameters->GetKeyCodeIndex();
+            $questionCountIndex = $parameters->GetQuestionCountIndex();
+            $incLevelScoreIndex = $parameters->GetIncLevelScoreIndex();
+            $decLevelScoreIndex = $parameters->GetDecLevelScoreIndex();
+            
+            $query = 'UPDATE ' . EXAMPARAMETERS_IDENTIFIER . ' SET'
+                    . ' ' . $keyCodeIndex . ' = :' . $keyCodeIndex
+                    . ', ' . $questionCountIndex . ' = :' . $questionCountIndex
+                    . ', ' . $incLevelScoreIndex . ' = :' . $incLevelScoreIndex
+                    . ', ' . $decLevelScoreIndex . ' = :' . $decLevelScoreIndex . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $keyCodeIndex, $parameters->GetKeyCode());
+            $statement->bindValue(':' . $questionCountIndex, $parameters->GetQuestionCount());
+            $statement->bindValue(':' . $incLevelScoreIndex, $parameters->GetIncLevelScore());
+            $statement->bindValue(':' . $decLevelScoreIndex, $parameters->GetDecLevelScore());
+            
+            $paramsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $paramsEffected;
+            
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Searches all users for the given name.
      * @param int $languageID The I.D. of the language to search.
      * @param string $name The user's first and/or last name.
