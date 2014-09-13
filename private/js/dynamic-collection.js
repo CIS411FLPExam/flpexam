@@ -54,6 +54,13 @@ function AddItem()
 function RemoveItem(index)
 {
     var count = GetCount();
+    
+    if (count < 2)
+    {
+        alert('There must be at least one answer.');
+        return; 
+    }
+    
     var collection = document.getElementById('collection');
     var container = document.getElementById('contnr' + index);
     var text = document.getElementById('input' + index);

@@ -25,7 +25,7 @@
         
         <div class="formSection">
             <label>Question:</label>
-            <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa'><?php echo(htmlspecialchars($name)); ?></textarea>
+            <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa' rows="5" cols="70"><?php echo(htmlspecialchars($name)); ?></textarea>
         </div>
         
         <div class='divider'></div>
