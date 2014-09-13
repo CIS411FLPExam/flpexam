@@ -187,11 +187,6 @@
     define("VALIDATIONINFOCLASS_FILE", CODE_DIR . "validation-info-class.php");
     
     /**
-     * The file path of the home file.
-     */
-    define("HOME_FILE", VIEW_DIR . "home.php");
-    
-    /**
      * The file path of the message form file.
      */
     define("MESSAGEFORM_FILE", VIEW_DIR . "message-form.php");
@@ -232,48 +227,9 @@
     define("MAINMODEL_FILE", MAINMODEL_DIR . "model.php");
     
     /**
-     * The file path of the login form file.
+     * The file path of the home file.
      */
-    define("LOGINFORM_FILE", MAINVIEW_DIR . "login-form.php");
-    
-    /**
-     * The file path of the add edit self form file.
-     */
-    define("ADDEDITSELFFORM_FILE", MAINVIEW_DIR . "add-edit-self-form.php");
-    
-    /**
-     * The file path of the view self form file.
-     */
-    define("VIEWSELFFORM_FILE", MAINVIEW_DIR . "view-self-form.php");
-    
-    /**
-     * The file path of the change password form file.
-     */
-    define("CHANGEPASSWORDFORM_FILE", MAINVIEW_DIR . "change-password-form.php");
-    /**
-     * the file path of the view language profiles form file.
-     */
-    
-    define("MANAGELANGUAGEPROFILESFORM_FILE", MAINVIEW_DIR . "manage-languageprofiles-form.php");
-    /**
-     * The file path of the add edit language profile form file.
-     */
-    define("ADDEDITLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "add-edit-languageprofile-form.php");
-    
-    /**
-     * The file path of the view language profile form file.
-     */
-    define("VIEWLANGUAGEPROFILEFORM_FILE", MAINVIEW_DIR . "view-languageprofile-form.php");
-    
-    /**
-     * The file path of the add edit profile form file.
-     */
-    define("ADDEDITPROFILEFORM_FILE", MAINVIEW_DIR . "add-edit-profile-form.php");
-    
-    /**
-     * The file path of the view form file.
-     */
-    define("VIEWPROFILEFORM_FILE", MAINVIEW_DIR . "view-profile-form.php");
+    define("HOME_FILE", MAINVIEW_DIR . "home.php");
     
 //Admin paths.
 /******************************************************************************/
@@ -304,6 +260,11 @@
      * The file path of the admin controller file.
      */
     define("ADMINCONTROLLER_FILE", CONTROLLER_DIR . "admin.php");
+    
+    /**
+     * The file path of the login form file.
+     */
+    define("LOGINFORM_FILE", ADMINVIEW_DIR . "login-form.php");
     
     /**
      * The file path of the add fucntion form file.
@@ -368,7 +329,7 @@
     /**
      * The path of the add/edit language form file.
      */
-    define("ADDEDITLANGUAGEFORM_FILE", ADMINVIEW_DIR . "add-edit-language.php");
+    define("ADDEDITLANGUAGEFORM_FILE", ADMINVIEW_DIR . "add-edit-language-form.php");
     
     /**
      * The file path of the view language form file.
@@ -388,25 +349,5 @@
     /**
      * The file path of the add/edit question form file.
      */
-    define("ADDEDITQUESTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-question.php");
-    
-//Exam paths.
-/******************************************************************************/
-    
-    define("EXAM_DIR", PRIVATE_DIR . 'exam/');
-    
-    /**
-     * The file path of the exam view directory.
-     */
-    define("EXAMVIEW_DIR", EXAM_DIR . 'view/');
-    
-    /**
-     * The file path of the exam controller file.
-     */
-    define("EXAMCONTROLLER_FILE", CONTROLLER_DIR . "exam.php");
-    
-    /**
-     * The file path of the select language form file.
-     */
-    define("SELECTLANGUAGEFORM_FILE", EXAMVIEW_DIR . "select-language-form.php");
+    define("ADDEDITQUESTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-question-form.php");
 ?>

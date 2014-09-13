@@ -41,30 +41,26 @@
 
 <h2>Modify User</h2>
 
-<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSERADDEDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
-
-    <input type="hidden" name="UserID" value="<?php echo $id; ?>"/>
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSEREDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
+    <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($id)); ?>"/>
     <div class="formGroup">
         <div class="formSection">
-            <label>First Name:</label><label><?php echo(htmlspecialchars($firstName)); ?></label>
+            <label>Username:</label>
+            <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" />
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Last Name:</label><label><?php echo(htmlspecialchars($lastName)); ?></label>
+            <label>Password:</label>
+            <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" />
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>User Name:</label><label><?php echo(htmlspecialchars($userName)); ?></label>
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
-            <label>Email:</label><label><?php echo(htmlspecialchars($email)); ?></label>
+            <label>Password Retype:</label>
+            <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" />
         </div>
         
         <div class="divider"></div>

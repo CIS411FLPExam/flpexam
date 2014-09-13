@@ -487,6 +487,42 @@
         }
     }
     
+    
+    /**
+     * Checks if the given user name already exists in the records.
+     * @param string $userName The user name.
+     * @return boolean True, if the user name already exists, or false it does not.
+     */
+    function UserNameExists($userName)
+    {
+        $exists = FALSE;
+        $db = GetDBConnection( );
+        
+        try
+        {
+            $query = 'SELECT * FROM ' . USERS_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER
+                    . ' = :' . USERNAME_IDENTIFIER . ';';
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':'. USERNAME_IDENTIFIER, $userName);
+            $statement->execute();
+            $results = $statement->fetchAll();
+            $statement->closeCursor();
+
+            if (count($results) > 0)
+            {
+                $exists = true;
+            }
+        }
+        catch (PDOException $e)
+        {
+            LogError($e);
+        }
+        
+        return $exists;
+    }
+    
     /**
      * Gets the roles that are currently assigned to a user.
      * @param int $ID The user ID of the user.
@@ -559,7 +595,7 @@
         {
             $db = GetDBConnection();
             
-            $query = "SELECT FirstName, LastName, UserName, Password, Email, UserID FROM users order by LastName";
+            $query = "SELECT * FROM users order by UserName";
             
             $statement = $db->prepare($query);
             $statement->execute();
@@ -575,30 +611,28 @@
     
     /**
      * Adds a user account to the records.
-     * @param string $firstName The first name of the user.
-     * @param string $lastName The last name of the user.
      * @param string $userName The user name that the user will use with the site.
      * @param string $password The password that the user will use for authentication.
-     * @param string $email The user's e-mail address.
      * @return int The user id of the added user.
      */
-    function addUser($firstName, $lastName, $userName, $password, $email)
+    function addUser($userName, $password)
     {
         try
         {
             $db = GetDBConnection();
-            $query = 'INSERT INTO users (FirstName, LastName, UserName, Password, Email)
-                      VALUES (:FirstName, :LastName, :UserName, :Password, :Email)';
+            $query = 'INSERT INTO ' . USERS_IDENTIFIER
+                    . ' (' . USERNAME_IDENTIFIER
+                    . ', ' . PASSWORD_IDENTIFIER . ') VALUES'
+                    . ' (:' . USERNAME_IDENTIFIER
+                    . ', :' . PASSWORD_IDENTIFIER . ');';
             
             $statement = $db->prepare($query);
 
-            $statement->bindValue(':FirstName', $firstName);
-            $statement->bindValue(':LastName', $lastName);
             $statement->bindValue(':UserName', $userName);
             $statement->bindValue(':Password', sha1($password));
-            $statement->bindValue(':Email', $email);
 
             $success = $statement->execute();
+            
             $row_count = $statement->rowCount();
             $statement->closeCursor();
 
@@ -612,11 +646,82 @@
     }
     
     /**
+     * Updates a user's information
+     * @param int $userID The I.D. of the user to update.
+     * @param string $firstName The first name of the user.
+     * @param string $lastName The last name of the user.
+     * @param string $userName The username of the user.
+     * @param string $password The user's password
+     * @param string $email The email of the user.
+     * @return int The number of users that were effected by the update.
+     */
+    function UpdateUser($userID, $userName, $password)
+    {
+        try
+        {
+            if(!empty($password))
+            {
+                UpdateUserPassword($userID, $password);
+            }
+            
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . USERS_IDENTIFIER . ' SET'
+                    . ' ' . USERNAME_IDENTIFIER
+                    . ' = :' . USERNAME_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER
+                    . ' = :' . USERID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . USERNAME_IDENTIFIER, $userName);
+            
+            $rowsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsEffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    function UpdateUserPassword($userID, $password)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . USERS_IDENTIFIER . ' SET'
+                    . ' ' . PASSWORD_IDENTIFIER
+                    . ' = :' . PASSWORD_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER
+                    . ' = :' . USERID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . PASSWORD_IDENTIFIER, sha1($password));
+            
+            $rowsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsEffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Updates a user's account information.
      * @param int $userID The user ID of the user account to update.
      * @param array $hasAttributes The new collection of role ID's that the user will have.
      */
-    function updateUser($userID, $hasAttributes)
+    function updateUserAttributes($userID, $hasAttributes)
     {
         try
         {

@@ -6,24 +6,9 @@
     define("REQUESTEDPAGE_IDENTIFIER", "RequestedPage");
 
     /**
-     * The profile I.D. identifier.
-     */
-    define("PROFILEID_IDENTIFIER", 'ProfileID');
-
-    /**
-     * The record of profiles identifier.
-     */
-    define("PROFILES_IDENTIFIER", 'profiles');
-
-    /**
      * The question I.D. identifier.
      */
     define("QUESTIONID_IDENTIFIER", "QuestionID");
-    
-    /**
-     * The language profile I.D. identifier.
-     */
-    define("LANGUAGEPROFILEID_IDENTIFIER", "ProfileID");
     
     /**
      * The language I.D. identifier.
@@ -36,11 +21,6 @@
     define("ANSWERID_IDENTIFIER", "AnswerID");
     
     /**
-     * The admin role name.
-     */
-    define("ADMINROLE_IDENTIFIER", "admin");
-    
-    /**
      * The record of answers identifier.
      */
     define("ANSWERS_IDENTIFIER", "answers");
@@ -51,19 +31,9 @@
     define("QUESTIONS_IDENTIFIER", "questions");
     
     /**
-     * The record of language profiles identifier.
-     */
-    define("LANGUAGEPROFILES_IDENTIFIER", "languageprofiles");
-    
-    /**
      * The record of language experiences identifier.
      */
     define("LANGUAGEEXPERIENCES_IDENTIFIER", "languageexperiences");
-    
-    /**
-     * The manager role name.
-     */
-    define("MANAGERROLE_IDENTIFIER", "manager");
     
     /**
      * The record of roles identifier.

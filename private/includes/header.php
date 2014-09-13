@@ -42,11 +42,13 @@
                 <img src="<?php echo(LOGO_FILE) ?>" width="200" height="70"/>
                 <span class="banner">Foreign Language Placement Exam</span>
                 <?php if(loggedIn()) { ?>
-                <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); //echo('wwwwwwwwwwwwwwwwwwww'); ?></span>
+                <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); ?></span>
                 <?php }?>
                 <div class="clear"></div>
             </header>
+            <?php if(loggedIn()) { ?>
             <nav id="navbar">
                 <?php include( NAVBAR_FILE ); ?>
             </nav>
-            <article id="content">
+            <?php } ?>
+            <article id="content" class="<?php if(loggedIn()) { echo('shiftContent'); } ?>">

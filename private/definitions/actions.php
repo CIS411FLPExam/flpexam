@@ -13,6 +13,20 @@
     define("HOME_ACTION", "Home");
     
     /**
+     * The action word to use to contact someone from the site.
+     */
+    define("CONTACT_ACTION", "Contact");
+    
+    /**
+     * The action word to use to view the site's information.
+     */
+    define("ABOUT_ACTION", "About");
+    
+    
+//Actions available through the admin controller.
+/******************************************************************************/
+  
+    /**
      * The action word to use to login.
      */
     define("LOGIN_ACTION", "Login");
@@ -26,90 +40,6 @@
      * The action word to use to process a login.
      */
     define("PROCESSLOGIN_ACTION", "ProcessLogin");
-    
-    /**
-     * The key word to use to add a new user account.
-     */
-    define("SELFADD_ACTION", "SelfAdd");
-    
-    /**
-     * The action word to use to edit a user account.
-     */
-    define("SELFEDIT_ACTION", "SelfEdit");
-    
-    /**
-     * The action word to use to process a user add or edit.
-     */
-    define("PROCESSSELFADDEDIT_ACTION", "ProcessSelfAddEdit");
-    
-    /**
-     * The action word to use to view user information.
-     */
-    define("SELFVIEW_ACTION", "SelfView");
-    
-    /**
-     * The action word to use to change a user's password.
-     */
-    define("CHANGEPASSWORD_ACTION", "ChangePassword");
-    
-    /**
-     * The action word to use to contact someone from the site.
-     */
-    define("CONTACT_ACTION", "Contact");
-    
-    /**
-     * The action word to use to view the site's information.
-     */
-    define("ABOUT_ACTION", "About");
-    
-    /**
-     * The action word for a user to use to add a language profile.
-     */
-    define("LANGUAGEPROFILEADD_ACTION", "LanguageProfileAdd");
-    
-    /**
-     * The action word for a user to use to edit a language profile.
-     */
-    define("LANGUAGEPROFILEEDIT_ACTION", "LanguageProfileEdit");
-    
-    /**
-     * The action word for a user to use to view a lanauage profile.
-     */
-    define("LANGUAGEPROFILEVIEW_ACTION", "LanguageProfileView");
-    
-    /**
-     * The action word to use to process a user profile add or edit.
-     */
-    define("PROCESSLANGUAGEPROFILEADDEDIT_ACTION", "ProcessLanguageProfileAddEdit");
-    
-    /**
-     * The action word for a user to use to view all of their profiles.
-     */
-    define("MANAGELANGUAGEPROFILES_ACTION", "ManageLanguageProfiles");
-    
-    /**
-     * The action word to use to add a user profile.
-     */
-    define("PROFILEADD_ACTION", "ProfileAdd");
-    
-    /**
-     * The action word to use to edit a user profile.
-     */
-    define("PROFILEEDIT_ACTION", "ProfileEdit");
-    
-    /**
-     * The action word to use to view a user profile.
-     */
-    define("PROFILEVIEW_ACTION", "ProfileView");
-    
-    /**
-     * The action word to use to process an add/edit profile.
-     */
-    define("PROCESSPROFILEADDEDIT_ACTION", "ProcessProfileAddEdit");
-    
-    
-//Actions available through the admin controller.
-/******************************************************************************/
     
     /**
      * The action word to use to search for a users.
@@ -127,6 +57,11 @@
     define("MANAGEUSERS_ACTION", "ManageUsers");
     
     /**
+     * The action word to add a user.
+     */
+    define("USERADD_ACTION", "UserAdd");
+    
+    /**
      * The action word to use to edit a current user's information.
      */
     define("USEREDIT_ACTION", "UserEdit");
@@ -142,9 +77,14 @@
     define("USERVIEW_ACTION", "UserView");
     
     /**
-     * The action word to use to process a user add or edit.
+     * The action word to use to process a user add.
      */
-    define("PROCESSUSERADDEDIT_ACTION", "ProcessUserAddEdit");
+    define("PROCESSUSERADD_ACTION", "ProcessUserAdd");
+    
+    /**
+     * The action word to use to process a user edit.
+     */
+    define("PROCESSUSEREDIT_ACTION", "ProcessUserEdit");
     
     /**
      * The action word to use to manage functions.
@@ -255,22 +195,4 @@
      * The action word to use to process a question add/edit.
      */
     define("PROCESSQUESTIONADDEDIT_ACTION", "ProcessQuestionAddEdit");
-    
-//Actions available through the exam controller.
-/******************************************************************************/
-    
-    /**
-     * The action word to use to start an exam.
-     */
-    define("STARTEXAM_ACTION", "StartExam");
-    
-    /**
-     * The action word to use select a language for the exam.
-     */
-    define("SELECTEXAMLANGUAGE_ACTION", "SelectExamLanguage");
-    
-    /**
-     * The action word to use to process a language select for an exam.
-     */
-    define("PROCESSEXAMLANGUAGESELECT_ACTION", "ProcessSelectExamLanguage");
 ?>

@@ -22,16 +22,17 @@
 <div class="divider"></div>
 
 <br />
-            
+
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION)); ?>" method="post">
+    <input type="submit" value="Add User" />
+</form>
+
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <div class="datatable">
         <table id="users" class="tablesorter">
             <thead>
                 <tr>
-                    <th><b>First Name</b></th>
-                    <th><b>Last Name</b></th>
                     <th><b>User Name</b></th>
-                    <th><b>Email</b></th>
                     <?php if ($userCanView) { ?><th></th><?php } ?>
                     <?php if ($userCanEdit) { ?><th></th><?php } ?>
                     <?php if ($userCanDelete) { ?><th></th><?php } ?>
@@ -42,19 +43,13 @@
                     $j = 0;
                     foreach ($results as $record)
                     {
-                        $firstName = $record[FIRSTNAME_IDENTIFIER];
-                        $lastName = $record[LASTNAME_IDENTIFIER];
                         $userName = $record[USERNAME_IDENTIFIER];
-                        $email = $record[EMAIL_IDENTIFIER];
                         $user_ID = $record[USERID_IDENTIFIER];
                 ?>
 
 
                 <tr class="row1">
-                    <td><?php echo(htmlspecialchars($firstName)); ?></td>
-                    <td><?php echo(htmlspecialchars($lastName)); ?></td>
                     <td><?php echo(htmlspecialchars($userName)); ?></td>
-                    <td><?php echo(htmlspecialchars($email)); ?></td>
 
                     <?php if ($userCanView) { ?>
                         <td>

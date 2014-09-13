@@ -23,27 +23,37 @@
         $action ="";
     }
     
-    if ($action != PROCESSLOGIN_ACTION && !userIsAuthorized($action))
+    if(!loggedIn() && $action != LOGIN_ACTION && $action != PROCESSLOGIN_ACTION)
     {
-        if(!loggedIn())
-        {
-            $url = GetControllerScript(MAINCONTROLLER_FILE,LOGIN_ACTION) . "&RequestedPage=" . GetRequestedURI( );
-            Redirect( $url );
-        }
-        else
-        {
-            include( NOTAUTHORIZED_FILE );
-        }
+        $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION) . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . GetRequestedURI( );
+        Redirect( $url );
+    }
+    else if (!userIsAuthorized($action))
+    {
+        include( NOTAUTHORIZED_FILE );
     }
     else
     {
         switch ($action)
         {
+            case LOGIN_ACTION :
+                HandleLogin();
+                break;
+            case PROCESSLOGIN_ACTION :
+                ProcessLogin();
+                break;
+            case LOGOUT_ACTION :
+                logOut();
+                Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                break;
             case CONTROLPANEL_ACTION :
                 include(CONTROLPANELFORM_FILE);
                 break;
             case MANAGEUSERS_ACTION :
                 ManageUsers();
+                break;
+            case USERADD_ACTION :
+                UserAdd();
                 break;
             case USEREDIT_ACTION :
                 UserEdit();
@@ -51,8 +61,11 @@
             case USERDELETE_ACTION :
                 UserDelete();
                 break;
-            case PROCESSUSERADDEDIT_ACTION :
-                ProcessUserAddEdit();
+            case PROCESSUSERADD_ACTION :
+                ProcessUserAdd();
+                break;
+            case PROCESSUSEREDIT_ACTION :
+                ProcessUserEdit();
                 break;
             case MANAGEFUNCTIONS_ACTION :
                 ManageFunctions();
@@ -128,6 +141,39 @@
                 break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+    }
+    
+    function HandleLogin( )
+    {
+        if(loggedIn())
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE,HOME_ACTION));
+        }
+        
+        if (!isset($_SERVER['HTTPS']))
+        {
+            SecureConnection( );
+            exit();
+        }
+        
+        include(LOGINFORM_FILE);
+    }
+    
+    function ProcessLogin()
+    {
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        
+        if(login($username,$password))
+        {
+            $requestedPage = $_POST["RequestedPage"];
+            UnsecureConnection($requestedPage);
+        }
+        else
+        {
+            $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION ) . "&LoginFailure" . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . urlencode($_POST["RequestedPage"]);
+            Redirect( $url );
         }
     }
     
@@ -342,10 +388,7 @@
         
         $hasAttrResults = getUserRoles($userID);
         
-        $firstName = $row[FIRSTNAME_IDENTIFIER];
-        $lastName = $row[LASTNAME_IDENTIFIER];
         $userName = $row[USERNAME_IDENTIFIER];
-        $email = $row[EMAIL_IDENTIFIER];
         
         include(VIEWUSERFORM_FILE);
     }
@@ -362,7 +405,15 @@
     function ManageUsers()
     {
         $results = getAllUsers();
+        
         include(MANAGEUSERSFORM_FILE);
+    }
+    
+    function UserAdd()
+    {
+        $userName = "";
+        
+        include(ADDUSERFORM_FILE);
     }
     
     function UserEdit()
@@ -391,11 +442,9 @@
                 {
                     $hasAttrResults = getUserRoles($id);
                     $hasNotAttrResults = getNotUserRoles($id);
+                    
                     $userID = $row[USERID_IDENTIFIER];
-                    $firstName = $row[FIRSTNAME_IDENTIFIER];
-                    $lastName = $row[LASTNAME_IDENTIFIER];
                     $userName = $row[USERNAME_IDENTIFIER];
-                    $email = $row[EMAIL_IDENTIFIER];
                     
                     include(EDITUSERFORM_FILE);
                 }
@@ -428,34 +477,80 @@
             include(MANAGEUSERSFORM_FILE);
         }
     }
-    function ProcessUserAddEdit()
+    
+    function ProcessUserAdd()
     {
+        $valid = TRUE;
+        
+        $userName = $_POST[USERNAME_IDENTIFIER];
+        $password = $_POST[PASSWORD_IDENTIFIER];
+        $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
+        
+        if($password != $passwordRetype)
+        {
+            $valid = FALSE;
+        }
+        
+        if($valid)
+        {
+            $userID = addUser($userName, $password);
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+        }
+        
+        include(ADDUSERFORM_FILE);
+    }
+    
+    function ProcessUserEdit()
+    {
+        $valid = TRUE;
+        
+        $userName = $_POST[USERNAME_IDENTIFIER];
+        
         if(!empty($_POST[USERID_IDENTIFIER]))
         {
-            $UserID = $_POST[USERID_IDENTIFIER];
+            $userID = $_POST[USERID_IDENTIFIER];
         }
         else
         {
             displayError('User ID could not be resolved.');
         }
         
-        if(userIsAuthorized(USEREDIT_ACTION))
+        if(!empty($_POST[PASSWORD_IDENTIFIER]))
         {
-            $hasAttributes = array();
+            $password = $_POST[PASSWORD_IDENTIFIER];
+            $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
 
-            if(!empty($_POST["hasAttributes"]))
+            if($password != $passwordRetype)
             {
-                $hasAttributes = $_POST["hasAttributes"];
+                $valid = FALSE;
             }
-            
-            updateUser($UserID, $hasAttributes);
-            
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($UserID)));
         }
-        else
+        
+        if($valid)
         {
-            include(NOTAUTHORIZED_FILE);
+            if(userIsAuthorized(USEREDIT_ACTION))
+            {
+                $hasAttributes = array();
+
+                if(!empty($_POST["hasAttributes"]))
+                {
+                    $hasAttributes = $_POST["hasAttributes"];
+
+                    updateUserAttributes($userID, $hasAttributes);
+                }
+                
+                UpdateUser($userID, $userName, $password);
+                
+                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+            }
+            else
+            {
+                include(NOTAUTHORIZED_FILE);
+            }
         }
+        
+        include(EDITUSERFORM_FILE);
     }
 
     function ManageFunctions()

@@ -3,27 +3,9 @@
 ?>
 <!-- Start main content here -->
 <div class="formGroup">
-    <div class="formSection">
-        <label>First Name:</label><label><?php echo(htmlspecialchars($firstName)); ?></label>
-    </div>
-    
-    <div class="divider"></div>
-    
-    <div class="formSection">
-        <label>Last Name:</label><label><?php echo(htmlspecialchars($lastName)); ?></label>
-    </div>
-    
-    <div class="divider"></div>
     
     <div class="formSection">
         <label>User Name:</label><label><?php echo(htmlspecialchars($userName)); ?></label>
-    </div>
-    
-    <div class="divider"></div>
-    
-    <div class="formSection">
-        <label>Email:</label><label><?php echo(htmlspecialchars($email)); ?></label>
-
     </div>
     
     <div class="divider"></div>

@@ -5,7 +5,7 @@
 
 <h1>Login</h1>
 
-<form action="<?php echo( GetControllerScript(MAINCONTROLLER_FILE, PROCESSLOGIN_ACTION ) ); ?>" method="post">
+<form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLOGIN_ACTION ) ); ?>" method="post">
     <div class="formGroup">
         <div class="formSection">
             <label>Username:</label><input class="formInput" type="text" name="username" />
@@ -28,14 +28,6 @@
     ?>
 
 </form>
-
-<form action='<?php echo( GetControllerScript( MAINCONTROLLER_FILE, SELFADD_ACTION ) ); ?>' method="post">
-    <?php if (isset($_GET[REQUESTEDPAGE_IDENTIFIER])) { ?>
-        <input type="hidden" name="<?php echo(REQUESTEDPAGE_IDENTIFIER); ?>" value="<?php echo($_GET[REQUESTEDPAGE_IDENTIFIER]); ?>" />
-    <?php } ?>
-        <input type="submit" value="Sign Up!" />
-</form>
-
 <!-- End main content here -->
 <?php
     include( FOOTER_FILE ); 

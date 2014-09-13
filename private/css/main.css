@@ -24,11 +24,16 @@ footer
 
 #content
 {
-    width: 750px;
-    float: left;
     background-color: #ffffff;
     padding: 5px;
 }
+
+.shiftContent
+{
+    width: 750px;
+    float: left;
+}
+
 .inline { display: inline; }
 .testBackground { background-color: #004400; }
 .stdHeight { height: 460px; }
