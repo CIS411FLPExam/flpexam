@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2014 at 07:44 PM
+-- Generation Time: Sep 13, 2014 at 08:19 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -34,7 +34,40 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `answers`
+--
+
+INSERT INTO `answers` (`AnswerID`, `QuestionID`, `Correct`, `Name`) VALUES
+(5, 2, 1, 'Let''s hope so.'),
+(6, 1, 1, 'I think so.'),
+(7, 1, 0, 'But how?');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `examparameters`
+--
+
+CREATE TABLE IF NOT EXISTS `examparameters` (
+  `ParameterID` int(11) NOT NULL AUTO_INCREMENT,
+  `KeyCode` varchar(40) NOT NULL,
+  `QuestionCount` int(11) NOT NULL DEFAULT '10',
+  `IncLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
+  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
+  PRIMARY KEY (`ParameterID`),
+  UNIQUE KEY `ParameterID` (`ParameterID`),
+  UNIQUE KEY `KeyCode` (`KeyCode`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `examparameters`
+--
+
+INSERT INTO `examparameters` (`ParameterID`, `KeyCode`, `QuestionCount`, `IncLevelScore`, `DecLevelScore`) VALUES
+(1, 'cis411', 10, '0.8000', '0.5000');
 
 -- --------------------------------------------------------
 
@@ -47,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Dumping data for table `functions`
@@ -78,7 +111,11 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (23, 'QuestionAdd', 'Allows the user to add a question to a language.'),
 (24, 'QuestionEdit', 'Allows a user to edit an existing questinon.'),
 (25, 'QuestionDelete', 'Allows the user to delete a question.'),
-(26, 'QuestionView', 'Allows the user to view a question.');
+(26, 'QuestionView', 'Allows the user to view a question.'),
+(27, 'ManageQuestions', 'Allows the user access to the panel to manage questions.'),
+(28, 'QuestionSearch', 'Allows the user to search questions.'),
+(29, 'ExamParametersView', 'Allows the user to view the exam parameters.'),
+(30, 'ExamParametersEdit', 'Allows the user to edit the exam parameters.');
 
 -- --------------------------------------------------------
 
@@ -91,29 +128,18 @@ CREATE TABLE IF NOT EXISTS `languageexperiences` (
   `Name` varchar(32) NOT NULL,
   PRIMARY KEY (`Name`),
   UNIQUE KEY `ExperienceID` (`ExperienceID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 --
--- Table structure for table `languageprofiles`
+-- Dumping data for table `languageexperiences`
 --
 
-CREATE TABLE IF NOT EXISTS `languageprofiles` (
-  `ProfileID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserID` int(11) NOT NULL,
-  `Language` varchar(32) NOT NULL,
-  `SpokenAtHome` tinyint(1) NOT NULL,
-  `JrHighExp` varchar(32) NOT NULL,
-  `SrHighExp` varchar(32) NOT NULL,
-  `CollegeExp` varchar(32) NOT NULL,
-  PRIMARY KEY (`UserID`,`Language`),
-  UNIQUE KEY `ProfileID` (`ProfileID`),
-  KEY `language_fk` (`Language`),
-  KEY `jrhighexp_fk` (`JrHighExp`),
-  KEY `srhighexp_fk` (`SrHighExp`),
-  KEY `collegeexp_fk` (`CollegeExp`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+INSERT INTO `languageexperiences` (`ExperienceID`, `Name`) VALUES
+(1, 'None'),
+(2, '1 - 2 years'),
+(3, '2 - 3 years'),
+(4, '3 - 4 years'),
+(5, '4+ years');
 
 -- --------------------------------------------------------
 
@@ -127,7 +153,14 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `Active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `languages`
+--
+
+INSERT INTO `languages` (`LanguageID`, `Name`, `Active`) VALUES
+(1, 'French', 0);
 
 -- --------------------------------------------------------
 
@@ -139,8 +172,19 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `QuestionID` int(11) NOT NULL AUTO_INCREMENT,
   `Level` int(11) NOT NULL,
   `Name` text NOT NULL,
-  PRIMARY KEY (`QuestionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `LanguageID` int(11) NOT NULL,
+  PRIMARY KEY (`QuestionID`),
+  KEY `question_language_fk` (`LanguageID`),
+  FULLTEXT KEY `question_ft` (`Name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `questions`
+--
+
+INSERT INTO `questions` (`QuestionID`, `Level`, `Name`, `LanguageID`) VALUES
+(1, 1, 'Did the other one get deleted?', 1),
+(2, 1, 'Let''s see if this change worked?', 1);
 
 -- --------------------------------------------------------
 
@@ -160,6 +204,20 @@ CREATE TABLE IF NOT EXISTS `rolefunctions` (
 --
 
 INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
+(3, 18),
+(3, 20),
+(3, 19),
+(3, 21),
+(3, 22),
+(3, 27),
+(3, 1),
+(3, 23),
+(3, 25),
+(3, 24),
+(3, 26),
+(3, 16),
+(3, 17),
+(3, 28),
 (1, 7),
 (1, 9),
 (1, 8),
@@ -169,11 +227,17 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 21),
 (1, 6),
 (1, 22),
+(1, 27),
 (1, 11),
 (1, 1),
 (1, 10),
 (1, 15),
 (1, 5),
+(1, 23),
+(1, 25),
+(1, 24),
+(1, 28),
+(1, 26),
 (1, 12),
 (1, 14),
 (1, 13),
@@ -181,22 +245,8 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 3),
 (1, 16),
 (1, 17),
-(1, 23),
-(1, 25),
-(1, 24),
-(1, 26),
-(3, 18),
-(3, 20),
-(3, 19),
-(3, 21),
-(3, 22),
-(3, 1),
-(3, 16),
-(3, 17),
-(3, 23),
-(3, 25),
-(3, 24),
-(3, 26);
+(1, 30),
+(1, 29);
 
 -- --------------------------------------------------------
 
@@ -239,9 +289,7 @@ CREATE TABLE IF NOT EXISTS `userroles` (
 
 INSERT INTO `userroles` (`UserID`, `RoleID`) VALUES
 (1, 1),
-(2, 1),
-(4, 2),
-(3, 3);
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -251,25 +299,18 @@ INSERT INTO `userroles` (`UserID`, `RoleID`) VALUES
 
 CREATE TABLE IF NOT EXISTS `users` (
   `UserID` int(11) NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(32) NOT NULL,
-  `LastName` varchar(32) NOT NULL,
   `UserName` varchar(32) NOT NULL,
   `Password` varchar(40) NOT NULL,
-  `Email` varchar(32) NOT NULL,
-  PRIMARY KEY (`UserID`),
-  FULLTEXT KEY `nombre` (`FirstName`,`LastName`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+  PRIMARY KEY (`UserID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`UserID`, `FirstName`, `LastName`, `UserName`, `Password`, `Email`) VALUES
-(1, 'cool', 'kid', 'wdgarey', '9c22f986c7a4149924fb8b016ef2958687f9f6b2', 'w.d.garey@eagle.clarion.edu'),
-(2, 'admin', 'admin', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@flpexam.com'),
-(3, 'manager', 'manager', 'manager', '1a8565a9dc72048ba03b4156be3e569f22771f23', 'manager@flpexam.com'),
-(4, 'guest', 'guest', 'guest', '35675e68f4b5af7b995d9205ad0fc43842f16450', 'guest@flpexam.com'),
-(5, 'Jack', 'Jill', 'jj', '7323a5431d1c31072983a6a5bf23745b655ddf59', 'jj@clarion.edu');
+INSERT INTO `users` (`UserID`, `UserName`, `Password`) VALUES
+(1, 'wdgarey', '9c22f986c7a4149924fb8b016ef2958687f9f6b2'),
+(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997');
 
 --
 -- Constraints for dumped tables
@@ -282,14 +323,10 @@ ALTER TABLE `answers`
   ADD CONSTRAINT `questionid_fk` FOREIGN KEY (`QuestionID`) REFERENCES `questions` (`QuestionID`);
 
 --
--- Constraints for table `languageprofiles`
+-- Constraints for table `questions`
 --
-ALTER TABLE `languageprofiles`
-  ADD CONSTRAINT `language_fk` FOREIGN KEY (`Language`) REFERENCES `languages` (`Name`),
-  ADD CONSTRAINT `userid_fk` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`),
-  ADD CONSTRAINT `jrhighexp_fk` FOREIGN KEY (`JrHighExp`) REFERENCES `languageexperiences` (`Name`),
-  ADD CONSTRAINT `srhighexp_fk` FOREIGN KEY (`SrHighExp`) REFERENCES `languageexperiences` (`Name`),
-  ADD CONSTRAINT `collegeexp_fk` FOREIGN KEY (`CollegeExp`) REFERENCES `languageexperiences` (`Name`);
+ALTER TABLE `questions`
+  ADD CONSTRAINT `question_language_fk` FOREIGN KEY (`LanguageID`) REFERENCES `languages` (`LanguageID`);
 
 --
 -- Constraints for table `rolefunctions`
