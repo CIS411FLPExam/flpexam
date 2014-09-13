@@ -1,5 +1,6 @@
 <?php
     include( HEADER_FILE );
+    include( CONTROLPANEL_FILE );
 ?>
 <!-- Start main content here -->
 
@@ -11,6 +12,19 @@
     $userCanView = userIsAuthorized(QUESTIONVIEW_ACTION);
     $userCanDelete = userIsAuthorized(QUESTIONDELETE_ACTION);
 ?>
+
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSEARCH_ACTION)); ?>" method="post">
+    <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+    <label>Search Questions:</label>
+    <input name="<?php echo(NAME_IDENTIFIER) ?>" type="text" class="formInput" />
+    <input type="submit" value="Search" />
+</form>
+
+<br />
+
+<div class="divider"></div>
+
+<br />
 
 <?php if($userCanAdd) { ?>
     <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
@@ -78,6 +92,8 @@
                 <input type="submit" value="Delete Selected" />
         <?php } ?>
     </form>
+<?php } else { ?>
+    <h3>No questions found.</h3>
 <?php } ?>
 <!-- End main content here -->
 <?php

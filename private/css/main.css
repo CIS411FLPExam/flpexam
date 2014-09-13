@@ -1,11 +1,15 @@
 body
 {
-    background-color: #9e9489;
+    background-color: #03439b;
+}
+
+a
+{
+    color: #03439b;
 }
 
 footer
 {
-    background-color: #ffffff;
     padding: 5px;
     text-align: center;
 }
@@ -26,11 +30,13 @@ footer
 {
     background-color: #ffffff;
     padding: 5px;
+    border: 2px #ddc873 solid;
+    border-radius: 10px;
 }
 
 .shiftContent
 {
-    width: 750px;
+    width: 746px;
     float: left;
 }
 
@@ -162,6 +168,7 @@ footer
 {
     display: inline-block;
     font-size: 250%;
+    color: #ddc873;
 }
 
 .username

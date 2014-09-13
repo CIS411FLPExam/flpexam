@@ -4,6 +4,41 @@
     require_once(MODEL_FILE);
     
     /**
+     * Searches all users for the given name.
+     * @param int $languageID The I.D. of the language to search.
+     * @param string $name The user's first and/or last name.
+     * @return array The collection of users found in the search.
+     */
+    function SearchForQuestion($languageID, $name)
+    {
+        try
+        {
+            $db = GetDBConnection();
+
+            $query = "SELECT * FROM " . QUESTIONS_IDENTIFIER . " WHERE"
+                    . " " . LANGUAGEID_IDENTIFIER
+                    . " = :" . LANGUAGEID_IDENTIFIER . " AND"
+                    . " MATCH (" . NAME_IDENTIFIER . ") AGAINST" 
+                    . " (:" . NAME_IDENTIFIER . " IN BOOLEAN MODE);";
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . NAME_IDENTIFIER, $name);
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            $statement->closeCursor();
+
+            return $results;
+        }
+        catch(PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Activates a language.
      * @param int $languageID The I.D. of the language to Activate.
      */
@@ -138,6 +173,43 @@
             
         }
         catch(PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the language that a question belongs to.
+     * @param int $questionID The I.D. of the question.
+     * @return array The language that the question belongs to.
+     */
+    function GetQuestionLanguage($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . LANGUAGES_IDENTIFIER . '.* FROM'
+                    . ' ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONS_IDENTIFIER .' ON'
+                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $language = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            return $language;
+        }
+        catch (PDOException $ex)
         {
             LogError($ex);
         }

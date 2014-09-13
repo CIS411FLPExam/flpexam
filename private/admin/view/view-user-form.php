@@ -1,5 +1,6 @@
 <?php
     include( HEADER_FILE );
+    include( CONTROLPANEL_FILE );
 ?>
 <!-- Start main content here -->
 <div class="formGroup">

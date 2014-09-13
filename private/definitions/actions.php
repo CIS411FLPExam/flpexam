@@ -195,4 +195,9 @@
      * The action word to use to process a question add/edit.
      */
     define("PROCESSQUESTIONADDEDIT_ACTION", "ProcessQuestionAddEdit");
+    
+    /**
+     * The action word to use to search for question.
+     */
+    define("QUESTIONSEARCH_ACTION", "QuestionSearch");
 ?>

@@ -139,6 +139,9 @@
             case PROCESSQUESTIONADDEDIT_ACTION :
                 ProcessQuestionAddEdit();
                 break;
+            case QUESTIONSEARCH_ACTION :
+                ProcessQuestionSearch();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
@@ -203,9 +206,24 @@
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
         }
-        else
+        else if(isset($_GET[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else if(isset($_GET[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
+        else if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        
+        if(isset($questionID))
+        {
+            $language = GetQuestionLanguage($questionID);
+            $languageID = $language[LANGUAGEID_IDENTIFIER];
+            unset($questionID);
         }
         
         $name = '';
@@ -299,6 +317,19 @@
         include(VIEWQUESTIONFORM_FILE);
     }
     
+    function ProcessQuestionSearch()
+    {
+        $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        $name = $_POST[NAME_IDENTIFIER];
+        
+        $lang = GetLanguage($languageID);
+        $questions = SearchForQuestion($languageID, $name);
+        
+        $language = $lang[NAME_IDENTIFIER];
+        
+        include(MANAGEQUESTIONSFORM_FILE);
+    }
+    
     function ProcessLanguageAdd()
     {
         $name = "";
@@ -331,12 +362,29 @@
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
         }
-        else
+        else if(isset($_GET[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_GET[LANGUAGEID_IDENTIFIER];
         }
+        else if(isset($_GET[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
+        else if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
         
-        $language = GetLanguage($languageID);
+        if(isset($languageID))
+        {
+            $language = GetLanguage($languageID);
+        }
+        else if(isset($questionID))
+        {
+            $language = GetQuestionLanguage($questionID);
+            $languageID = $language[LANGUAGEID_IDENTIFIER];
+            unset($questionID);
+        }
         
         $name = $language[NAME_IDENTIFIER];
         $active = $language['Active'];

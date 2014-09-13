@@ -85,6 +85,8 @@
                 <input type="submit" value="Delete Selected" />
         <?php } ?>
     </form>
+<?php } else { ?>
+    <h3>No languages found.</h3>
 <?php } ?>
 <!-- End main content here -->
 <?php
