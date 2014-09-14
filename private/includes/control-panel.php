@@ -7,7 +7,7 @@
     <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)); ?>">Manage Languages</a> &nbsp;
 <?php } ?>
 <?php if (userIsAuthorized(EXAMPARAMETERSVIEW_ACTION) ) { ?>
-    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)); ?>">View Exam Parameters</a> &nbsp;
+    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)); ?>">Manage Exam Parameters</a> &nbsp;
 <?php } ?>
 <?php if (userIsAuthorized(MANAGEFUNCTIONS_ACTION)) {  ?>
     <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION ) ) ?>">Manage Functions</a> &nbsp;

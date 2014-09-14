@@ -29,8 +29,8 @@
     
     if (!UserIsClear() && $action!= ENTERKEYCODE_ACTION && $action != PROCESSKEYCODE_ACTION)
     {
-        exit();
         include(NOTAUTHORIZED_FILE);
+        exit();
     }
     else
     {

@@ -20,17 +20,17 @@
         <div class="divider"></div>
 
         <div class="formSection">
-            <label>Get at least:</label>
+            <label>Score:</label>
             <input name="<?php echo($parameters->GetIncLevelScoreIndex()); ?>" type="number" value="<?php echo(htmlspecialchars($incLevelScore)); ?>" />
-            % correct to increase level
+            % or higher to increase level
         </div>
 
         <div class="divider"></div>
 
         <div class="formSection">
-            <label>Get less than:</label>
+            <label>Score:</label>
             <input name="<?php echo($parameters->GetDecLevelScoreIndex()); ?>" type="number" value="<?php echo(htmlspecialchars($decLevelScore)); ?>" />
-            % correct to decrease level
+            % or lower to decrease level
         </div>
         
         <br />

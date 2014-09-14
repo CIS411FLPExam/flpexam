@@ -19,17 +19,17 @@
     <div class="divider"></div>
     
     <div class="formSection">
-        <label>Get at least:</label> 
+        <label>Score:</label> 
         <?php echo(htmlspecialchars($incLevelScore)); ?>
-        % correct to increase level
+        % or higher to increase level
     </div>
     
     <div class="divider"></div>
     
     <div class="formSection">
-        <label>Get less than:</label>
+        <label>Score:</label>
         <?php echo(htmlspecialchars($decLevelScore)); ?>
-        % correct to decrease level
+        % or lower to decrease level
     </div>
     
 </div>

@@ -216,6 +216,16 @@
      */
     define("PROCESSEXAMPARAMETERSEDIT_ACTION", "ProccesExamParametersEdit");
     
+    /**
+     * The action word to use to manage tests.
+     */
+    define("MANAGETESTS_ACTION", "ManageTests");
+    
+    /**
+     * The action word to use to view a test.
+     */
+    define("VIEWTEST_ACTION", "ViewTest");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

@@ -151,9 +151,25 @@
             case PROCESSEXAMPARAMETERSEDIT_ACTION :
                 ProcessExamParametersEdit();
                 break;
+            case MANAGETESTS_ACTION :
+                ManageTests();
+                break;
+            case VIEWTEST_ACTION :
+                ViewTest();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function ViewTest()
+    {
+        
+    }
+    
+    function ManageTests()
+    {
+        
     }
     
     function ExamParametersView()
