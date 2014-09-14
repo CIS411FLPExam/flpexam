@@ -31,6 +31,39 @@
     }
     
     /**
+     * Gets the exam parameters.
+     * @return type
+     */
+    function GetExamParameters()
+    {
+        try
+        {
+            $examParameters = new ExamParameters();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM'
+                    . ' ' . EXAMPARAMETERS_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            $examParameters->Initialize($row);
+            
+            return $examParameters;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Starts a PHP session if one hasn't already been started.
      */
     function StartSession( )
@@ -286,11 +319,50 @@
     }
     
     /**
+     * Indicates whether or not a language is active.
+     * @param int $languageID The I.D. of the language.
+     * @return boolean True, if the language is active.
+     */
+    function IsActive($languageID)
+    {
+        try
+        {
+            $isActive = FALSE;
+            $db = GetDBConnection( );
+            
+            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
+                    . ' ' . 'Active'
+                    . ' = :' . 'Active' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . 'Active', 1); //"1" because "1" means true (or active).
+            
+            $statement->execute();
+            
+            $activeLanguages = $statement->fetchAll();
+            
+            if (count($activeLanguages) > 0)
+            {
+                $isActive = TRUE;
+            }
+            
+            return $isActive;
+        } 
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Gets a language from the record of languages.
-     * @param int $langaugeID The ID of the language to get.
+     * @param int $languageID The ID of the language to get.
      * @return array The language.
      */
-    function GetLanguage($langaugeID)
+    function GetLanguage($languageID)
     {
         try
         {
@@ -301,11 +373,13 @@
                     . ' = :' . LANGUAGEID_IDENTIFIER . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $langaugeID);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
             
             $statement->execute();
             
             $language = $statement->fetch();
+            
+            $statement->closeCursor();
             
             return $language;
         } 
@@ -379,6 +453,23 @@
         {
             LogError($ex);
         }
+    }
+    
+    /**
+     * Gets the names of all active languages.
+     * @return array The collection of names.
+     */
+    function GetActiveLanguageNames()
+    {
+        $languageNames = array();
+        $activeLanguages = GetAllActiveLanguages();
+        
+        foreach ($activeLanguages as $language)
+        {
+            $languageNames[] = $language[NAME_IDENTIFIER];
+        }
+        
+        return $languageNames;
     }
     
     /**
@@ -460,6 +551,62 @@
             $statement->closeCursor();
             
             return $experiences;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets all language experience names.
+     * @return array The collection of names.
+     */
+    function GetLanguageExperienceNames()
+    {
+        $names = array();
+        $languageExperiences = GetAllLanguageExperiences();
+        
+        foreach ($languageExperiences as $experience)
+        {
+            $names[] = $experience[NAME_IDENTIFIER];
+        }
+        
+        return $names;
+    }
+    
+    /**
+     * Gets the I.D. of a language experience.
+     * @param string $experience The name.
+     * @return int The I.D. of the language experience or 0 if the corresponding language experience was not found.
+     */
+    function GetLanguageExperienceID($experience)
+    {
+        try
+        {
+            $experienceID = 0;
+            $db = GetDBConnection();
+        
+            $query = 'SELECT ' . LANGUAGEEXPERIENCEID_IDENTIFIER . ' FROM'
+                    . ' ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
+                    . ' ' . NAME_IDENTIFIER
+                    . ' = :' . NAME_IDENTIFIER . ';';
+
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . NAME_IDENTIFIER, $experience);
+            
+            $statement->execute();
+            
+            $result = $statement->fetch();
+            
+            if(count($result) > 0)
+            {
+                $experienceID = $result[0];
+            }
+            
+            $statement->closeCursor();
+            
+            return $experienceID;
         }
         catch (PDOException $ex)
         {

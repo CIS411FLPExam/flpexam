@@ -38,7 +38,7 @@
     </head>
     <body>        
         <div id="wrapper">
-            <header>
+            <header class="centerText">
                 <img src="<?php echo(LOGO_FILE) ?>" width="200" height="70"/>
                 <span class="banner">Foreign Language Placement Exam</span>
                 <?php if(loggedIn()) { ?>

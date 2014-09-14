@@ -201,6 +201,21 @@
      */
     define("EXAMPARAMETERSCLASS_FILE", CODE_DIR . "examparameters-class.php");
     
+    /**
+     * The file path of the exam class file.
+     */
+    define("EXAMCLASS_FILE", CODE_DIR . "exam-class.php");
+    
+    /**
+     * The file path of the language class file.
+     */
+    define("LANGUAGECLASS_FILE", CODE_DIR . "language-class.php");
+    
+    /**
+     * The file path of the profile class file.
+     */
+    define("PROFILECLASS_FILE", CODE_DIR . "profile-class.php");
+    
 //Main paths.
 /******************************************************************************/
     
@@ -365,4 +380,47 @@
      * The file path of the view exam parameters form file.
      */
     define("VIEWEXAMPARAMETERSFORM_FILE", ADMINVIEW_DIR . "view-examparameters-form.php");
+    
+//Exam paths.
+/******************************************************************************/
+    
+    /**
+     * The file path of the exam directory.
+     */
+    define("EXAM_DIR", PRIVATE_DIR . "exam/");
+    
+    /**
+     * The file path of the exam view directory.
+     */
+    define("EXAMVIEW_DIR", EXAM_DIR . "view/");
+    
+    /**
+     * The file path of the exam model directory.
+     */
+    define("EXAMMODEL_DIR", EXAM_DIR . "model/");
+    
+    /**
+     * The file path of the exam controller file.
+     */
+    define("EXAMCONTROLLER_FILE", CONTROLLER_DIR . "exam.php");
+    
+    /**
+     * The file path of the exam model file.
+     */
+    define("EXAMMODEL_FILE", EXAMMODEL_DIR . "model.php");
+    
+    /**
+     * The file path of the key code form file.
+     */
+    define("KEYCODEFORM_FILE", EXAMVIEW_DIR . "keycode-form.php");
+    
+    /**
+     * The file path of the language select form file.
+     */
+    define("SELECTLANGUAGEFORM_FILE", EXAMVIEW_DIR . "select-language-form.php");
+    
+    /**
+     * The file path of the create profile form file.
+     */
+    define("CREATEPROFILEFORM_FILE", EXAMVIEW_DIR . "create-profile-form.php");
 ?>

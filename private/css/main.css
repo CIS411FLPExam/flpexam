@@ -101,13 +101,7 @@ footer
     text-decoration: underline;
 }
 
-
-.row1
-{
-    background-color: #ddc873;
-}
-
-.row2
+.datatable tbody tr td
 {
     background-color: #ddc873;
 }

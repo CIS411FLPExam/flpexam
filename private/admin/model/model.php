@@ -4,39 +4,6 @@
     require_once(MODEL_FILE);
     
     /**
-     * Gets the exam parameters.
-     * @return type
-     */
-    function GetExamParameters()
-    {
-        try
-        {
-            $examParameters = new ExamParameters();
-            
-            $db = GetDBConnection();
-            
-            $query = 'SELECT * FROM'
-                    . ' ' . EXAMPARAMETERS_IDENTIFIER;
-            
-            $statement = $db->prepare($query);
-            
-            $statement->execute();
-            
-            $row = $statement->fetch();
-            
-            $statement->closeCursor();
-            
-            $examParameters->Initialize($row);
-            
-            return $examParameters;
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }
-    
-    /**
      * Sets the exam parameters.
      * @param ExamParameters $parameters The parameters.
      * @return int The number of exam parameter rows effected by the update.

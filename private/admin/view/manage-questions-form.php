@@ -56,7 +56,7 @@
                             $questionName = $question[NAME_IDENTIFIER];
                     ?>
 
-                    <tr class="row1">
+                    <tr>
                         <td><?php echo(htmlspecialchars($questionName)); ?></td>
 
                         <?php if ($userCanView) { ?>
@@ -99,3 +99,9 @@
 <?php
     include( FOOTER_FILE ); 
 ?>
+<script>
+    $( document ).ready( function( ) 
+    { 
+        $( "#questions" ).tablesorter( ); 
+    });   
+</script>

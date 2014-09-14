@@ -1,4 +1,30 @@
 <?php
+    
+    /**
+     * The test I.D. identifier.
+     */
+    define("TESTID_IDENTIFIER", "TestID");
+
+    /**
+     * The identifier for the record of testees experiences .
+     */
+    define("TESTEEEXPERIENCES_IDENTIFIER", "testeeexperiences");
+    
+    /**
+     * The identifier for the record of testees.
+     */
+    define("TESTEES_IDENTIFIER", "testees");
+    
+    /**
+     * The identifier for the record of test etnries.
+     */
+    define("TESTENTIRES_IDENTIFIER", "testentries");
+    
+    /**
+     * The exam identifier.
+     */
+    define("EXAM_IDENTIFIER", "exam");
+
     /**
      * The exam paramter I.D. identifier.
      */

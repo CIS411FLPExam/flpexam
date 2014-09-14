@@ -41,7 +41,7 @@
                             $languageID = $language[LANGUAGEID_IDENTIFIER];
                             $name = $language[NAME_IDENTIFIER];
                     ?>
-                    <tr class="row1">
+                    <tr>
                         <td><?php echo(htmlspecialchars($name)); ?></td>
                         <?php if ($userCanView) { ?>
                             <td>

@@ -48,7 +48,7 @@
                 ?>
 
 
-                <tr class="row1">
+                <tr>
                     <td><?php echo(htmlspecialchars($userName)); ?></td>
 
                     <?php if ($userCanView) { ?>

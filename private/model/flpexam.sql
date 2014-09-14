@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 13, 2014 at 08:19 PM
+-- Generation Time: Sep 14, 2014 at 07:36 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -160,7 +160,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
 --
 
 INSERT INTO `languages` (`LanguageID`, `Name`, `Active`) VALUES
-(1, 'French', 0);
+(1, 'French', 1);
 
 -- --------------------------------------------------------
 
@@ -273,6 +273,79 @@ INSERT INTO `roles` (`RoleID`, `Name`, `Description`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `testeeexperiences`
+--
+
+CREATE TABLE IF NOT EXISTS `testeeexperiences` (
+  `TestID` int(11) NOT NULL,
+  `SpokenAtHome` tinyint(1) NOT NULL,
+  `JrHighExp` varchar(32) NOT NULL,
+  `SrHighExp` varchar(32) NOT NULL,
+  `CollegeExp` varchar(32) NOT NULL,
+  PRIMARY KEY (`TestID`),
+  UNIQUE KEY `TestID` (`TestID`),
+  KEY `jrhighexp_languageexperience_fk` (`JrHighExp`),
+  KEY `srhighexp_languageexperience_fk` (`SrHighExp`),
+  KEY `collegeexp_languageexperience_fk` (`CollegeExp`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `testeeexperiences`
+--
+
+INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`) VALUES
+(10, 0, 'None', '1 - 2 years', '2 - 3 years');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testees`
+--
+
+CREATE TABLE IF NOT EXISTS `testees` (
+  `TestID` int(11) NOT NULL,
+  `FirstName` varchar(32) NOT NULL,
+  `LastName` varchar(32) NOT NULL,
+  `Email` varchar(40) NOT NULL,
+  `Major` varchar(32) NOT NULL,
+  `HighSchool` varchar(32) NOT NULL,
+  PRIMARY KEY (`TestID`),
+  UNIQUE KEY `TestID` (`TestID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `testees`
+--
+
+INSERT INTO `testees` (`TestID`, `FirstName`, `LastName`, `Email`, `Major`, `HighSchool`) VALUES
+(10, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testentries`
+--
+
+CREATE TABLE IF NOT EXISTS `testentries` (
+  `TestID` int(11) NOT NULL AUTO_INCREMENT,
+  `Language` varchar(32) NOT NULL,
+  `Score` decimal(6,4) NOT NULL,
+  `Date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`TestID`),
+  UNIQUE KEY `TestID` (`TestID`),
+  KEY `testentry_language_fk` (`Language`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+
+--
+-- Dumping data for table `testentries`
+--
+
+INSERT INTO `testentries` (`TestID`, `Language`, `Score`, `Date`) VALUES
+(10, 'French', '0.0000', '2014-09-14 13:32:59');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `userroles`
 --
 
@@ -334,6 +407,27 @@ ALTER TABLE `questions`
 ALTER TABLE `rolefunctions`
   ADD CONSTRAINT `rolefunctions_ibfk_1` FOREIGN KEY (`RoleID`) REFERENCES `roles` (`RoleID`) ON DELETE CASCADE,
   ADD CONSTRAINT `rolefunctions_ibfk_2` FOREIGN KEY (`FunctionID`) REFERENCES `functions` (`FunctionID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `testeeexperiences`
+--
+ALTER TABLE `testeeexperiences`
+  ADD CONSTRAINT `collegeexp_languageexperience_fk` FOREIGN KEY (`CollegeExp`) REFERENCES `languageexperiences` (`Name`),
+  ADD CONSTRAINT `jrhighexp_languageexperience_fk` FOREIGN KEY (`JrHighExp`) REFERENCES `languageexperiences` (`Name`),
+  ADD CONSTRAINT `srhighexp_languageexperience_fk` FOREIGN KEY (`SrHighExp`) REFERENCES `languageexperiences` (`Name`),
+  ADD CONSTRAINT `testeeexperiences_testee_fk` FOREIGN KEY (`TestID`) REFERENCES `testentries` (`TestID`);
+
+--
+-- Constraints for table `testees`
+--
+ALTER TABLE `testees`
+  ADD CONSTRAINT `testes_testentry_fk` FOREIGN KEY (`TestID`) REFERENCES `testentries` (`TestID`);
+
+--
+-- Constraints for table `testentries`
+--
+ALTER TABLE `testentries`
+  ADD CONSTRAINT `testentry_language_fk` FOREIGN KEY (`Language`) REFERENCES `languages` (`Name`);
 
 --
 -- Constraints for table `userroles`

@@ -215,4 +215,43 @@
      * The action word to use to process the edit of exam parameters.
      */
     define("PROCESSEXAMPARAMETERSEDIT_ACTION", "ProccesExamParametersEdit");
+    
+//Actions available through the exam controller.
+/******************************************************************************/
+    
+    /**
+     * The action word to use to enter a key code.
+     */
+    define("ENTERKEYCODE_ACTION", "EnterKeyCode");
+    
+    /**
+     * The action word to use to process a key code.
+     */
+    define("PROCESSKEYCODE_ACTION", "ProcessKeyCode");
+    
+    /**
+     * The action word to use to select a language.
+     */
+    define("LANGUAGESELECT_ACTION", "LanguageSelect");
+    
+    /**
+     * The action word to use to process a language selection.
+     */
+    define("PROCESSLANGUAGESELECT_ACTION", "ProcessLanguageSelect");
+    
+    /**
+     * The action word to use to create a profile.
+     */
+    define("PROFILECREATE_ACTION", "ProfileCreate");
+    
+    /**
+     * The action word to use to process a created profile.
+     */
+    define("PROCESSPROFILECREATE_ACTION", "ProcessProfileCreate");
+    
+    /**
+     * The action word to use to start the exam.
+     */
+    define("STARTEXAM_ACTION", "StartExam");
+    
 ?>
