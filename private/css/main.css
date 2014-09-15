@@ -52,14 +52,11 @@ footer
 .indent1 { padding-left: 50px; }
 .indent2 { padding-left: 100px; }
 .boldText { font-weight: bold; }
+.goldText { color: #ddc873; }
+.whiteText { color: #eeeeee }
 
 .mainCategory
 {
-    border: 2px #ffb6c1 solid;
-    border-radius: 10px;
-    border-top: thick red solid;
-    border-radius: 10px;
-    border-bottom: thick red solid;
     padding: 5px;
     margin: auto;
 }

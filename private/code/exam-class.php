@@ -30,28 +30,16 @@ class Exam
     private $parameters;
     
     /**
-     * The I.D.'s of each answer for the current level.
-     * @var array 
+     * The questions and answers for the current level.
+     * @var array of QuestionAnswer
      */
-    private $lvlAnswers;
+    private $lvlQAs;
     
     /**
-     * The I.D.'s of each answer for the entire exam.
-     * @var array 
+     * The questions and answers for the entire exam.
+     * @var array of QuestionAnswer 
      */
-    private $allAnswers;
-    
-    /**
-     * The I.D.'s of each question for the current level.
-     * @var array
-     */
-    private $lvlQuestions;
-    
-    /**
-     * The I.D.'s of each question for the entire exam.
-     * @var type 
-     */
-    private $allQuestions;
+    private $allQAs;
     
     /**
      * Gets the current level of the exam.
@@ -126,75 +114,39 @@ class Exam
     }
     
     /**
-     * Gets the collection of answer I.D.'s for this level.
-     * @return array The collection of answer I.D.'s
+     * Gets the collection of questions and answers for the current level.
+     * @return array The collection of questions and answers.
      */
-    public function GetLvlAnswers()
+    public function GetLvlQAs()
     {
-        return $this->lvlAnswers;
+        return $this->lvlQAs;
     }
     
     /**
-     * Sets the collection of answer I.D.'s for this level.
-     * @param array $lvlAnswers The collection of answer I.D.'s.
+     * Sets the collection of questions and answers for the current level.
+     * @param array $lvlQAs The collection of questions and answers.
      */
-    public function SetLvlAnswers($lvlAnswers)
+    public function SetLvlQAs($lvlQAs)
     {
-        $this->lvlAnswers = $lvlAnswers;
+        $this->lvlQAs = $lvlQAs;
     }
     
     /**
-     * Gets the collection of answer I.D.'s for the entire exam.
-     * @return array The collection of answer I.D.'s
+     * Gets the collection of questions and answers for the entire exam.
+     * @return array The collection of questions and answers.
      */
-    public function GetAllAnswers()
+    public function GetAllQAs()
     {
-        return $this->allAnswers;
+        return $this->allQAs;
     }
     
     /**
-     * Sets the collection of answer I.D.'s for the entire exam.
-     * @param array $lvlAnswers The collection of answer I.D.'s.
+     * Sets the collection of questions and answers for the entire exam.
+     * @param array $allQAs The collection of questions and answers.
      */
-    public function SetAllAnswers($allAnswers)
+    public function SetAllQAs($allQAs)
     {
-        $this->allAnswers = $allAnswers;
-    }
-    
-    /**
-     * Gets the collection of question I.D's for this level.
-     * @return array The collection of question I.D.'s.
-     */
-    public function GetLvlQuestions()
-    {
-        return $this->lvlQuestions;
-    }
-    
-    /**
-     * Sets the collection of question I.D.'s for this level.
-     * @param array $lvlQuestions The collection of question I.D.'s.
-     */
-    public function SetLvlQuestions($lvlQuestions)
-    {
-        $this->lvlQuestions = $lvlQuestions;
-    }
-    
-    /**
-     * Gets the collection of question I.D's for the entire exam.
-     * @return array The collection of question I.D.'s.
-     */
-    public function GetAllQuestions()
-    {
-        return $this->allQuestions;
-    }
-    
-    /**
-     * Sets the collection of question I.D.'s for the entire exam.
-     * @param array $lvlQuestions The collection of question I.D.'s.
-     */
-    public function SetAllQuestions($allQuestions)
-    {
-        $this->allQuestions = $allQuestions;
+        $this->allQAs = $allQAs;
     }
     
     /**
@@ -209,10 +161,8 @@ class Exam
         $this->SetParameters($parameters);
         $this->SetLanguage($language);
         $this->SetProfile($profile);
-        $this->SetLvlAnswers(array());
-        $this->SetLvlQuestions(array());
-        $this->SetAllAnswers(array());
-        $this->SetAllQuestions(array());
+        $this->SetLvlQAs(array());
+        $this->SetAllQAs(array());
     }
     
     /**

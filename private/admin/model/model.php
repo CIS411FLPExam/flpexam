@@ -2,6 +2,69 @@
 
     //Include the base model file becasue functions from that files will be used here.
     require_once(MODEL_FILE);
+    require_once(TESTINFOCLASS_FILE);
+    require_once(DETAILEDTESTINFOCLASS_FILE);
+    
+    /**
+     * Gets the collection of test information from the records.
+     * @return \TestInfo
+     */
+    function GetTests()
+    {
+        try
+        {
+            $testInfo = new TestInfo();
+            $testInfos = array();
+            $testIdIndex = $testInfo->GetIdIndex();
+            $firstNameIndex = $testInfo->GetFirstNameIndex();
+            $lastNameIndex = $testInfo->GetLastNameIndex();
+            $languageIndex = $testInfo->GetLanguageIndex();
+            $scoreIndex = $testInfo->GetScoreIndex();
+            $dateIndex = $testInfo->GetDateIndex();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ', ' . $firstNameIndex
+                    . ', ' . $lastNameIndex
+                    . ', ' . $languageIndex
+                    . ', ' . $scoreIndex
+                    . ', ' . $dateIndex . ' FROM'
+                    . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . TESTEES_IDENTIFIER . ' ON'
+                    . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
+                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ' ORDER BY ' . $dateIndex . ';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach ($results as $result)
+            {
+                $testInfo = new TestInfo();
+                $testInfo->Initialize($result);
+                
+                $testInfos[] = $testInfo;
+            }
+            
+            return $testInfos;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    function GetDetailedTest($testID)
+    {
+        
+    }
+    
     
     /**
      * Sets the exam parameters.

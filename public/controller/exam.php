@@ -9,6 +9,7 @@
     require_once(EXAMCLASS_FILE);
     require_once(LANGUAGECLASS_FILE);
     require_once(PROFILECLASS_FILE);
+    require_once(QUESTIONANSWERCLASS_FILE);
 
     //error_reporting(E_ALL ^ E_NOTICE);
 

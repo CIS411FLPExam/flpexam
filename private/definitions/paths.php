@@ -216,6 +216,21 @@
      */
     define("PROFILECLASS_FILE", CODE_DIR . "profile-class.php");
     
+    /**
+     * The file path of the test info class file.
+     */
+    define("TESTINFOCLASS_FILE", CODE_DIR . "testinfo-class.php");
+    
+    /**
+     * The file path of the detailed test info class file.
+     */
+    define("DETAILEDTESTINFOCLASS_FILE", CODE_DIR . "detailedtestinfo-class.php");
+    
+    /**
+     * The file path of the question answer class file.
+     */
+    define("QUESTIONANSWERCLASS_FILE", CODE_DIR . "questionanswer-class.php");
+    
 //Main paths.
 /******************************************************************************/
     

@@ -154,7 +154,7 @@
             case MANAGETESTS_ACTION :
                 ManageTests();
                 break;
-            case VIEWTEST_ACTION :
+            case TESTVIEW_ACTION :
                 ViewTest();
                 break;
             default:
@@ -164,12 +164,28 @@
     
     function ViewTest()
     {
+        $testInfo = new DetailedTestInfo();
+        $testIdIndex = $testInfo->GetIdIndex();
         
+        if(isset($_POST[$testIdIndex]))
+        {
+            $testID = $_POST[$testIdIndex];
+        }
+        else if(isset($_GET[$testIdIndex]))
+        {
+            $testID = $_GET[$testIdIndex];
+        }
+        
+        $testInfo = GetDetailedTest($testID);
+        
+        include(VIEWTESTFORM_FILE);
     }
     
     function ManageTests()
     {
+        $testInfos = GetTests();
         
+        include(MANAGETESTSFORM_FILE);
     }
     
     function ExamParametersView()

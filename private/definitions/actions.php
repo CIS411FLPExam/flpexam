@@ -224,7 +224,7 @@
     /**
      * The action word to use to view a test.
      */
-    define("VIEWTEST_ACTION", "ViewTest");
+    define("TESTVIEW_ACTION", "TestView");
     
 //Actions available through the exam controller.
 /******************************************************************************/

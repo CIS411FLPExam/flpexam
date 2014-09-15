@@ -15,3 +15,6 @@
 <?php if (userIsAuthorized(MANAGEROLES_ACTION)) {  ?>
     <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION ) ) ?>">Manage Roles</a> &nbsp;
 <?php } ?>
+<?php if (userIsAuthorized(MANAGETESTS_ACTION)) {  ?>
+    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>">Manage Tests</a> &nbsp;
+<?php } ?>
