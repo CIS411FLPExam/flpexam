@@ -226,6 +226,11 @@
      */
     define("TESTVIEW_ACTION", "TestView");
     
+    /**
+     * The action word to use to search tests by name.
+     */
+    define("TESTSEARCH_ACTION", "TestSearch");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

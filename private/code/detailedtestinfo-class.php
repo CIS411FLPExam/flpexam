@@ -228,7 +228,7 @@ class DetailedTestInfo extends TestInfo
             $this->SetHighSchool($highSchool);
         }
         
-        if(isset($row[$this->GetSpokenAtHomeIndex()]) && $row[$this->GetSpokenAtHomeIndex()] == 'Y')
+        if($row[$this->GetSpokenAtHomeIndex()] == 1)
         {
             $spokenAtHome = TRUE;
             $this->SetSpokenAtHome($spokenAtHome);

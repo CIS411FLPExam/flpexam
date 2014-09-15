@@ -34,7 +34,7 @@
                     . ' ' . TESTEES_IDENTIFIER . ' ON'
                     . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
                     . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
-                    . ' ORDER BY ' . $dateIndex . ';';
+                    . ' ORDER BY ' . $dateIndex . ' LIMIT 100;';
             
             $statement = $db->prepare($query);
             
@@ -60,9 +60,76 @@
         }
     }
     
+    /**
+     * Gets the detailed test information.
+     * @param int $testID The I.D. of the test.
+     * @return \DetailedTestInfo The detailed test information.
+     */
     function GetDetailedTest($testID)
     {
-        
+        try
+        {
+            $testInfo = new DetailedTestInfo();
+            $testIdIndex = $testInfo->GetIdIndex();
+            $firstNameIndex = $testInfo->GetFirstNameIndex();
+            $lastNameIndex = $testInfo->GetLastNameIndex();
+            $languageIndex = $testInfo->GetLanguageIndex();
+            $scoreIndex = $testInfo->GetScoreIndex();
+            $dateIndex = $testInfo->GetDateIndex();
+            $emailIndex = $testInfo->GetEmailIndex();
+            $majorIndex = $testInfo->GetMajorIndex();
+            $highSchoolIndex = $testInfo->GetHighSchoolIndex();
+            $spokenAtHomeIndex = $testInfo->GetSpokenAtHomeIndex();
+            $jrHighExpIndex = $testInfo->GetJrHighExpIndex();
+            $srHighExpIndex = $testInfo->GetSrHighExpIndex();
+            $collegeExpIndex = $testInfo->GetCollegeExpIndex();
+            
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ', ' . $firstNameIndex
+                    . ', ' . $lastNameIndex
+                    . ', ' . $languageIndex
+                    . ', ' . $scoreIndex
+                    . ', ' . $emailIndex
+                    . ', ' . $majorIndex
+                    . ', ' . $highSchoolIndex
+                    . ', ' . $spokenAtHomeIndex
+                    . ', ' . $jrHighExpIndex
+                    . ', ' . $srHighExpIndex
+                    . ', ' . $collegeExpIndex
+                    . ', ' . $dateIndex . ' FROM'
+                    . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . TESTEES_IDENTIFIER . ' ON'
+                    . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
+                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex . ' INNER JOIN'
+                    . ' ' . TESTEEEXPERIENCES_IDENTIFIER . ' ON'
+                    . ' ' . TESTEEEXPERIENCES_IDENTIFIER . '.' . $testIdIndex
+                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex . ' WHERE'
+                    . ' ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ' = :' . $testIdIndex . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $testIdIndex, $testID);
+            
+            $statement->execute();
+            
+            $results = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if (count($results) > 0)
+            {
+                $testInfo->Initialize($results);
+            }
+            
+            return $testInfo;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     
@@ -1333,6 +1400,140 @@
         catch (PDOException $e)
         {
             displayDBError($e->getMessage());
+        }
+    }
+    
+    /**
+     * Searches the tests.
+     * @param string $name The name.
+     * @param string $language The language.
+     * @param float $minScore The minimum score.
+     * @param float $maxScore The maximum score.
+     * @param float $minDate The minimum date.
+     * @param float $maxDate The maximum date.
+     * @return \TestInfo The collection of test entries found
+     */
+    function SearchForTest($name, $language, $minScore, $maxScore, $minDate, $maxDate)
+    {
+        try
+        {
+            $testInfo = new TestInfo();
+            $testInfos = array();
+            $testIdIndex = $testInfo->GetIdIndex();
+            $firstNameIndex = $testInfo->GetFirstNameIndex();
+            $lastNameIndex = $testInfo->GetLastNameIndex();
+            $languageIndex = $testInfo->GetLanguageIndex();
+            $scoreIndex = $testInfo->GetScoreIndex();
+            $dateIndex = $testInfo->GetDateIndex();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ', ' . $firstNameIndex
+                    . ', ' . $lastNameIndex
+                    . ', ' . $languageIndex
+                    . ', ' . $scoreIndex
+                    . ', ' . $dateIndex . ' FROM'
+                    . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . TESTEES_IDENTIFIER . ' ON'
+                    . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
+                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex;
+            
+            if(!empty($name))
+            {
+                $whereClause = ' WHERE MATCH(' . $firstNameIndex . ', ' . $lastNameIndex . ') AGAINST(:Name IN BOOLEAN MODE)';
+            }
+            
+            if(!empty($language))
+            {
+                if(empty($whereClause))
+                {
+                    $whereClause = ' WHERE ' . $languageIndex . ' = :' . $languageIndex;
+                }
+                else
+                {
+                    $whereClause .= ' AND ' . $languageIndex . ' = :' . $languageIndex;
+                }
+            }
+            
+            if((!empty($minScore) || $minScore == 0.0) && !empty($maxScore))
+            {
+               if(empty($whereClause))
+                {
+                    $whereClause = ' WHERE ' . $scoreIndex . ' >= :MinScore';
+                }
+                else
+                {
+                    $whereClause .= ' AND ' . $scoreIndex . ' >= :MinScore';
+                }
+                
+                $whereClause .= ' AND ' . $scoreIndex . ' <= :MaxScore';
+            }
+            
+            if(!empty($minDate) && !empty($maxDate))
+            {
+                if(empty($whereClause))
+                {
+                    $whereClause = ' WHERE ' . $dateIndex . ' >= :MinDate';
+                }
+                else
+                {
+                    $whereClause .= ' AND ' . $dateIndex . ' >= :MinDate';
+                }
+                
+                $whereClause .= ' AND ' . $dateIndex . ' <= :MaxDate';
+            }
+            
+            if(!empty($whereClause))
+            {
+                $query .= $whereClause;
+            }
+            
+            $query = $query . ' ORDER BY ' . $dateIndex . ';';
+            
+            $statement = $db->prepare($query);
+            
+            if(!empty($name))
+            {
+                $statement->bindValue(':' . 'Name', $name);
+            }
+            
+            if(!empty($language))
+            {
+                $statement->bindValue(':' . $languageIndex, $language);
+            }
+            
+            if((!empty($minScore) || $minScore == 0.0 ) && !empty($maxScore))
+            {
+               $statement->bindValue(':' . 'MinScore', $minScore);
+               $statement->bindValue(':' . 'MaxScore', $maxScore);
+            }
+            
+            if(!empty($minDate) && !empty($maxDate))
+            {
+                $statement->bindValue(':' . 'MinDate', ToMySQLDate($minDate));
+                $statement->bindValue(':' . 'MaxDate', ToMySQLDate($maxDate));
+            }
+            
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach ($results as $result)
+            {
+                $testInfo = new TestInfo();
+                $testInfo->Initialize($result);
+                
+                $testInfos[] = $testInfo;
+            }
+            
+            return $testInfos;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
         }
     }
 ?>

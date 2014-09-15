@@ -53,7 +53,46 @@ footer
 .indent2 { padding-left: 100px; }
 .boldText { font-weight: bold; }
 .goldText { color: #ddc873; }
-.whiteText { color: #eeeeee }
+.whiteText { color: #eeeeee; }
+.floatLeft { float: left; }
+
+.srchSectLbl
+{
+    display: inline-block;
+    width: 60px;
+}
+
+.srchSectTxt
+{
+    width: 150px;
+}
+
+.srchSectSelect
+{
+    width: 155px;
+}
+
+.srchSectNmbr
+{
+    width: 40px;
+}
+
+.srchSectDate
+{
+    width: 70px;
+}
+
+.infoSectionCntnr
+{
+    padding: 10px;
+}
+
+.infoSection
+{
+    float: left;
+    width: 320px;
+    margin: 15px;
+}
 
 .mainCategory
 {

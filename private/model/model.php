@@ -499,6 +499,23 @@
     }
     
     /**
+     * Gets the name of all languages on record.
+     * @return array The collection of language names.
+     */
+    function GetAllLanguagesNames()
+    {
+        $languageNames = array();
+        $languages = GetAllLanguages();
+        
+        foreach ($languages as $language)
+        {
+            $languageNames[] = $language[NAME_IDENTIFIER];
+        }
+        
+        return $languageNames;
+    }
+    
+    /**
      * Gets language experience.
      * @param int $experienceID The ID of the language experience.
      * @return array The language experience.

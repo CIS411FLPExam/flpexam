@@ -155,14 +155,17 @@
                 ManageTests();
                 break;
             case TESTVIEW_ACTION :
-                ViewTest();
+                TestView();
+                break;
+            case TESTSEARCH_ACTION :
+                TestSearch();
                 break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
     }
     
-    function ViewTest()
+    function TestView()
     {
         $testInfo = new DetailedTestInfo();
         $testIdIndex = $testInfo->GetIdIndex();
@@ -181,9 +184,33 @@
         include(VIEWTESTFORM_FILE);
     }
     
+    function TestSearch()
+    {
+        $name = $_POST['Name'];
+        $language = $_POST['Language'];
+        $minScore = $_POST['MinScore'];
+        $maxScore = $_POST['MaxScore'];
+        $minDate = $_POST['MinDate'];
+        $maxDate = $_POST['MaxDate'];
+        
+         $languageNames = GetAllLanguagesNames();
+        
+        $testInfos = SearchForTest($name, $language, $minScore, $maxScore, $minDate, $maxDate);
+        
+        include(MANAGETESTSFORM_FILE);
+    }
+    
     function ManageTests()
     {
         $testInfos = GetTests();
+        
+        $name = '';
+        $languageNames = GetAllLanguagesNames();
+        
+        $minScore = 0.0;
+        $maxScore = 100;
+        $minDate = ToDisplayDate(date('2014-09-13'));
+        $maxDate = ToDisplayDate(date("m.d.y"));
         
         include(MANAGETESTSFORM_FILE);
     }
