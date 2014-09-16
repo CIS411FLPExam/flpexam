@@ -82,16 +82,11 @@ footer
     width: 70px;
 }
 
-.infoSectionCntnr
-{
-    padding: 10px;
-}
-
 .infoSection
 {
     float: left;
-    width: 320px;
-    margin: 15px;
+    width: 360px;
+    margin: 5px;
 }
 
 .mainCategory

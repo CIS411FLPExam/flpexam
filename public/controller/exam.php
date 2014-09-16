@@ -194,6 +194,8 @@
         AddTestee($testEntryID, $profile);
         AddTesteeExperiences($testEntryID, $profile);
         
+        DisposeCurrentExam();
+        
         echo('Exam committed.');
         exit();
     }

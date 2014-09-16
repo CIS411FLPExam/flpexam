@@ -25,6 +25,17 @@
         StartSession();
         $_SESSION[EXAM_IDENTIFIER] = $exam;
     }
+    
+    /**
+     * Destroys the current exam information.
+     */
+    function DisposeCurrentExam()
+    {
+        if(isset($_SESSION[EXAM_IDENTIFIER]))
+        {
+            unset($_SESSION[EXAM_IDENTIFIER]);
+        }
+    }
 
     /**
      * Attemps to clear a user to take the exam.
