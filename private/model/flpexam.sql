@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 14, 2014 at 07:36 PM
+-- Generation Time: Sep 17, 2014 at 02:55 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -34,16 +34,19 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `answers`
 --
 
 INSERT INTO `answers` (`AnswerID`, `QuestionID`, `Correct`, `Name`) VALUES
-(5, 2, 1, 'Let''s hope so.'),
-(6, 1, 1, 'I think so.'),
-(7, 1, 0, 'But how?');
+(16, 3, 1, 'The sky.'),
+(17, 3, 0, 'Chilling hard.'),
+(22, 14, 1, 'Answers'),
+(23, 15, 1, 'doe'),
+(25, 16, 1, 'Answer.'),
+(27, 17, 1, 'An');
 
 -- --------------------------------------------------------
 
@@ -80,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `functions`
@@ -115,7 +118,9 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (27, 'ManageQuestions', 'Allows the user access to the panel to manage questions.'),
 (28, 'QuestionSearch', 'Allows the user to search questions.'),
 (29, 'ExamParametersView', 'Allows the user to view the exam parameters.'),
-(30, 'ExamParametersEdit', 'Allows the user to edit the exam parameters.');
+(30, 'ExamParametersEdit', 'Allows the user to edit the exam parameters.'),
+(31, 'ManageTests', 'Allows the user to manage test scores.'),
+(32, 'TestView', 'Allows the user to view a test.');
 
 -- --------------------------------------------------------
 
@@ -173,18 +178,22 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `Level` int(11) NOT NULL,
   `Name` text NOT NULL,
   `LanguageID` int(11) NOT NULL,
+  `Instructions` text NOT NULL,
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`),
   FULLTEXT KEY `question_ft` (`Name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 --
 -- Dumping data for table `questions`
 --
 
-INSERT INTO `questions` (`QuestionID`, `Level`, `Name`, `LanguageID`) VALUES
-(1, 1, 'Did the other one get deleted?', 1),
-(2, 1, 'Let''s see if this change worked?', 1);
+INSERT INTO `questions` (`QuestionID`, `Level`, `Name`, `LanguageID`, `Instructions`) VALUES
+(3, 1, 'Sup yo?', 1, 'Tell me what''s really good.'),
+(14, 1, 'Questions', 1, ''),
+(15, 1, 'sup', 1, ''),
+(16, 1, 'Question.', 1, 'Instructions.'),
+(17, 2, 'Ques', 1, 'Instruc');
 
 -- --------------------------------------------------------
 
@@ -204,20 +213,8 @@ CREATE TABLE IF NOT EXISTS `rolefunctions` (
 --
 
 INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
-(3, 18),
-(3, 20),
-(3, 19),
-(3, 21),
-(3, 22),
-(3, 27),
-(3, 1),
-(3, 23),
-(3, 25),
-(3, 24),
-(3, 26),
-(3, 16),
-(3, 17),
-(3, 28),
+(1, 30),
+(1, 29),
 (1, 7),
 (1, 9),
 (1, 8),
@@ -229,6 +226,7 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 22),
 (1, 27),
 (1, 11),
+(1, 31),
 (1, 1),
 (1, 10),
 (1, 15),
@@ -241,12 +239,27 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 12),
 (1, 14),
 (1, 13),
+(1, 32),
 (1, 4),
 (1, 3),
 (1, 16),
 (1, 17),
-(1, 30),
-(1, 29);
+(3, 18),
+(3, 20),
+(3, 19),
+(3, 21),
+(3, 22),
+(3, 27),
+(3, 31),
+(3, 1),
+(3, 23),
+(3, 25),
+(3, 24),
+(3, 28),
+(3, 26),
+(3, 32),
+(3, 16),
+(3, 17);
 
 -- --------------------------------------------------------
 
@@ -266,9 +279,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 --
 
 INSERT INTO `roles` (`RoleID`, `Name`, `Description`) VALUES
-(1, 'admin', 'Full privileges.'),
-(2, 'guest', 'An un-identified user.'),
-(3, 'manager', 'Granted all neccessary permission to manage the site.');
+(1, 'Admin', 'Full privileges.'),
+(3, 'Manager', 'Granted all neccessary permission to manage the site.');
 
 -- --------------------------------------------------------
 
@@ -294,7 +306,10 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
 --
 
 INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`) VALUES
-(10, 0, 'None', '1 - 2 years', '2 - 3 years');
+(10, 1, 'None', '1 - 2 years', '2 - 3 years'),
+(11, 1, '2 - 3 years', '3 - 4 years', '1 - 2 years'),
+(12, 0, 'None', 'None', 'None'),
+(13, 0, 'None', 'None', 'None');
 
 -- --------------------------------------------------------
 
@@ -310,7 +325,8 @@ CREATE TABLE IF NOT EXISTS `testees` (
   `Major` varchar(32) NOT NULL,
   `HighSchool` varchar(32) NOT NULL,
   PRIMARY KEY (`TestID`),
-  UNIQUE KEY `TestID` (`TestID`)
+  UNIQUE KEY `TestID` (`TestID`),
+  FULLTEXT KEY `name_ft` (`FirstName`,`LastName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -318,7 +334,10 @@ CREATE TABLE IF NOT EXISTS `testees` (
 --
 
 INSERT INTO `testees` (`TestID`, `FirstName`, `LastName`, `Email`, `Major`, `HighSchool`) VALUES
-(10, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana');
+(10, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(11, 'Victoria', 'Snelick', 'vpsnelick@gmail.com', 'Computer Information Systems', 'Urbana'),
+(12, '', '', '', '', ''),
+(13, 'blayze', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -334,14 +353,17 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `testentries`
 --
 
 INSERT INTO `testentries` (`TestID`, `Language`, `Score`, `Date`) VALUES
-(10, 'French', '0.0000', '2014-09-14 13:32:59');
+(10, 'French', '0.0000', '2014-09-14 13:32:59'),
+(11, 'French', '0.0000', '2014-09-15 20:00:53'),
+(12, 'French', '0.0000', '2014-09-16 11:26:13'),
+(13, 'French', '0.0000', '2014-09-16 11:45:19');
 
 -- --------------------------------------------------------
 
@@ -362,7 +384,8 @@ CREATE TABLE IF NOT EXISTS `userroles` (
 
 INSERT INTO `userroles` (`UserID`, `RoleID`) VALUES
 (1, 1),
-(2, 1);
+(2, 1),
+(4, 3);
 
 -- --------------------------------------------------------
 
@@ -375,7 +398,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `UserName` varchar(32) NOT NULL,
   `Password` varchar(40) NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users`
@@ -383,7 +406,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 INSERT INTO `users` (`UserID`, `UserName`, `Password`) VALUES
 (1, 'wdgarey', '9c22f986c7a4149924fb8b016ef2958687f9f6b2'),
-(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997');
+(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997'),
+(4, 'manager', '1a8565a9dc72048ba03b4156be3e569f22771f23');
 
 --
 -- Constraints for dumped tables

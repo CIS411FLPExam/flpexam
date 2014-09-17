@@ -491,7 +491,7 @@
      * @param array $answers The question's collection of answers.
      * @return int The number of questions effected by the update.
      */
-    function UpdateQuestion($questionID, $name, $level, $answers)
+    function UpdateQuestion($questionID, $name, $instructions, $level, $answers)
     {
         try
         {
@@ -500,6 +500,8 @@
             $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
                     . ' ' . '`Level`'
                     . ' = :' . 'Level'
+                    . ', ' . 'Instructions'
+                    . ' = :' . 'Instructions'
                     . ', ' . '`Name`'
                     . ' = :' . 'Name WHERE'
                     . ' ' . QUESTIONID_IDENTIFIER
@@ -508,6 +510,7 @@
             $statement = $db->prepare($query);
             $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
             $statement->bindValue(':' . 'Name', $name);
+            $statement->bindValue(':' . 'Instructions', $instructions);
             $statement->bindValue(':' . 'Level', $level);
             
             $effectedCount = $statement->execute();
@@ -532,7 +535,7 @@
      * @param array $answers The answers to the question.
      * @return int The I.D. of the new question.
      */
-    function AddQuestion($languageID, $name, $level, $answers)
+    function AddQuestion($languageID, $name, $instructions, $level, $answers)
     {
         try
         {
@@ -541,17 +544,18 @@
             $query = 'INSERT INTO ' . QUESTIONS_IDENTIFIER
                     . ' (' . 'Level'
                     . ', ' . LANGUAGEID_IDENTIFIER
+                    . ', ' . 'Instructions'
                     . ', ' . 'Name' . ') VALUES'
                     . ' (:' . 'Level'
                     . ', :' . LANGUAGEID_IDENTIFIER
+                    . ', :' . 'Instructions'
                     . ', :' . 'Name' . ');';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . 'Name', $name);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . 'Instructions', $instructions);
             $statement->bindValue(':' . 'Level', $level);
-            
-            
             
             $statement->execute();
             

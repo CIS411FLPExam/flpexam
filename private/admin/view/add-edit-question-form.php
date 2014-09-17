@@ -30,6 +30,13 @@
         
         <div class='divider'></div>
         
+        <div class="formSection">
+            <label>Instructions:</label>
+            <textarea name="Instructions" class='qa' rows="5" cols="70"><?php echo(htmlspecialchars($instructions)); ?></textarea>
+        </div>
+        
+        <div class='divider'></div>
+        
         <div id="collection">
 
             <?php

@@ -344,6 +344,7 @@
         
         $name = '';
         $level = '1';
+        $instructions = '';
         $answers = array();
         $answers[] = array(NAME_IDENTIFIER => '');
         
@@ -365,6 +366,7 @@
         
         $name = $question[NAME_IDENTIFIER];
         $level = $question['Level'];
+        $instructions = $question['Instructions'];
         
         $answers = GetQuestionAnswers($questionID);
         
@@ -386,6 +388,7 @@
         
         $name = $question[NAME_IDENTIFIER];
         $level = $question['Level'];
+        $instructions = $question['Instructions'];
         
         $answers = GetQuestionAnswers($questionID);
         
@@ -403,6 +406,7 @@
         $name = $_POST[NAME_IDENTIFIER];
         
         $level = $_POST['Level'];
+        $instructions = $_POST['Instructions'];
         $answers = array();
         
         $answerNumber = 0;
@@ -418,13 +422,13 @@
             {
                 $questionID = $_POST[QUESTIONID_IDENTIFIER];
                 
-                UpdateQuestion($questionID, $name, $level, $answers);
+                UpdateQuestion($questionID, $name, $instructions, $level, $answers);
             }
             else
             {
                 $languageID = $_POST[LANGUAGEID_IDENTIFIER];
                 
-                $questionID = AddQuestion($languageID, $name, $level, $answers);
+                $questionID = AddQuestion($languageID, $name, $instructions, $level, $answers);
             }
             
             Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . urldecode($questionID)));

@@ -18,6 +18,12 @@
 
     <div class="divider"></div>
 
+    <div class="formSection">
+        <label>Instructions:</label><?php echo(htmlspecialchars($instructions)); ?>
+    </div>
+
+    <div class="divider"></div>
+    
     <?php
         $i = 1;
         foreach ($answers as $answer)
