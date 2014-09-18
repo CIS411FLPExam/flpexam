@@ -189,7 +189,7 @@
         
         $exam->Start();
         
-        PresentNextQuestion();
+        Redirect(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION));
     }
     
     function PresentNextQuestion()
@@ -198,13 +198,10 @@
         
         $questionID = $exam->PullNextQuestionID();
         
-        echo($questionID);
-        exit();
-        
         $question = GetQuestion($questionID);
         
-        var_dump($question);
-        exit();
+        $name = $question[NAME_IDENTIFIER];
+        $instructions = $question['Instructions'];
         
         $answers = array();
         $orderedAnswers = GetQuestionAnswers($questionID);
@@ -221,15 +218,18 @@
     
     function SubmitAnswer()
     {
-        $answerID = $_POST[ANSWERID_IDENTIFIER];
-        
-        $exam = GetCurrentExam();
-        
-        $exam->PushQuestionAnswerID($answerID);
-        
-        if($exam->IsDone())
+        if (isset($_POST[ANSWERID_IDENTIFIER]))
         {
-            CommitExam();
+            $answerID = $_POST[ANSWERID_IDENTIFIER];
+
+            $exam = GetCurrentExam();
+
+            $exam->PushQuestionAnswerID($answerID);
+
+            if($exam->IsDone())
+            {
+                CommitExam();
+            }
         }
         
         PresentNextQuestion();

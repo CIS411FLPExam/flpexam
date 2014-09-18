@@ -20,11 +20,15 @@
     
     <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION)); ?>" method="post">
         <div class="formSection">
+            <input type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answers[0][ANSWERID_IDENTIFIER])) ?>" checked="checked" />
             <?php
+                echo(htmlspecialchars($answers[0][NAME_IDENTIFIER]));
                 for ($index = 1; $index < count($answers); $index++)
                 {
                     $answer = $answers[$index];
             ?>
+            <br />
+            <br />
             <input type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answer[ANSWERID_IDENTIFIER])) ?>" />
                 <?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?>
             <?php
@@ -34,7 +38,7 @@
         
         <br />
         
-        <input type="submit" name="Submit" />
+        <input type="submit" value="Submit" />
     </form>
 </div>
 

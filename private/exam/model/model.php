@@ -61,6 +61,7 @@
     {
         try
         {
+            $questionIDs = array();
             $db = GetDBConnection();
             
             $query = 'SELECT ' . QUESTIONID_IDENTIFIER . ' FROM'
@@ -70,9 +71,11 @@
             {
                 $query .= ' ' . QUESTIONID_IDENTIFIER . ' NOT IN (';
                 
-                for ($index = 0; $index < count($idsToExclude); $index++)
+                $query .= ':' . QUESTIONID_IDENTIFIER . 0;
+                
+                for ($index = 1; $index < count($idsToExclude); $index++)
                 {
-                    $query .= ':' . QUESTIONID_IDENTIFIER . $index;
+                    $query .= ', :' . QUESTIONID_IDENTIFIER . $index;
                 }
                 
                 $query .= ')';
@@ -82,36 +85,27 @@
                     . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
                     . ' ' . 'Level'
                     . ' = :' . 'Level' . ' ORDER BY RAND() LIMIT'
-                    . ' :' . 'Limit' . ';';
+                    . ' ' . $limit;
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
             $statement->bindValue(':' . 'Level', $level);
-            $statement->bindValue(':' . 'Limit', $limit);
             
             for ($index = 0; $index < count($idsToExclude); $index++)
             {
                 $statement->bindValue(':' . QUESTIONID_IDENTIFIER . $index, $idsToExclude[$index]);
             }
             
-            /*
-            echo($languageID);
-            echo('<br />');
-            echo($level);
-            echo('<br />');
-            echo($limit);
-            echo('<br />');
-            echo($query);
-            exit();
-            */
             $statement->execute();
             
-            var_dump($statement->errorInfo());
-            exit();
-            
-            $questionIDs = $statement->fetchAll();
+            $questions = $statement->fetchAll();
             
             $statement->closeCursor();
+            
+            foreach ($questions as $question)
+            {
+                $questionIDs[] = $question[QUESTIONID_IDENTIFIER];
+            }
             
             return $questionIDs;
         }

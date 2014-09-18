@@ -403,9 +403,6 @@ class Exam
         $foundNextQues = FALSE;
         $lvlQAs = $this->GetLvlQAs();
         
-        var_dump($lvlQAs);
-        exit();
-        
         for($index = 0; $index < count($lvlQAs) && !$foundNextQues; $index++)
         {
             $lvlQA = $lvlQAs[$index];
