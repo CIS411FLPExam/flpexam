@@ -448,4 +448,9 @@
      * The file path of the create profile form file.
      */
     define("CREATEPROFILEFORM_FILE", EXAMVIEW_DIR . "create-profile-form.php");
+    
+    /**
+     * The file path of the view test quetsion form file.
+     */
+    define("TESTQUESTIONVIEWFORM_FILE", EXAMVIEW_DIR . "testquestion-view-form.php");
 ?>

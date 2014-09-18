@@ -4,6 +4,125 @@
     require_once(MODEL_FILE);
     
     /**
+     * Indicates whether or not an answer is the correct answer.
+     * @param int $questionID The I.D. of the question.
+     * @param int $answerID The I.D. of the answer.
+     * @return boolean True, if the answer is the correct answer.
+     */
+    function IsAnswerCorrect($questionID, $answerID)
+    {
+        try
+        {
+            $correctAnswer = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . ANSWERID_IDENTIFIER . ' FROM'
+                    . ' ' . ANSWERS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ' AND'
+                    . ' ' . ANSWERID_IDENTIFIER
+                    . ' = :' . ANSWERID_IDENTIFIER . ' AND'
+                    . ' ' . 'Correct'
+                    . ' = :' . 'Correct';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':'. QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
+            $statement->bindValue(':' . 'Correct', 1);
+            
+            $statement->execute();
+            
+            $answerIDs = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            if (count($answerIDs) > 0)
+            {
+                $correctAnswer = TRUE;
+            }
+            
+            return $correctAnswer;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets a random collection of question I.D.'s.
+     * @param int $languageID The I.D. of the language to get the questions from.
+     * @param int $level The level of the questions to get.
+     * @param int $limit The maximum number of question I.D.'s to return.
+     * @param array $idsToExclude A collection of question I.D.'s to exclude.
+     * @return array The collection of question I.D.'s that were retrieved.
+     */
+    function GetRandomQuestionIDs($languageID, $level, $limit, $idsToExclude)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . QUESTIONID_IDENTIFIER . ' FROM'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' WHERE';
+            
+            if (count($idsToExclude) > 0)
+            {
+                $query .= ' ' . QUESTIONID_IDENTIFIER . ' NOT IN (';
+                
+                for ($index = 0; $index < count($idsToExclude); $index++)
+                {
+                    $query .= ':' . QUESTIONID_IDENTIFIER . $index;
+                }
+                
+                $query .= ')';
+            }
+            
+            $query .= ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
+                    . ' ' . 'Level'
+                    . ' = :' . 'Level' . ' ORDER BY RAND() LIMIT'
+                    . ' :' . 'Limit' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . 'Level', $level);
+            $statement->bindValue(':' . 'Limit', $limit);
+            
+            for ($index = 0; $index < count($idsToExclude); $index++)
+            {
+                $statement->bindValue(':' . QUESTIONID_IDENTIFIER . $index, $idsToExclude[$index]);
+            }
+            
+            /*
+            echo($languageID);
+            echo('<br />');
+            echo($level);
+            echo('<br />');
+            echo($limit);
+            echo('<br />');
+            echo($query);
+            exit();
+            */
+            $statement->execute();
+            
+            var_dump($statement->errorInfo());
+            exit();
+            
+            $questionIDs = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $questionIDs;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    
+    /**
      * Gets the current exam.
      * @return Exam The current exam or FALSE if the current exam is not set.
      */

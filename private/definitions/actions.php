@@ -269,4 +269,9 @@
      */
     define("STARTEXAM_ACTION", "StartExam");
     
+    /**
+     * The action word to process an exam question.
+     */
+    define("SUBMITANSWER_ACTION", "SubmitAnswer");
+    
 ?>

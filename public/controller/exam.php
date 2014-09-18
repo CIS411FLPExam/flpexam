@@ -58,6 +58,9 @@
             case STARTEXAM_ACTION :
                 StartExam();
                 break;
+            case SUBMITANSWER_ACTION :
+                SubmitAnswer();
+                break;
             default :
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
@@ -182,7 +185,54 @@
     
     function StartExam()
     {
-        CommitExam();
+        $exam = GetCurrentExam();
+        
+        $exam->Start();
+        
+        PresentNextQuestion();
+    }
+    
+    function PresentNextQuestion()
+    {
+        $exam = GetCurrentExam();
+        
+        $questionID = $exam->PullNextQuestionID();
+        
+        echo($questionID);
+        exit();
+        
+        $question = GetQuestion($questionID);
+        
+        var_dump($question);
+        exit();
+        
+        $answers = array();
+        $orderedAnswers = GetQuestionAnswers($questionID);
+        
+        $answerKeys = array_rand($orderedAnswers, count($orderedAnswers));
+        
+        foreach ($answerKeys as $key)
+        {
+            $answers[] = $orderedAnswers[$key];
+        }
+        
+        include(TESTQUESTIONVIEWFORM_FILE);
+    }
+    
+    function SubmitAnswer()
+    {
+        $answerID = $_POST[ANSWERID_IDENTIFIER];
+        
+        $exam = GetCurrentExam();
+        
+        $exam->PushQuestionAnswerID($answerID);
+        
+        if($exam->IsDone())
+        {
+            CommitExam();
+        }
+        
+        PresentNextQuestion();
     }
     
     function CommitExam()
@@ -194,9 +244,10 @@
         AddTestee($testEntryID, $profile);
         AddTesteeExperiences($testEntryID, $profile);
         
+        echo('Score:' . $exam->GetLevel());
+        
         DisposeCurrentExam();
         
-        echo('Exam committed.');
         exit();
     }
 ?>

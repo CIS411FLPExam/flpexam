@@ -203,5 +203,256 @@ class Exam
         
         return $isSet;
     }
+    
+    /**
+     * Indicates whether or not the exam is over.
+     * @return boolean True, if the exam is over.
+     */
+    public function IsDone()
+    {
+        $isDone = !$this->IsNotDone();
+        
+        return $isDone;
+    }
+    
+    /**
+     * Indicates whether or not the exam is over.
+     * @return boolean True, if the exam is NOT over.
+     */
+    public function IsNotDone()
+    {
+        $questionsLeft = $this->IsQuestionsLeft();
+        $validNumQuestions = $this->IsLvlQAsCountValid();
+        
+        $isNotDone = $questionsLeft && $validNumQuestions;
+        
+        return $isNotDone;
+    }
+
+    /**
+     * Indicates whether or not the there is valid number of questions for the level.
+     * @return boolean True, if there is a valid number of questions.
+     */
+    protected function IsLvlQAsCountValid()
+    {
+        $lvlQAs = $this->GetLvlQAs();
+        $parameters = $this->GetParameters();
+        
+        $isValid = count($lvlQAs) == $parameters->GetQuestionCount();
+        
+        return $isValid;
+    }
+    
+    /**
+     * Indicates whether or not there are unanswered quetsions.
+     * @return boolean True, if there ARE unanswered questions.
+     */
+    protected function IsQuestionsLeft()
+    {
+        $isLeft = FALSE;
+        $lvlQAs = $this->GetLvlQAs();
+        
+        for($index = 0; $index < count($lvlQAs) && !$isLeft; $index++)
+        {
+            $qa = $lvlQAs[$index];
+            
+            $isLeft = !$qa->IsAnswerIdSet();
+        }
+        
+        return $isLeft;
+    }
+    
+    /**
+     * Gets the cumulative collection of question I.D.'s from all previous levels.
+     * @return The collection of question I.D.'s from the previous level.
+     */
+    protected function GetPreviousQuestionIDs()
+    {
+        $previousQuesIds = array();
+        $allQAs = $this->GetAllQAs();
+        
+        foreach ($allQAs as $qa)
+        {
+            $previousQuesIds[] = $qa->GetQuestionId();
+        }
+        
+        return $previousQuesIds;
+    }
+    
+    /**
+     * Uses the profile to compute an initial level for the exam, and sets it to the current level.
+     */
+    public function SetInitialLevel()
+    {
+        $this->SetLevel(1);
+    }
+    
+    /**
+     * Stores the current questions, increases the level, and gets new questions.
+     */
+    protected function IncreaseLevel()
+    {
+        $level = $this->GetLevel();
+        
+        $level++;
+        
+        $this->RecordLvlQAs();
+        
+        $this->SetLevel($level);
+        
+        $this->GetNewLvlQAs();
+    }
+    
+    /**
+     * Stores the current questions, decreases the level, and gets new questions.
+     */
+    protected function DecreaseLevel()
+    {
+        $level = $this->GetLevel();
+        
+        $level--;
+        
+        $this->RecordLvlQAs();
+        
+        $this->SetLevel($level);
+        
+        $this->GetNewLvlQAs();
+    }
+    
+    /**
+     * Gets a new set of level questions and answers and assigns them.
+     */
+    protected function GetNewLvlQAs()
+    {
+        $level = $this->GetLevel();
+        $languageID = $this->GetLanguage()->GetId();
+        $idsToExclude = $this->GetPreviousQuestionIDs();
+        $limit = $this->GetParameters()->GetQuestionCount();
+        
+        $newQuesIDs = GetRandomQuestionIDs($languageID, $level, $limit, $idsToExclude);
+        
+        $lvlQAs = array();
+        
+        foreach ($newQuesIDs as $questionID)
+        {
+            $lvlQAs[] = new QuestionAnswer($questionID);
+        }
+        
+        $this->SetLvlQAs($lvlQAs);
+    }
+    
+    /**
+     * Stores the current set of level question answers into all the question answers collection.
+     */
+    protected function RecordLvlQAs()
+    {
+        $lvlQAs = $this->GetLvlQAs();
+        $allQAs = $this->GetAllQAs();
+        
+        foreach ($lvlQAs as $lvlQA)
+        {
+            $allQAs[] = $lvlQA;
+        }
+        
+        $this->SetAllQAs($allQAs);
+    }
+    
+    /**
+     * Assess the score of the exam and decides whether to decrease, increase, or do nothing to the level.
+     * If nothing is done then the exam is done.
+     */
+    protected function AssessLvlAnswers()
+    {
+        $lvlQAs = $this->GetLvlQAs();
+        $parameters = $this->GetParameters();
+        
+        $questionCount = count($lvlQAs);
+        $correctAnsCount = 0;
+        
+        foreach ($lvlQAs as $lvlQA)
+        {
+            $answerID = $lvlQA->GetAnswerId();
+            $questionID = $lvlQA->GetQuestionId();
+            
+            if (IsAnswerCorrect($questionID, $answerID))
+            {
+                $correctAnsCount++;
+            }
+        }
+        
+        $percentScore = $correctAnsCount / $questionCount;
+        
+        if ($percentScore >= $parameters->GetIncLevelScore())
+        {
+            $this->IncreaseLevel();
+        }
+        else if ($percentScore <= $parameters->GetDecLevelScore())
+        {
+            $this->DecreaseLevel();
+        }
+    }
+    
+    /**
+     * Gets the next unanswered question I.D. from the level of questions.
+     * @return int The question I.D. of the next question or 0 if there are not more unanswered questions.
+     */
+    public function PullNextQuestionID()
+    {
+        $questionID = 0;
+        
+        $foundNextQues = FALSE;
+        $lvlQAs = $this->GetLvlQAs();
+        
+        var_dump($lvlQAs);
+        exit();
+        
+        for($index = 0; $index < count($lvlQAs) && !$foundNextQues; $index++)
+        {
+            $lvlQA = $lvlQAs[$index];
+            
+            if(!$lvlQA->IsAnswerIdSet())
+            {
+                $foundNextQues = TRUE;
+                $questionID = $lvlQA->GetQuestionId();
+            }
+        }
+        
+        return $questionID;
+    }
+    
+    /**
+     * Pairs the give answer I.D. with the first question that does not have an answer.
+     * @param int $answerID The I.D. of the answer.
+     */
+    public function PushQuestionAnswerID($answerID)
+    {
+        $foundPulledQues = FALSE;
+        $lvlQAs = $this->GetLvlQAs();
+        
+        for($index = 0; $index < count($lvlQAs) && !$foundPulledQues; $index++)
+        {
+            $lvlQA = $lvlQAs[$index];
+            
+            if(!$lvlQA->IsAnswerIdSet())
+            {
+                $foundPulledQues = TRUE;
+                $lvlQA->SetAnswerId($answerID);
+            }
+        }
+        
+        if(!$this->IsQuestionsLeft())
+        {
+            $this->AssessLvlAnswers();
+        }
+    }
+    
+    /**
+     * Starts the exam.
+     */
+    public function Start()
+    {
+        $this->SetInitialLevel();
+        $this->GetNewLvlQAs();
+    }
 }
 ?>

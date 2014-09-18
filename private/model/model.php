@@ -630,4 +630,73 @@
             LogError($ex);
         }
     }
+    
+    
+    /**
+     * Gets question from the records.
+     * @param int $questionID The I.D. of the question to get.
+     * @return array The question.
+     */
+    function GetQuestion($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER .';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $question = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            return $question;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets all possible answers for a question.
+     * @param int $questionID The I.D. of the question.
+     * @return array The collection of answers.
+     */
+    function GetQuestionAnswers($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            //Order by Correct because WE ALWAYS WANT THE CORRECT ANSWER FIRST.
+            $query = 'SELECT * FROM ' . ANSWERS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER
+                    . ' ORDER BY Correct DESC';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $answers = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $answers;
+            
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
 ?>
