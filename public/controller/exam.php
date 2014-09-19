@@ -189,7 +189,7 @@
         
         $exam->Start();
         
-        Redirect(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION));
+        PresentNextQuestion();
     }
     
     function PresentNextQuestion()
@@ -203,15 +203,9 @@
         $name = $question[NAME_IDENTIFIER];
         $instructions = $question['Instructions'];
         
-        $answers = array();
-        $orderedAnswers = GetQuestionAnswers($questionID);
+        $answers = GetQuestionAnswers($questionID);
         
-        $answerKeys = array_rand($orderedAnswers, count($orderedAnswers));
-        
-        foreach ($answerKeys as $key)
-        {
-            $answers[] = $orderedAnswers[$key];
-        }
+        //shuffle($answers);
         
         include(TESTQUESTIONVIEWFORM_FILE);
     }
@@ -230,9 +224,16 @@
             {
                 CommitExam();
             }
+            else
+            {
+                PresentNextQuestion();
+            }
         }
-        
-        PresentNextQuestion();
+        else
+        {
+            $message = 'Error';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function CommitExam()
@@ -244,10 +245,10 @@
         AddTestee($testEntryID, $profile);
         AddTesteeExperiences($testEntryID, $profile);
         
-        echo('Score:' . $exam->GetLevel());
-        
         DisposeCurrentExam();
         
-        exit();
+        $message = 'Score:' . $exam->GetLevel();
+        
+        include(MESSAGEFORM_FILE);
     }
 ?>

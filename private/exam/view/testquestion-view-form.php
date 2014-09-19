@@ -6,7 +6,7 @@
 <h1>Question</h1>
 
 <div class="formGroup">
-    
+    <label>Level: <?php echo($exam->GetLevel()); ?></label>
     <div class="formSection">
         <label>Instructions:</label><?php echo(htmlspecialchars($instructions)); ?>
     </div>

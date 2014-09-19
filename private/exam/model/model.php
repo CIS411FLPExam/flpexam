@@ -78,22 +78,23 @@
                     $query .= ', :' . QUESTIONID_IDENTIFIER . $index;
                 }
                 
-                $query .= ')';
+                $query .= ') AND';
             }
             
             $query .= ' ' . LANGUAGEID_IDENTIFIER
                     . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
                     . ' ' . 'Level'
                     . ' = :' . 'Level' . ' ORDER BY RAND() LIMIT'
-                    . ' ' . $limit;
+                    . ' :' . 'Limit' ;
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
-            $statement->bindValue(':' . 'Level', $level);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, (int)$languageID, PDO::PARAM_INT);
+            $statement->bindValue(':' . 'Level', (int)$level, PDO::PARAM_INT);
+            $statement->bindValue(':' . 'Limit', (int)$limit, PDO::PARAM_INT);
             
             for ($index = 0; $index < count($idsToExclude); $index++)
             {
-                $statement->bindValue(':' . QUESTIONID_IDENTIFIER . $index, $idsToExclude[$index]);
+                $statement->bindValue(':' . QUESTIONID_IDENTIFIER . $index, (int)$idsToExclude[$index], PDO::PARAM_INT);
             }
             
             $statement->execute();
