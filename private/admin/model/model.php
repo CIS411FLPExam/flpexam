@@ -4,6 +4,72 @@
     require_once(MODEL_FILE);
     require_once(TESTINFOCLASS_FILE);
     require_once(DETAILEDTESTINFOCLASS_FILE);
+    require_once(PHPEXCELCLASS_FILE);
+    require_once(PHPEXCELIOFACTORYCLASS_FILE);
+    
+    /**
+     * Creates an excel file of questions for the given language.
+     * @param int $languageID The I.D. of the language to export.
+     * @return string The file path of the file.
+     */
+    function ExportLanguage($languageID)
+    {
+        try
+        {
+            $fileName = TEMP_DIR . 'langauge_' . date("m-d-Y-G-i-s") . '.xlsx';
+            $languageName = GetLanguage($languageID)[NAME_IDENTIFIER];
+            $objPHPExcel = new PHPExcel();
+                
+            // Set properties
+            $properties = $objPHPExcel->getProperties();
+            $properties->setCreator("FLPExam site");
+            $properties->setLastModifiedBy("FLPExam site");
+            $properties->setTitle($languageName . " Exam Questions");
+            $properties->setSubject($languageName . " Exam Questions");
+            $properties->setDescription("Exam questions for " . $languageName . ".");
+            $properties->setKeywords("foreign language placement exam " . $languageName);
+            $properties->setCategory("Exam Questions");
+            
+            $workSheet = $objPHPExcel->setActiveSheetIndex(0);
+            $workSheet->setTitle('Questions');
+            
+            $questions = GetQuestions($languageID);
+            
+            $row = 1;
+            foreach ($questions as $question)
+            {
+                $column = 0;
+                
+                $questionID = $question[QUESTIONID_IDENTIFIER];
+                $level = $question['Level'];
+                $instructions = $question['Instructions'];
+                $quesName = $question[NAME_IDENTIFIER];
+                
+                $answers = GetQuestionAnswers($questionID);
+                
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $instructions);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $quesName);
+                
+                foreach ($answers as $answer)
+                {
+                    $ansName = $answer[NAME_IDENTIFIER];
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
+                }
+                
+                $row++;
+            }
+            
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter->save($fileName);
+            
+            return $fileName;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
     
     /**
      * Gets the collection of test information from the records.

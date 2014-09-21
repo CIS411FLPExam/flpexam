@@ -11,6 +11,8 @@
     $userCanEdit = userIsAuthorized(QUESTIONEDIT_ACTION);
     $userCanView = userIsAuthorized(QUESTIONVIEW_ACTION);
     $userCanDelete = userIsAuthorized(QUESTIONDELETE_ACTION);
+    $userCanExport = userIsAuthorized(LANGUAGEEXPORT_ACTION);
+    $userCanImport = userIsAuthorized(LANGUAGEIMPORT_ACTION);
 ?>
 
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSEARCH_ACTION)); ?>" method="post">
@@ -18,6 +20,17 @@
     <label>Search Questions:</label>
     <input name="<?php echo(NAME_IDENTIFIER) ?>" type="text" class="formInput" />
     <input type="submit" value="Search" />
+</form>
+
+<br />
+
+<div class="divider"></div>
+
+<br />
+
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
+    <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+    <input type="submit" value="Export Questions" />
 </form>
 
 <br />

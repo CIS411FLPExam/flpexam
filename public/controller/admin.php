@@ -160,8 +160,51 @@
             case TESTSEARCH_ACTION :
                 TestSearch();
                 break;
+            case LANGUAGEIMPORT_ACTION :
+                LanguageImport();
+                break;
+            case LANGUAGEEXPORT_ACTION :
+                LanguageExport();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+    }
+    
+    function LanguageImport()
+    {
+        
+    }
+    
+    function LanguageExport()
+    {
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $file = ExportLanguage($languageID);
+        
+        header('Content-type: application/octet-stream');
+        header('Content-Length: ' . filesize($file));
+        header("Content-Disposition: attachment; filename=" . basename($file));
+        readfile($file);
+        
+        ignore_user_abort(true);
+        if (connection_aborted())
+        {
+            unlink($file);
         }
     }
     

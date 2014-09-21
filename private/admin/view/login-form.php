@@ -8,7 +8,7 @@
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLOGIN_ACTION ) ); ?>" method="post">
     <div class="formGroup">
         <div class="formSection">
-            <label>Username:</label><input class="formInput" type="text" name="username" />
+            <label>Username:</label><input class="formInput" type="text" name="username" autofocus />
         </div>
 
         <div class="formSection">

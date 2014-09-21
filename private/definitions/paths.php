@@ -65,7 +65,32 @@
      */
     define("CODE_DIR", PRIVATE_DIR . "code/");
     
+    /**
+     * The file path of the PHPExcel code directory.
+     */
+    define("PHPEXCELCODE_DIR", CODE_DIR . "PHPExcel/Classes/");
+    
+    /**
+     * The file path of the PHPExcel classes code directory.
+     */
+    define("PHPEXCELCLASSESCODE_DIR", PHPEXCELCODE_DIR . "PHPExcel/");
+    
+    /**
+     * The file path of the temporary files directory.
+     */
+    define("TEMP_DIR", PRIVATE_DIR . "temp/");
+    
     //Base file paths.
+    /**
+     * The file path of the PHPExcell class file.
+     */
+    define("PHPEXCELCLASS_FILE", PHPEXCELCODE_DIR . "PHPExcel.php");
+    
+    /**
+     * The file path of the PHPExcell IOFactory class file.
+     */
+    define("PHPEXCELIOFACTORYCLASS_FILE", PHPEXCELCLASSESCODE_DIR . "IOFactory.php");
+    
     /**
      * The file path of the base model file.
      */

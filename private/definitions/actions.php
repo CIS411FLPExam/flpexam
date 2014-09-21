@@ -231,6 +231,16 @@
      */
     define("TESTSEARCH_ACTION", "TestSearch");
     
+    /**
+     * The action word to use to import the questions for a langauge.
+     */
+    define("LANGUAGEIMPORT_ACTION", "LanguageImport");
+    
+    /**
+     * The action word to use to export the questions for a language.
+     */
+    define("LANGUAGEEXPORT_ACTION", "LanguageExport");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     
