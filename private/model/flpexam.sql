@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2014 at 02:55 AM
+-- Generation Time: Sep 22, 2014 at 10:58 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -34,19 +34,61 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=109 ;
 
 --
 -- Dumping data for table `answers`
 --
 
 INSERT INTO `answers` (`AnswerID`, `QuestionID`, `Correct`, `Name`) VALUES
-(16, 3, 1, 'The sky.'),
-(17, 3, 0, 'Chilling hard.'),
-(22, 14, 1, 'Answers'),
-(23, 15, 1, 'doe'),
-(25, 16, 1, 'Answer.'),
-(27, 17, 1, 'An');
+(49, 1, 1, 'una'),
+(50, 1, 0, 'un'),
+(51, 1, 0, 'unas'),
+(52, 1, 0, 'unos'),
+(53, 2, 1, 'La'),
+(54, 2, 0, 'Las'),
+(55, 2, 0, 'El'),
+(56, 2, 0, 'Los'),
+(57, 3, 1, 'una, la'),
+(58, 3, 0, 'un, el'),
+(59, 3, 0, 'una, el'),
+(60, 3, 0, 'un, la'),
+(61, 4, 1, 'interesante'),
+(62, 4, 0, 'grande'),
+(63, 4, 0, 'simpÃ¡tica'),
+(64, 4, 0, 'pequeÃ±a'),
+(65, 5, 1, 'se cepilla'),
+(66, 5, 0, 'me lavo'),
+(67, 5, 0, 'te vistes'),
+(68, 5, 0, 'nos levantamos'),
+(69, 6, 1, 'duermo'),
+(70, 6, 0, 'como'),
+(71, 6, 0, 'habla'),
+(72, 6, 0, 'escuchas'),
+(73, 7, 1, 'me levantÃ©'),
+(74, 7, 0, 'me levanto'),
+(75, 7, 0, 'te acostaste'),
+(76, 7, 0, 'te acuestas'),
+(77, 12, 1, 'visitamos'),
+(78, 12, 0, 'hablamos'),
+(79, 12, 0, 'fueron'),
+(80, 12, 0, 'dormimos'),
+(81, 8, 1, 'un piloto'),
+(82, 8, 0, 'un veterinario'),
+(83, 8, 0, 'un mÃ©dico'),
+(84, 8, 0, 'un psicÃ³logo'),
+(85, 9, 1, 'una psicÃ³loga'),
+(86, 9, 0, 'una ejecutiva'),
+(87, 9, 0, 'una veterinaria'),
+(88, 9, 0, 'una mÃ©dica'),
+(89, 10, 1, 'sea'),
+(90, 10, 0, 'seas'),
+(91, 10, 0, 'es'),
+(92, 10, 0, 'eres'),
+(93, 11, 1, 'sea'),
+(94, 11, 0, 'seas'),
+(95, 11, 0, 'es'),
+(96, 11, 0, 'eres');
 
 -- --------------------------------------------------------
 
@@ -70,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
 --
 
 INSERT INTO `examparameters` (`ParameterID`, `KeyCode`, `QuestionCount`, `IncLevelScore`, `DecLevelScore`) VALUES
-(1, 'cis411', 10, '0.8000', '0.5000');
+(1, 'cis411', 2, '1.0000', '0.5000');
 
 -- --------------------------------------------------------
 
@@ -83,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
 
 --
 -- Dumping data for table `functions`
@@ -120,7 +162,9 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (29, 'ExamParametersView', 'Allows the user to view the exam parameters.'),
 (30, 'ExamParametersEdit', 'Allows the user to edit the exam parameters.'),
 (31, 'ManageTests', 'Allows the user to manage test scores.'),
-(32, 'TestView', 'Allows the user to view a test.');
+(32, 'TestView', 'Allows the user to view a test.'),
+(33, 'LanguageImport', 'Allows the user to import the questions for a langauge.'),
+(34, 'LanguageExport', 'Allows the user to export the questions of a language.');
 
 -- --------------------------------------------------------
 
@@ -158,14 +202,29 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `Active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `languages`
 --
 
 INSERT INTO `languages` (`LanguageID`, `Name`, `Active`) VALUES
-(1, 'French', 1);
+(2, 'Spanish', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `levels`
+--
+
+CREATE TABLE IF NOT EXISTS `levels` (
+  `Level` int(11) NOT NULL,
+  `LanguageID` int(11) NOT NULL,
+  `Name` varchar(32) NOT NULL,
+  `Course` varchar(32) NOT NULL,
+  PRIMARY KEY (`Level`,`LanguageID`),
+  KEY `levels_language_fk` (`LanguageID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -182,18 +241,25 @@ CREATE TABLE IF NOT EXISTS `questions` (
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`),
   FULLTEXT KEY `question_ft` (`Name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Dumping data for table `questions`
 --
 
 INSERT INTO `questions` (`QuestionID`, `Level`, `Name`, `LanguageID`, `Instructions`) VALUES
-(3, 1, 'Sup yo?', 1, 'Tell me what''s really good.'),
-(14, 1, 'Questions', 1, ''),
-(15, 1, 'sup', 1, ''),
-(16, 1, 'Question.', 1, 'Instructions.'),
-(17, 2, 'Ques', 1, 'Instruc');
+(1, 1, 'Estudio en  _____  universidad muy buena.', 2, 'Indicate whether the noun in this sentence is masculine or feminine, singular or plural by filling in the correct form of the indefinite article.'),
+(2, 1, '__________  universidad es pequeÃ±a y muy bonita.', 2, 'Complete the following sentence with the correct form of the definite article in Spanish.'),
+(3, 1, 'Â¿Hay  ______________  biblioteca grande en  ______________  universidad?', 2, 'Complete the following question a correct form of the definite or indefinite article.'),
+(4, 1, 'Â¿Es la clase de espaÃ±ol aburrida? No, es muy  _____________________________ .', 2, 'Complete the answer to the question that Laura asks Eric about his first impressions of his Spanish class by providing the antonym (opposite) of the adjective in italics.'),
+(5, 2, 'AndrÃ©s _____ los dientes despuÃ©s de desayunar.', 2, 'Complete the following sentence with the correct form of the appropriate verb. '),
+(6, 2, 'Yo siempre tengo sueÃ±o en clase pero nunca __________ en clase.	', 2, 'Read the sentence and choose the logical word.'),
+(7, 3, 'Mi esposo durmiÃ³ tarde pero yo _____ muy temprano.', 2, 'Complete the sentence with the correct form of the appropriate reflexive verb in the preterit. '),
+(8, 4, 'Un hombre que conduce aviones es _______.', 2, 'Complete the sentence with the logical word.'),
+(9, 4, 'Una mujer que cuida la salud mental de sus pacientes es _______', 2, 'Complete the sentence with the logical word.'),
+(10, 4, 'Mi padre bajÃ³ de peso sin razÃ³n y siempre tiene sed. Es posible que _____ diabÃ©tico', 2, 'Read the descriptions of the symptoms and complete the sentences with the logical phrase.'),
+(11, 4, 'Mi padre bajÃ³ de peso sin razÃ³n y siempre tiene sed. Es posible que _____ diabÃ©tico', 2, 'Read the descriptions of the symptoms and complete the sentences with the logical phrase.'),
+(12, 3, 'El aÃ±o pasado, fuimos de vacaciones a MÃ©xico. Primero mi esposo y yo _____ a la agencia de viajes.', 2, 'Complete the sentence in a logical way.');
 
 -- --------------------------------------------------------
 
@@ -244,6 +310,8 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 3),
 (1, 16),
 (1, 17),
+(1, 34),
+(1, 33),
 (3, 18),
 (3, 20),
 (3, 19),
@@ -259,7 +327,9 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (3, 26),
 (3, 32),
 (3, 16),
-(3, 17);
+(3, 17),
+(3, 34),
+(3, 33);
 
 -- --------------------------------------------------------
 
@@ -306,10 +376,17 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
 --
 
 INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`) VALUES
-(10, 1, 'None', '1 - 2 years', '2 - 3 years'),
-(11, 1, '2 - 3 years', '3 - 4 years', '1 - 2 years'),
-(12, 0, 'None', 'None', 'None'),
-(13, 0, 'None', 'None', 'None');
+(14, 0, '1 - 2 years', '2 - 3 years', 'None'),
+(15, 0, '1 - 2 years', '2 - 3 years', 'None'),
+(16, 0, '1 - 2 years', '2 - 3 years', 'None'),
+(17, 0, '1 - 2 years', '2 - 3 years', 'None'),
+(18, 0, '1 - 2 years', '2 - 3 years', 'None'),
+(19, 0, '2 - 3 years', '1 - 2 years', 'None'),
+(20, 0, '2 - 3 years', '1 - 2 years', 'None'),
+(21, 0, '2 - 3 years', '1 - 2 years', 'None'),
+(22, 0, '2 - 3 years', '1 - 2 years', 'None'),
+(23, 0, '1 - 2 years', '2 - 3 years', 'None'),
+(24, 0, '2 - 3 years', '1 - 2 years', 'None');
 
 -- --------------------------------------------------------
 
@@ -334,10 +411,17 @@ CREATE TABLE IF NOT EXISTS `testees` (
 --
 
 INSERT INTO `testees` (`TestID`, `FirstName`, `LastName`, `Email`, `Major`, `HighSchool`) VALUES
-(10, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(11, 'Victoria', 'Snelick', 'vpsnelick@gmail.com', 'Computer Information Systems', 'Urbana'),
-(12, '', '', '', '', ''),
-(13, 'blayze', '', '', '', '');
+(14, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(15, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(16, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(17, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(18, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(19, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(20, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(21, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(22, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(23, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(24, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana');
 
 -- --------------------------------------------------------
 
@@ -353,17 +437,24 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 --
 -- Dumping data for table `testentries`
 --
 
 INSERT INTO `testentries` (`TestID`, `Language`, `Score`, `Date`) VALUES
-(10, 'French', '0.0000', '2014-09-14 13:32:59'),
-(11, 'French', '0.0000', '2014-09-15 20:00:53'),
-(12, 'French', '0.0000', '2014-09-16 11:26:13'),
-(13, 'French', '0.0000', '2014-09-16 11:45:19');
+(14, 'Spanish', '2.0000', '2014-09-17 21:08:56'),
+(15, 'Spanish', '3.0000', '2014-09-17 21:13:18'),
+(16, 'Spanish', '2.0000', '2014-09-17 21:14:03'),
+(17, 'Spanish', '0.0000', '2014-09-18 18:16:00'),
+(18, 'Spanish', '5.0000', '2014-09-18 21:42:38'),
+(19, 'Spanish', '2.0000', '2014-09-18 21:49:32'),
+(20, 'Spanish', '0.0000', '2014-09-18 21:52:48'),
+(21, 'Spanish', '0.0000', '2014-09-18 21:54:18'),
+(22, 'Spanish', '0.0000', '2014-09-18 21:59:07'),
+(23, 'Spanish', '2.0000', '2014-09-18 22:08:02'),
+(24, 'Spanish', '3.0000', '2014-09-22 12:47:18');
 
 -- --------------------------------------------------------
 
@@ -418,6 +509,12 @@ INSERT INTO `users` (`UserID`, `UserName`, `Password`) VALUES
 --
 ALTER TABLE `answers`
   ADD CONSTRAINT `questionid_fk` FOREIGN KEY (`QuestionID`) REFERENCES `questions` (`QuestionID`);
+
+--
+-- Constraints for table `levels`
+--
+ALTER TABLE `levels`
+  ADD CONSTRAINT `levels_language_fk` FOREIGN KEY (`LanguageID`) REFERENCES `languages` (`LanguageID`);
 
 --
 -- Constraints for table `questions`

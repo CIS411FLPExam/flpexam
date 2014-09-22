@@ -15,6 +15,7 @@
         <div class="formSection">
             <label>Question Count:</label>
             <input name="<?php echo($parameters->GetQuestionCountIndex()); ?>" type="number" value="<?php echo(htmlspecialchars($questionCount)); ?>" />
+            per-level
         </div>
 
         <div class="divider"></div>

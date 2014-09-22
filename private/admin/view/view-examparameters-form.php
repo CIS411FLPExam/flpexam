@@ -13,7 +13,7 @@
     <div class="divider"></div>
     
     <div class="formSection">
-        <label>Question Count:</label><?php echo(htmlspecialchars($questionCount)); ?>
+        <label>Question Count:</label><?php echo(htmlspecialchars($questionCount)); ?> per-level
     </div>
     
     <div class="divider"></div>

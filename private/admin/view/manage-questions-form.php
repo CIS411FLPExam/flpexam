@@ -33,6 +33,12 @@
     <input type="submit" value="Export Questions" />
 </form>
 
+<form enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
+    <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+    <input type="submit" value="Import Questions" />
+    <input type="file" name="file" />
+</form>
+
 <br />
 
 <div class="divider"></div>

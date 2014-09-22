@@ -8,11 +8,80 @@
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
     
     /**
+     * Imports language questions from an excel sheet.
+     * @param int $languageID The I.D. of the language.
+     * @param string $filePath The file path of the excell file.
+     */
+    function ImportLanguageQuestions($languageID, $filePath)
+    {
+        try
+        {
+            $objPHPExcel = PHPExcel_IOFactory::load($filePath);
+    
+            foreach ($objPHPExcel->getWorksheetIterator() as $worksheet)
+            {
+                $highestRow = $worksheet->getHighestRow();
+                $highestColumn = $worksheet->getHighestColumn();
+                $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+                
+                for ($row = 2; $row <= $highestRow; ++$row)
+                {
+                    $column = 0;
+                    
+                    $cell = $worksheet->getCellByColumnAndRow(0, $row);
+                    $val = $cell->getValue();
+                    $column1DataType = PHPExcel_Cell_DataType::dataTypeForValue($val);
+                    $cell = $worksheet->getCellByColumnAndRow(1, $row);
+                    $val = $cell->getValue();
+                    $column2DataType = PHPExcel_Cell_DataType::dataTypeForValue($val);
+                    
+                    //Check to see if a question I.D. and a level exists.
+                    if($column1DataType == PHPExcel_Cell_DataType::TYPE_NUMERIC && $column2DataType == PHPExcel_Cell_DataType::TYPE_NUMERIC)
+                    {//If both  exists then we are doing an update.
+                        $questionID = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
+                    }
+                    else
+                    {
+                        $questionID = 0;
+                    }
+                    
+                    $level = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
+                    $instructions = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
+                    $quesName = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
+                    
+                    $answers = array();
+                    
+                    for ($col = $column; $col < $highestColumnIndex; ++ $col)
+                    {
+                        $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                        $answer = $cell->getValue();
+                        
+                        $answers[] = $answer;
+                    }
+                    
+                    if($questionID > 0)
+                    {//We are doing an update.
+                        UpdateQuestion($questionID, $quesName, $instructions, $level, $answers);
+                    }
+                    else
+                    {//We are doing an add.
+                        AddQuestion($languageID, $quesName, $instructions, $level, $answers);
+                    }
+                }
+            }
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Creates an excel file of questions for the given language.
      * @param int $languageID The I.D. of the language to export.
      * @return string The file path of the file.
      */
-    function ExportLanguage($languageID)
+    function ExportLanguageQuestions($languageID)
     {
         try
         {
@@ -33,11 +102,22 @@
             $workSheet = $objPHPExcel->setActiveSheetIndex(0);
             $workSheet->setTitle('Questions');
             
+            $workSheet->getColumnDimensionByColumn(0)->setVisible(false);
+            
             $questions = GetQuestions($languageID);
             
             $row = 1;
+            $column = 0;
+            
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question ID');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Level');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Instructions');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Correct Answer');
+            
             foreach ($questions as $question)
             {
+                $row++;
                 $column = 0;
                 
                 $questionID = $question[QUESTIONID_IDENTIFIER];
@@ -47,6 +127,7 @@
                 
                 $answers = GetQuestionAnswers($questionID);
                 
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $instructions);
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $quesName);
@@ -56,9 +137,14 @@
                     $ansName = $answer[NAME_IDENTIFIER];
                     $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
                 }
-                
-                $row++;
             }
+            
+            $workSheet->getProtection()->setSheet(true);
+            
+            $highestCol = $workSheet->getHighestDataColumn();
+            $highestRow = $workSheet->getHighestDataRow();
+            
+            $workSheet->getStyle('B2:' . $highestCol . $highestRow)->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED); 
             
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
             $objWriter->save($fileName);
@@ -100,7 +186,7 @@
                     . ' ' . TESTEES_IDENTIFIER . ' ON'
                     . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
                     . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
-                    . ' ORDER BY ' . $dateIndex . ' LIMIT 100;';
+                    . ' ORDER BY ' . $dateIndex . ' DESC;';
             
             $statement = $db->prepare($query);
             
@@ -465,7 +551,8 @@
             
             $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
                     . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ' ORDER BY'
+                    . ' ' . 'Level' . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);

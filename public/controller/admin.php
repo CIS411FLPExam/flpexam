@@ -173,7 +173,28 @@
     
     function LanguageImport()
     {
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
         
+        $file = $_FILES['file'];
+        $filePath = $file ['tmp_name'];
+        
+        ImportLanguageQuestions($languageID, $filePath);
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
     }
     
     function LanguageExport()
@@ -194,18 +215,16 @@
             exit();
         }
         
-        $file = ExportLanguage($languageID);
+        ignore_user_abort(true);
+        
+        $file = ExportLanguageQuestions($languageID);
         
         header('Content-type: application/octet-stream');
         header('Content-Length: ' . filesize($file));
-        header("Content-Disposition: attachment; filename=" . basename($file));
+        header('Content-Disposition: attachment; filename=' . basename($file));
         readfile($file);
         
-        ignore_user_abort(true);
-        if (connection_aborted())
-        {
-            unlink($file);
-        }
+        unlink($file);
     }
     
     function TestView()
