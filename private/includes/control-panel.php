@@ -18,3 +18,6 @@
 <?php if (userIsAuthorized(MANAGETESTS_ACTION)) {  ?>
     <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>">Manage Tests</a> &nbsp;
 <?php } ?>
+<?php if (userIsAuthorized(MANAGECONTACTS_ACTION)) {  ?>
+    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION ) ) ?>">Manage Contacts</a> &nbsp;
+<?php } ?>

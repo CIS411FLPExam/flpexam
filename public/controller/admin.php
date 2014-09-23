@@ -166,9 +166,111 @@
             case LANGUAGEEXPORT_ACTION :
                 LanguageExport();
                 break;
+            case MANAGECONTACTS_ACTION :
+                ManageContacts();
+                break;
+            case CONTACTADD_ACTION :
+                ContactAdd();
+                break;
+            case CONTACTEDIT_ACTION :
+                ContactEdit();
+                break;
+            case PROCESSCONTACTADDEDIT_ACTION :
+                ProcessContactAddEdit();
+                break;
+            case CONTACTDELETE_ACTION :
+                ContactDelete();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function ContactAdd()
+    {
+        $contact = new Contact();
+        
+        include(ADDEDITCONTACTFORM_FILE);
+    }
+    
+    function ContactEdit()
+    {
+        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_POST[CONTACTID_IDENTIFIER];
+        }
+        else if (isset($_GET[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_GET[CONTACTID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No contact I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $contact = GetContact($contactID);
+        
+        include(ADDEDITCONTACTFORM_FILE);
+    }
+    
+    function ProcessContactAddEdit()
+    {
+        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_POST[CONTACTID_IDENTIFIER];
+        }
+        
+        $contact = new Contact();
+        $contact->Initialize($_POST);
+        
+        if(true)
+        {
+            if(isset($contactID))
+            {
+                UpdateContact($contactID, $contact);
+            }
+            else
+            {
+                AddContact($contact);
+            }
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
+        }
+        
+        include(ADDEDITCONTACTFORM_FILE);
+    }
+    
+    function ContactDelete()
+    {
+        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_POST[CONTACTID_IDENTIFIER];
+        }
+        else if (isset($_GET[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_GET[CONTACTID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No contact I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        DeleteContact($contactID);
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
+    }
+    
+    function ManageContacts()
+    {
+        $contacts = GetContacts();
+        
+        include(MANAGECONTACTSFORM_FILE);
     }
     
     function LanguageImport()

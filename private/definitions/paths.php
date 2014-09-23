@@ -256,6 +256,11 @@
      */
     define("QUESTIONANSWERCLASS_FILE", CODE_DIR . "questionanswer-class.php");
     
+    /**
+     * The file path of the contact class file.
+     */
+    define("CONTACTCLASS_FILE", CODE_DIR . "contact-class.php");
+    
 //Main paths.
 /******************************************************************************/
     
@@ -430,6 +435,16 @@
      * The file path of the view test form file.
      */
     define("VIEWTESTFORM_FILE", ADMINVIEW_DIR . "view-test-form.php");
+    
+    /**
+     * The file path of the manage contacts form file.
+     */
+    define("MANAGECONTACTSFORM_FILE", ADMINVIEW_DIR . "manage-contacts-form.php");
+    
+    /**
+     * The file path of the add edit contact form file.
+     */
+    define("ADDEDITCONTACTFORM_FILE", ADMINVIEW_DIR . "add-edit-contact-form.php");
     
 //Exam paths.
 /******************************************************************************/

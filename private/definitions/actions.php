@@ -241,6 +241,31 @@
      */
     define("LANGUAGEEXPORT_ACTION", "LanguageExport");
     
+    /**
+     * The action word to use to add a contact.
+     */
+    define("CONTACTADD_ACTION", "ContactAdd");
+    
+    /**
+     * The action word to use to edit a contact.
+     */
+    define("CONTACTEDIT_ACTION", "ConcactEdit");
+    
+    /**
+     * The action word to use to manage contacts.
+     */
+    define("MANAGECONTACTS_ACTION", "ManageContacts");
+    
+    /**
+     * The action word to use to delete a contact.
+     */
+    define("CONTACTDELETE_ACTION", "ContactDelete");
+    
+    /**
+     * The action word to use to process a contact add edit.
+     */
+    define("PROCESSCONTACTADDEDIT_ACTION", "ProcessContactAddEdit");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

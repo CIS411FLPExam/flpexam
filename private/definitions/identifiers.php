@@ -1,12 +1,22 @@
 <?php
     
     /**
+     * The identifier for the record of contacts.
+     */
+    define("CONTACTS_IDENTIFIER", "contacts");
+
+    /**
+     * The contact I.D. identifier.
+     */
+    define("CONTACTID_IDENTIFIER", "ContactID");
+
+    /**
      * The test I.D. identifier.
      */
     define("TESTID_IDENTIFIER", "TestID");
 
     /**
-     * The identifier for the record of testees experiences .
+     * The identifier for the record of testees experiences.
      */
     define("TESTEEEXPERIENCES_IDENTIFIER", "testeeexperiences");
     

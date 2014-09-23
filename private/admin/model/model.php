@@ -6,6 +6,199 @@
     require_once(DETAILEDTESTINFOCLASS_FILE);
     require_once(PHPEXCELCLASS_FILE);
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
+    require_once(CONTACTCLASS_FILE);
+    
+    /**
+     * Adds a contacts to the records.
+     * @param \Contact $contact The contact.
+     * @return int The I.D. of the newly inserted contact.
+     */
+    function AddContact($contact)
+    {
+        try
+        {
+            $firstNameIndex = $contact->GetFirstNameIndex();
+            $lastNameIndex = $contact->GetLastNameIndex();
+            $phoneNumberIndex = $contact->GetPhoneNumberIndex();
+            $emailIndex = $contact->GetEmailIndex();
+            
+            $db = GetDBConnection();
+            
+            $query = 'INSERT INTO ' . CONTACTS_IDENTIFIER
+                    . ' (' . $firstNameIndex
+                    . ', ' . $lastNameIndex
+                    . ', ' . $phoneNumberIndex
+                    . ', ' . $emailIndex . ') VALUES'                    
+                    . ' (:' . $firstNameIndex
+                    . ', :' . $lastNameIndex
+                    . ', :' . $phoneNumberIndex
+                    . ', :' . $emailIndex . ');';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $firstNameIndex, $contact->GetFirstName());
+            $statement->bindValue(':' . $lastNameIndex, $contact->GetLastName());
+            $statement->bindValue(':' . $phoneNumberIndex, $contact->GetPhoneNumber());
+            $statement->bindValue(':' . $emailIndex, $contact->GetEmail());
+            
+            $statement->execute();
+            
+            $contactID = $db->lastInsertId();
+            
+            $statement->closeCursor();
+            
+            return $contactID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets a contact from the records.
+     * @param int $contactID The I.D. of the contact to get.
+     * @return \Contact The contact.
+     */
+    function GetContact($contactID)
+    {
+        try
+        {
+            $contact = new Contact();
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . CONTACTS_IDENTIFIER . ' WHERE'
+                    . ' ' . CONTACTID_IDENTIFIER
+                    . ' = :' . CONTACTID_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            $contact->Initialize($row);
+            
+            return $contact;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Updates a contact on the records.
+     * @param int $contactID The I.D. of the contact to update.
+     * @param \Contact $contact The contact.
+     * @return int The number of contacts effected by the update.
+     */
+    function UpdateContact($contactID, $contact)
+    {
+        try
+        {
+            $firstNameIndex = $contact->GetFirstNameIndex();
+            $lastNameIndex = $contact->GetLastNameIndex();
+            $phoneNumberIndex = $contact->GetPhoneNumberIndex();
+            $emailIndex = $contact->GetEmailIndex();
+            
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . CONTACTS_IDENTIFIER . ' SET'
+                    . ' ' . $firstNameIndex . ' = :' . $firstNameIndex
+                    . ', ' . $lastNameIndex . ' = :' . $lastNameIndex
+                    . ', ' . $phoneNumberIndex . ' = :' . $phoneNumberIndex
+                    . ', ' . $emailIndex . ' = :' . $emailIndex . ' WHERE'
+                    . ' ' . CONTACTID_IDENTIFIER
+                    . ' = :' . CONTACTID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            $statement->bindValue(':' . $firstNameIndex, $contact->GetFirstName());
+            $statement->bindValue(':' . $lastNameIndex, $contact->GetLastName());
+            $statement->bindValue(':' . $phoneNumberIndex, $contact->GetPhoneNumber());
+            $statement->bindValue(':' . $emailIndex, $contact->GetEmail());
+            
+            $contactsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $contactsEffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Deletes a contact from the records.
+     * @param int $contactID The I.D. of the contact to delete.
+     * @return int The number contacts deleted.
+     */
+    function DeleteContact($contactID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'DELETE FROM ' . CONTACTS_IDENTIFIER . ' WHERE'
+                    . ' ' . CONTACTID_IDENTIFIER
+                    . ' = :' . CONTACTID_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            
+            $contactsDeleted = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $contactsDeleted;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets a collection of all contacts on record.
+     * @return \Contact Array of contacts.
+     */
+    function GetContacts()
+    {
+        try
+        {
+            $contacts = array();
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . CONTACTS_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $rows = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach ($rows as $row)
+            {
+                $contact = new Contact();
+                $contact->Initialize($row);
+                
+                $contacts[] = $contact;
+            }
+            
+            return $contacts;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
     
     /**
      * Imports language questions from an excel sheet.
