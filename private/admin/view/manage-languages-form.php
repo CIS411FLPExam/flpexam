@@ -31,6 +31,7 @@
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanManageQuestions) { ?><th></th><?php } ?>
                         <?php if ($userCanDelete) { ?><th></th><?php } ?>
+                        <?php if ($userCanEdit) { ?><th></th><?php } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,26 +41,27 @@
                         {
                             $languageID = $language[LANGUAGEID_IDENTIFIER];
                             $name = $language[NAME_IDENTIFIER];
+                            $active = $language['Active'];
                     ?>
                     <tr>
                         <td><?php echo(htmlspecialchars($name)); ?></td>
                         <?php if ($userCanView) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))) ?>">
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
                                     View
                                 </a>
                             </td>
                         <?php } ?>
                         <?php if ($userCanEdit) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))) ?>">
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
                                     Edit
                                 </a>
                             </td>
                         <?php } ?>
                         <?php if ($userCanManageQuestions) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))) ?>">
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
                                     Manage Questions
                                 </a>
                             </td>
@@ -67,6 +69,19 @@
                         <?php if ($userCanDelete) { ?>
                             <td class="centerText">
                                 <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanEdit) { ?>
+                            <td>
+                                <?php if($active == TRUE) { ?>
+                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
+                                        Activate
+                                    </a>
+                                <?php } else { ?>
+                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
+                                        Deactivate
+                                    </a>
+                                <?php } ?>
                             </td>
                         <?php } ?>
                     </tr>

@@ -6,6 +6,12 @@
 class Contact
 {
     /**
+     * The I.D. of the contact.
+     * @var int 
+     */
+    private $id;
+    
+    /**
      * The first name.
      * @var string 
      */
@@ -29,6 +35,30 @@ class Contact
      */
     private $email;
     
+    /**
+     * The flag that indicates whether are not the contact is a primary contact.
+     * @var boolean 
+     */
+    private $primary;
+   
+    /**
+     * Get's the I.D.
+     * @return int The I.D.
+     */
+    public function GetId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Sets the I.D.
+     * @param int $id The I.D.
+     */
+    public function SetId($id)
+    {
+        $this->id = $id;
+    }
+     
     /**
      * Gets the first name.
      * @return string The first name.
@@ -101,19 +131,42 @@ class Contact
         $this->email = $email;
     }
     
+    
+    /**
+     * Gets the flag that indicates whether or not the contact is a primary contact.
+     * @return boolean True, if the contact is a primary contact.
+     */
+    public function GetPrimary()
+    {
+        return $this->primary;
+    }
+    
+    /**
+     * Sets the flag that indicates whether or not the contact is a primary contact.
+     * @param boolean $primary True, if the contact is a priarmy contact.
+     */
+    public function SetPrimary($primary)
+    {
+        $this->primary = $primary;
+    }
+    
     /**
      * Creates an instance of a Contact.
+     * @param int $id The I.D.
      * @param string $firstName The first name.
      * @param string $lastName The last name.
      * @param string $phoneNumber The phone number.
      * @param string $email The email.
+     * @param boolean $primary The flag that indicates whether or not the contact is a primary contact.
      */
-    public function Contact($firstName = '', $lastName = '', $phoneNumber = '', $email = '')
+    public function Contact($id = 0, $firstName = '', $lastName = '', $phoneNumber = '', $email = '', $primary = FALSE)
     {
+        $this->SetId($id);
         $this->SetFirstName($firstName);
         $this->SetLastName($lastName);
         $this->SetPhoneNumber($phoneNumber);
         $this->SetEmail($email);
+        $this->SetPrimary($primary);
     }
     
     /**
@@ -122,10 +175,18 @@ class Contact
      */
     public function Initialize($array)
     {
+        $idIndex = $this->GetIdIndex();
         $firstNameIndex = $this->GetFirstNameIndex();
         $lastNameIndex = $this->GetLastNameIndex();
         $phoneNumberIndex = $this->GetPhoneNumberIndex();
         $emailIndex = $this->GetEmailIndex();
+        $primaryIndex = $this->GetPrimaryIndex();
+        
+        if(isset($array[$idIndex]))
+        {
+            $id = $array[$idIndex];
+            $this->SetId($id);
+        }
         
         if (isset($array[$firstNameIndex]))
         {
@@ -150,6 +211,21 @@ class Contact
             $email = $array[$emailIndex];
             $this->SetEmail($email);
         }
+        
+        if(isset($array[$primaryIndex]))
+        {
+            $primary = $array[$primaryIndex];
+            $this->SetPrimary($primary);
+        }
+    }
+    
+    /**
+     * Gets the index identifier for the I.D.
+     * @return string The I.D. index identifier.
+     */
+    public function GetIdIndex()
+    {
+        return 'ContactID';
     }
     
     /**
@@ -186,6 +262,15 @@ class Contact
     public function GetEmailIndex()
     {
         return 'Email';
+    }
+    
+    /**
+     * Gets the index identifier for the primary flag indicator.
+     * @return string The primary flag index identifier.
+     */
+    public function GetPrimaryIndex()
+    {
+        return 'Primary';
     }
 }
 ?>

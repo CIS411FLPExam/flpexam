@@ -266,6 +266,26 @@
      */
     define("PROCESSCONTACTADDEDIT_ACTION", "ProcessContactAddEdit");
     
+    /**
+     * The action word to use to activate a language.
+     */
+    define("LANGUAGEACTIVATE_ACTION", "LanguageActivate");
+    
+    /**
+     * The action word to use to deactivate a language.
+     */
+    define("LANGUAGEDEACTIVATE_ACTION", "LanguageDeactivate");
+    
+    /**
+     * The action word to use to activate a contact.
+     */
+    define("CONTACTACTIVATE_ACTION", "ContactActivate");
+    
+    /**
+     * The action word to use to deactivate a contact.
+     */
+    define("CONTACTDEACTIVATE_ACTION", "ContactDeactivate");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

@@ -9,6 +9,61 @@
     require_once(CONTACTCLASS_FILE);
     
     /**
+     * Activates a contact.
+     * @param int $contactID The I.D. of the contact.
+     */
+    function ActivateContact($contactID)
+    {
+        SetContactState($contactID, 1);
+    }
+    
+    /**
+     * Deactivates a contact.
+     * @param int $contactID The I.D. of the contact.
+     */
+    function DeactivateContact($contactID)
+    {
+        SetContactState($contactID, 0);
+    }
+    
+    /**
+     * Sets the state of a contact.
+     * @param int $contactID
+     * @param int $primary The flag that indicates whether or not the 
+     * @return int The number of contacts effected by the update.
+     */
+    function SetContactState($contactID, $primary)
+    {
+        try
+        {
+            $contact = new Contact();
+            $primaryIndex = $contact->GetPrimaryIndex();
+            
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . CONTACTS_IDENTIFIER . ' SET'
+                    . ' ' . $primaryIndex . ' = :' . $primaryIndex . ' WHERE'
+                    . ' ' . CONTACTID_IDENTIFIER 
+                    . ' = :' . CONTACTID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            $statement->bindValue(':' . $primaryIndex, $primary);
+            
+            $contactsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $contactsEffected;
+            
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Adds a contacts to the records.
      * @param \Contact $contact The contact.
      * @return int The I.D. of the newly inserted contact.
@@ -560,7 +615,7 @@
      */
     function ActivateLanguage($languageID)
     {
-        SetLanguageState($languageID, 'TRUE');
+        SetLanguageState($languageID, 1);
     }
     
     /**
@@ -569,7 +624,7 @@
      */
     function DeactivateLanguage($languageID)
     {
-        SetLanguageState($languageID, 'FALSE');
+        SetLanguageState($languageID, 0);
     }
     
     /**

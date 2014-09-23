@@ -181,9 +181,125 @@
             case CONTACTDELETE_ACTION :
                 ContactDelete();
                 break;
+            case LANGUAGEACTIVATE_ACTION :
+                LanguageActivate();
+                break;
+            case LANGUAGEDEACTIVATE_ACTION :
+                LanguageDeactivate();
+                break;
+            case CONTACTACTIVATE_ACTION :
+                ContactActivate();
+                break;
+            case CONTACTDEACTIVATE_ACTION :
+                ContactDeactivate();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function LanguageActivate()
+    {
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        if(userIsAuthorized(LANGUAGEEDIT_ACTION))
+        {
+            ActivateLanguage($languageID);
+        }
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+    }
+    
+    function LanguageDeactivate()
+    {
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        if(userIsAuthorized(LANGUAGEEDIT_ACTION))
+        {
+            DeactivateLanguage($languageID);
+        }
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+    }
+    
+    function ContactActivate()
+    {
+        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_POST[CONTACTID_IDENTIFIER];
+        }
+        else if (isset($_GET[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_GET[CONTACTID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No contact I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        if(userIsAuthorized(CONTACTEDIT_ACTION))
+        {
+            ActivateContact($contactID);
+        }
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
+    }
+    
+    function ContactDeactivate()
+    {
+        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_POST[CONTACTID_IDENTIFIER];
+        }
+        else if (isset($_GET[CONTACTID_IDENTIFIER]))
+        {
+            $contactID = $_GET[CONTACTID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No contact I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        if(userIsAuthorized(CONTACTEDIT_ACTION))
+        {
+            DeactivateContact($contactID);
+        }
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
     }
     
     function ContactAdd()
