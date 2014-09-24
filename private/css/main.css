@@ -5,7 +5,7 @@ body
 
 a
 {
-    color: #03439b;
+    //color: #03439b;
 }
 
 footer
@@ -140,6 +140,12 @@ footer
 .formGroup
 {
     padding: 5px;
+}
+
+.noWrapHidden
+{
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .formSection

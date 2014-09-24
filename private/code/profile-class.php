@@ -1,5 +1,7 @@
 <?php
 
+require_once(VALIDATIONINFOCLASS_FILE);
+
 /**
  * The profile class.
  */
@@ -386,6 +388,238 @@ class Profile
     public function GetCollegeExpIndex()
     {
         return 'CollegeExp';
+    }
+    
+    /**
+     * Validates the first name field.
+     * @return \ValidationInfo The validitaion info.
+     */
+    protected function ValidateFirstName()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $firstName = $this->GetFirstName();
+        
+        if (empty($firstName))
+        {
+            $valid = FALSE;
+            $errors[] = "First name can't be blank.";
+        }
+        else
+        {
+            if (strlen($firstName) > 32)
+            {
+                $valid = FALSE;
+                $errors[] = "The first name is too long.";
+            }
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the last name field.
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateLastName()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $lastName = $this->GetLastName();
+        
+        if (empty($lastName))
+        {
+            $valid = FALSE;
+            $errors[] = "Last name can't be blank.";
+        }
+        else
+        {
+            if (strlen($lastName) > 32)
+            {
+                $valid = FALSE;
+                $errors[] = "The last name is too long.";
+            }
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the email field.
+     * @return \ValidationInfo The validation email.
+     */
+    protected function ValidateEmail()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $email = $this->GetEmail();
+        
+        if (empty($email))
+        {
+            $valid = FALSE;
+            $errors[] = "Email can't be blank.";
+        }
+        else
+        {
+            if (!preg_match(VALID_EMAIL_PATTERN, $email))
+            {
+                $valid = FALSE;
+                $errors[] = "The email address \"" . $email . "\" is not valid.";
+            }
+
+            if (strlen($email) > 40)
+            {
+                $valid = FALSE;
+                $errors[] = "The email is too long.";
+            }
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the major field.
+     * @return \ValidationInfo The validation information.
+     */
+    protected function ValidateMajor()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $major = $this->GetMajor();
+        
+        if (!empty($major))
+        {
+            if(strlen($major) > 32)
+            {
+                $valid = FALSE;
+                $errors[] = "The name of the major is too long.";
+            }
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the high school field.
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateHighSchool()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $highSchool = $this->GetHighSchool();
+        
+        if (!empty($highSchool))
+        {
+            if(strlen($highSchool) > 32)
+            {
+                $valid = FALSE;
+                $errors[] = "The name of the high school is too long.";
+            }
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the junior high experience field.
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateJrHighExp()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $jrHighExp = $this->GetJrHighExp();
+        
+        if (empty($jrHighExp))
+        {
+            $valid = FALSE;
+            $errors[] = "Junior high experience can't be blank.";
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the high school experience field.
+     * @return \ValidationInfo The validation info.
+     */
+    protected  function ValidateSrHighExp()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $srHighExp = $this->GetSrHighExp();
+        
+        if (empty($srHighExp))
+        {
+            $valid = FALSE;
+            $errors[] = "High school experience can't be blank.";
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the college experience field
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateCollegeExp()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $collegeExp = $this->GetCollegeExp();
+        
+        if (empty($collegeExp))
+        {
+            $valid = FALSE;
+            $errors[] = "College experience can't be blank.";
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the profile.
+     * @return \ValidationInfo The validation info.
+     */
+    public function Validate()
+    {
+        $validInfo = new ValidationInfo();
+        
+        $validInfo->Merge($this->ValidateFirstName());
+        $validInfo->Merge($this->ValidateLastName());
+        $validInfo->Merge($this->ValidateEmail());
+        $validInfo->Merge($this->ValidateMajor());
+        $validInfo->Merge($this->ValidateHighSchool());
+        $validInfo->Merge($this->ValidateJrHighExp());
+        $validInfo->Merge($this->ValidateSrHighExp());
+        $validInfo->Merge($this->ValidateCollegeExp());
+        
+        return $validInfo;
     }
 }
 ?>

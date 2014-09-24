@@ -2,28 +2,36 @@
     include( HEADER_FILE );
 ?>
 <!-- Start main content here -->
+
+<?php
+    if(isset($message))
+    {
+        include(MESSAGE_FILE);
+    }
+?>
+
 <h1>Profile</h1>
 <div class="formGroup">
     <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, PROCESSPROFILECREATE_ACTION)) ?>" method="post">
         <div class="formSection">
-            <label>First Name:</label>
-            <input name="<?php echo($profile->GetFirstNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetFirstName())); ?>" autofocus />
+            <label>First Name<span class="redText">*</span>:</label>
+            <input name="<?php echo($profile->GetFirstNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetFirstName())); ?>" autofocus required maxlength="32"/>
             (Your first name.)
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Last Name:</label>
-            <input name="<?php echo($profile->GetLastNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetLastName())); ?>" />
+            <label>Last Name<span class="redText">*</span>:</label>
+            <input name="<?php echo($profile->GetLastNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetLastName())); ?>" required maxlength="32" />
             (Your last name.)
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Email:</label>
-            <input name="<?php echo($profile->GetEmailIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetEmail())); ?>" />
+            <label>Email<span class="redText">*</span>:</label>
+            <input name="<?php echo($profile->GetEmailIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetEmail())); ?>" required maxlength="40" />
             (An e-mail address that you can be contacted at.)
         </div>
         
@@ -31,7 +39,7 @@
         
         <div class="formSection">
             <label>Major:</label>
-            <input name="<?php echo($profile->GetMajorIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetMajor())); ?>" />
+            <input name="<?php echo($profile->GetMajorIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetMajor())); ?>" maxlength="32" />
             (The name of your major if you are attending college.)
         </div>
         
@@ -39,14 +47,14 @@
         
         <div class="formSection">
             <label>High School:</label>
-            <input name="<?php echo($profile->GetHighSchoolIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetHighSchool())); ?>" />
+            <input name="<?php echo($profile->GetHighSchoolIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetHighSchool())); ?>" maxlength="32"/>
             (The name of your current or past high school.)
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <b>Do you speak <?php echo(htmlspecialchars($language->GetName())); ?> at home?</b>
+            <b>Do you speak <?php echo(htmlspecialchars($language->GetName())); ?> at home?<span class="redText">*</span></b>
             <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="Y" />Yes
             <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="N" checked />No
         </div>
@@ -54,7 +62,7 @@
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Junior High Exp:</label>
+            <label>Junior High Exp<span class="redText">*</span>:</label>
             <select name="<?php echo($profile->GetJrHighExpIndex()); ?>" class="formInput">
                 <?php foreach ($experiences as $experience) { ?>
                     <option <?php if ($experience == $profile->GetJrHighExp()) { echo('selected="selected"'); } ?>>
@@ -68,7 +76,7 @@
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>High School Exp:</label>
+            <label>High School Exp<span class="redText">*</span>:</label>
             <select name="<?php echo($profile->GetSrHighExpIndex()); ?>" class="formInput">
                 <?php foreach ($experiences as $experience) { ?>
                     <option <?php if ($experience == $profile->GetSrHighExp()) { echo('selected="selected"'); } ?>>
@@ -82,7 +90,7 @@
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>College Exp:</label>
+            <label>College Exp<span class="redText">*</span>:</label>
             <select name="<?php echo($profile->GetCollegeExpIndex()); ?>" class="formInput">
                 <?php foreach ($experiences as $experience) { ?>
                     <option <?php if ($experience == $profile->GetCollegeExp()) { echo('selected="selected"'); } ?>>

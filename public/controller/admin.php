@@ -482,15 +482,16 @@
     
     function ManageTests()
     {
-        $testInfos = GetTests();
-        
         $name = '';
+        $language = '';
         $languageNames = GetAllLanguagesNames();
         
         $minScore = 0.0;
         $maxScore = 100;
-        $minDate = ToDisplayDate(date('2014-09-13'));
-        $maxDate = ToDisplayDate(date("m.d.y"));
+        $minDate = ToDisplayDate(date("Y-m-d", strtotime("-7 days")));
+        $maxDate = ToDisplayDate(date("Y-m-d", strtotime("+1 days")));
+        
+        $testInfos = SearchForTest($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
         include(MANAGETESTSFORM_FILE);
     }

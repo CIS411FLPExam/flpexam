@@ -74,5 +74,18 @@ class ValidationInfo
         
         return $valid;
     }
+    
+    /**
+     * Merges this validation info with another.
+     * @param ValidationInfo $vi The other validation info.
+     */
+    public function Merge(ValidationInfo $vi)
+    {
+        $valid = $this->IsValid() && $vi->IsValid();
+        $errors = array_merge($this->GetErrors(), $vi->GetErrors());
+        
+        $this->SetValid($valid);
+        $this->SetErrors($errors);
+    }
 }
 ?>

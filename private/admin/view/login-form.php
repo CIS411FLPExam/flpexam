@@ -8,11 +8,11 @@
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLOGIN_ACTION ) ); ?>" method="post">
     <div class="formGroup">
         <div class="formSection">
-            <label>Username:</label><input class="formInput" type="text" name="username" autofocus />
+            <label>Username:</label><input class="formInput" type="text" name="username" autofocus required maxlength="32"/>
         </div>
 
         <div class="formSection">
-            <label>Password:</label><input class="formInput" type="password" name="password" />
+            <label>Password:</label><input class="formInput" type="password" name="password" required maxlength="40"/>
         </div>
 
         <input type="hidden" name="<?php echo(REQUESTEDPAGE_IDENTIFIER); ?>" value="<?php echo($_GET[REQUESTEDPAGE_IDENTIFIER]); ?>" />

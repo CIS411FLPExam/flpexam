@@ -197,10 +197,17 @@
         
         $profile->Initialize($_POST);
         
-        if(true)
+        $profileVI = $profile->Validate();
+        
+        if($profileVI->IsValid())
         {
             $exam->SetProfile($profile);
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+        }
+        else
+        {
+            $message = 'Profile Errors';
+            $collection = $profileVI->GetErrors();
         }
         
         $experiences = GetLanguageExperienceNames();
@@ -294,7 +301,7 @@
         
         DisposeCurrentExam();
         
-        $message = 'Score:' . $exam->GetLevel();
+        $message = 'Score: ' . $exam->GetLevel();
         
         include(MESSAGEFORM_FILE);
     }
