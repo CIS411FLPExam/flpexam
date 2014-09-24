@@ -11,6 +11,9 @@
     <?php } ?>
     
     <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSCONTACTADDEDIT_ACTION)); ?>" method="post">
+        <?php if(isset($contactID)) { ?>
+            <input type="hidden" name="<?php echo($contact->GetIdIndex()); ?>" value="<?php echo(htmlspecialchars($contactID)); ?>" />
+        <?php } ?>
         <div class="formSection">
             <label>First Name:</label>
             <input name="<?php echo($contact->GetFirstNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetFirstName())); ?>" autofocus />
@@ -30,7 +33,7 @@
         <div class="formSection">
             <label>Phone Number:</label>
             <input name="<?php echo($contact->GetPhoneNumberIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetPhoneNumber())); ?>" />
-            (An e-mail address that the contact can be reached at.)
+            (A phone number that the contact can be reached at.)
         </div>
         
         <div class="divider"></div>
@@ -48,6 +51,10 @@
             <input name="<?php echo($contact->GetPrimaryIndex()); ?>" type="checkbox" class="formInput" <?php if ($contact->GetPrimary() == TRUE) { echo('checked'); } ?> />
             (Check if the person is a primary contact.)
         </div>
+        
+        <br />
+        
+        <input type="submit" value="Submit" />
     </form>
 </div>
 

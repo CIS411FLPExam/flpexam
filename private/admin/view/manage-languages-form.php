@@ -74,12 +74,12 @@
                         <?php if ($userCanEdit) { ?>
                             <td>
                                 <?php if($active == TRUE) { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
-                                        Activate
-                                    </a>
-                                <?php } else { ?>
                                     <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
                                         Deactivate
+                                    </a>
+                                <?php } else { ?>
+                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
+                                        Activate
                                     </a>
                                 <?php } ?>
                             </td>

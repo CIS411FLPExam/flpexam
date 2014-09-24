@@ -338,7 +338,7 @@
         {
             $contactID = $_POST[CONTACTID_IDENTIFIER];
         }
-        
+                
         $contact = new Contact();
         $contact->Initialize($_POST);
         

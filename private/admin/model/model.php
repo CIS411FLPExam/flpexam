@@ -14,7 +14,7 @@
      */
     function ActivateContact($contactID)
     {
-        SetContactState($contactID, 1);
+        SetContactState($contactID, TRUE);
     }
     
     /**
@@ -23,7 +23,7 @@
      */
     function DeactivateContact($contactID)
     {
-        SetContactState($contactID, 0);
+        SetContactState($contactID, FALSE);
     }
     
     /**
@@ -42,13 +42,13 @@
             $db = GetDBConnection();
             
             $query = 'UPDATE ' . CONTACTS_IDENTIFIER . ' SET'
-                    . ' ' . $primaryIndex . ' = :' . $primaryIndex . ' WHERE'
+                    . ' `' . $primaryIndex . '` = :' . $primaryIndex . ' WHERE'
                     . ' ' . CONTACTID_IDENTIFIER 
                     . ' = :' . CONTACTID_IDENTIFIER . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
-            $statement->bindValue(':' . $primaryIndex, $primary);
+            $statement->bindValue(':' . $primaryIndex, $primary, PDO::PARAM_BOOL);
             
             $contactsEffected = $statement->execute();
             
@@ -75,6 +75,7 @@
             $firstNameIndex = $contact->GetFirstNameIndex();
             $lastNameIndex = $contact->GetLastNameIndex();
             $phoneNumberIndex = $contact->GetPhoneNumberIndex();
+            $primaryIndex = $contact->GetPrimaryIndex();
             $emailIndex = $contact->GetEmailIndex();
             
             $db = GetDBConnection();
@@ -83,16 +84,19 @@
                     . ' (' . $firstNameIndex
                     . ', ' . $lastNameIndex
                     . ', ' . $phoneNumberIndex
-                    . ', ' . $emailIndex . ') VALUES'                    
+                    . ', `' . $primaryIndex
+                    . '`, ' . $emailIndex . ') VALUES'                    
                     . ' (:' . $firstNameIndex
                     . ', :' . $lastNameIndex
                     . ', :' . $phoneNumberIndex
+                    . ', :' . $primaryIndex
                     . ', :' . $emailIndex . ');';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $firstNameIndex, $contact->GetFirstName());
             $statement->bindValue(':' . $lastNameIndex, $contact->GetLastName());
             $statement->bindValue(':' . $phoneNumberIndex, $contact->GetPhoneNumber());
+            $statement->bindValue(':' . $primaryIndex, $contact->GetPrimary(),PDO::PARAM_BOOL);
             $statement->bindValue(':' . $emailIndex, $contact->GetEmail());
             
             $statement->execute();
@@ -157,6 +161,7 @@
             $firstNameIndex = $contact->GetFirstNameIndex();
             $lastNameIndex = $contact->GetLastNameIndex();
             $phoneNumberIndex = $contact->GetPhoneNumberIndex();
+            $primaryIndex = $contact->GetPrimaryIndex();
             $emailIndex = $contact->GetEmailIndex();
             
             $db = GetDBConnection();
@@ -165,6 +170,7 @@
                     . ' ' . $firstNameIndex . ' = :' . $firstNameIndex
                     . ', ' . $lastNameIndex . ' = :' . $lastNameIndex
                     . ', ' . $phoneNumberIndex . ' = :' . $phoneNumberIndex
+                    . ', `' . $primaryIndex . '` = :' . $primaryIndex
                     . ', ' . $emailIndex . ' = :' . $emailIndex . ' WHERE'
                     . ' ' . CONTACTID_IDENTIFIER
                     . ' = :' . CONTACTID_IDENTIFIER . ';';
@@ -174,6 +180,7 @@
             $statement->bindValue(':' . $firstNameIndex, $contact->GetFirstName());
             $statement->bindValue(':' . $lastNameIndex, $contact->GetLastName());
             $statement->bindValue(':' . $phoneNumberIndex, $contact->GetPhoneNumber());
+            $statement->bindValue(':' . $primaryIndex, $contact->GetPrimary(),PDO::PARAM_BOOL);
             $statement->bindValue(':' . $emailIndex, $contact->GetEmail());
             
             $contactsEffected = $statement->execute();
@@ -532,7 +539,6 @@
         }
     }
     
-    
     /**
      * Sets the exam parameters.
      * @param ExamParameters $parameters The parameters.
@@ -615,7 +621,7 @@
      */
     function ActivateLanguage($languageID)
     {
-        SetLanguageState($languageID, 1);
+        SetLanguageState($languageID, TRUE);
     }
     
     /**
@@ -624,13 +630,13 @@
      */
     function DeactivateLanguage($languageID)
     {
-        SetLanguageState($languageID, 0);
+        SetLanguageState($languageID, FALSE);
     }
     
     /**
      * Sets a languages state to either TRUE or FALSE.
      * @param int $languageID The I.D. of the language to activate/deactivate.
-     * @param int $active The flag that indicates whether the language should be active or deactive.
+     * @param boolean $active The flag that indicates whether the language should be active or deactive.
      * @return int The number of languages that were activated/deactivated
      */
     function SetLanguageState($languageID, $active)
@@ -647,7 +653,7 @@
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
-            $statement->bindValue(':' . 'Active', $active);
+            $statement->bindValue(':' . 'Active', $active, PDO::PARAM_BOOL);
             
             $effectedCount = $statement->execute();
             

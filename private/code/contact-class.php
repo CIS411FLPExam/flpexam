@@ -215,6 +215,19 @@ class Contact
         if(isset($array[$primaryIndex]))
         {
             $primary = $array[$primaryIndex];
+            
+            if(is_string($primary))
+            {
+                if($primary == '0')
+                {
+                    $primary = FALSE;
+                }
+                else 
+                {
+                    $primary = TRUE;
+                }
+            }
+            
             $this->SetPrimary($primary);
         }
     }

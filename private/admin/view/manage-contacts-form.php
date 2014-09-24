@@ -43,7 +43,6 @@
                             $lastName = $contact->GetLastName();
                             $active = $contact->GetPrimary();
                     ?>
-
                     <tr>
                         <td><?php echo(htmlspecialchars($firstName)); ?></td>
                         <td><?php echo(htmlspecialchars($lastName)); ?></td>
@@ -62,12 +61,12 @@
                         <?php if ($userCanEdit) { ?>
                             <td>
                                 <?php if($active == TRUE) { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
-                                        Activate
-                                    </a>
-                                <?php } else { ?>
                                     <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTDEACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
                                         Deactivate
+                                    </a>
+                                <?php } else { ?>
+                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
+                                        Activate
                                     </a>
                                 <?php } ?>
                             </td>
