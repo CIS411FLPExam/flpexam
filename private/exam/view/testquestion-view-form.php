@@ -19,6 +19,7 @@
     </div>
     
     <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION)); ?>" method="post">
+        <input type="hidden" name ="<?php echo(QUESTIONID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
         <div class="formSection">
             <input type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answers[0][ANSWERID_IDENTIFIER])) ?>" checked="checked" />
             <?php

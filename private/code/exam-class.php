@@ -6,6 +6,12 @@
 class Exam
 {
     /**
+     * The flag that indicates whether or not the test has been started.
+     * @var boolean 
+     */
+    private $started;
+    
+    /**
      * The current level tha the user is on.
      * @var float 
      */
@@ -41,6 +47,24 @@ class Exam
      */
     private $allQAs;
     
+    /**
+     * Gets the flag that indicates whether or not the exam has been started.
+     * @return boolean The flag that indicates whether or not the exam has been started.
+     */
+    protected function GetStarted()
+    {
+        return $this->started;
+    }
+    
+    /**
+     * Sets the flag that indicates whether or not the exam has been started.
+     * @param boolean $started The flag that indicates whether or not the exam has been started.
+     */
+    protected function SetStarted($started)
+    {
+        $this->started = $started;
+    }
+
     /**
      * Gets the current level of the exam.
      * @return float The level.
@@ -157,12 +181,24 @@ class Exam
      */
     public function Exam(ExamParameters $parameters = NULL, Language $language = NULL, Profile $profile = NULL)
     {
+        $this->SetStarted(FALSE);
         $this->SetLevel(0.0);
         $this->SetParameters($parameters);
         $this->SetLanguage($language);
         $this->SetProfile($profile);
         $this->SetLvlQAs(array());
         $this->SetAllQAs(array());
+    }
+    
+    /**
+     * Indicates whether or not the test has been started.
+     * @return boolean True, if the test has been started.
+     */
+    public function IsStarted()
+    {
+        $started = $this->GetStarted();
+        
+        return $started;
     }
     
     /**
@@ -221,14 +257,15 @@ class Exam
      */
     public function IsNotDone()
     {
+        $isStarted = $this->IsStarted();
         $questionsLeft = $this->IsQuestionsLeft();
         $validNumQuestions = $this->IsLvlQAsCountValid();
         
-        $isNotDone = $questionsLeft && $validNumQuestions;
+        $isNotDone = !$isStarted || ($questionsLeft && $validNumQuestions);
         
         return $isNotDone;
     }
-
+    
     /**
      * Indicates whether or not the there is valid number of questions for the level.
      * @return boolean True, if there is a valid number of questions.
@@ -419,9 +456,10 @@ class Exam
     
     /**
      * Pairs the give answer I.D. with the first question that does not have an answer.
+     * @param int $questionID The I.D. of the question that the answer is for.
      * @param int $answerID The I.D. of the answer.
      */
-    public function PushQuestionAnswerID($answerID)
+    public function PushQuestionAnswerID($questionID, $answerID)
     {
         $foundPulledQues = FALSE;
         $lvlQAs = $this->GetLvlQAs();
@@ -430,7 +468,7 @@ class Exam
         {
             $lvlQA = $lvlQAs[$index];
             
-            if(!$lvlQA->IsAnswerIdSet())
+            if($questionID == $lvlQA->GetQuestionId() && !$lvlQA->IsAnswerIdSet())
             {
                 $foundPulledQues = TRUE;
                 $lvlQA->SetAnswerId($answerID);
@@ -450,6 +488,7 @@ class Exam
     {
         $this->SetInitialLevel();
         $this->GetNewLvlQAs();
+        $this->SetStarted(TRUE);
     }
 }
 ?>

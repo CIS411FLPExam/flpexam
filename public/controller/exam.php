@@ -68,11 +68,21 @@
     
     function EnterKeyCode()
     {
+        if(UserIsClear())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
+        }
+        
         include(KEYCODEFORM_FILE);
     }
     
     function ProcessKeyCode()
     {
+        if(UserIsClear())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
+        }
+        
         if (isset($_POST['KeyCode']))
         {
             $keyCode = $_POST['KeyCode'];
@@ -96,6 +106,10 @@
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
         }
+        else if ($exam->IsLanguageSet())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
+        }
         
         $languageNames = GetActiveLanguageNames();
         
@@ -109,6 +123,10 @@
         if(!$exam->IsParametersSet())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
+        }
+        else if ($exam->IsLanguageSet())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
         }
         
         if(isset($_POST[NAME_IDENTIFIER]))
@@ -143,6 +161,10 @@
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
         }
+        else if ($exam->IsProfileSet())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+        }
         
         $experiences = GetLanguageExperienceNames();
         $initExpName = $experiences[0];
@@ -165,12 +187,15 @@
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
         }
+        else if ($exam->IsProfileSet())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+        }
         
         $language = $exam->GetLanguage();
         $profile = new Profile();
         
         $profile->Initialize($_POST);
-        
         
         if(true)
         {
@@ -187,7 +212,15 @@
     {
         $exam = GetCurrentExam();
         
-        $exam->Start();
+        if (!$exam->IsProfileSet())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
+        }
+        
+        if(!$exam->IsStarted())
+        {
+            $exam->Start();
+        }
         
         PresentNextQuestion();
     }
@@ -195,6 +228,11 @@
     function PresentNextQuestion()
     {
         $exam = GetCurrentExam();
+        
+        if(!$exam->IsStarted())
+        {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+        }
         
         $questionID = $exam->PullNextQuestionID();
         
@@ -205,20 +243,28 @@
         
         $answers = GetQuestionAnswers($questionID);
         
-        //shuffle($answers);
+        shuffle($answers);
         
         include(TESTQUESTIONVIEWFORM_FILE);
     }
     
     function SubmitAnswer()
     {
-        if (isset($_POST[ANSWERID_IDENTIFIER]))
+        
+        $exam = GetCurrentExam();
+        
+        if(!$exam->IsStarted())
         {
+            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+        }
+        
+        
+        if (isset($_POST[QUESTIONID_IDENTIFIER]) && isset($_POST[ANSWERID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
             $answerID = $_POST[ANSWERID_IDENTIFIER];
 
-            $exam = GetCurrentExam();
-
-            $exam->PushQuestionAnswerID($answerID);
+            $exam->PushQuestionAnswerID($questionID, $answerID);
 
             if($exam->IsDone())
             {
@@ -231,7 +277,8 @@
         }
         else
         {
-            $message = 'Error';
+            $message = 'ERROR: Question and/or answer not sent to server.';
+            
             include(MESSAGEFORM_FILE);
         }
     }
