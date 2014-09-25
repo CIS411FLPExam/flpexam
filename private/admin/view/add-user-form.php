@@ -2,27 +2,34 @@
     include( HEADER_FILE );
 ?>
 <!-- Start main content here -->
+
+<?php
+    if (isset($message))
+    {
+        include(MESSAGE_FILE);
+    }
+?>
 <h1>Add User</h1>
 
 <div class="formGroup">
     <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSUSERADD_ACTION)); ?>" method="post">
         <div class="formSection">
             <label>Username:</label>
-            <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" />
+            <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required  maxlength="32"/>
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
             <label>Password:</label>
-            <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" />
+            <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" required maxlength="40"/>
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
             <label>Password Retype:</label>
-            <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" />
+            <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" required maxlength="40" />
         </div>
         
         <br />

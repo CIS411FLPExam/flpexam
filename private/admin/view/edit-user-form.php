@@ -38,29 +38,34 @@
     include( CONTROLPANEL_FILE );
 ?>
 <!-- Start main content here -->
-
+<?php
+    if (isset($message))
+    {
+        include(MESSAGE_FILE);
+    }
+?>
 <h2>Modify User</h2>
 
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSEREDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
-    <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($id)); ?>"/>
+    <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($userID)); ?>"/>
     <div class="formGroup">
         <div class="formSection">
             <label>Username:</label>
-            <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" />
+            <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required maxlength="32"/>
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
             <label>Password:</label>
-            <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" />
+            <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" maxlength="40" />
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
             <label>Password Retype:</label>
-            <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" />
+            <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" maxlength="40" />
         </div>
         
         <div class="divider"></div>

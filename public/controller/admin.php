@@ -562,18 +562,25 @@
     
     function ProcessLogin()
     {
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-        
-        if(login($username,$password))
+        if (isset($_POST["username"]) && isset($_POST["password"]))
         {
-            $requestedPage = $_POST["RequestedPage"];
-            UnsecureConnection($requestedPage);
+            $username = $_POST["username"];
+            $password = $_POST["password"];
+            
+            if(login($username, $password))
+            {
+                $requestedPage = $_POST["RequestedPage"];
+                UnsecureConnection($requestedPage);
+            }
+            else
+            {
+                $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION ) . "&LoginFailure" . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . urlencode($_POST["RequestedPage"]);
+                Redirect( $url );
+            }
         }
         else
         {
-            $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION ) . "&LoginFailure" . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . urlencode($_POST["RequestedPage"]);
-            Redirect( $url );
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
     }
     
@@ -877,7 +884,7 @@
             
             if (empty($id))
             {
-                displayError("An ID is required for this function.");
+                displayError("The user I.D. could not be resolved.");
             }
             else
             {
@@ -929,77 +936,137 @@
     
     function ProcessUserAdd()
     {
-        $valid = TRUE;
-        
-        $userName = $_POST[USERNAME_IDENTIFIER];
-        $password = $_POST[PASSWORD_IDENTIFIER];
-        $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
-        
-        if($password != $passwordRetype)
+        if(!userIsAuthorized(USERADD_ACTION))
         {
-            $valid = FALSE;
+            include(NOTAUTHORIZED_FILE);
         }
-        
-        if($valid)
+        else
         {
-            $userID = addUser($userName, $password);
+            $errors = array();
+
+            $userName = $_POST[USERNAME_IDENTIFIER];
+            $password = $_POST[PASSWORD_IDENTIFIER];
+            $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+            if (empty($userName))
+            {
+                $errors[] = 'Username cannot be blank.';
+            }
+            else
+            {
+                if (strlen($userName) > 32)
+                {
+                    $errors[] = 'The username is too long.';
+                }
+            }
+            
+            if (empty($password))
+            {
+                $errors[] = 'Password cannot be blank.';
+            }
+            else
+            {
+                if (strlen($password) > 40)
+                {
+                    $errors[] = 'Password is too long.';
+                }
+            }
+            
+            if ($password != $passwordRetype)
+            {
+                $errors[] = 'The password and retyped password do not match.';
+            }
+
+            if (count($errors) > 0)
+            {
+                $message = 'Errors';
+                $collection = $errors;
+            }
+            else
+            {
+                $userID = addUser($userName, $password);
+
+                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+            }
+
+            include(ADDUSERFORM_FILE);
         }
-        
-        include(ADDUSERFORM_FILE);
     }
     
     function ProcessUserEdit()
     {
-        $valid = TRUE;
-        
-        $userName = $_POST[USERNAME_IDENTIFIER];
-        
-        if(!empty($_POST[USERID_IDENTIFIER]))
+        if(!userIsAuthorized(USEREDIT_ACTION))
         {
-            $userID = $_POST[USERID_IDENTIFIER];
+            include(NOTAUTHORIZED_FILE);
         }
         else
         {
-            displayError('User ID could not be resolved.');
-        }
-        
-        if(!empty($_POST[PASSWORD_IDENTIFIER]))
-        {
-            $password = $_POST[PASSWORD_IDENTIFIER];
-            $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
-
-            if($password != $passwordRetype)
+            $errors = array();
+            $userName = $_POST[USERNAME_IDENTIFIER];
+            
+            if(!empty($_POST[USERID_IDENTIFIER]))
             {
-                $valid = FALSE;
-            }
-        }
-        
-        if($valid)
-        {
-            if(userIsAuthorized(USEREDIT_ACTION))
-            {
-                $hasAttributes = array();
-
-                if(!empty($_POST["hasAttributes"]))
-                {
-                    $hasAttributes = $_POST["hasAttributes"];
-
-                    updateUserAttributes($userID, $hasAttributes);
-                }
-                
-                UpdateUser($userID, $userName, $password);
-                
-                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+                $userID = $_POST[USERID_IDENTIFIER];
             }
             else
             {
-                include(NOTAUTHORIZED_FILE);
+                displayError('User I.D. could not be resolved.');
             }
+            
+            if (empty($userName))
+            {
+                $errors[] = 'Username cannot be blank.';
+            }
+            else
+            {
+                if (strlen($userName) > 32)
+                {
+                    $errors[] = 'The username is too long.';
+                }
+            }
+
+            if(!empty($_POST[PASSWORD_IDENTIFIER]))
+            {
+                $password = $_POST[PASSWORD_IDENTIFIER];
+                $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
+                
+                if (strlen($password) > 40)
+                {
+                    $errors[] = 'Password is too long.';
+                }
+                
+                if($password != $passwordRetype)
+                {
+                    $errors[] = 'The password and retyped password do not match.';
+                }
+            }
+
+            if(count($errors) > 0)
+            {
+                $message = 'Errors';
+                $collection = $errors;
+            }
+            else
+            {
+                $hasAttributes = array();
+                
+                if(isset($_POST["hasAttributes"]))
+                {
+                    $hasAttributes = $_POST["hasAttributes"];
+                }
+                
+                updateUserAttributes($userID, $hasAttributes);
+                
+                UpdateUser($userID, $userName, $password);
+
+                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+            }
+            
+            $hasAttrResults = getUserRoles($userID);
+            $hasNotAttrResults = getNotUserRoles($userID);
+            
+            include(EDITUSERFORM_FILE);
         }
-        
-        include(EDITUSERFORM_FILE);
     }
 
     function ManageFunctions()

@@ -15,17 +15,15 @@
             <label>Password:</label><input class="formInput" type="password" name="password" required maxlength="40"/>
         </div>
 
-        <input type="hidden" name="<?php echo(REQUESTEDPAGE_IDENTIFIER); ?>" value="<?php echo($_GET[REQUESTEDPAGE_IDENTIFIER]); ?>" />
-
+        <?php if (isset($_GET[REQUESTEDPAGE_IDENTIFIER])) { ?>
+            <input type="hidden" name="<?php echo(REQUESTEDPAGE_IDENTIFIER); ?>" value="<?php echo($_GET[REQUESTEDPAGE_IDENTIFIER]); ?>" />
+        <?php } ?>
         <input type="submit" value="Login"/>
     </div>
     
-    <?php
-        if (isset($_GET['LoginFailure']))
-        {
-            echo '<p/><h4> Invalid Username or Password.  Please try again.</h4>';
-        }
-    ?>
+    <?php if (isset($_GET['LoginFailure'])) { ?>
+        <h4 class="redText">Invalid Username or Password.  Please try again.</h4>
+    <?php } ?>
 
 </form>
 <!-- End main content here -->
