@@ -74,8 +74,6 @@
         {
             $firstNameIndex = $contact->GetFirstNameIndex();
             $lastNameIndex = $contact->GetLastNameIndex();
-            $phoneNumberIndex = $contact->GetPhoneNumberIndex();
-            $primaryIndex = $contact->GetPrimaryIndex();
             $emailIndex = $contact->GetEmailIndex();
             
             $db = GetDBConnection();
@@ -83,20 +81,14 @@
             $query = 'INSERT INTO ' . CONTACTS_IDENTIFIER
                     . ' (' . $firstNameIndex
                     . ', ' . $lastNameIndex
-                    . ', ' . $phoneNumberIndex
-                    . ', `' . $primaryIndex
-                    . '`, ' . $emailIndex . ') VALUES'                    
+                    . ', ' . $emailIndex . ') VALUES'                    
                     . ' (:' . $firstNameIndex
                     . ', :' . $lastNameIndex
-                    . ', :' . $phoneNumberIndex
-                    . ', :' . $primaryIndex
                     . ', :' . $emailIndex . ');';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $firstNameIndex, $contact->GetFirstName());
             $statement->bindValue(':' . $lastNameIndex, $contact->GetLastName());
-            $statement->bindValue(':' . $phoneNumberIndex, $contact->GetPhoneNumber());
-            $statement->bindValue(':' . $primaryIndex, $contact->GetPrimary(),PDO::PARAM_BOOL);
             $statement->bindValue(':' . $emailIndex, $contact->GetEmail());
             
             $statement->execute();
@@ -160,8 +152,6 @@
         {
             $firstNameIndex = $contact->GetFirstNameIndex();
             $lastNameIndex = $contact->GetLastNameIndex();
-            $phoneNumberIndex = $contact->GetPhoneNumberIndex();
-            $primaryIndex = $contact->GetPrimaryIndex();
             $emailIndex = $contact->GetEmailIndex();
             
             $db = GetDBConnection();
@@ -169,8 +159,6 @@
             $query = 'UPDATE ' . CONTACTS_IDENTIFIER . ' SET'
                     . ' ' . $firstNameIndex . ' = :' . $firstNameIndex
                     . ', ' . $lastNameIndex . ' = :' . $lastNameIndex
-                    . ', ' . $phoneNumberIndex . ' = :' . $phoneNumberIndex
-                    . ', `' . $primaryIndex . '` = :' . $primaryIndex
                     . ', ' . $emailIndex . ' = :' . $emailIndex . ' WHERE'
                     . ' ' . CONTACTID_IDENTIFIER
                     . ' = :' . CONTACTID_IDENTIFIER . ';';
@@ -179,8 +167,6 @@
             $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
             $statement->bindValue(':' . $firstNameIndex, $contact->GetFirstName());
             $statement->bindValue(':' . $lastNameIndex, $contact->GetLastName());
-            $statement->bindValue(':' . $phoneNumberIndex, $contact->GetPhoneNumber());
-            $statement->bindValue(':' . $primaryIndex, $contact->GetPrimary(),PDO::PARAM_BOOL);
             $statement->bindValue(':' . $emailIndex, $contact->GetEmail());
             
             $contactsEffected = $statement->execute();
@@ -1781,7 +1767,8 @@
                     . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
                     . ' ' . TESTEES_IDENTIFIER . ' ON'
                     . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
-                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex;
+                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ' ORDER BY ' . $dateIndex . ' DESC;';
             
             if(!empty($name))
             {

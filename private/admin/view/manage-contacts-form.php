@@ -30,7 +30,7 @@
                         <th><b>Last Name</b></th>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanDelete) { ?><th></th><?php } ?>
-                        <?php if ($userCanEdit) { ?><th></th><?php } ?>
+                        <?php if ($userCanEdit) { ?><th>Primary</th><?php } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,9 +61,7 @@
                         <?php if ($userCanEdit) { ?>
                             <td>
                                 <?php if($active == TRUE) { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTDEACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
-                                        Deactivate
-                                    </a>
+                                    Yes
                                 <?php } else { ?>
                                     <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
                                         Activate

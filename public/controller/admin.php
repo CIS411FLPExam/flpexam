@@ -270,6 +270,13 @@
         
         if(userIsAuthorized(CONTACTEDIT_ACTION))
         {
+            $contacts = GetContacts();
+            
+            foreach ($contacts as $contact)
+            {
+                DeactivateContact($contact->GetId());
+            }
+            
             ActivateContact($contactID);
         }
         
@@ -304,6 +311,12 @@
     
     function ContactAdd()
     {
+        if (!userIsAuthorized(CONTACTADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $contact = new Contact();
         
         include(ADDEDITCONTACTFORM_FILE);
@@ -311,6 +324,12 @@
     
     function ContactEdit()
     {
+        if (!userIsAuthorized(CONTACTEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if(isset($_POST[CONTACTID_IDENTIFIER]))
         {
             $contactID = $_POST[CONTACTID_IDENTIFIER];
@@ -342,21 +361,44 @@
         $contact = new Contact();
         $contact->Initialize($_POST);
         
-        if(true)
+        $contactVI = $contact->Validate();
+        
+        if(!$contactVI->IsValid())
+        {
+            $message = 'Errors';
+            $collection = $contactVI->GetErrors();
+            
+            include(ADDEDITCONTACTFORM_FILE);
+        }
+        else
         {
             if(isset($contactID))
             {
-                UpdateContact($contactID, $contact);
+                if(userIsAuthorized(CONTACTEDIT_ACTION))
+                {
+                    UpdateContact($contactID, $contact);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
             }
             else
             {
-                AddContact($contact);
+                if(userIsAuthorized(CONTACTADD_ACTION))
+                {
+                    AddContact($contact);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
             }
             
             Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
         }
-        
-        include(ADDEDITCONTACTFORM_FILE);
     }
     
     function ContactDelete()

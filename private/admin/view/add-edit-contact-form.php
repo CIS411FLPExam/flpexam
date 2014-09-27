@@ -3,6 +3,13 @@
 ?>
 <!--Start main content-->
 
+<?php
+    if (isset($message))
+    {
+        include(MESSAGE_FILE);
+    }
+?>
+
 <div class="formGroup">
     <?php if(isset($contactID)) { ?>
         <h1>Edit Contact</h1>
@@ -16,7 +23,7 @@
         <?php } ?>
         <div class="formSection">
             <label>First Name:</label>
-            <input name="<?php echo($contact->GetFirstNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetFirstName())); ?>" autofocus />
+            <input name="<?php echo($contact->GetFirstNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetFirstName())); ?>" autofocus required maxlength="32" />
             (The contact's first name.)
         </div>
         
@@ -24,32 +31,16 @@
         
         <div class="formSection">
             <label>Last Name:</label>
-            <input name="<?php echo($contact->GetLastNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetLastName())); ?>" />
+            <input name="<?php echo($contact->GetLastNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetLastName())); ?>" required maxlength="32" />
             (The contact's last name.)
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Phone Number:</label>
-            <input name="<?php echo($contact->GetPhoneNumberIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetPhoneNumber())); ?>" />
-            (A phone number that the contact can be reached at.)
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
             <label>Email:</label>
-            <input name="<?php echo($contact->GetEmailIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($contact->GetEmail())); ?>" />
+            <input name="<?php echo($contact->GetEmailIndex()); ?>" type="email" class="formInput" value="<?php echo(htmlspecialchars($contact->GetEmail())); ?>" required maxlength="40" />
             (An e-mail address that the contact can be reached at.)
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
-            <label>Primary Contact:</label>
-            <input name="<?php echo($contact->GetPrimaryIndex()); ?>" type="checkbox" class="formInput" <?php if ($contact->GetPrimary() == TRUE) { echo('checked'); } ?> />
-            (Check if the person is a primary contact.)
         </div>
         
         <br />

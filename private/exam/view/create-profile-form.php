@@ -31,7 +31,7 @@
         
         <div class="formSection">
             <label>Email<span class="redText">*</span>:</label>
-            <input name="<?php echo($profile->GetEmailIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetEmail())); ?>" required maxlength="40" />
+            <input name="<?php echo($profile->GetEmailIndex()); ?>" type="email" class="formInput" value="<?php echo(htmlspecialchars($profile->GetEmail())); ?>" required maxlength="40" />
             (An e-mail address that you can be contacted at.)
         </div>
         
