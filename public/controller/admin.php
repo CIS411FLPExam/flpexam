@@ -755,13 +755,26 @@
     
     function ManageQuestions()
     {
+        if (!userIsAuthorized(MANAGEQUESTIONS_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if (isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
         }
-        else
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No langage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
         }
         
         $lang = GetLanguage($languageID);
@@ -775,6 +788,12 @@
     
     function ProcessQuestionAdd()
     {
+        if(!userIsAuthorized(QUESTIONADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if (isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
@@ -790,6 +809,13 @@
         else if (isset($_POST[QUESTIONID_IDENTIFIER]))
         {
             $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No question or languge I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
         }
         
         if(isset($questionID))
@@ -810,13 +836,26 @@
     
     function ProcessQuestionEdit()
     {
+        if (!userIsAuthorized(CONTACTEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if (isset($_POST[QUESTIONID_IDENTIFIER]))
         {
             $questionID = $_POST[QUESTIONID_IDENTIFIER];
         }
-        else
+        else if (isset ($_GET[QUESTIONID_IDENTIFIER]))
         {
             $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No question I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
         }
         
         $question = GetQuestion($questionID);
@@ -832,13 +871,26 @@
     
     function ProcessQuestionView()
     {
+        if (!userIsAuthorized(QUESTIONVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if (isset($_POST[QUESTIONID_IDENTIFIER]))
         {
             $questionID = $_POST[QUESTIONID_IDENTIFIER];
         }
-        else
+        else if (isset($_GET[QUESTIONID_IDENTIFIER]))
         {
             $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'Question I.D. not provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
         }
         
         $question = GetQuestion($questionID);
@@ -854,16 +906,97 @@
     
     function ProcessQuestionDelete()
     {
+        if (!userIsAuthorized(QUESTIONDELETE_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
         
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        
+        if (isset($languageID))
+        {
+            if(isset($_POST["numListed"]))
+            {
+                $numListed = $_POST["numListed"];
+
+                for($i = 0; $i < $numListed; ++$i)
+                {
+                    if(isset($_POST["record$i"]))
+                    {
+                        $questionID = $_POST["record$i"];
+                        
+                        DeleteQuestion($questionID);
+                    }
+                }
+            }
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
+        }
+        
+        $message = 'Error retrieving language I.D.';
+        include(MESSAGEFORM_FILE);
     }
     
     function ProcessQuestionAddEdit()
     {
+        $errors = array();
         
-        $name = $_POST[NAME_IDENTIFIER];
+        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        else if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'Could not resolve question or language I.D.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
         
-        $level = $_POST['Level'];
-        $instructions = $_POST['Instructions'];
+        if (isset($_POST[NAME_IDENTIFIER]))
+        {
+            $name = $_POST[NAME_IDENTIFIER];
+            
+            if (empty($name))
+            {
+                $errors[] = 'The question cannot be blank.';
+            }
+        }
+        else
+        {
+            $errors[] = 'A question was not provided.';
+        }
+        
+        if (isset($_POST['Level']))
+        {
+            $level = $_POST['Level'];
+            
+            if((string)(int)$level != $level)
+            {
+                $errors[] = 'The level must be an integer value.';
+            }
+        }
+        else
+        {
+            $errors[] = 'A level was not provided.';
+        }
+        
+        if (isset($_POST['Instructions']))
+        {
+            $instructions = $_POST['Instructions'];
+        }
+        else
+        {
+            $errors[] = 'Instructions were not provided.';
+        }
+        
         $answers = array();
         
         $answerNumber = 0;
@@ -873,31 +1006,89 @@
             $answerNumber++;
         }
         
-        if(true)
+        if(count($answers) < 1)
         {
-            if (isset($_POST[QUESTIONID_IDENTIFIER]))
+            $errors[] = 'At least one answer needs to be provided.';
+        }
+        else
+        {
+            foreach ($answers as $answer)
             {
-                $questionID = $_POST[QUESTIONID_IDENTIFIER];
-                
-                UpdateQuestion($questionID, $name, $instructions, $level, $answers);
+                if (empty($answer))
+                {
+                    $errors[] = 'An answer cannot be blank.';
+                    break;
+                }
+            }
+        }
+        
+        if(count($errors) < 1)
+        {
+            if (isset($questionID))
+            {
+                if(userIsAuthorized(QUESTIONEDIT_ACTION))
+                {
+                    UpdateQuestion($questionID, $name, $instructions, $level, $answers);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
             }
             else
             {
                 $languageID = $_POST[LANGUAGEID_IDENTIFIER];
                 
-                $questionID = AddQuestion($languageID, $name, $instructions, $level, $answers);
+                if (userIsAuthorized(QUESTIONADD_ACTION))
+                {
+                    $questionID = AddQuestion($languageID, $name, $instructions, $level, $answers);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
             }
             
             Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . urldecode($questionID)));
         }
         
-        include(VIEWQUESTIONFORM_FILE);
+        $message = 'Errors';
+        $collection = $errors;
+        
+        include(ADDEDITQUESTIONFORM_FILE);
     }
     
     function ProcessQuestionSearch()
     {
-        $languageID = $_POST[LANGUAGEID_IDENTIFIER];
-        $name = $_POST[NAME_IDENTIFIER];
+        if (!userIsAuthorized(QUESTIONSEARCH_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language I.D. was provided.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[NAME_IDENTIFIER]))
+        {
+            $name = $_POST[NAME_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'The search criteria could not be resolved.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
         
         $lang = GetLanguage($languageID);
         $questions = SearchForQuestion($languageID, $name);

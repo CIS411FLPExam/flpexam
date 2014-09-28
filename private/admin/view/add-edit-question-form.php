@@ -3,6 +3,13 @@
 ?>
 <!-- Start main content here -->
 
+<?php
+    if (isset($message))
+    {
+        include(MESSAGE_FILE);
+    }
+?>
+
 <?php if (isset($questionID)) { ?>
     <h1>Edit Question</h1>
 <?php } else { ?>
@@ -18,14 +25,14 @@
     <div class="formGroup">
         <div class="formSection">
             <label>Level:</label>
-            <input type="number" name="Level" value="<?php echo(htmlspecialchars($level)); ?>"/>
+            <input type="number" name="Level" value="<?php echo(htmlspecialchars($level)); ?>" autofocus required />
         </div>
         
         <div class='divider'></div>
         
         <div class="formSection">
             <label>Question:</label>
-            <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa' rows="5" cols="70"><?php echo(htmlspecialchars($name)); ?></textarea>
+            <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa' rows="5" cols="70" required><?php echo(htmlspecialchars($name)); ?></textarea>
         </div>
         
         <div class='divider'></div>
@@ -46,7 +53,7 @@
             ?>      
                 <div id='contnr<?php echo($i); ?>' class="formSection">
                     <label id='lbl<?php echo($i); ?>'>Answer:</label>
-                    <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>'><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></textarea>
+                    <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>' required><?php if (isset($answer[NAME_IDENTIFIER])) { echo(htmlspecialchars($answer[NAME_IDENTIFIER])); } ?></textarea>
                     <input id='btn<?php echo($i); ?>' type='button' value='Remove Answer' onclick='RemoveItem(<?php echo($i); ?>);' />
                     <br />
                     <br />

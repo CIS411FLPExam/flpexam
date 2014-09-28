@@ -33,6 +33,7 @@ function AddItem()
     txt.id = 'input' + index;
     txt.name = txt.id;
     txt.setAttribute('class', 'qa');
+    txt.required = true;
     
     btn.setAttribute('type', 'button');
     btn.id = 'btn' + index;

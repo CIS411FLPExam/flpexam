@@ -66,6 +66,7 @@
 
 <?php if(count($questions) > 0) { ?>
     <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONDELETE_ACTION ) ); ?>" method="post">
+        <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
         <div class="datatable">
             <table id="questions" class="tablesorter">
                 <thead>
@@ -115,7 +116,7 @@
                 </tbody>
             </table>
         </div>
-        <input type="hidden" name="numListed" value="<?php echo count($results); ?>" />
+        <input type="hidden" name="numListed" value="<?php echo count($questions); ?>" />
         <?php if ($userCanDelete) { ?>
                 <br />
                 <input type="submit" value="Delete Selected" />
