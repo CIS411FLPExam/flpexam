@@ -431,6 +431,12 @@
     
     function ManageContacts()
     {
+        if(!userIsAuthorized(MANAGECONTACTS_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $contacts = GetContacts();
         
         include(MANAGECONTACTSFORM_FILE);
@@ -438,6 +444,12 @@
     
     function LanguageImport()
     {
+        if(!userIsAuthorized(LANGUAGEIMPORT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if(isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
@@ -521,6 +533,12 @@
     
     function LanguageExport()
     {
+        if(!userIsAuthorized(LANGUAGEEXPORT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if(isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
@@ -554,6 +572,12 @@
     
     function TestView()
     {
+        if(!userIsAuthorized(TESTVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $testInfo = new DetailedTestInfo();
         $testIdIndex = $testInfo->GetIdIndex();
         
@@ -565,6 +589,13 @@
         {
             $testID = $_GET[$testIdIndex];
         }
+        else
+        {
+            $message = 'No test I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
         
         $testInfo = GetDetailedTest($testID);
         
@@ -573,6 +604,12 @@
     
     function TestSearch()
     {
+        if(!userIsAuthorized(TESTSEARCH_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $name = $_POST['Name'];
         $language = $_POST['Language'];
         $minScore = $_POST['MinScore'];
@@ -580,7 +617,7 @@
         $minDate = $_POST['MinDate'];
         $maxDate = $_POST['MaxDate'];
         
-         $languageNames = GetAllLanguagesNames();
+        $languageNames = GetAllLanguagesNames();
         
         $testInfos = SearchForTest($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
@@ -589,6 +626,12 @@
     
     function ManageTests()
     {
+        if(!userIsAuthorized(MANAGETESTS_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $name = '';
         $language = '';
         $languageNames = GetAllLanguagesNames();
@@ -605,6 +648,12 @@
     
     function ExamParametersView()
     {
+        if(!userIsAuthorized(EXAMPARAMETERSVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $parameters = GetExamParameters();
         
         $keyCode = $parameters->GetKeyCode();
@@ -617,6 +666,12 @@
     
     function ExamParametersEdit()
     {
+        if(!userIsAuthorized(EXAMPARAMETERSEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $parameters = GetExamParameters();
         
         $keyCode = $parameters->GetKeyCode();
@@ -629,19 +684,26 @@
     
     function ProcessExamParametersEdit()
     {
-        if(userIsAuthorized(EXAMPARAMETERSEDIT_ACTION))
+        if(!userIsAuthorized(EXAMPARAMETERSEDIT_ACTION))
         {
-            $parameters = new ExamParameters();
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $parameters = new ExamParameters();
 
-            $parameters->Initialize($_POST);
-            
+        $parameters->Initialize($_POST);
+        
+        $parametersVI = $parameters->Validate();
+        
+        if($parametersVI->IsValid())
+        {
             SetExamParameters($parameters);
             Redirect(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION));
         }
-        else
-        {
-            include(NOTAUTHORIZED_FILE);
-        }
+        
+        $message = 'Errors';
+        $collection = $parametersVI->GetErrors();
         
         $keyCode = $parameters->GetKeyCode();
         $questionCount = $parameters->GetQuestionCount();

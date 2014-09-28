@@ -1,4 +1,5 @@
 <?php
+require_once(VALIDATIONINFOCLASS_FILE);
 
 /**
  * The exam parameters class.
@@ -133,9 +134,9 @@ class ExamParameters
     public function Initialize($row)
     {
         $keyCode = $row[$this->GetKeyCodeIndex()];
-        $questionCount = $row[$this->GetQuestionCountIndex()];
-        $incLevelScore = $row[$this->GetIncLevelScoreIndex()];
-        $decLevelScore = $row[$this->GetDecLevelScoreIndex()];
+        $questionCount = (int)$row[$this->GetQuestionCountIndex()];
+        $incLevelScore = (float)$row[$this->GetIncLevelScoreIndex()];
+        $decLevelScore = (float)$row[$this->GetDecLevelScoreIndex()];
         
         $this->SetKeyCode($keyCode);
         $this->SetQuestionCount($questionCount);
@@ -200,6 +201,113 @@ class ExamParameters
         $decLevelScore = $this->GetDecLevelScore();
         
         return $decLevelScore * 100;
+    }
+    
+    /**
+     * Validates the key code.
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateKeyCode()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $keyCode = $this->GetKeyCode();
+        
+        if (!empty($keyCode))
+        {
+            if (strlen($keyCode) > 40)
+            {
+                $valid = FALSE;
+                $errors[] = 'The key code is too long.';
+            }
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the question count field.
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateQuestionCount()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $questionCount = $this->GetQuestionCount();
+        
+        if (!is_int($questionCount))
+        {
+            $valid = FALSE;
+            $errors[] = 'The question count must be an integer.';
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the increment level score field
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateIncLevelScore()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $incLevelScore = $this->GetIncLevelScore();
+        
+        if (!is_float($incLevelScore))
+        {
+            $valid = FALSE;
+            $errors[] = 'The increment level score value must be a real number.';
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+    
+    /**
+     * Validates the decrement level score field
+     * @return \ValidationInfo The validation info.
+     */
+    protected function ValidateDecLevelScore()
+    {
+        $valid = TRUE;
+        $errors = array();
+        
+        $decLevelScore = $this->GetDecLevelScore();
+        
+        if (!is_float($decLevelScore))
+        {
+            $valid = FALSE;
+            $errors[] = 'The decrement level score value must be a real number.';
+        }
+        
+        $vInfo = new ValidationInfo($valid, $errors);
+        
+        return $vInfo;
+    }
+
+    /**
+     * Validates the exam parameters;
+     * @return \ValidationInfo The validatio info.
+     */
+    public function Validate()
+    {
+        $vInfo = new ValidationInfo();
+        
+        $vInfo->Merge($this->ValidateKeyCode());
+        $vInfo->Merge($this->ValidateQuestionCount());
+        $vInfo->Merge($this->ValidateIncLevelScore());
+        $vInfo->Merge($this->ValidateDecLevelScore());
+        
+        return $vInfo;
     }
 }
 ?>
