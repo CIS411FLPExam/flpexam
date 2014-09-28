@@ -5,6 +5,8 @@
     require_once(IDENTIFIER_FILE);
     require_once(GENERALFUNCTIONS_FILE);
     require_once(ACTIONS_FILE);
+    require_once(PHPEXCELCLASS_FILE);
+    require_once(PHPEXCELIOFACTORYCLASS_FILE);
     
     //error_reporting(E_ALL ^ E_NOTICE);
     
@@ -403,23 +405,26 @@
     
     function ContactDelete()
     {
-        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        if (!userIsAuthorized(CONTACTDELETE_ACTION))
         {
-            $contactID = $_POST[CONTACTID_IDENTIFIER];
-        }
-        else if (isset($_GET[CONTACTID_IDENTIFIER]))
-        {
-            $contactID = $_GET[CONTACTID_IDENTIFIER];
-        }
-        else
-        {
-            $message = 'No contact I.D. provided.';
-            
-            include(MESSAGEFORM_FILE);
+            include(NOTAUTHORIZED_FILE);
             exit();
         }
         
-        DeleteContact($contactID);
+        if(isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+            
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $contactID = $_POST["record$i"];
+                    
+                    DeleteContact($contactID);
+                }
+            }
+        }
         
         Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
     }
@@ -449,12 +454,69 @@
             exit();
         }
         
-        $file = $_FILES['file'];
-        $filePath = $file ['tmp_name'];
+        $errors = array();
         
-        ImportLanguageQuestions($languageID, $filePath);
+        if(isset($_FILES['file']))
+        {
+            $file = $_FILES['file'];
+            $filePath = $file ['tmp_name'];
+            $type = $file['type'];
+            $error = $file['error'];
+            
+            if ($error == UPLOAD_ERR_NO_FILE)
+            {
+                $errors[] = 'No file selected for upload.';
+            }
+            else if ($error != 0)
+            {
+                $errors[] = 'Error uploading file to server.';
+            }
+            else if($type != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            {
+                $errors[] = 'The file type is not of a valid Excel format.';
+            }
+            
+            if (count($errors) == 0)
+            {
+                $objPHPExcel = OpenExcelFile($filePath);
+                
+                $questions = array();
+                include(PROCESSLANGUAGEIMPORT_FILE);
+                
+                if (count($errors) == 0)
+                {
+                    foreach($questions as $question)
+                    {
+                        $questionID = $question[QUESTIONID_IDENTIFIER];
+                        $level = $question['Level'];
+                        $instructions = $question['Instructions'];
+                        $quesName = $question[NAME_IDENTIFIER];
+                        $answers = $question['Answers'];
+
+                        if($questionID > 0)
+                        {//Doing an update.
+                            UpdateQuestion($questionID, $quesName, $instructions, $level, $answers);
+                        }
+                        else
+                        {//Doing an add.
+                            AddQuestion($languageID, $quesName, $instructions, $level, $answers);
+                        }
+                    }
+
+                    Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
+                }
+            }
+        }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
+        $lang = GetLanguage($languageID);
+        $questions = GetQuestions($languageID);
+        
+        $language = $lang[NAME_IDENTIFIER];
+        
+        $message = 'Error Importing Questions.';
+        $collection = $errors;
+        
+        include(MANAGEQUESTIONSFORM_FILE);
     }
     
     function LanguageExport()
@@ -475,16 +537,19 @@
             exit();
         }
         
+        $language = GetLanguage($languageID);
+        $languageName = $language[NAME_IDENTIFIER];
+        
         ignore_user_abort(true);
         
         $file = ExportLanguageQuestions($languageID);
         
         header('Content-type: application/octet-stream');
         header('Content-Length: ' . filesize($file));
-        header('Content-Disposition: attachment; filename=' . basename($file));
+        header('Content-Disposition: attachment; filename=' . $languageName .'.xlsx');
         readfile($file);
         
-        unlink($file);
+        DeleteFile($file);
     }
     
     function TestView()

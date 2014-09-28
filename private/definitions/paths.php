@@ -446,6 +446,12 @@
      */
     define("ADDEDITCONTACTFORM_FILE", ADMINVIEW_DIR . "add-edit-contact-form.php");
     
+    /**
+     * The file path of the file to use to import languages.
+     */
+    define("PROCESSLANGUAGEIMPORT_FILE", ADMINVIEW_DIR . "process-languageimport.php");
+    
+    
 //Exam paths.
 /******************************************************************************/
     

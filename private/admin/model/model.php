@@ -9,6 +9,28 @@
     require_once(CONTACTCLASS_FILE);
     
     /**
+     * Opens an excel file.
+     * @param string $filePath The file path of the excel file.
+     * @return \PHPExcel The PHPExcel representation of the excel file.
+     */
+    function OpenExcelFile($filePath)
+    {
+        $objPHPExcel = PHPExcel_IOFactory::load($filePath);
+        
+        return $objPHPExcel;
+    }
+    
+    /**
+     * Deletes a file.
+     * @param string $filePath The file path of the file.
+     * @return bool True, if the delete was succesfull.
+     */
+    function DeleteFile($filePath)
+    {
+        return unlink($filePath);
+    }
+    
+    /**
      * Activates a contact.
      * @param int $contactID The I.D. of the contact.
      */
@@ -253,6 +275,7 @@
      * @param int $languageID The I.D. of the language.
      * @param string $filePath The file path of the excell file.
      */
+    /*
     function ImportLanguageQuestions($languageID, $filePath)
     {
         try
@@ -316,6 +339,7 @@
             LogError($ex);
         }
     }
+    */
     
     /**
      * Creates an excel file of questions for the given language.
