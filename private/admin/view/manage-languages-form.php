@@ -92,7 +92,7 @@
                 </tbody>
             </table>
         </div>
-        <input type="hidden" name="numListed" value="<?php echo count($results); ?>" />
+        <input type="hidden" name="numListed" value="<?php echo count($languages); ?>" />
         <?php if ($userCanDelete) { ?>
 
                 <br />

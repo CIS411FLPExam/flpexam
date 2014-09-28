@@ -757,7 +757,18 @@
         {
             $db = GetDBConnection();
             
+            $query = 'DELETE FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
             
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            $languagesDeleted = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $languagesDeleted;
         }
         catch(PDOException $ex)
         {

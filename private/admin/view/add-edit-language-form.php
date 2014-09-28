@@ -2,6 +2,14 @@
     include( HEADER_FILE );
 ?>
 <!-- Start main content here -->
+
+<?php
+    if (isset($message))
+    {
+        include(MESSAGE_FILE);
+    }
+?>
+
 <?php if (isset($languageID)) { ?>
     <h1>Edit Language</h1>
 <?php } else { ?>
@@ -15,7 +23,7 @@
     <div class="formGroup">
         <div class="formSection">
             <label>Name:</label>
-            <input type="text" name="Name" class="formInput" value="<?php echo(htmlspecialchars($name)); ?>" />
+            <input type="text" name="Name" class="formInput" value="<?php echo(htmlspecialchars($name)); ?>" autofocus required maxlength="32" />
         </div>
         
         <?php if (isset($languageID)) { ?>

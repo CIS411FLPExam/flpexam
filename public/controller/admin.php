@@ -1100,6 +1100,12 @@
     
     function ProcessLanguageAdd()
     {
+        if (!userIsAuthorized(LANGUAGEADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $name = "";
         
         include(ADDEDITLANGUAGEFORM_FILE);
@@ -1107,13 +1113,26 @@
     
     function ProcessLanguageEdit()
     {
+        if (!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if (isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
         }
-        else
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
         }
         
         $language = GetLanguage($languageID);
@@ -1126,6 +1145,12 @@
     
     function ProcessLanguageView()
     {
+        if (!userIsAuthorized(LANGUAGEVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if (isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
@@ -1141,6 +1166,13 @@
         else if (isset($_POST[QUESTIONID_IDENTIFIER]))
         {
             $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'The language or question I.D. could not be resolved.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
         }
         
         if(isset($languageID))
@@ -1162,15 +1194,55 @@
     
     function ProcessLanguageDelete()
     {
+        if (!userIsAuthorized(LANGUAGEDELETE_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
         
+        if(isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $languageID = $_POST["record$i"];
+
+                    DeleteLanguage($languageID);
+                }
+            }
+        }
+
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
     }
     
     function ProcessLanguageAddEdit()
     {
-        $name = $_POST[NAME_IDENTIFIER];
+        $errors = array();
+        
+        if (isset($_POST[NAME_IDENTIFIER]))
+        {
+            $name = $_POST[NAME_IDENTIFIER];
+            
+            if (empty($name))
+            {
+                $errors[] = 'Name cannot be blank.';
+            }
+            else if (strlen($name) > 32)
+            {
+                $errors[] = 'The name is too long.';
+            }
+        }
+        else
+        {
+            $errors[] = 'A name was not provided.';
+        }
+        
         $active = isset($_POST['Active']);
         
-        if(true)
+        if(count($errors) < 1)
         {
             if(isset($_POST[LANGUAGEID_IDENTIFIER]))
             {
@@ -1186,11 +1258,20 @@
             Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID)));
         }
         
+        $message = 'Errors';
+        $collection = $errors;
+        
         include(ADDEDITLANGUAGEFORM_FILE);
     }
     
     function ManageLanguages()
     {
+        if (!userIsAuthorized(MANAGELANGUAGES_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $languages = GetAllLanguages();
         
         include(MANAGELANGUAGESFORM_FILE);
@@ -1198,6 +1279,12 @@
     
     function ProcessUserView()
     {
+        if (!userIsAuthorized(USERVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $userID = $_GET[USERID_IDENTIFIER];
         
         $row = getUser($userID);
@@ -1211,6 +1298,12 @@
     
     function ProcessUserSearch()
     {
+        if (!userIsAuthorized(USERSEARCH_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $name = $_POST[NAME_IDENTIFIER];
         
         $results = SearchForUser($name);
@@ -1220,6 +1313,12 @@
     
     function ManageUsers()
     {
+        if (!userIsAuthorized(MANAGEUSERS_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $results = getAllUsers();
         
         include(MANAGEUSERSFORM_FILE);
@@ -1227,6 +1326,12 @@
     
     function UserAdd()
     {
+        if (!userIsAuthorized(USERADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $userName = "";
         
         include(ADDUSERFORM_FILE);
@@ -1266,6 +1371,8 @@
                 }
             }
         }
+        
+        Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
     }
     
     function UserDelete()
@@ -1597,6 +1704,12 @@
     
     function RoleEdit()
     {
+        if (!userIsAuthorized(ROLEEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         $id = $_GET["id"];
         if (empty($id))
         {
