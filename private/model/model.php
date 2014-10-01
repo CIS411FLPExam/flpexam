@@ -79,7 +79,7 @@
             
             $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
                     . ' ' . $languageIdKey
-                    . ' = :' . $languageIdKey
+                    . ' = :' . $languageIdKey . ' AND'
                     . ' ' . $levelKey
                     . ' = :' . $levelKey . ';' ;
             
@@ -167,11 +167,14 @@
             
             $statement = $db->prepare($query);
             
+            $statement->execute();
+            
             $row = $statement->fetch();
             
             $statement->closeCursor();
             
             $contact->Initialize($row);
+            
             
             return $contact;
         }

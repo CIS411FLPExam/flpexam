@@ -334,7 +334,9 @@
         $score = $testEntry['Score'];
         $languageName = $testEntry['Language'];
         $languageID = GetLanguageID($languageName);
+        
         $levelInfoID = GetLevelInfoID($languageID, $score);
+        
         $levelInfo = GetLevelInfo($levelInfoID);
         $contact = GetPrimaryContact();
         

@@ -3,8 +3,7 @@
 ?>
 <!--Start main content-->
 <h1>Test Results</h1>
-<div class="infoSectionCntnr">
-    <div class="infoSection">
+<div class="formGroup">
         <h3>Test Info</h3>
 
         <div class="formSection">
@@ -18,10 +17,7 @@
             <label>Language:</label>
             <?php echo(htmlspecialchars($languageName)); ?>
         </div>
-    </div>
-
-    <?php if ($levelInfoID > 0) { ?>
-        <div class="infoSection">
+        <?php if ($levelInfoID > 0) { ?>
             <h3>Level Info</h3>
 
             <div class="formSection">
@@ -44,18 +40,14 @@
                     <?php echo(htmlspecialchars($levelInfo->GetDescription())); ?>
                 </div>
             <?php } ?>
-        </div>
     <?php } ?>
-</div>
-
-<div class="clear"></div>
-
-<?php if ($contact->GetId() > 0) { ?>
+    <?php if ($contact->GetId() > 0) { ?>
     <p>
-        Contact <?php echo(htmlspecialchars($contact->GetFirstName()) . htmlspecialchars($contact->GetLastName())); ?>
-        at <?php echo(htmlspecialchars($contact->GetEmail())); ?>
+        Contact <b><?php echo(htmlspecialchars($contact->GetFirstName()) . htmlspecialchars($contact->GetLastName())); ?></b>
+        at <b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b>
         for more information.
     </p>
+</div>
 <?php } ?>
 <!--End main content-->
 <?php
