@@ -61,6 +61,9 @@
             case SUBMITANSWER_ACTION :
                 SubmitAnswer();
                 break;
+            case TESTRESULTSVIEW_ACTION :
+                TestResultsView();
+                break;
             default :
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
@@ -102,7 +105,7 @@
     {
         $exam = GetCurrentExam();
         
-        if(!$exam->IsParametersSet())
+        if($exam == FALSE || !$exam->IsParametersSet())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
         }
@@ -120,7 +123,7 @@
     {
         $exam = GetCurrentExam();
         
-        if(!$exam->IsParametersSet())
+        if($exam == FALSE || !$exam->IsParametersSet())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
         }
@@ -157,7 +160,7 @@
     {
         $exam = GetCurrentExam();
         
-        if(!$exam->IsLanguageSet())
+        if($exam == FALSE || !$exam->IsLanguageSet())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
         }
@@ -183,7 +186,7 @@
     {
         $exam = GetCurrentExam();
         
-        if(!$exam->IsLanguageSet())
+        if($exam == FALSE || !$exam->IsLanguageSet())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
         }
@@ -219,7 +222,7 @@
     {
         $exam = GetCurrentExam();
         
-        if (!$exam->IsProfileSet())
+        if ($exam == FALSE || !$exam->IsProfileSet())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
         }
@@ -236,7 +239,7 @@
     {
         $exam = GetCurrentExam();
         
-        if(!$exam->IsStarted())
+        if($exam == FALSE || !$exam->IsStarted())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
         }
@@ -257,14 +260,12 @@
     
     function SubmitAnswer()
     {
-        
         $exam = GetCurrentExam();
         
-        if(!$exam->IsStarted())
+        if($exam == FALSE || !$exam->IsStarted())
         {
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
         }
-        
         
         if (isset($_POST[QUESTIONID_IDENTIFIER]) && isset($_POST[ANSWERID_IDENTIFIER]))
         {
@@ -273,7 +274,7 @@
 
             $exam->PushQuestionAnswerID($questionID, $answerID);
 
-            if($exam->IsDone())
+            if($exam->IsDone() )
             {
                 CommitExam();
             }
@@ -293,6 +294,12 @@
     function CommitExam()
     {
         $exam = GetCurrentExam();
+        
+        if ($exam == FALSE)
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        
         $profile = $exam->GetProfile();
         
         $testEntryID = AddTestEntry($exam);
@@ -301,8 +308,36 @@
         
         DisposeCurrentExam();
         
-        $message = 'Score: ' . $exam->GetLevel();
+        StoreTestId($testEntryID);
         
-        include(MESSAGEFORM_FILE);
+        TestResultsView();
+    }
+    
+    function TestResultsView()
+    {
+        $testID = GetTestId();
+        
+        if ($testID == FALSE)
+        {
+            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+        
+        $testEntry = GetTestResults($testID);
+        
+        if ($testEntry == FALSE)
+        {
+            $message = 'Test not found.';
+            
+            include(MESSAGEFORM_FILE);
+        }
+        
+        $score = $testEntry['Score'];
+        $languageName = $testEntry['Language'];
+        $languageID = GetLanguageID($languageName);
+        $levelInfoID = GetLevelInfoID($languageID, $score);
+        $levelInfo = GetLevelInfo($levelInfoID);
+        $contact = GetPrimaryContact();
+        
+        include(VIEWTESTRESULTSFORM_FILE);
     }
 ?>

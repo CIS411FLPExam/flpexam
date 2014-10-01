@@ -359,4 +359,9 @@
      */
     define("SUBMITANSWER_ACTION", "SubmitAnswer");
     
+    /**
+     * The action word to use to view test results.
+     */
+    define("TESTRESULTSVIEW_ACTION", "TestResultsView");
+    
 ?>

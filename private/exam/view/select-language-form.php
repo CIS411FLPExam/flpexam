@@ -10,7 +10,7 @@
         <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, PROCESSLANGUAGESELECT_ACTION)); ?>" method="post">
             <div class="formSection">
                 <label>Language: </label>
-                <select name="<?php echo(NAME_IDENTIFIER); ?>" class="formInput">
+                <select name="<?php echo(NAME_IDENTIFIER); ?>" class="formInput" autofocus>
                     <option selected="selected"><?php echo(htmlspecialchars($languageNames[0])); ?></option>
                     <?php for($index = 1; $index < count($languageNames); $index++) { ?>
                         <option><?php echo(htmlspecialchars($languageNames[$index])); ?></option>

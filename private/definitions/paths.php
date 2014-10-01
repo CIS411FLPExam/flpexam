@@ -518,4 +518,9 @@
      * The file path of the view test quetsion form file.
      */
     define("TESTQUESTIONVIEWFORM_FILE", EXAMVIEW_DIR . "testquestion-view-form.php");
+    
+    /**
+     * The file path of the vew test results form file.
+     */
+    define("VIEWTESTRESULTSFORM_FILE", EXAMVIEW_DIR . "view-testresults-form.php");
 ?>

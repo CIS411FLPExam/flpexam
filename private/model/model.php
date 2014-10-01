@@ -1,10 +1,8 @@
 <?php
     
+    require_once(CONTACTCLASS_FILE);
+    require_once(LEVELINFOCLASS_FILE);
     require_once(EXAMPARAMETERSCLASS_FILE);
-
-    /**
-     * Require this file because we use the ValidationInfo class for validation here.
-     */
     require_once(VALIDATIONINFOCLASS_FILE);
     
     /**
@@ -69,7 +67,43 @@
     
     function GetLevelInfoID($languageID, $level)
     {
-        
+        try
+        {
+            $levelInfoID = 0;
+            $levelInfo = new LevelInfo();
+            $idKey = $levelInfo->GetIdKey();
+            $languageIdKey = $levelInfo->GetLanguageIdKey();
+            $levelKey = $levelInfo->GetLevelKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+                    . ' ' . $languageIdKey
+                    . ' = :' . $languageIdKey
+                    . ' ' . $levelKey
+                    . ' = :' . $levelKey . ';' ;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $languageIdKey, $languageID);
+            $statement->bindValue(':' . $levelKey, $level);
+            
+            $statement->execute();
+            
+            $result = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($result != FALSE)
+            {
+                $levelInfoID = $result[$idKey];
+            }
+            
+            return $levelInfoID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**
@@ -110,6 +144,38 @@
             return $exists;
         }
         catch(PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the primary contact on record.
+     * @return \Contact The primary contact.
+     */
+    function GetPrimaryContact()
+    {
+        try
+        {
+            $contact = new Contact();
+            $primaryIndex = $contact->GetPrimaryIndex();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . CONTACTS_IDENTIFIER . ' WHERE'
+                    . '`' . $primaryIndex . '` = 1;';
+            
+            $statement = $db->prepare($query);
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            $contact->Initialize($row);
+            
+            return $contact;
+        }
+        catch (PDOException $ex)
         {
             LogError($ex);
         }

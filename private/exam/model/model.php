@@ -4,6 +4,38 @@
     require_once(MODEL_FILE);
     
     /**
+     * Gets the test results for a test.
+     * @param int $testID The I.D. of the test.
+     * @return mixed The array of test info, or FALSE otherwise.
+     */
+    function GetTestResults($testID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . TESTENTIRES_IDENTIFIER . ' WHERE'
+                    . ' ' . TESTID_IDENTIFIER
+                    . ' = :' . TESTID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            return $row;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Indicates whether or not an answer is the correct answer.
      * @param int $questionID The I.D. of the question.
      * @param int $answerID The I.D. of the answer.
@@ -116,6 +148,30 @@
         }
     }
     
+    /**
+     * Store the I.D. of the committed test.
+     * @param int $testID The I.D. of the test.
+     */
+    function StoreTestId($testID)
+    {
+        StartSession();
+        
+        $_SESSION[TESTID_IDENTIFIER] = $testID;
+    }
+    
+    /**
+     * Gets the I.D. of the committed test.
+     * @return mixed The I.D. of the comitted, or FALSE other if no I.D. is set.
+     */
+    function GetTestId()
+    {
+        if (isset($_SESSION[TESTID_IDENTIFIER]))
+        {
+            return $_SESSION[TESTID_IDENTIFIER];
+        }
+        
+        return FALSE;
+    }
     
     /**
      * Gets the current exam.
