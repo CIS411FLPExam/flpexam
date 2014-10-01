@@ -50,7 +50,7 @@
     <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($userID)); ?>"/>
     <div class="formGroup">
         <div class="formSection">
-            <label>Username:</label>
+            <label>Username<span class="redText">*</span>:</label>
             <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required maxlength="32"/>
         </div>
         

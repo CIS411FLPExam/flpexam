@@ -11,7 +11,7 @@
 
     <div class="formGroup">
         <div class="formSection">
-            <label>Name:</label><input type="text" name="Name" value="<?php echo htmlspecialchars($name); ?>" />
+            <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" value="<?php echo htmlspecialchars($name); ?>" autofocus required />
         </div>
 
         <div class="divider"></div>

@@ -8,7 +8,7 @@
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSROLEADDEDIT_ACTION)) ?>" method="post">
     <div class="formGroup">
         <div class="formSection">
-            <label>Name:</label><input type="text" name="Name" size="20" value=""><br/>
+            <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" size="20" value="" autofocus required><br/>
         </div>
         
         <div class="divider"></div>

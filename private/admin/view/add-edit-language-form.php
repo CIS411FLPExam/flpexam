@@ -22,7 +22,7 @@
     <?php } ?>
     <div class="formGroup">
         <div class="formSection">
-            <label>Name:</label>
+            <label>Name<span class="redText">*</span>:</label>
             <input type="text" name="Name" class="formInput" value="<?php echo(htmlspecialchars($name)); ?>" autofocus required maxlength="32" />
         </div>
         

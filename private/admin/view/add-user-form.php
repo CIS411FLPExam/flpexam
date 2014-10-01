@@ -14,21 +14,21 @@
 <div class="formGroup">
     <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSUSERADD_ACTION)); ?>" method="post">
         <div class="formSection">
-            <label>Username:</label>
+            <label>Username<span class="redText">*</span>:</label>
             <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required  maxlength="32"/>
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Password:</label>
+            <label>Password<span class="redText">*</span>:</label>
             <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" required maxlength="40"/>
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Password Retype:</label>
+            <label>Password Retype<span class="redText">*</span>:</label>
             <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" required maxlength="40" />
         </div>
         

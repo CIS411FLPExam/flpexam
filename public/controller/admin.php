@@ -195,9 +195,91 @@
             case CONTACTDEACTIVATE_ACTION :
                 ContactDeactivate();
                 break;
+            case MANAGELEVELINFOS_ACTION :
+                break;
+            case LEVELINFOADD_ACTION :
+                break;
+            case LEVELINFOVIEW_ACTION :
+                break;
+            case LEVELINFOEDIT_ACTION :
+                break;
+            case LEVELINFODELETE_ACTION :
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function ManageLevelInfos()
+    {
+        if(!userIsAuthorized(MANAGELEVELINFOS_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        include(MANAGELEVELINFOSFORM_FILE);
+    }
+    
+    function LevelInfoAdd()
+    {
+        if(!userIsAuthorized(LEVELINFOADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        include(ADDEDITLEVELINFOFORM_FILE);
+    }
+    
+    function LevelInfoView()
+    {
+        if(!userIsAuthorized(LEVELINFOVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        include(VIEWLEVELINFOFORM_FILE);
+    }
+    
+    function LevelInfoEdit()
+    {
+        if(!userIsAuthorized(LEVELINFOEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        include(ADDEDITLEVELINFOFORM_FILE);
+    }
+    
+    function LevelInfoDelete()
+    {
+        if(!userIsAuthorized(LEVELINFODELETE_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $languageID = 0;
+        
+        if(isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+            
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $level = $_POST["record$i"];
+                    
+                    DeleteLevelInfo($languageID, $level);
+                }
+            }
+        }
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urldecode($languageID));
     }
     
     function LanguageActivate()
@@ -978,7 +1060,7 @@
         {
             $level = $_POST['Level'];
             
-            if((string)(int)$level != $level)
+            if(!is_int($level) && (string)(int)$level != $level)
             {
                 $errors[] = 'The level must be an integer value.';
             }

@@ -8,6 +8,26 @@
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
     require_once(CONTACTCLASS_FILE);
     
+    function AddLevelInfo(LevelInfo $levelInfo)
+    {
+        
+    }
+    
+    function GetLevelInfos()
+    {
+        
+    }
+    
+    function UpdateLevelInfo(LevelInfo $levelInfo)
+    {
+        
+    }
+    
+    function DeleteLevelInfo($languageID, $level)
+    {
+        
+    }
+    
     /**
      * Opens an excel file.
      * @param string $filePath The file path of the excel file.

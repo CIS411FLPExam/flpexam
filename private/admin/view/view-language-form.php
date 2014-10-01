@@ -29,14 +29,14 @@
             <input type="submit" value="Manage Questions" />
         </form>
     <?php } ?>
+    <?php if (userIsAuthorized(MANAGELEVELINFOS_ACTION)) {?>
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Manage Level Info" />
+        </form>
+    <?php } ?>
 </div>
 <!-- End main content here -->
 <?php
     include( FOOTER_FILE ); 
 ?>
-<script>
-    $( document ).ready( function( ) 
-    { 
-        $( "#questions" ).tablesorter( ); 
-    });   
-</script>

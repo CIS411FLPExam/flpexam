@@ -30,6 +30,11 @@
         return $db;            
     }
     
+    function GetLevelInfo($languageID, $level)
+    {
+        
+    }
+    
     /**
      * Gets the exam parameters.
      * @return type

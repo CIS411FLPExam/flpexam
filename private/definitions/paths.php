@@ -442,7 +442,7 @@
     define("MANAGECONTACTSFORM_FILE", ADMINVIEW_DIR . "manage-contacts-form.php");
     
     /**
-     * The file path of the add edit contact form file.
+     * The file path of the add/edit contact form file.
      */
     define("ADDEDITCONTACTFORM_FILE", ADMINVIEW_DIR . "add-edit-contact-form.php");
     
@@ -451,6 +451,20 @@
      */
     define("PROCESSLANGUAGEIMPORT_FILE", ADMINVIEW_DIR . "process-languageimport.php");
     
+    /**
+     * The file path of the add/edit level info form file.
+     */
+    define("ADDEDITLEVELINFOFORM_FILE", ADMINVIEW_DIR . "add-edit-levelinfo-form.php");
+    
+    /**
+     * The file path of the view level info form file.
+     */
+    define("VIEWLEVELINFOFORM_FILE", ADMINVIEW_DIR . "view-levelinfo-form.php");
+    
+    /**
+     * The file path of the manage level infos form file.
+     */
+    define("MANAGELEVELINFOSFORM_FILE", ADMINVIEW_DIR . "manage-levelinfos-form.php");
     
 //Exam paths.
 /******************************************************************************/

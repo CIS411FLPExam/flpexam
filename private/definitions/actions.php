@@ -286,6 +286,36 @@
      */
     define("CONTACTDEACTIVATE_ACTION", "ContactDeactivate");
     
+    /**
+     * The action word to use to manage level infos.
+     */
+    define("MANAGELEVELINFOS_ACTION", "ManageLevelInfos");
+    
+    /**
+     * The action word to use to add a level info.
+     */
+    define("LEVELINFOADD_ACTION", "LevelInfoAdd");
+    
+    /**
+     * The action word to use to view a level info.
+     */
+    define("LEVELINFOVIEW_ACTION", "LevelInfoView");
+    
+    /**
+     * The action word to use to edit a level info.
+     */
+    define("LEVELINFOEDIT_ACTION", "LevelInfoEdit");
+    
+    /**
+     * The action word to use to delete a level info.
+     */
+    define("LEVELINFODELETE_ACTION", "LevelInfoDelete");
+    
+    /**
+     * The action word to use to process a level info add/edit.
+     */
+    define("PROCESSLEVELINFOADDEDIT_ACTION", "ProcessLevelInfoAddEdit");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

@@ -24,14 +24,14 @@
     <?php } ?>
     <div class="formGroup">
         <div class="formSection">
-            <label>Level:</label>
+            <label>Level<span class="redText">*</span>:</label>
             <input type="number" name="Level" value="<?php echo(htmlspecialchars($level)); ?>" autofocus required />
         </div>
         
         <div class='divider'></div>
         
         <div class="formSection">
-            <label>Question:</label>
+            <label>Question<span class="redText">*</span>:</label>
             <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa' rows="5" cols="70" required><?php echo(htmlspecialchars($name)); ?></textarea>
         </div>
         
@@ -52,7 +52,7 @@
                 { 
             ?>      
                 <div id='contnr<?php echo($i); ?>' class="formSection">
-                    <label id='lbl<?php echo($i); ?>'>Answer:</label>
+                    <label id='lbl<?php echo($i); ?>'>Answer<span class="redText">*</span>:</label>
                     <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>' required><?php if (isset($answer[NAME_IDENTIFIER])) { echo(htmlspecialchars($answer[NAME_IDENTIFIER])); } ?></textarea>
                     <input id='btn<?php echo($i); ?>' type='button' value='Remove Answer' onclick='RemoveItem(<?php echo($i); ?>);' />
                     <br />

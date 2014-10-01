@@ -10,7 +10,7 @@
                 <li><a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>"><span>Manage Tests</span></a></li>
                 <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION)) ?>"><span>Manage Contacts</span></a></li>
                 <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)) ?>"><span>Manage Languages</span></a></li>
-                <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION)) ?>"><span>Manage Functions</span></a></li>
+                <?php //<li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION)) ?"><span>Manage Functions</span></a></li>?>
                 <li class='last'><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)) ?>"><span>Manage Exam Parameters</span></a></li>
             </ul>
             </li>

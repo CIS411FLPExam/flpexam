@@ -239,7 +239,7 @@ class ExamParameters
         
         $questionCount = $this->GetQuestionCount();
         
-        if ((string)(int)$questionCount != $questionCount)
+        if (!is_int($questionCount) && (string)(int)$questionCount != $questionCount)
         {
             $valid = FALSE;
             $errors[] = 'The question count must be an integer.';

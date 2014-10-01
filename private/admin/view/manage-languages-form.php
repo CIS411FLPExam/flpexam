@@ -11,6 +11,7 @@
     $userCanView = userIsAuthorized(LANGUAGEVIEW_ACTION);
     $userCanDelete = userIsAuthorized(LANGUAGEDELETE_ACTION);
     $userCanManageQuestions = userIsAuthorized(MANAGEQUESTIONS_ACTION);
+    $userCanManageLevelInfos = userIsAuthorized(MANAGELEVELINFOS_ACTION);
 ?>
 
 <?php if($userCanAdd) { ?>
@@ -30,6 +31,7 @@
                         <?php if ($userCanView) { ?><th></th><?php } ?>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanManageQuestions) { ?><th></th><?php } ?>
+                        <?php if ($userCanManageLevelInfos) { ?><th></th><?php } ?>
                         <?php if ($userCanDelete) { ?><th></th><?php } ?>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                     </tr>
@@ -63,6 +65,13 @@
                             <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
                                     Manage Questions
+                                </a>
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanManageLevelInfos) { ?>
+                            <td>
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
+                                    Manage Level Info
                                 </a>
                             </td>
                         <?php } ?>

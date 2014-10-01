@@ -1,5 +1,10 @@
 <?php
-    
+
+    /**
+     * The identifier of the levelinfos records.
+     */
+    define("LEVELINFOS_IDENTIFIER", "levelinfos");
+
     /**
      * The identifier for the record of contacts.
      */
