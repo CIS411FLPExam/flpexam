@@ -1903,9 +1903,8 @@
                     . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
                     . ' ' . TESTEES_IDENTIFIER . ' ON'
                     . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
-                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
-                    . ' ORDER BY ' . $dateIndex . ' DESC;';
-            
+                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex;
+                    
             if(!empty($name))
             {
                 $whereClause = ' WHERE MATCH(' . $firstNameIndex . ', ' . $lastNameIndex . ') AGAINST(:Name IN BOOLEAN MODE)';
@@ -1956,7 +1955,7 @@
                 $query .= $whereClause;
             }
             
-            $query = $query . ' ORDER BY ' . $dateIndex . ';';
+            $query = $query . ' ORDER BY ' . $dateIndex . ' DESC;';
             
             $statement = $db->prepare($query);
             
