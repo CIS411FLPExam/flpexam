@@ -34,7 +34,7 @@ class LevelInfo
      * The name of the class that corresponds to the level.
      * @var string 
      */
-    private $class;
+    private $course;
     
     /**
      * A description of the level.
@@ -118,18 +118,18 @@ class LevelInfo
      * Gets the class.
      * @return string The class.
      */
-    public function GetClass()
+    public function GetCourse()
     {
-        return $this->class;
+        return $this->course;
     }
     
     /**
      * Sets the class.
      * @param string $class The class.
      */
-    public function SetClass($class)
+    public function SetCourse($class)
     {
-        $this->class = $class;
+        $this->course = $class;
     }
     
     /**
@@ -165,7 +165,7 @@ class LevelInfo
         $this->SetLevel($level);
         $this->SetLanguageId($languageID);
         $this->SetName($name);
-        $this->SetClass($class);
+        $this->SetCourse($class);
         $this->SetDescription($description);
     }
     
@@ -179,7 +179,7 @@ class LevelInfo
         $levelKey = $this->GetLevelKey();
         $languageIdKey = $this->GetLanguageIdKey();
         $nameKey = $this->GetNameKey();
-        $classKey = $this->GetClassKey();
+        $classKey = $this->GetCourseKey();
         $descriptionKey = $this->GetDescriptionKey();
         
         if (isset($row[$idKey]))
@@ -205,21 +205,22 @@ class LevelInfo
         
         if (isset($row[$nameKey]))
         {
-            $name = $this->GetName();
+            $name = $row[$nameKey];
             
             $this->SetName($name);
+            
         }
         
         if (isset($row[$classKey]))
         {
-            $class = $this->GetClass();
+            $class = $row[$classKey];
             
-            $this->SetClass($class);
+            $this->SetCourse($class);
         }
         
         if (isset($row[$descriptionKey]))
         {
-            $description = $this->GetDescription();
+            $description = $row[$descriptionKey];
             
             $this->SetDescription($description);
         }
@@ -265,9 +266,9 @@ class LevelInfo
      * Gets the class key index.
      * @return string The key index.
      */
-    public function GetClassKey()
+    public function GetCourseKey()
     {
-        return 'Class';
+        return 'Course';
     }
     
     /**
@@ -362,7 +363,7 @@ class LevelInfo
         $valid = TRUE;
         $errors = array();
         
-        $class = $this->GetClass();
+        $class = $this->GetCourse();
         
         if (empty($class))
         {

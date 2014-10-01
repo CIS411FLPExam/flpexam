@@ -30,14 +30,89 @@
         return $db;            
     }
     
-    function GetLevelInfo($levelID)
+    /**
+     * Gets the level info.
+     * @param int $levelInfoID The I.D. of the level info.
+     * @return \LevelInfo The level info.
+     */
+    function GetLevelInfo($levelInfoID)
     {
-        
+        try
+        {
+            $levelInfo = new LevelInfo();
+            $idKey = $levelInfo->GetIdKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+                    . ' ' . $idKey
+                    . ' = :' . $idKey;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $idKey, $levelInfoID);
+            
+            $statement->execute();
+            
+            $result = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            $levelInfo->Initialize($result);
+            
+            return $levelInfo;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     function GetLevelInfoID($languageID, $level)
     {
         
+    }
+    
+    /**
+     * Indicates whether or not the level information for a particular language already exists.
+     * @param int $languageID The I.D. of the language.
+     * @param int $level The level.
+     * @return boolean True, if the level information already exists.
+     */
+    function LevelInfoExists($languageID, $level)
+    {
+        try
+        {
+            $exists = FALSE;
+            $db = GetDBConnection();
+            $levelInfo = new LevelInfo();
+            $langaugeIdKey = $levelInfo->GetLanguageIdKey();
+            $levelKey = $levelInfo->GetLevelKey();
+            
+            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+                    . ' ' . $langaugeIdKey
+                    . ' = :' . $langaugeIdKey . ' AND'
+                    . ' ' . $levelKey
+                    . ' = :' . $levelKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $langaugeIdKey, $languageID);
+            $statement->bindValue(':' . $levelKey, $level);
+            
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            if (count($results) > 0)
+            {
+                $exists = TRUE;
+            }
+            
+            return $exists;
+        }
+        catch(PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**

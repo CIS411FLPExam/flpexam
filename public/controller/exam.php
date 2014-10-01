@@ -12,7 +12,7 @@
     require_once(QUESTIONANSWERCLASS_FILE);
 
     //error_reporting(E_ALL ^ E_NOTICE);
-
+    error_reporting(E_ALL);
     StartSession( );
 
     if (isset($_POST[ACTION_KEYWORD]))

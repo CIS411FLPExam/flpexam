@@ -4,14 +4,30 @@
         <?php if (loggedIn()) {  ?>
             <li class='active has-sub'><a href='#'><span>Admin</span></a>
             <ul>
-                <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION)) ?>"><span>Control Panel</span></a></li>
-                <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION)) ?>"><span>Roles</span></a></li>
-                <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>"><span>Users</span></a></li>
-                <li><a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>"><span>Tests</span></a></li>
-                <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION)) ?>"><span>Contacts</span></a></li>
-                <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)) ?>"><span>Languages</span></a></li>
-                <?php //<li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION)) ?"><span>Functions</span></a></li>?>
-                <li class='last'><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)) ?>"><span>Exam Parameters</span></a></li>
+                <?php if (userIsAuthorized(CONTROLPANEL_ACTION)) { ?>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION)) ?>"><span>Control Panel</span></a></li>
+                <?php } ?>
+                <?php if (userIsAuthorized(MANAGEROLES_ACTION)) { ?>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION)) ?>"><span>Roles</span></a></li>
+                <?php } ?>
+                <?php if (userIsAuthorized(MANAGEUSERS_ACTION)) { ?>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>"><span>Users</span></a></li>
+                <?php } ?>
+                <?php if (userIsAuthorized(MANAGETESTS_ACTION)) { ?>
+                    <li><a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>"><span>Tests</span></a></li>
+                <?php } ?>
+                <?php if (userIsAuthorized(MANAGECONTACTS_ACTION)) { ?>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION)) ?>"><span>Contacts</span></a></li>
+                <?php } ?>
+                <?php if (userIsAuthorized(MANAGELANGUAGES_ACTION)) { ?>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)) ?>"><span>Languages</span></a></li>
+                <?php } ?>
+                <?php if (userIsAuthorized(MANAGEFUNCTIONS_ACTION)) { ?>
+                    <?php //<li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION)) ?"><span>Functions</span></a></li>?>
+                <?php } ?>
+                <?php if (userIsAuthorized(EXAMPARAMETERSVIEW_ACTION)) { ?>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)) ?>"><span>Exam Parameters</span></a></li>
+                <?php } ?>
             </ul>
             </li>
             <li><a href="<?php echo( GetControllerScript( ADMINCONTROLLER_FILE, LOGOUT_ACTION ) ) ?>"><span>Logout</span></a></li>

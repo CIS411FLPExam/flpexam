@@ -11,6 +11,8 @@
     
     //error_reporting(E_ALL ^ E_NOTICE);
     
+    error_reporting(E_ALL);
+    
     StartSession( );
     
     if (isset($_POST[ACTION_KEYWORD]))
@@ -211,6 +213,9 @@
             case LEVELINFODELETE_ACTION :
                 LevelInfoDelete();
                 break;
+            case PROCESSLEVELINFOADDEDIT_ACTION :
+                ProcessLevelInfoAddEdit();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
@@ -241,6 +246,8 @@
         }
         
         $levelinfos = GetLevelInfos($languageID);
+        $language = GetLanguage($languageID);
+        $languageName = $language[NAME_IDENTIFIER];
         
         include(MANAGELEVELINFOSFORM_FILE);
     }
@@ -253,6 +260,24 @@
             exit();
         }
         
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $levelInfo = new LevelInfo();
+        
         include(ADDEDITLEVELINFOFORM_FILE);
     }
     
@@ -263,6 +288,23 @@
             include(NOTAUTHORIZED_FILE);
             exit();
         }
+        if (isset($_POST[LEVELINFOID_IDENTIFIER]))
+        {
+            $levelInfoID = $_POST[LEVELINFOID_IDENTIFIER];
+        }
+        else if (isset($_GET[LEVELINFOID_IDENTIFIER]))
+        {
+            $levelInfoID = $_GET[LEVELINFOID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No level information I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $levelInfo = GetLevelInfo($levelInfoID);
         
         include(VIEWLEVELINFOFORM_FILE);
     }
@@ -275,6 +317,99 @@
             exit();
         }
         
+        if (isset($_POST[LEVELINFOID_IDENTIFIER]))
+        {
+            $levelInfoID = $_POST[LEVELINFOID_IDENTIFIER];
+        }
+        else if (isset($_GET[LEVELINFOID_IDENTIFIER]))
+        {
+            $levelInfoID = $_GET[LEVELINFOID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No level information I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $levelInfo = GetLevelInfo($levelInfoID);
+        $languageID = $levelInfo->GetLanguageId();
+        
+        include(ADDEDITLEVELINFOFORM_FILE);
+    }
+    
+    function ProcessLevelInfoAddEdit()
+    {
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $language = GetLanguage($languageID);
+        $languageName = $language[NAME_IDENTIFIER];
+        
+        $levelInfo = new LevelInfo();
+        $levelInfo->Initialize($_POST);
+        
+        $levelInfoVI = $levelInfo->Validate();
+        
+        if ($levelInfoVI->IsValid())
+        {
+            if (isset($_POST[LEVELINFOID_IDENTIFIER]))
+            {//We are doing an edit.
+                if (userIsAuthorized(LEVELINFOEDIT_ACTION))
+                {
+                    UpdateLevelInfo($levelInfo);
+                    $levelInfoID = $levelInfo->GetId();
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
+            }
+            else
+            {//We are doing an add.
+                
+                $level = $levelInfo->GetLevel();
+                
+                if (LevelInfoExists($languageID, $level))
+                {
+                    $message = 'The inforamtion for this level already exists';
+                    
+                    include(ADDEDITLEVELINFOFORM_FILE);
+                    exit();
+                }
+                
+                if (userIsAuthorized(LEVELINFOADD_ACTION))
+                {
+                    $levelInfoID = AddLevelInfo($levelInfo);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
+            }
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOVIEW_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . urlencode($levelInfoID));
+        }
+        
+        $message = 'Errors';
+        $collection = $levelInfoVI->GetErrors();
+        
         include(ADDEDITLEVELINFOFORM_FILE);
     }
     
@@ -286,7 +421,21 @@
             exit();
         }
         
-        $languageID = 0;
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
         
         if(isset($_POST["numListed"]))
         {
@@ -296,9 +445,9 @@
             {
                 if(isset($_POST["record$i"]))
                 {
-                    $level = $_POST["record$i"];
+                    $levelInfoId = $_POST["record$i"];
                     
-                    DeleteLevelInfo($languageID, $level);
+                    DeleteLevelInfo($levelInfoId);
                 }
             }
         }

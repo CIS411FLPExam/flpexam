@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 28, 2014 at 12:45 AM
+-- Generation Time: Oct 01, 2014 at 08:07 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=165 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=101 ;
 
 --
 -- Dumping data for table `answers`
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `Email` varchar(40) NOT NULL,
   `Primary` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ContactID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
 
 --
 -- Dumping data for table `functions`
@@ -183,7 +183,12 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (35, 'ContactAdd', 'Allows the user to add a contact.'),
 (36, 'ManageContacts', 'Allows the user to manage contacts.'),
 (37, 'ContactEdit', 'Allows the user to edit a contact.'),
-(38, 'ContactDelete', 'Allows the user to delete a contact.');
+(38, 'ContactDelete', 'Allows the user to delete a contact.'),
+(39, 'LevelInfoAdd', 'Allows for adding of level infos.'),
+(40, 'LevelInfoView', 'Allows for viewing level infos.'),
+(41, 'LevelInfoEdit', 'Allows for editing level infos.'),
+(42, 'LevelInfoDelete', 'Allows for deleting level infos.'),
+(43, 'ManageLevelInfos', 'Allows for viewing interface to add, edit, and delete level infos.');
 
 -- --------------------------------------------------------
 
@@ -221,29 +226,33 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `Active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `languages`
 --
 
 INSERT INTO `languages` (`LanguageID`, `Name`, `Active`) VALUES
+(4, 'Math', 1),
 (2, 'Spanish', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `levels`
+-- Table structure for table `levelinfos`
 --
 
-CREATE TABLE IF NOT EXISTS `levels` (
-  `Level` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `levelinfos` (
+  `LevelInfoID` int(11) NOT NULL AUTO_INCREMENT,
   `LanguageID` int(11) NOT NULL,
+  `Level` int(11) NOT NULL,
   `Name` varchar(32) NOT NULL,
   `Course` varchar(32) NOT NULL,
+  `Description` text NOT NULL,
   PRIMARY KEY (`Level`,`LanguageID`),
+  UNIQUE KEY `LevelInfoID` (`LevelInfoID`),
   KEY `levels_language_fk` (`LanguageID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 
@@ -260,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`),
   FULLTEXT KEY `question_ft` (`Name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `questions`
@@ -298,24 +307,9 @@ CREATE TABLE IF NOT EXISTS `rolefunctions` (
 --
 
 INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
-(3, 18),
-(3, 20),
-(3, 19),
-(3, 21),
-(3, 22),
-(3, 27),
-(3, 31),
-(3, 1),
-(3, 23),
-(3, 25),
-(3, 24),
-(3, 28),
-(3, 26),
-(3, 32),
-(3, 16),
-(3, 17),
-(3, 34),
-(3, 33),
+(1, 35),
+(1, 38),
+(1, 37),
 (1, 30),
 (1, 29),
 (1, 7),
@@ -327,8 +321,14 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 34),
 (1, 33),
 (1, 21),
+(1, 39),
+(1, 42),
+(1, 41),
+(1, 40),
+(1, 36),
 (1, 6),
 (1, 22),
+(1, 43),
 (1, 27),
 (1, 11),
 (1, 31),
@@ -349,10 +349,30 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 3),
 (1, 16),
 (1, 17),
-(1, 35),
-(1, 38),
-(1, 37),
-(1, 36);
+(3, 35),
+(3, 38),
+(3, 37),
+(3, 18),
+(3, 20),
+(3, 19),
+(3, 34),
+(3, 33),
+(3, 21),
+(3, 39),
+(3, 42),
+(3, 41),
+(3, 40),
+(3, 36),
+(3, 22),
+(3, 43),
+(3, 27),
+(3, 31),
+(3, 23),
+(3, 25),
+(3, 24),
+(3, 28),
+(3, 26),
+(3, 32);
 
 -- --------------------------------------------------------
 
@@ -442,7 +462,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
 
 --
 -- Dumping data for table `testentries`
@@ -494,8 +514,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`UserID`, `UserName`, `Password`) VALUES
 (1, 'wdgarey', '9c22f986c7a4149924fb8b016ef2958687f9f6b2'),
 (2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997'),
-(4, 'manager', '1a8565a9dc72048ba03b4156be3e569f22771f23'),
-(7, 'test', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3');
+(4, 'manager', '1a8565a9dc72048ba03b4156be3e569f22771f23');
 
 --
 -- Constraints for dumped tables
@@ -508,9 +527,9 @@ ALTER TABLE `answers`
   ADD CONSTRAINT `questionid_fk` FOREIGN KEY (`QuestionID`) REFERENCES `questions` (`QuestionID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `levels`
+-- Constraints for table `levelinfos`
 --
-ALTER TABLE `levels`
+ALTER TABLE `levelinfos`
   ADD CONSTRAINT `levels_language_fk` FOREIGN KEY (`LanguageID`) REFERENCES `languages` (`LanguageID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

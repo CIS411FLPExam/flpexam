@@ -9,9 +9,53 @@
     require_once(CONTACTCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
     
+    /**
+     * Adds a level's information to the records.
+     * @param LevelInfo $levelInfo The level information.
+     * @return int The I.D. of the newly inserted information.
+     */
     function AddLevelInfo(LevelInfo $levelInfo)
     {
-        
+        try
+        {
+            $levelKey = $levelInfo->GetLevelKey();
+            $languageIdKey = $levelInfo->GetLanguageIdKey();
+            $nameKey = $levelInfo->GetNameKey();
+            $courseKey = $levelInfo->GetCourseKey();
+            $descriptionKey = $levelInfo->GetDescriptionKey();
+            
+            $db = GetDBConnection();
+            $query = 'INSERT INTO ' . LEVELINFOS_IDENTIFIER
+                    . ' (' . $levelKey
+                    . ', ' . $languageIdKey
+                    . ', ' . $nameKey
+                    . ', ' . $courseKey
+                    . ', ' . $descriptionKey . ') VALUES'
+                    . ' (:' . $levelKey
+                    . ', :' . $languageIdKey
+                    . ', :' . $nameKey
+                    . ', :' . $courseKey
+                    . ', :' . $descriptionKey . ');';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $levelKey, $levelInfo->GetLevel());
+            $statement->bindValue(':' . $languageIdKey, $levelInfo->GetLanguageId());
+            $statement->bindValue(':' . $nameKey, $levelInfo->GetName());
+            $statement->bindValue(':' . $courseKey, $levelInfo->GetCourse());
+            $statement->bindValue(':' . $descriptionKey,$levelInfo->GetDescription());
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+            
+            $levelInfoID = $db->lastInsertId();
+            
+            return $levelInfoID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**
@@ -60,14 +104,80 @@
         }
     }
     
+    /**
+     * Updates level information.
+     * @param LevelInfo $levelInfo The level inforamtion.
+     * @return int The number of rows effected by the update.
+     */
     function UpdateLevelInfo(LevelInfo $levelInfo)
     {
-        
+        try
+        {
+            $idKey = $levelInfo->GetIdKey();
+            $levelKey = $levelInfo->GetLevelKey();
+            $languageIdKey = $levelInfo->GetLanguageIdKey();
+            $nameKey = $levelInfo->GetNameKey();
+            $classKey = $levelInfo->GetCourseKey();
+            $descriptionKey = $levelInfo->GetDescriptionKey();
+            
+            $db = GetDBConnection();
+            $query = 'UPDATE ' . LEVELINFOS_IDENTIFIER . ' SET'
+                    . ' ' . $levelKey . ' = :' . $levelKey
+                    . ', ' . $languageIdKey . ' = :' . $languageIdKey
+                    . ', ' . $nameKey . ' = :' . $nameKey
+                    . ', ' . $classKey . ' = :' . $classKey
+                    . ', ' . $descriptionKey . ' = :' . $descriptionKey . ' WHERE'
+                    . ' ' . $idKey
+                    . ' = :' . $idKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $idKey, $levelInfo->GetId());
+            $statement->bindValue(':' . $levelKey, $levelInfo->GetLevel());
+            $statement->bindValue(':' . $languageIdKey, $levelInfo->GetLanguageId());
+            $statement->bindValue(':' . $nameKey, $levelInfo->GetName());
+            $statement->bindValue(':' . $classKey, $levelInfo->GetCourse());
+            $statement->bindValue(':' . $descriptionKey,$levelInfo->GetDescription());
+            
+            $rowsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsEffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
-    function DeleteLevelInfo($levelID)
+    /**
+     * Deletes level information from the records.
+     * @param int $levelInfoId The I.D. of the level information.
+     * @return int The number of rows effected.
+     */
+    function DeleteLevelInfo($levelInfoId)
     {
-        
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'DELETE FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+                    . ' ' . LEVELINFOID_IDENTIFIER
+                    . ' = :' . LEVELINFOID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LEVELINFOID_IDENTIFIER, $levelInfoId);
+            
+            $rowsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsEffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**
