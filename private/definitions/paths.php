@@ -261,6 +261,11 @@
      */
     define("CONTACTCLASS_FILE", CODE_DIR . "contact-class.php");
     
+    /**
+     * The file path of the level info class file.
+     */
+    define("LEVELINFOCLASS_FILE", CODE_DIR . "levelinfo-class.php");
+    
 //Main paths.
 /******************************************************************************/
     

@@ -7,6 +7,12 @@ require_once(VALIDATIONINFOCLASS_FILE);
 class LevelInfo
 {
     /**
+     * The I.D. of the level information.
+     * @var int 
+     */
+    private $id;
+    
+    /**
      * The level.
      * @var int
      */
@@ -35,6 +41,24 @@ class LevelInfo
      * @var string 
      */
     private $description;
+    
+    /**
+     * Gets the I.D.
+     * @return int The I.D.
+     */
+    public function GetId()
+    {
+        return $this->id;
+    }
+    
+    /**
+     * Sets the I.D.
+     * @param int $id The I.D.
+     */
+    public function SetId($id)
+    {
+        $this->id = $id;
+    }
     
     /**
      * Gets the level.
@@ -128,14 +152,16 @@ class LevelInfo
     
     /**
      * Creates an instance of a LevelInfo.
+     * @param int $id The I.D.
      * @param int $level The level.
      * @param int $languageID The language I.D.
      * @param string $name The name.
      * @param string $class The class.
      * @param string $description The description.
      */
-    public function LevelInfo($level = 0, $languageID = 0, $name = '', $class = '', $description = '')
+    public function LevelInfo($id = 0, $level = 0, $languageID = 0, $name = '', $class = '', $description = '')
     {
+        $this->SetId($id);
         $this->SetLevel($level);
         $this->SetLanguageId($languageID);
         $this->SetName($name);
@@ -149,11 +175,19 @@ class LevelInfo
      */
     public function Initialize($row)
     {
+        $idKey = $this->GetIdKey();
         $levelKey = $this->GetLevelKey();
         $languageIdKey = $this->GetLanguageIdKey();
         $nameKey = $this->GetNameKey();
         $classKey = $this->GetClassKey();
         $descriptionKey = $this->GetDescriptionKey();
+        
+        if (isset($row[$idKey]))
+        {
+            $id = $row[$idKey];
+            
+            $this->SetId($id);
+        }
         
         if (isset($row[$levelKey]))
         {
@@ -189,6 +223,15 @@ class LevelInfo
             
             $this->SetDescription($description);
         }
+    }
+    
+    /**
+     * Gets the I.D. key index.
+     * @return string The key index.
+     */
+    public function GetIdKey()
+    {
+        return 'LevelInfoID';
     }
     
     /**

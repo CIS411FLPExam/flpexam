@@ -7,46 +7,49 @@
 
 <?php
     $userCanView = userIsAuthorized(TESTVIEW_ACTION);
+    $userCanSearch = userIsAuthorized(TESTSEARCH_ACTION);
 ?>
 
-<h3>Search</h3>
+<?php if ($userCanSearch) { ?>
+    <h3>Search</h3>
 
-<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTSEARCH_ACTION)); ?>" method="post">
-    <div class="formGroup">
-        <label class="srchSectLbl">Name:</label>
-        <input class="srchSectTxt" type="text" name="Name" value="<?php echo(htmlspecialchars($name)); ?>" />
-    </div>
-    <div class="formGroup">
-        <label class="srchSectLbl">Language:</label>
-        <select class="srchSectSelect" name="Language" class="formInput">
-            <option selected="selected"></option>
-            <?php foreach ($languageNames as $languageName) { ?>
-                <option><?php echo(htmlspecialchars($languageName)); ?></option>
-            <?php } ?>
-        </select>
-    </div>
-    <div class="formGroup">
-        <label class="srchSectLbl">Score:</label>
-        <input class="srchSectNmbr" type="number" name="MinScore" value="<?php echo(htmlspecialchars($minScore)) ?>" />
-        to
-        <input class="srchSectNmbr" type="number" name="MaxScore" value="<?php echo(htmlspecialchars($maxScore)) ?>" />
-    </div>
-    <div class="formGroup">
-        <label class="srchSectLbl">Date:</label>
-        <input class="srchSectDate" type="date" name="MinDate" value="<?php echo(htmlspecialchars($minDate)) ?>" />
-        to
-        <input class="srchSectDate" type="date" name="MaxDate" value="<?php echo(htmlspecialchars($maxDate)) ?>" />
-    </div>
+    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTSEARCH_ACTION)); ?>" method="post">
+        <div class="formGroup">
+            <label class="srchSectLbl">Name:</label>
+            <input class="srchSectTxt" type="text" name="Name" value="<?php echo(htmlspecialchars($name)); ?>" />
+        </div>
+        <div class="formGroup">
+            <label class="srchSectLbl">Language:</label>
+            <select class="srchSectSelect" name="Language" class="formInput">
+                <option selected="selected"></option>
+                <?php foreach ($languageNames as $languageName) { ?>
+                    <option><?php echo(htmlspecialchars($languageName)); ?></option>
+                <?php } ?>
+            </select>
+        </div>
+        <div class="formGroup">
+            <label class="srchSectLbl">Score:</label>
+            <input class="srchSectNmbr" type="number" name="MinScore" value="<?php echo(htmlspecialchars($minScore)) ?>" />
+            to
+            <input class="srchSectNmbr" type="number" name="MaxScore" value="<?php echo(htmlspecialchars($maxScore)) ?>" />
+        </div>
+        <div class="formGroup">
+            <label class="srchSectLbl">Date:</label>
+            <input class="srchSectDate" type="date" name="MinDate" value="<?php echo(htmlspecialchars($minDate)) ?>" />
+            to
+            <input class="srchSectDate" type="date" name="MaxDate" value="<?php echo(htmlspecialchars($maxDate)) ?>" />
+        </div>
+
+        <br />
+
+        <input type="submit" value="Search" />
+    </form>
 
     <br />
 
-    <input type="submit" value="Search" />
-</form>
-
-<br />
-
-<div class="divider"></div>
-
+    <div class="divider"></div>
+<?php } ?>
+    
 <?php if (count($testInfos)) { ?>
     <div class="datatable">
         <table id="tests" class="tablesorter">

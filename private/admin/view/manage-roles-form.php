@@ -4,7 +4,7 @@
 ?>
 <!-- Start main content here -->
 
-<h2>Manage Roles</h2>
+<h2>Roles</h2>
 
 <?php
     if (userIsAuthorized(ROLEADD_ACTION)) {

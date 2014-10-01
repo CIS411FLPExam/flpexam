@@ -7,15 +7,57 @@
     require_once(PHPEXCELCLASS_FILE);
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
     require_once(CONTACTCLASS_FILE);
+    require_once(LEVELINFOCLASS_FILE);
     
     function AddLevelInfo(LevelInfo $levelInfo)
     {
         
     }
     
-    function GetLevelInfos()
+    /**
+     * Gets the collection of level information for a language.
+     * @return \LevelInfo The collection of level information.
+     */
+    function GetLevelInfos($languageID)
     {
-        
+        try
+        {
+            $levelInfos = array();
+            $levelInfo = new LevelInfo();
+            $languagekey = $levelInfo->GetLanguageIdKey();
+            $levelKey = $levelInfo->GetLevelKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+                    . ' ' . $languagekey
+                    . ' = :' . $languagekey . ' ORDER BY'
+                    . ' ' . $levelKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $languagekey, $languageID);
+            
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach ($results as $result)
+            {
+                $levelInfo = new LevelInfo();
+                
+                $levelInfo->Initialize($result);
+                
+                $levelInfos[] = $levelInfo;
+            }
+            
+            return $levelInfos;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     function UpdateLevelInfo(LevelInfo $levelInfo)
@@ -23,7 +65,7 @@
         
     }
     
-    function DeleteLevelInfo($languageID, $level)
+    function DeleteLevelInfo($levelID)
     {
         
     }

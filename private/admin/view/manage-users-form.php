@@ -4,28 +4,33 @@
 ?>
 <!-- Start main content here -->
 
-<h2>Manage Users</h2>
+<h2>Users</h2>
 
 <?php
+    $userCanAdd = userIsAuthorized(USERADD_ACTION);
     $userCanEdit = userIsAuthorized(USEREDIT_ACTION);
     $userCanView = userIsAuthorized(USERVIEW_ACTION);
     $userCanDelete = userIsAuthorized(USERDELETE_ACTION);
+    $userCanSearch = userIsAuthorized(USERSEARCH_ACTION);
 ?>
 
-<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
-    <label>Name:</label><input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
-    <input type="submit" value="Search" />
-</form>
+<?php if ($userCanSearch) { ?>
+    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
+        <label>Name:</label><input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
+        <input type="submit" value="Search" />
+    </form>
 
-<br />
-            
-<div class="divider"></div>
+    <br />
 
-<br />
+    <div class="divider"></div>
 
-<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION)); ?>" method="post">
-    <input type="submit" value="Add User" />
-</form>
+    <br />
+<?php } ?>
+<?php if ($userCanAdd) { ?>
+    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION)); ?>" method="post">
+        <input type="submit" value="Add User" />
+    </form>
+<?php } ?>
 
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <div class="datatable">

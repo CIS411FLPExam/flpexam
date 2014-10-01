@@ -7,6 +7,7 @@
     require_once(ACTIONS_FILE);
     require_once(PHPEXCELCLASS_FILE);
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
+    require_once(LEVELINFOCLASS_FILE);
     
     //error_reporting(E_ALL ^ E_NOTICE);
     
@@ -196,14 +197,19 @@
                 ContactDeactivate();
                 break;
             case MANAGELEVELINFOS_ACTION :
+                ManageLevelInfos();
                 break;
             case LEVELINFOADD_ACTION :
+                LevelInfoAdd();
                 break;
             case LEVELINFOVIEW_ACTION :
+                LevelInfoView();
                 break;
             case LEVELINFOEDIT_ACTION :
+                LevelInfoEdit();
                 break;
             case LEVELINFODELETE_ACTION :
+                LevelInfoDelete();
                 break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
@@ -217,6 +223,24 @@
             include(NOTAUTHORIZED_FILE);
             exit();
         }
+        
+        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $levelinfos = GetLevelInfos($languageID);
         
         include(MANAGELEVELINFOSFORM_FILE);
     }

@@ -30,7 +30,12 @@
         return $db;            
     }
     
-    function GetLevelInfo($languageID, $level)
+    function GetLevelInfo($levelID)
+    {
+        
+    }
+    
+    function GetLevelInfoID($languageID, $level)
     {
         
     }

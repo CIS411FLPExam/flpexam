@@ -6,6 +6,11 @@
     define("LEVELINFOS_IDENTIFIER", "levelinfos");
 
     /**
+     * The level info I.D. indentifier.
+     */
+    define("LEVELINFOID_IDENTIFIER", "LevelInfoID");
+    
+    /**
      * The identifier for the record of contacts.
      */
     define("CONTACTS_IDENTIFIER", "contacts");
