@@ -8,13 +8,16 @@
 <div class="formGroup">
     <label>Level: <?php echo($exam->GetLevel()); ?></label>
     <div class="formSection">
-        <label>Instructions:</label><?php echo(htmlspecialchars($instructions)); ?>
+        <label>Instructions:</label>
+        <div class="displayBox"><?php echo(htmlspecialchars($instructions)); ?></div>
+        <div class="clear"></div>
     </div>
     
     <div class="divider"></div>
     
     <div class="formSection">
         <label>Question:</label>
+        <div class="clear"></div>
         <h3><?php echo(htmlspecialchars($name)); ?></h3>
     </div>
     

@@ -89,6 +89,13 @@ footer
     margin: 5px;
 }
 
+.infoDisplayBox
+{
+    width: 220px;
+    float: left;
+    display: inline-block;
+}
+
 .mainCategory
 {
     padding: 5px;
@@ -156,8 +163,16 @@ footer
 
 .formSection label
 {
+    float: left;
     font-weight: bold;
     width: 140px;
+    display: inline-block;
+}
+
+.displayBox
+{
+    width: 560px;
+    float: left;
     display: inline-block;
 }
 
@@ -170,6 +185,7 @@ footer
 {
     width: 200px;
     display: inline-block;
+    float: left;
 }
 
 #price

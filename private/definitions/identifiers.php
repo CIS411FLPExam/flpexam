@@ -1,6 +1,11 @@
 <?php
 
     /**
+     * The identifier of the question statistic records.
+     */
+    define("QUESTIONSTATISTICS_IDENTIFIER", "questionstatistics");
+
+    /**
      * The identifier of the levelinfos records.
      */
     define("LEVELINFOS_IDENTIFIER", "levelinfos");

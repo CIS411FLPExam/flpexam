@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 01, 2014 at 08:07 PM
+-- Generation Time: Oct 02, 2014 at 05:39 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -103,7 +103,14 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `Email` varchar(40) NOT NULL,
   `Primary` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ContactID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`ContactID`, `FirstName`, `LastName`, `Email`, `Primary`) VALUES
+(1, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 1);
 
 -- --------------------------------------------------------
 
@@ -226,14 +233,13 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `Active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `languages`
 --
 
 INSERT INTO `languages` (`LanguageID`, `Name`, `Active`) VALUES
-(4, 'Math', 1),
 (2, 'Spanish', 1);
 
 -- --------------------------------------------------------
@@ -252,7 +258,17 @@ CREATE TABLE IF NOT EXISTS `levelinfos` (
   PRIMARY KEY (`Level`,`LanguageID`),
   UNIQUE KEY `LevelInfoID` (`LevelInfoID`),
   KEY `levels_language_fk` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `levelinfos`
+--
+
+INSERT INTO `levelinfos` (`LevelInfoID`, `LanguageID`, `Level`, `Name`, `Course`, `Description`) VALUES
+(5, 2, 1, 'Beginners Spanish 1', 'Spanish 151', 'This level is for people who have little to no experience speaking Spanish.'),
+(6, 2, 2, 'Beginning Spanish 2', 'Spanish 152', 'This level is for people who have a some experience speaking Spanish.'),
+(7, 2, 3, 'Intermediate Spanish 1', 'Spanish 251', 'This is level is for people who have a fair amount of experience speaking Spanish.'),
+(8, 2, 4, 'Intermediate Spanish 2', 'Spanish 252', 'This level is for more advanced Spanish speakers.');
 
 -- --------------------------------------------------------
 
@@ -288,6 +304,18 @@ INSERT INTO `questions` (`QuestionID`, `Level`, `Name`, `LanguageID`, `Instructi
 (10, 4, 'Mi padre bajÃ³ de peso sin razÃ³n y siempre tiene sed. Es posible que _____ diabÃ©tico', 2, 'Read the descriptions of the symptoms and complete the sentences with the logical phrase.'),
 (11, 4, 'Mi padre bajÃ³ de peso sin razÃ³n y siempre tiene sed. Es posible que _____ diabÃ©tico', 2, 'Read the descriptions of the symptoms and complete the sentences with the logical phrase.'),
 (12, 3, 'El aÃ±o pasado, fuimos de vacaciones a MÃ©xico. Primero mi esposo y yo _____ a la agencia de viajes.', 2, 'Complete the sentence in a logical way.');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `questionstatistics`
+--
+
+CREATE TABLE IF NOT EXISTS `questionstatistics` (
+  `AnswerID` int(11) NOT NULL,
+  `Count` int(11) NOT NULL DEFAULT '0',
+  UNIQUE KEY `AnswerID` (`AnswerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -420,7 +448,26 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
 
 INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`) VALUES
 (26, 0, '2 - 3 years', '1 - 2 years', 'None'),
-(27, 0, 'None', 'None', 'None');
+(27, 0, 'None', 'None', 'None'),
+(28, 0, 'None', 'None', 'None'),
+(29, 0, 'None', 'None', 'None'),
+(30, 0, 'None', 'None', 'None'),
+(31, 0, 'None', 'None', 'None'),
+(33, 0, 'None', 'None', 'None'),
+(34, 1, '1 - 2 years', '2 - 3 years', '4+ years'),
+(35, 0, 'None', 'None', 'None'),
+(36, 0, 'None', 'None', 'None'),
+(37, 0, 'None', 'None', 'None'),
+(38, 0, 'None', 'None', 'None'),
+(39, 0, 'None', 'None', 'None'),
+(40, 0, 'None', 'None', 'None'),
+(41, 0, 'None', 'None', 'None'),
+(42, 0, 'None', 'None', 'None'),
+(43, 0, 'None', 'None', 'None'),
+(44, 0, 'None', 'None', 'None'),
+(45, 0, 'None', 'None', 'None'),
+(46, 0, 'None', 'None', 'None'),
+(47, 0, 'None', 'None', 'None');
 
 -- --------------------------------------------------------
 
@@ -446,7 +493,26 @@ CREATE TABLE IF NOT EXISTS `testees` (
 
 INSERT INTO `testees` (`TestID`, `FirstName`, `LastName`, `Email`, `Major`, `HighSchool`) VALUES
 (26, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(27, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', '');
+(27, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(28, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(29, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(30, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(31, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(33, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(34, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(35, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(36, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(37, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(38, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(39, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(40, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(41, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(42, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(43, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(44, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(45, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(46, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
+(47, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', '');
 
 -- --------------------------------------------------------
 
@@ -457,20 +523,39 @@ INSERT INTO `testees` (`TestID`, `FirstName`, `LastName`, `Email`, `Major`, `Hig
 CREATE TABLE IF NOT EXISTS `testentries` (
   `TestID` int(11) NOT NULL AUTO_INCREMENT,
   `Language` varchar(32) NOT NULL,
-  `Score` decimal(6,4) NOT NULL,
+  `Score` int(11) NOT NULL,
   `Date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `testentries`
 --
 
 INSERT INTO `testentries` (`TestID`, `Language`, `Score`, `Date`) VALUES
-(26, 'Spanish', '0.0000', '2014-09-24 14:48:10'),
-(27, 'Spanish', '3.0000', '2014-09-24 16:43:11');
+(26, 'Spanish', 0, '2014-09-24 14:48:10'),
+(27, 'Spanish', 3, '2014-09-24 16:43:11'),
+(28, 'Spanish', 2, '2014-10-01 15:41:33'),
+(29, 'Spanish', 2, '2014-10-01 15:43:03'),
+(30, 'Spanish', 2, '2014-10-01 15:44:41'),
+(31, 'Spanish', 2, '2014-10-01 15:46:24'),
+(33, 'Spanish', 2, '2014-10-01 16:59:09'),
+(34, 'Spanish', 2, '2014-10-01 17:01:27'),
+(35, 'Spanish', 2, '2014-10-01 17:02:34'),
+(36, 'Spanish', 2, '2014-10-01 17:04:19'),
+(37, 'Spanish', 2, '2014-10-01 17:06:05'),
+(38, 'Spanish', 2, '2014-10-01 17:08:43'),
+(39, 'Spanish', 2, '2014-10-01 17:10:32'),
+(40, 'Spanish', 2, '2014-10-01 17:11:29'),
+(41, 'Spanish', 2, '2014-10-01 17:18:50'),
+(42, 'Spanish', 2, '2014-10-01 17:20:37'),
+(43, 'Spanish', 2, '2014-10-01 17:21:59'),
+(44, 'Spanish', 2, '2014-10-01 17:23:34'),
+(45, 'Spanish', 2, '2014-10-01 17:24:58'),
+(46, 'Spanish', 2, '2014-10-01 17:27:20'),
+(47, 'Spanish', 2, '2014-10-01 17:28:46');
 
 -- --------------------------------------------------------
 
@@ -505,7 +590,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `UserName` varchar(32) NOT NULL,
   `Password` varchar(40) NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users`
@@ -537,6 +622,12 @@ ALTER TABLE `levelinfos`
 --
 ALTER TABLE `questions`
   ADD CONSTRAINT `question_language_fk` FOREIGN KEY (`LanguageID`) REFERENCES `languages` (`LanguageID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `questionstatistics`
+--
+ALTER TABLE `questionstatistics`
+  ADD CONSTRAINT `questionstatistic_answers_fk` FOREIGN KEY (`AnswerID`) REFERENCES `answers` (`AnswerID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `rolefunctions`

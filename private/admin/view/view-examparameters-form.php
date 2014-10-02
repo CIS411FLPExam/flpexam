@@ -7,7 +7,9 @@
     <h1>Exam Parameters</h1>
     
     <div class="formSection">
-        <label>Key Code:</label><?php echo(htmlspecialchars($keyCode)); ?>
+        <label>Key Code:</label>
+        <div class="displayBox"><?php echo(htmlspecialchars($keyCode)); ?></div>
+        <div class="clear"></div>
     </div>
     
     <div class="divider"></div>

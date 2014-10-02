@@ -16,21 +16,24 @@
         
         <div class="formSection">
             <label>Name:</label>
-            <?php echo(htmlspecialchars($levelInfo->GetName())); ?>
+            <div class="displayBox"><?php echo(htmlspecialchars($levelInfo->GetName())); ?></div>
+            <div class="clear"></div>
         </div>
         
         <div class='divider'></div>
         
         <div class="formSection">
             <label>Course Name:</label>
-            <?php echo(htmlspecialchars($levelInfo->GetCourse())); ?>
+            <div class="displayBox"><?php echo(htmlspecialchars($levelInfo->GetCourse())); ?></div>
+            <div class="clear"></div>
         </div>
         
         <div class='divider'></div>
         
         <div class="formSection">
             <label>Description:</label>
-            <?php echo(htmlspecialchars($levelInfo->GetDescription())); ?>
+            <div class="displayBox"><?php echo(htmlspecialchars($levelInfo->GetDescription())); ?></div>
+            <div class="clear"></div>
         </div>
         
         <br />

@@ -13,13 +13,15 @@
     <div class="divider"></div>
 
     <div class="formSection">
-        <label>Question:</label><?php echo(htmlspecialchars($name)); ?>
+        <label>Question:</label><div class="displayBox"><?php echo(htmlspecialchars($name)); ?></div>
+        <div class="clear"></div>
     </div>
 
     <div class="divider"></div>
 
     <div class="formSection">
-        <label>Instructions:</label><?php echo(htmlspecialchars($instructions)); ?>
+        <label>Instructions:</label><div class="displayBox"><?php echo(htmlspecialchars($instructions)); ?></div>
+        <div class="clear"></div>
     </div>
 
     <div class="divider"></div>
@@ -31,7 +33,8 @@
     ?>
         <div class="formSection">
             <label>Answer <?php echo(htmlspecialchars($i)); ?>:</label>
-            <?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?>
+            <div class="displayBox"><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></div>
+            <div class="clear"></div>
         </div>
 
         <div class="divider"></div>

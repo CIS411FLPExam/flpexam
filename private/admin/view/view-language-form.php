@@ -8,7 +8,9 @@
     <h1>Language</h1>
     <div class="formGroup">
         <div class="formSection">
-            <label>Name:</label><?php echo(htmlspecialchars($name)); ?>
+            <label>Name:</label>
+            <div class="displayBox"><?php echo(htmlspecialchars($name)); ?></div>
+            <div class="clear"></div>
         </div>
 
         <div class="divider"></div>

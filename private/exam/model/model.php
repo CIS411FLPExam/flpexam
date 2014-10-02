@@ -4,6 +4,34 @@
     require_once(MODEL_FILE);
     
     /**
+     * Records the answer for a question.
+     * @param int $answerID The I.D. of the answer that was submitted.
+     */
+    function IncrementQuestionStatisticAnswerCount($answerID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'INSERT INTO ' . QUESTIONSTATISTICS_IDENTIFIER
+                    . ' (' . ANSWERID_IDENTIFIER . ') VALUES'
+                    . ' (:' . ANSWERID_IDENTIFIER . ') ON DUPLICATE KEY UPDATE'
+                    . ' ' . 'Count' . '=' . 'Count+1;';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Gets the test results for a test.
      * @param int $testID The I.D. of the test.
      * @return mixed The array of test info, or FALSE otherwise.

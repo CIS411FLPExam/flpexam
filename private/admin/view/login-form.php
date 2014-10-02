@@ -9,10 +9,12 @@
     <div class="formGroup">
         <div class="formSection">
             <label>Username:</label><input class="formInput" type="text" name="username" autofocus required maxlength="32"/>
+            <div class="clear"></div>
         </div>
 
         <div class="formSection">
             <label>Password:</label><input class="formInput" type="password" name="password" required maxlength="40"/>
+            <div class="clear"></div>
         </div>
 
         <?php if (isset($_GET[REQUESTEDPAGE_IDENTIFIER])) { ?>

@@ -11,28 +11,32 @@
 
         <div class="formSection">
             <label>Name:</label>
-            <?php echo(htmlspecialchars($testInfo->GetFirstName() . ' ' . $testInfo->GetLastName())); ?>
+            <div class="infoDisplayBox"><?php echo(htmlspecialchars($testInfo->GetFirstName() . ' ' . $testInfo->GetLastName())); ?></div>
+            <div class="clear"></div>
         </div>
 
         <div class="divider"></div>
 
         <div class="formSection">
             <label>Email:</label>
-            <?php echo(htmlspecialchars($testInfo->GetEmail())); ?>
+            <div class="infoDisplayBox"><?php echo(htmlspecialchars($testInfo->GetEmail())); ?></div>
+            <div class="clear"></div>
         </div>
 
         <div class="divider"></div>
 
         <div class="formSection">
             <label>Major:</label>
-            <?php echo(htmlspecialchars($testInfo->GetMajor())); ?>
+            <div class="infoDisplayBox"><?php echo(htmlspecialchars($testInfo->GetMajor())); ?></div>
+            <div class="clear"></div>
         </div>
 
         <div class="divider"></div>
 
         <div class="formSection">
             <label>High School:</label>
-            <?php echo(htmlspecialchars($testInfo->GetHighSchool())); ?>
+            <div class="infoDisplayBox"><?php echo(htmlspecialchars($testInfo->GetHighSchool())); ?></div>
+            <div class="clear"></div>
         </div>
     </div>
 

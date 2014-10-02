@@ -10,6 +10,42 @@
     require_once(LEVELINFOCLASS_FILE);
     
     /**
+     * Gets the number of times an answer has been submitted.
+     * @param int $answerID The I.D. of the answer.
+     * @return mixed The count if the statistic exists, or FALSE otherwise.
+     */
+    function GetQuestionStatisticAnswerCount($answerID)
+    {
+        try
+        {
+            $count = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT `Count` FROM ' . QUESTIONSTATISTICS_IDENTIFIER . ' WHERE'
+                    . ' ' . ANSWERID_IDENTIFIER
+                    . ' = :' . ANSWERID_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
+            
+            $statement->execute();
+            
+            $result = $statement->fetch();
+            
+            if ($result != FALSE)
+            {
+                $count = $result['Count'];
+            }
+            
+            return $count;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Adds a level's information to the records.
      * @param LevelInfo $levelInfo The level information.
      * @return int The I.D. of the newly inserted information.
