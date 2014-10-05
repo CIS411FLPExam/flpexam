@@ -13,14 +13,14 @@
     <div class="divider"></div>
 
     <div class="formSection">
-        <label>Question:</label><div class="displayBox"><?php echo(htmlspecialchars($name)); ?></div>
+        <label>Instructions:</label><div class="displayBox"><?php echo(htmlspecialchars($instructions)); ?></div>
         <div class="clear"></div>
     </div>
 
     <div class="divider"></div>
 
     <div class="formSection">
-        <label>Instructions:</label><div class="displayBox"><?php echo(htmlspecialchars($instructions)); ?></div>
+        <label>Question:</label><div class="displayBox"><?php echo(htmlspecialchars($name)); ?></div>
         <div class="clear"></div>
     </div>
 
@@ -59,6 +59,11 @@
 <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION)); ?>" method="post">
     <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
     <input type="submit" value="View Language" />
+</form>
+
+<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
+    <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+    <input type="submit" value="Manage Questions" />
 </form>
 <!-- End main content here -->
 <?php

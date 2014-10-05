@@ -64,14 +64,14 @@
                         <?php if ($userCanManageQuestions) { ?>
                             <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
-                                    Manage Questions
+                                    Questions
                                 </a>
                             </td>
                         <?php } ?>
                         <?php if ($userCanManageLevelInfos) { ?>
                             <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
-                                    Manage Level Info
+                                    Level Info
                                 </a>
                             </td>
                         <?php } ?>

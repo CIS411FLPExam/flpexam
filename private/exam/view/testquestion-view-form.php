@@ -7,13 +7,17 @@
 
 <div class="formGroup">
     <label>Level: <?php echo($exam->GetLevel()); ?></label>
-    <div class="formSection">
-        <label>Instructions:</label>
-        <div class="displayBox"><?php echo(htmlspecialchars($instructions)); ?></div>
-        <div class="clear"></div>
-    </div>
     
-    <div class="divider"></div>
+    <?php if (!empty($instructions)) { ?>
+        <div class="formSection">
+            <label>Instructions:</label>
+            <div class="displayBox"><span class="crimText"><?php echo(htmlspecialchars($instructions)); ?></span></div>
+            <div class="clear"></div>
+        </div>
+    
+        <div class="divider"></div>
+    <?php } ?>
+    
     
     <div class="formSection">
         <label>Question:</label>

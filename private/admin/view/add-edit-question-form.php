@@ -26,13 +26,7 @@
         <div class="formSection">
             <label>Level<span class="redText">*</span>:</label>
             <input type="number" name="Level" value="<?php echo(htmlspecialchars($level)); ?>" autofocus required />
-        </div>
-        
-        <div class='divider'></div>
-        
-        <div class="formSection">
-            <label>Question<span class="redText">*</span>:</label>
-            <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa' rows="5" cols="70" required><?php echo(htmlspecialchars($name)); ?></textarea>
+            <div class="clear"></div>
         </div>
         
         <div class='divider'></div>
@@ -40,6 +34,15 @@
         <div class="formSection">
             <label>Instructions:</label>
             <textarea name="Instructions" class='qa' rows="5" cols="70"><?php echo(htmlspecialchars($instructions)); ?></textarea>
+            <div class="clear"></div>
+        </div>
+        
+        <div class='divider'></div>
+        
+        <div class="formSection">
+            <label>Question<span class="redText">*</span>:</label>
+            <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa' rows="5" cols="70" required><?php echo(htmlspecialchars($name)); ?></textarea>
+            <div class="clear"></div>
         </div>
         
         <div class='divider'></div>
@@ -52,7 +55,8 @@
                 { 
             ?>      
                 <div id='contnr<?php echo($i); ?>' class="formSection">
-                    <label id='lbl<?php echo($i); ?>'>Answer<span class="redText">*</span>:</label>
+                    <b>Answer:</b>
+                    <br />
                     <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>' required><?php if (isset($answer[NAME_IDENTIFIER])) { echo(htmlspecialchars($answer[NAME_IDENTIFIER])); } ?></textarea>
                     <input id='btn<?php echo($i); ?>' type='button' value='Remove Answer' onclick='RemoveItem(<?php echo($i); ?>);' />
                     <br />

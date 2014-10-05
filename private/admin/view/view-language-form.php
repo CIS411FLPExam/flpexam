@@ -17,6 +17,7 @@
 
         <div class="formSection">
             <label>Active:</label><?php if ($active) { echo('Yes'); } else { echo ('No'); } ?>
+            <div class="clear"></div>
         </div>
     </div>
     <?php if (userIsAuthorized(LANGUAGEEDIT_ACTION)) {?>
@@ -28,13 +29,13 @@
     <?php if (userIsAuthorized(MANAGEQUESTIONS_ACTION)) {?>
     <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Manage Questions" />
+            <input type="submit" value="Questions" />
         </form>
     <?php } ?>
     <?php if (userIsAuthorized(MANAGELEVELINFOS_ACTION)) {?>
         <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Manage Level Info" />
+            <input type="submit" value="Level Info" />
         </form>
     <?php } ?>
 </div>

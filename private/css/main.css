@@ -3,15 +3,15 @@ body
     background-color: #03439b;
 }
 
-a
-{
-    //color: #03439b;
-}
-
 footer
 {
     padding: 5px;
     text-align: center;
+}
+
+#questions
+{
+    width:745px;
 }
 
 #navbar
@@ -55,6 +55,8 @@ footer
 .goldText { color: #ddc873; }
 .whiteText { color: #eeeeee; }
 .floatLeft { float: left; }
+.crimText { color: crimson }
+
 
 .srchSectLbl
 {

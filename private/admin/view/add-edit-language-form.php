@@ -24,6 +24,7 @@
         <div class="formSection">
             <label>Name<span class="redText">*</span>:</label>
             <input type="text" name="Name" class="formInput" value="<?php echo(htmlspecialchars($name)); ?>" autofocus required maxlength="32" />
+            <div class="clear"></div>
         </div>
         
         <?php if (isset($languageID)) { ?>
@@ -32,6 +33,7 @@
                 <div class="formSection">
                     <label>Active:</label>
                     <input type="checkbox" name="Active" <?php if ($active) { echo('checked'); } ?> />
+                    <div class="clear"></div>
                 </div>
         <?php } ?>    
     </div>

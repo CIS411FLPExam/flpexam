@@ -739,15 +739,34 @@
         {
             $db = GetDBConnection();
 
+            /*
             $query = "SELECT * FROM " . QUESTIONS_IDENTIFIER . " WHERE"
                     . " " . LANGUAGEID_IDENTIFIER
                     . " = :" . LANGUAGEID_IDENTIFIER . " AND"
-                    . " MATCH (" . NAME_IDENTIFIER . ") AGAINST" 
+                    . " MATCH (" . NAME_IDENTIFIER . ", " . "Instructions" . ") AGAINST" 
                     . " (:" . NAME_IDENTIFIER . " IN BOOLEAN MODE);";
+            */
+            
+            
+            $query = 'SELECT ' . QUESTIONS_IDENTIFIER . '.* FROM'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' WHERE'
+                     . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :'. LANGUAGEID_IDENTIFIER . ' AND (MATCH ('
+                    . QUESTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER
+                    . ', ' . 'Instructions' . ') AGAINST'
+                    . ' (:' . NAME_IDENTIFIER . ' IN BOOLEAN MODE) OR'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . NAME_IDENTIFIER . ' LIKE'
+                    . ' :' . 'AnswerName' . ') GROUP BY'
+                    . ' '. QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ';';
+            
 
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
             $statement->bindValue(':' . NAME_IDENTIFIER, $name);
+            $statement->bindValue(':' . 'AnswerName', '%' . $name . '%');
             $statement->execute();
             
             $results = $statement->fetchAll();

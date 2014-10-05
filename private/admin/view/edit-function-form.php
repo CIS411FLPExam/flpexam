@@ -12,12 +12,14 @@
     <div class="formGroup">
         <div class="formSection">
             <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" value="<?php echo htmlspecialchars($name); ?>" autofocus required />
+            <div class="clear"></div>
         </div>
 
         <div class="divider"></div>
 
         <div class="formSection">
             <label>Description:</label><input type="text" name="Description" value="<?php echo htmlspecialchars($desc); ?>" />
+            <div class="clear"></div>
         </div>
         
         <br/>

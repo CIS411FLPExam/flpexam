@@ -15,13 +15,15 @@
 ?>
 
 <?php if ($userCanSearch) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
         <label>Name:</label><input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
         <input type="submit" value="Search" />
     </form>
-
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>" method="post">
+        <input type="submit" value="Clear" />
+    </form>
     <br />
-
+    <br />
     <div class="divider"></div>
 
     <br />

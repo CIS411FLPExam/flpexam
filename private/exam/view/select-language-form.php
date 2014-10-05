@@ -16,6 +16,7 @@
                         <option><?php echo(htmlspecialchars($languageNames[$index])); ?></option>
                     <?php } ?>
                 </select>
+                <div class="clear"></div>
             </div>
             
             <br />

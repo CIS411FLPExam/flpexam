@@ -16,6 +16,7 @@
         <div class="formSection">
             <label>Username<span class="redText">*</span>:</label>
             <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required  maxlength="32"/>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -23,6 +24,7 @@
         <div class="formSection">
             <label>Password<span class="redText">*</span>:</label>
             <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" required maxlength="40"/>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -30,6 +32,7 @@
         <div class="formSection">
             <label>Password Retype<span class="redText">*</span>:</label>
             <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" required maxlength="40" />
+            <div class="clear"></div>
         </div>
         
         <br />

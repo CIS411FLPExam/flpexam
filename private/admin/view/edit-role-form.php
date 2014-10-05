@@ -43,13 +43,15 @@
     <input type="hidden" name="RoleID" value="<?php echo htmlspecialchars($id); ?>"/>
     <div class="formGroup">
         <div class="formSection">
-            <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" autofocus required /><br/>
+            <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" autofocus required />
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
             <label>Description:</label><input type="text" name="Description" size="20" value="<?php echo htmlspecialchars($desc); ?>" />
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>

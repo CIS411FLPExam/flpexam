@@ -15,22 +15,6 @@
     $userCanImport = userIsAuthorized(LANGUAGEIMPORT_ACTION);
     $userCanSearch = userIsAuthorized(QUESTIONSEARCH_ACTION);
 ?>
-
-<?php if ($userCanSearch) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSEARCH_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-        <label>Search Questions:</label>
-        <input name="<?php echo(NAME_IDENTIFIER) ?>" type="text" class="formInput" />
-        <input type="submit" value="Search" />
-    </form>
-
-    <br />
-
-    <div class="divider"></div>
-<?php } ?>
-
-<br />
-
 <?php
     if (isset($message))
     {
@@ -39,46 +23,71 @@
 ?>
 
 <?php if ($userCanImport) { ?>
-    <form enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-        <input type="file" name="file" required/>
-        <input type="submit" value="Import Questions" />
-    </form>
+    <div class="formGroup">
+        <h4>Import Questions</h4>
 
-    <br />
+        <form enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="file" name="file" required/>
+            <input type="submit" value="Import Questions" />
+        </form>
+    </div>
 <?php } ?>
 
 <?php if ($userCanExport) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-        <input type="submit" value="Export Questions" />
-    </form>
-
-    <br />
-<?php } ?>
-
-<?php if ($userCanExport|| $userCanImport) { ?>
-<div class="divider"></div>
-
-<br />
+    <div class="divider"></div>
+    <div class="formGroup">
+        <h4>Export Questions</h4>
+        
+        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Export Questions" />
+        </form>
+    </div>
 <?php } ?>
 
 <?php if($userCanAdd) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-        <input type="submit" value="Add Question" />
-    </form>
+    <div class="divider"></div>
+    
+    <div class="formGroup">
+        <h4>Add Question</h4>
+        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Add Question" />
+        </form>
+    </div>
+<?php } ?>
 
+<?php if ($userCanSearch) { ?>
+    <div class="divider"></div>
+    
+    <div class="formGroup">
+        <h4>Find Questions</h4>
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSEARCH_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input name="<?php echo(NAME_IDENTIFIER) ?>" type="text" class="formInput" />
+            <input type="submit" value="Search Questions" />
+        </form>
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Clear" />
+        </form>
+    </div>
+    
     <br />
 <?php } ?>
 
+    
 <?php if(count($questions) > 0) { ?>
+    <div class="divider"></div>
+    <h4>Questions</h4>
     <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONDELETE_ACTION ) ); ?>" method="post">
         <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
         <div class="datatable">
             <table id="questions" class="tablesorter">
                 <thead>
                     <tr>
+                        <th><b>Level</b></th>
                         <th><b>Question</b></th>
                         <?php if ($userCanView) { ?><th></th><?php } ?>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
@@ -92,11 +101,12 @@
                         {
                             $questionID = $question[QUESTIONID_IDENTIFIER];
                             $questionName = $question[NAME_IDENTIFIER];
+                            $questionLevel = $question['Level']
                     ?>
 
                     <tr>
+                        <td><?php echo(htmlspecialchars($questionLevel)); ?></td>
                         <td><?php echo(htmlspecialchars($questionName)); ?></td>
-
                         <?php if ($userCanView) { ?>
                             <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urldecode($questionID))) ?>">

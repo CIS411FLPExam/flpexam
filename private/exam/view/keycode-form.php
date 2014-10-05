@@ -10,6 +10,7 @@
         <div class="formSection">
             <label>Enter Key Code:</label>
             <input name="KeyCode"  type="password" class="formInput" autofocus />
+            <div class="clear"></div>
         </div>
         
         <input type="submit" value="Submit" />

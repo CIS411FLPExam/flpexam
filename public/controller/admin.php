@@ -1024,12 +1024,27 @@
         {
             $languageID = $_GET[LANGUAGEID_IDENTIFIER];
         }
+        else if(isset($_GET[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
+        else if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
         else
         {
-            $message = 'No langage I.D. provided.';
+            $message = 'No question or languge I.D. provided.';
             
             include(MESSAGEFORM_FILE);
             exit();
+        }
+        
+        if(isset($questionID))
+        {
+            $language = GetQuestionLanguage($questionID);
+            $languageID = $language[LANGUAGEID_IDENTIFIER];
+            unset($questionID);
         }
         
         $lang = GetLanguage($languageID);

@@ -18,7 +18,7 @@ function AddItem()
     var collection = document.getElementById('collection');
     
     var contnr = document.createElement('div');
-    var lbl = document.createElement('label');
+    var lbl = document.createElement('b');
     var txt = document.createElement('textarea');
     var btn = document.createElement('input');
     var newLine = document.createElement('br');
@@ -27,8 +27,7 @@ function AddItem()
     
     contnr.id = 'contnr' + index;
     
-    lbl.id = 'lbl' + index;
-    lbl.innerHTML = '<b>Answer:</b> ';
+    lbl.innerHTML = 'Answer: ';
     
     txt.id = 'input' + index;
     txt.name = txt.id;
@@ -66,7 +65,6 @@ function RemoveItem(index)
     var container = document.getElementById('contnr' + index);
     var text = document.getElementById('input' + index);
     var btn = document.getElementById('btn' + index);
-    var lbl = document.getElementById('lbl' + index);
 
     collection.removeChild(container);
 
@@ -83,14 +81,12 @@ function RemoveItem(index)
         container = document.getElementById('contnr' + j);
         text = document.getElementById('input' + j);
         btn = document.getElementById('btn' + j);
-        lbl = document.getElementById('lbl' + j);
 
         container.id = "contnr" + i;
         text.id = 'input' + i;
         text.name = text.id;
         btn.id = 'btn' + i;
         btn.setAttribute('onclick','RemoveItem(' + i + ')');
-        lbl.id = 'lbl' + i;
 
         j++;
         i++;

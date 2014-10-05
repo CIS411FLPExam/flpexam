@@ -8,13 +8,15 @@
 <form action="<?php echo( GetControllerScript( ADMINCONTROLLER_FILE, PROCESSFUNCTIONADDEDIT ) ); ?>" method="post">
     <div class="formGroup">
         <div class="formSection">
-            <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" size="20" value="" autofocus required><br/> 
+            <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" size="20" value="" autofocus required />
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Description:</label><input type="text" name="Description" size="20" value=""><br/> 
+            <label>Description:</label><input type="text" name="Description" size="20" value="" />
+            <div class="clear"></div>
         </div>
         
         <br/>
