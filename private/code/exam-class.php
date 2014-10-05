@@ -12,10 +12,17 @@ class Exam
     private $started;
     
     /**
-     * The current level tha the user is on.
-     * @var float 
+     * The current level that the user is on.
+     * @var int 
      */
     private $level;
+    
+    
+    /**
+     * The previous level that the user was on.
+     * @var int
+     */
+    private $prevLevel;
     
     /**
      * The user's information profile.
@@ -67,7 +74,7 @@ class Exam
 
     /**
      * Gets the current level of the exam.
-     * @return float The level.
+     * @return int The level.
      */
     public function GetLevel()
     {
@@ -76,11 +83,29 @@ class Exam
     
     /**
      * Sets the current level of the exam.
-     * @param float $level The level.
+     * @param int $level The level.
      */
     public function SetLevel($level)
     {
         $this->level = $level;
+    }
+    
+    /**
+     * Gets the level that the user was previously on.
+     * @return int The user's previous level.
+     */
+    public function GetPrevLevel()
+    {
+        return $this->prevLevel;
+    }
+    
+    /**
+     * Sets the level that the user was previously on.
+     * @param int $prevLevel The user's previous level.
+     */
+    public function SetPrevLevel($prevLevel)
+    {
+        $this->prevLevel = $prevLevel;
     }
     
     /**
@@ -183,6 +208,7 @@ class Exam
     {
         $this->SetStarted(FALSE);
         $this->SetLevel(1);
+        $this->SetPrevLevel(1);
         $this->SetParameters($parameters);
         $this->SetLanguage($language);
         $this->SetProfile($profile);
@@ -335,6 +361,7 @@ class Exam
         $level = max(array($level, $highSchoolExpLevel));
         
         $this->SetLevel($level);
+        $this->SetPrevLevel($level);
     }
     
     /**
@@ -347,12 +374,12 @@ class Exam
         
         $this->RecordLvlQAs();
         
-        $level++;
+        $nextLevel = $level + 1;
         
-        if (LevelExists($languageID, $level))
+        if (LevelExists($languageID, $nextLevel))
         {
-            $this->SetLevel($level);
-
+            $this->SetLevel($nextLevel);
+            $this->SetPrevLevel($level);
             $this->GetNewLvlQAs();
         }
     }
@@ -363,17 +390,22 @@ class Exam
     protected function DecreaseLevel()
     {
         $level = $this->GetLevel();
+        $prevLevel = $this->GetPrevLevel();
         $languageID = $this->GetLanguage()->GetId();
         
         $this->RecordLvlQAs();
         
-        $level--;
+        $nextLevel = $level - 1;
         
-        if (LevelExists($languageID, $level))
+        if ($prevLevel != $nextLevel && LevelExists($languageID, $nextLevel))
         {
-            $this->SetLevel($level);
-        
+            $this->SetLevel($nextLevel);
+            $this->SetPrevLevel($level);
             $this->GetNewLvlQAs();
+        }
+        else
+        {
+            $this->SetLevel($prevLevel);
         }
     }
     
@@ -409,7 +441,10 @@ class Exam
         
         foreach ($lvlQAs as $lvlQA)
         {
-            $allQAs[] = $lvlQA;
+            if ($lvlQA->IsAnswerIdSet())
+            {
+                $allQAs[] = $lvlQA;
+            }
         }
         
         $this->SetAllQAs($allQAs);
@@ -445,6 +480,39 @@ class Exam
             $this->IncreaseLevel();
         }
         else if ($percentScore <= $parameters->GetDecLevelScore())
+        {
+            $this->DecreaseLevel();
+        }
+    }
+    
+    /**
+     * Tries to decrease the current level.
+     */
+    protected function TryToDecreaseLevel()
+    {
+        $lvlQAs = $this->GetLvlQAs();
+        $parameters = $this->GetParameters();
+        
+        $incorrectAnsCount = 0;
+        $questionCount = count($lvlQAs);
+        
+        foreach ($lvlQAs as $lvlQA)
+        {
+            if ($lvlQA->IsAnswerIdSet())
+            {
+                $answerID = $lvlQA->GetAnswerId();
+                $questionID = $lvlQA->GetQuestionId();
+
+                if (!IsAnswerCorrect($questionID, $answerID))
+                {
+                    $incorrectAnsCount++;
+                }
+            }
+        }
+        
+        $percentScore = $incorrectAnsCount / $questionCount;
+        
+        if (1 - $percentScore <= $parameters->GetDecLevelScore())
         {
             $this->DecreaseLevel();
         }
@@ -499,6 +567,10 @@ class Exam
         if(!$this->IsQuestionsLeft())
         {
             $this->AssessLvlAnswers();
+        }
+        else
+        {
+            $this->TryToDecreaseLevel();
         }
     }
     

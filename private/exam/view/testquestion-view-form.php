@@ -6,8 +6,6 @@
 <h1>Question</h1>
 
 <div class="formGroup">
-    <label>Level: <?php echo($exam->GetLevel()); ?></label>
-    
     <?php if (!empty($instructions)) { ?>
         <div class="formSection">
             <label>Instructions:</label>
