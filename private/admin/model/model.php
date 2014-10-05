@@ -9,6 +9,32 @@
     require_once(CONTACTCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
     
+    function ResetQuestionStatistics($questionID)
+    {
+        //UPDATE questionstatistics INNER JOIN answers ON answers.AnswerID = questionstatistics.AnswerID INNER JOIN questions ON questions.QuestionID = answers.QuestionID SET Count = 0 WHERE questions.QuestionID = 4;
+    }
+    
+    function GetAllQuestionStatistics($languageID)
+    {
+        //SELECT questions.QuestionID AS ID, (SELECT CASE WHEN Count IS NULL THEN 0 ELSE COUNT END FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID INNER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE Correct = TRUE AND questions.QuestionID = ID)/SUM(Count) AS PercentCorrect FROM questions LEFT OUTER JOIN answers ON questions.QuestionID = answers.QuestionID LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID GROUP BY questions.QuestionID;
+    }
+    
+    function GetQuestionStatistics($questionID)
+    {
+        //SELECT answers.AnswerID, answers.Name, CASE WHEN questionstatistics.Count IS NULL THEN 0 ELSE questionstatistics.Count END, answers.Correct FROM answers LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE QuestionID = 4;
+    }
+    
+    function GetQuestionStatisticsTotalCorrectAnswerCount($questionID)
+    {
+        //SELECT questions.QuestionID, CASE WHEN questionstatistics.Count IS NULL THEN 0 ELSE questionstatistics.Count END FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID INNER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE Correct = TRUE WHERE questions.QuestionID = 4;
+    }
+    
+    
+    function GetQuestionStatisticsTotalAnswerCount($questionID)
+    {
+        //SELECT questions.QuestionID, SUM(CASE WHEN Count IS NULL THEN 0 ELSE COUNT END) AS TotalAnswers FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE questions.QuestionID = 4;
+    }
+    
     /**
      * Gets the number of times an answer has been submitted.
      * @param int $answerID The I.D. of the answer.

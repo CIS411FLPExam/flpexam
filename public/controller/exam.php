@@ -306,6 +306,13 @@
         AddTestee($testEntryID, $profile);
         AddTesteeExperiences($testEntryID, $profile);
         
+        $examQAs = $exam->GetAllQAs();
+        foreach ($examQAs as $examQA)
+        {
+            $answerID = $examQA->GetAnswerId();
+            IncrementQuestionStatisticAnswerCount($answerID);
+        }
+        
         DisposeCurrentExam();
         
         StoreTestId($testEntryID);
