@@ -711,7 +711,8 @@
         {
             $db = GetDBConnection();
         
-            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' ORDER BY'
+                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
 
             $statement = $db->prepare($query);
             

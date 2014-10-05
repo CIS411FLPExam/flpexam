@@ -4,6 +4,122 @@
     require_once(MODEL_FILE);
     
     /**
+     * Indicates whether or not the given level exists.
+     * @param int $languageID The I.D. of the language.
+     * @param int $level The level of the questions.
+     * @return boolean True, if the level exists.
+     */
+    function LevelExists($languageID, $level)
+    {
+        try
+        {
+            $levelExists = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . QUESTIONID_IDENTIFIER . ' FROM'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
+                    . ' ' . 'Level'
+                    . ' = :' . 'Level' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . 'Level', $level);
+            
+            $statement->execute();
+            
+            $rows = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            if ($rows != FALSE && count($rows) > 0)
+            {
+                $levelExists = TRUE;
+            }
+            
+            return $levelExists;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the initial level of a test taker who speaks the language at home.
+     * @return int The initial level.
+     */
+    function GetSpokenAtHomeInitLevel()
+    {
+        try
+        {
+            $initLevel = 1;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT InitLevel FROM ' . SPOKEATHOMEINITLEVEL_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($row != FALSE)
+            {
+                $initLevel = (int)$row[0];
+            }
+            
+            return $initLevel;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the intial level that corresponds to the given language experiences.
+     * @param string $languageExperience The name of the experience.
+     * @return int The intitial level.
+     */
+    function GetLanguageExperienceInitLevel($languageExperience)
+    {
+        try
+        {
+            $initLevel = 1;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . 'InitLevel' . ' FROM'
+                    . ' ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
+                    . ' ' . NAME_IDENTIFIER
+                    . ' = :' . NAME_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . NAME_IDENTIFIER, $languageExperience);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($row != FALSE)
+            {
+                $initLevel = (int)$row[0];
+            }
+            
+            return $initLevel;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Records the answer for a question.
      * @param int $answerID The I.D. of the answer that was submitted.
      */

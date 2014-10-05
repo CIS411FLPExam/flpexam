@@ -70,7 +70,8 @@
                     </option>
                 <?php } ?>
             </select>
-            (The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in middle school.)
+            <div class="displayBox">(The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in middle school.)</div>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -84,7 +85,8 @@
                     </option>
                 <?php } ?>
             </select>
-            (The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in high school.)
+            <div class="displayBox">(The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in high school.)</div>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -98,7 +100,8 @@
                     </option>
                 <?php } ?>
             </select>
-            (The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in college.)
+            <div class="displayBox">(The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in college.)</div>
+            <div class="clear"></div>
         </div>
         
         <br />

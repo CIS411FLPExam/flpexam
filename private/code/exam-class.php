@@ -182,7 +182,7 @@ class Exam
     public function Exam(ExamParameters $parameters = NULL, Language $language = NULL, Profile $profile = NULL)
     {
         $this->SetStarted(FALSE);
-        $this->SetLevel(0.0);
+        $this->SetLevel(1);
         $this->SetParameters($parameters);
         $this->SetLanguage($language);
         $this->SetProfile($profile);
@@ -321,7 +321,20 @@ class Exam
      */
     public function SetInitialLevel()
     {
-        $this->SetLevel(1);
+        $level = 1;
+        $spokenAtHome = $this->GetProfile()->GetSpokenAtHome();
+        $highSchoolExp = $this->GetProfile()->GetSrHighExp();
+        
+        if ($spokenAtHome)
+        {
+            $level = GetSpokenAtHomeInitLevel();
+        }
+        
+        $highSchoolExpLevel = GetLanguageExperienceInitLevel($highSchoolExp);
+        
+        $level = max(array($level, $highSchoolExpLevel));
+        
+        $this->SetLevel($level);
     }
     
     /**
@@ -330,14 +343,18 @@ class Exam
     protected function IncreaseLevel()
     {
         $level = $this->GetLevel();
-        
-        $level++;
+        $languageID = $this->GetLanguage()->GetId();
         
         $this->RecordLvlQAs();
         
-        $this->SetLevel($level);
+        $level++;
         
-        $this->GetNewLvlQAs();
+        if (LevelExists($languageID, $level))
+        {
+            $this->SetLevel($level);
+
+            $this->GetNewLvlQAs();
+        }
     }
     
     /**
@@ -346,14 +363,18 @@ class Exam
     protected function DecreaseLevel()
     {
         $level = $this->GetLevel();
-        
-        $level--;
+        $languageID = $this->GetLanguage()->GetId();
         
         $this->RecordLvlQAs();
         
-        $this->SetLevel($level);
+        $level--;
         
-        $this->GetNewLvlQAs();
+        if (LevelExists($languageID, $level))
+        {
+            $this->SetLevel($level);
+        
+            $this->GetNewLvlQAs();
+        }
     }
     
     /**
