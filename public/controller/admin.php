@@ -1047,8 +1047,22 @@
             unset($questionID);
         }
         
+        if (isset($_POST['Level']))
+        {
+            $level = $_POST['Level'];
+        }
+        else if (isset($_GET['Level']))
+        {
+            $level = $_GET['Level'];
+        }
+        
+        if (!isset($level) || ((string)(int)$level != $level))
+        {
+            $level = 1;
+        }
+        
         $lang = GetLanguage($languageID);
-        $questions = GetQuestions($languageID);
+        $questions = GetQuestions($languageID, $level);
         
         $language = $lang[NAME_IDENTIFIER];
         

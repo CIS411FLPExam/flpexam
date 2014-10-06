@@ -9,11 +9,6 @@
     require_once(CONTACTCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
     
-    function ResetQuestionStatistics($questionID)
-    {
-        //UPDATE questionstatistics INNER JOIN answers ON answers.AnswerID = questionstatistics.AnswerID INNER JOIN questions ON questions.QuestionID = answers.QuestionID SET Count = 0 WHERE questions.QuestionID = 4;
-    }
-    
     function GetAllQuestionStatistics($languageID)
     {
         //SELECT questions.QuestionID AS ID, (SELECT CASE WHEN Count IS NULL THEN 0 ELSE COUNT END FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID INNER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE Correct = TRUE AND questions.QuestionID = ID)/SUM(Count) AS PercentCorrect FROM questions LEFT OUTER JOIN answers ON questions.QuestionID = answers.QuestionID LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID GROUP BY questions.QuestionID;
@@ -33,6 +28,107 @@
     function GetQuestionStatisticsTotalAnswerCount($questionID)
     {
         //SELECT questions.QuestionID, SUM(CASE WHEN Count IS NULL THEN 0 ELSE COUNT END) AS TotalAnswers FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE questions.QuestionID = 4;
+    }
+    
+    /**
+     * Resets the statistics for a question.
+     * @param int $questionID The I.D. of the question to reset.
+     */
+    function ResetQuestionStatistics($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            //UPDATE questionstatistics INNER JOIN answers ON answers.AnswerID = questionstatistics.AnswerID INNER JOIN questions ON questions.QuestionID = answers.QuestionID SET Count = 0 WHERE questions.QuestionID = 4;
+            $query = 'UPDATE ' . QUESTIONSTATISTICS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
+                    . ' = ' . QUESTIONSTATISTICS_IDENTIFIER  . '.' . ANSWERID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' SET'
+                    . ' ' . 'Count'
+                    . ' = ' . '0' . ' WHERE'
+                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Creates an answer statistic
+     * @param int $answerID The I.D. of the answer.
+     */
+    function InsertQuestionStatisticsAnswerCount($answerID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'INSERT INTO ' . QUESTIONSTATISTICS_IDENTIFIER
+                    . ' (' . ANSWERID_IDENTIFIER
+                    . ', ' . 'Count' . ') VALUES'
+                    . ' (:' . ANSWERID_IDENTIFIER
+                    . ', :' . 'Count' . ');';
+
+            $statement = $db->prepare($query);
+
+            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
+            $statement->bindValue(':' . 'Count', '0', PDO::PARAM_INT);
+
+            $statement->execute();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the number of times an answer has been submitted.
+     * @param int $answerID The I.D. of the answer.
+     * @return mixed The count if the statistic exists, or FALSE otherwise.
+     */
+    function GetQuestionStatisticAnswerCount($answerID)
+    {
+        try
+        {
+            $count = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT `Count` FROM ' . QUESTIONSTATISTICS_IDENTIFIER . ' WHERE'
+                    . ' ' . ANSWERID_IDENTIFIER
+                    . ' = :' . ANSWERID_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
+            
+            $statement->execute();
+            
+            $result = $statement->fetch();
+            
+            if ($result != FALSE)
+            {
+                $count = $result['Count'];
+            }
+            
+            return $count;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**
@@ -82,42 +178,6 @@
         $striped_content = strip_tags($content);
 
         return $striped_content;
-    }
-    
-    /**
-     * Gets the number of times an answer has been submitted.
-     * @param int $answerID The I.D. of the answer.
-     * @return mixed The count if the statistic exists, or FALSE otherwise.
-     */
-    function GetQuestionStatisticAnswerCount($answerID)
-    {
-        try
-        {
-            $count = FALSE;
-            $db = GetDBConnection();
-            
-            $query = 'SELECT `Count` FROM ' . QUESTIONSTATISTICS_IDENTIFIER . ' WHERE'
-                    . ' ' . ANSWERID_IDENTIFIER
-                    . ' = :' . ANSWERID_IDENTIFIER;
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
-            
-            $statement->execute();
-            
-            $result = $statement->fetch();
-            
-            if ($result != FALSE)
-            {
-                $count = $result['Count'];
-            }
-            
-            return $count;
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
     }
     
     /**
@@ -816,15 +876,6 @@
         {
             $db = GetDBConnection();
 
-            /*
-            $query = "SELECT * FROM " . QUESTIONS_IDENTIFIER . " WHERE"
-                    . " " . LANGUAGEID_IDENTIFIER
-                    . " = :" . LANGUAGEID_IDENTIFIER . " AND"
-                    . " MATCH (" . NAME_IDENTIFIER . ", " . "Instructions" . ") AGAINST" 
-                    . " (:" . NAME_IDENTIFIER . " IN BOOLEAN MODE);";
-            */
-            
-            
             $query = 'SELECT ' . QUESTIONS_IDENTIFIER . '.* FROM'
                     . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
                     . ' ' . ANSWERS_IDENTIFIER . ' ON'
@@ -1049,9 +1100,10 @@
     /**
      * Gets all the questions of a specific language.
      * @param int $languageID The I.D. of the language questions to get.
+     * @param int $level The level of the questions to get.
      * @return array The collection of questions.
      */
-    function GetQuestions($languageID)
+    function GetQuestions($languageID, $level = 0)
     {
         try
         {
@@ -1059,11 +1111,22 @@
             
             $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
                     . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ' ORDER BY'
-                    . ' ' . 'Level' . ';';
+                    . ' = :' . LANGUAGEID_IDENTIFIER;
+            
+            if ($level > 0)
+            {
+                $query .= ' AND ' . 'Level' . ' = :' . 'Level';
+            }
+            
+            $query .= ' ORDER BY' . ' ' . 'Level' . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            if ($level > 0)
+            {
+                $statement->bindValue(':' . 'Level', $level);
+            }
             
             $statement->execute();
             
@@ -1238,6 +1301,10 @@
                 
                 $statement->closeCursor();
                 
+                $answerID = $db->lastInsertId();
+                    
+                InsertQuestionStatisticsAnswerCount($answerID);
+                
                 //Now answer all of the other answers which are inccorect.
                 for($i = 1; $i < count($answers); $i++)
                 {
@@ -1259,6 +1326,10 @@
                     $statement->execute();
                     
                     $statement->closeCursor();
+                    
+                    $answerID = $db->lastInsertId();
+                    
+                    InsertQuestionStatisticsAnswerCount($answerID);
                 }
             }
         }
