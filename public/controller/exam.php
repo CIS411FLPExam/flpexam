@@ -173,11 +173,16 @@
         $initExpName = $experiences[0];
         
         $language = $exam->GetLanguage();        
+        
+        $courses = GetLanguageCourses($language->GetId());
+        
         $profile = new Profile();
         
         $profile->SetJrHighExp($initExpName);
         $profile->SetSrHighExp($initExpName);
         $profile->SetCollegeExp($initExpName);
+        
+        $profile->SetCurrentCourse($courses[0]);
         
         include(CREATEPROFILEFORM_FILE);
     }

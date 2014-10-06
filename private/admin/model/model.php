@@ -712,6 +712,7 @@
             $jrHighExpIndex = $testInfo->GetJrHighExpIndex();
             $srHighExpIndex = $testInfo->GetSrHighExpIndex();
             $collegeExpIndex = $testInfo->GetCollegeExpIndex();
+            $currentCourseIndex = $testInfo->GetCurrentCourseIndex();
             
             
             $db = GetDBConnection();
@@ -728,6 +729,7 @@
                     . ', ' . $jrHighExpIndex
                     . ', ' . $srHighExpIndex
                     . ', ' . $collegeExpIndex
+                    . ', ' . $currentCourseIndex
                     . ', ' . $dateIndex . ' FROM'
                     . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
                     . ' ' . TESTEES_IDENTIFIER . ' ON'

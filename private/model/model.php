@@ -748,6 +748,43 @@
     }
     
     /**
+     * Gets all courses on record for this language.
+     * @param type $languageID
+     * @return type
+     */
+    function GetLanguageCourses($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM courses WHERE LanguageID = :LanguageID;';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':LanguageID', $languageID);
+            
+            $statement->execute();
+            
+            $rows = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            if($rows == FALSE || count($rows) < 0)
+            {
+                $rows = array();
+            }
+            
+            array_unshift($rows, array('Name' => 'Nothing'));
+            
+            return $rows;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Gets the I.D. of a language experience.
      * @param string $experience The name.
      * @return int The I.D. of the language experience or 0 if the corresponding language experience was not found.

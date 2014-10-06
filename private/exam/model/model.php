@@ -484,6 +484,7 @@
             $jrHighExpIndex = $profile->GetJrHighExpIndex();
             $srHighExpIndex = $profile->GetSrHighExpIndex();
             $collegeExpIndex = $profile->GetCollegeExpIndex();
+            $currentCourseIndex = $profile->GetCurrentCourseIndex();
             
             $db = GetDBConnection();
             
@@ -492,11 +493,13 @@
                     . ', ' . $spokenAtHomeIndex
                     . ', ' . $jrHighExpIndex
                     . ', ' . $srHighExpIndex
+                    . ', ' . $currentCourseIndex
                     . ', ' . $collegeExpIndex . ') VALUES'
                     . ' (:' . TESTID_IDENTIFIER
                     . ', :' . $spokenAtHomeIndex
                     . ', :' . $jrHighExpIndex
                     . ', :' . $srHighExpIndex
+                    . ', :' . $currentCourseIndex
                     . ', :' . $collegeExpIndex . ');';
             
             
@@ -507,6 +510,7 @@
             $statement->bindValue(':' . $jrHighExpIndex, $profile->GetJrHighExp());
             $statement->bindValue(':' . $srHighExpIndex, $profile->GetSrHighExp());
             $statement->bindValue(':' . $collegeExpIndex, $profile->GetCollegeExp());
+            $statement->bindValue(':' . $currentCourseIndex, $profile->GetCurrentCourse());
             
             $statement->execute();
             

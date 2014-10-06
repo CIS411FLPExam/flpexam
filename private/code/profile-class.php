@@ -62,6 +62,12 @@ class Profile
     private $collegeExp;
     
     /**
+     * The name of the course that the student is currently enrolled in.
+     * @var string 
+     */
+    private $currentCourse;
+    
+    /**
      * Gets the first name.
      * @return string The first name.
      */
@@ -224,6 +230,24 @@ class Profile
     }
     
     /**
+     * Gets the name of the current course for the language.
+     * @return string The name.
+     */
+    public function GetCurrentCourse()
+    {
+        return $this->currentCourse;
+    }
+    
+    /**
+     * Sets the name of the current course for the language.
+     * @param string $currentCourse The name.
+     */
+    public function SetCurrentCourse($currentCourse)
+    {
+        $this->currentCourse = $currentCourse;
+    }
+    
+    /**
      * Creates an instance of a Profile.
      * @param string $firstName The first name.
      * @param string $lastName The last name.
@@ -234,8 +258,9 @@ class Profile
      * @param string $jrHighExp The name of the junior high experience with the language.
      * @param string $srHighExp The name of the senior high experience with the language.
      * @param string $collegeExp The name of the college experience with the language.
+     * @param string $currentCourse The name of the current course in the language.
      */
-    public function Profile($firstName = "", $lastName = "", $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE, $jrHighExp = "", $srHighExp = "", $collegeExp = "")
+    public function Profile($firstName = "", $lastName = "", $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE, $jrHighExp = "", $srHighExp = "", $collegeExp = "", $currentCourse = "")
     {
         $this->SetFirstName($firstName);
         $this->SetLastName($lastName);
@@ -246,6 +271,7 @@ class Profile
         $this->SetJrHighExp($jrHighExp);
         $this->SetSrHighExp($srHighExp);
         $this->SetCollegeExp($collegeExp);
+        $this->SetCurrentCourse($currentCourse);
     }
 
     /**
@@ -306,6 +332,12 @@ class Profile
         {
             $collegeExp = $row[$this->GetCollegeExpIndex()];
             $this->SetCollegeExp($collegeExp);
+        }
+        
+        if (isset($row[$this->GetCurrentCourseIndex()]))
+        {
+            $currentCourse = $row[$this->GetCurrentCourseIndex()];
+            $this->SetCurrentCourse($currentCourse);
         }
     }
     
@@ -379,6 +411,15 @@ class Profile
     public function GetSrHighExpIndex()
     {
         return 'SrHighExp';
+    }
+    
+    /**
+     * Gets the index identifier for the current course name.
+     * @return string The current course name index identifier.
+     */
+    public function GetCurrentCourseIndex()
+    {
+        return 'CurrentCourse';
     }
     
     /**

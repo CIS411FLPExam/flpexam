@@ -48,6 +48,12 @@ class DetailedTestInfo extends TestInfo
     private $collegeExp;
     
     /**
+     * The name of the current course.
+     * @var string
+     */
+    private $currentCourse;
+    
+    /**
      * Gets the email address.
      * @return string The email address.
      */
@@ -174,6 +180,24 @@ class DetailedTestInfo extends TestInfo
     }
     
     /**
+     * Gets the current course.
+     * @return string The name of the current course.
+     */
+    public function GetCurrentCourse()
+    {
+        return $this->currentCourse;
+    }
+    
+    /**
+     * Sets the current course.
+     * @param string $currentCourse THe name of the current course.
+     */
+    public function SetCurrentCourse($currentCourse)
+    {
+        $this->currentCourse = $currentCourse;
+    }
+    
+    /**
      * Creates an instance of DetailedTestInfo.
      * @param int $id The I.D. of the test.
      * @param string $firstName The first name of the person who took the test.
@@ -188,8 +212,9 @@ class DetailedTestInfo extends TestInfo
      * @param string $jrHighExp The name of the junior high experience with the language.
      * @param string $srHighExp The name of the senior high experience with the language.
      * @param string $collegeExp The name of the college experience with the language.
+     * @param string $currentCourse The name of the current course.
      */
-    public function DetailedTestInfo($id = 0, $firstName = '', $lastName = '', $language = '', $score = 0.0, $date = '', $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE, $jrHighExp = "", $srHighExp = "", $collegeExp = "")
+    public function DetailedTestInfo($id = 0, $firstName = '', $lastName = '', $language = '', $score = 0.0, $date = '', $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE, $jrHighExp = "", $srHighExp = "", $collegeExp = "", $currentCourse = "")
     {
         parent::TestInfo($id, $firstName, $lastName, $language, $score, $date);
         
@@ -200,6 +225,7 @@ class DetailedTestInfo extends TestInfo
         $this->SetJrHighExp($jrHighExp);
         $this->SetSrHighExp($srHighExp);
         $this->SetCollegeExp($collegeExp);
+        $this->SetCurrentCourse($currentCourse);
     }
     
     /**
@@ -250,6 +276,12 @@ class DetailedTestInfo extends TestInfo
         {
             $collegeExp = $row[$this->GetCollegeExpIndex()];
             $this->SetCollegeExp($collegeExp);
+        }
+        
+        if(isset($row[$this->GetCurrentCourseIndex()]))
+        {
+            $currentCourse = $row[$this->GetCurrentCourseIndex()];
+            $this->SetCurrentCourse($currentCourse);
         }
     }
     
@@ -314,6 +346,15 @@ class DetailedTestInfo extends TestInfo
     public function GetCollegeExpIndex()
     {
         return 'CollegeExp';
+    }
+    
+    /**
+     * Gets the index identifier for the current course name.
+     * @return string The current course name index identifier.
+     */
+    public function GetCurrentCourseIndex()
+    {
+        return 'CurrentCourse';
     }
 }
 ?>

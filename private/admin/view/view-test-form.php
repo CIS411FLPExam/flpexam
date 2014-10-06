@@ -72,6 +72,14 @@
             <label>College Exp:</label>
             <?php echo(htmlspecialchars($testInfo->GetCollegeExp())); ?>
         </div>
+        
+        <div class="divider"></div>
+
+        <div class="formSection">
+            <label>Current Course:</label>
+            <?php echo(htmlspecialchars($testInfo->GetCurrentCourse())); ?>
+        </div>
+
     </div>
 
     <div class="infoSection">

@@ -104,6 +104,21 @@
             <div class="clear"></div>
         </div>
         
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>Current Course<span class="redText">*</span>:</label>
+            <select name="<?php echo($profile->GetCurrentCourseIndex()); ?>" class="formInput">
+                <?php foreach ($courses as $course) { ?>
+                    <option <?php if ($course[NAME_IDENTIFIER] == $profile->GetCurrentCourse()) { echo('selected="selected"'); } ?>>
+                        <?php echo(htmlspecialchars($course[NAME_IDENTIFIER])); ?>
+                    </option>
+                <?php } ?>
+            </select>
+            <div class="displayBox">(The <?php echo(htmlspecialchars($language->GetName())); ?> class you are currently enrolled in.)</div>
+            <div class="clear"></div>
+        </div>
+        
         <br />
         
         <input type="submit" value="Submit" />
