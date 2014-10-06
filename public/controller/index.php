@@ -41,9 +41,32 @@
     {
         switch ($action)
         {
+            case ABOUT_ACTION :
+                ProcessAboutUs();
+                break;
+            case CONTACT_ACTION :
+                ProcessContactUs();
+                break;
             default :
-                include(HOME_FILE);
+                ProcessHome();
                 break;
         }
+    }
+    
+    function ProcessAboutUs()
+    {
+        include(ABOUT_FILE);
+    }
+    
+    function ProcessContactUs()
+    {
+        $contact = GetPrimaryContact();
+        
+        include(CONTACT_FILE);
+    }
+    
+    function ProcessHome()
+    {
+        include(HOME_FILE);
     }
 ?>

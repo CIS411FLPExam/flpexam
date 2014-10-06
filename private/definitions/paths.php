@@ -297,9 +297,20 @@
     define("MAINMODEL_FILE", MAINMODEL_DIR . "model.php");
     
     /**
+     * The file path of the about file.
+     */
+    define("ABOUT_FILE", MAINVIEW_DIR . "about-form.php");
+    
+    /**
+     * The file path of the contact file.
+     */
+    define("CONTACT_FILE", MAINVIEW_DIR . "contact-form.php");
+    
+    /**
      * The file path of the home file.
      */
-    define("HOME_FILE", MAINVIEW_DIR . "home.php");
+    define("HOME_FILE", MAINVIEW_DIR . "home-form.php");
+    
     
 //Admin paths.
 /******************************************************************************/
