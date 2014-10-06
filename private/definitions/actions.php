@@ -316,6 +316,22 @@
      */
     define("PROCESSLEVELINFOADDEDIT_ACTION", "ProcessLevelInfoAddEdit");
     
+    /**
+     * The action word to use to edit the language experiences.
+     */
+    define("LANGUAGEEXPERIENCESEDIT_ACTION", "LanguageExperiencesEdit");
+    
+    /**
+     * The action word to use to view the language experiences.
+     */
+    define("LANGUAGEEXPERIENCESVIEW_ACTION", "LanguageExperiencesView");
+    
+    /**
+     * The action word to use to process a language experiences edit.
+     */
+    define("PROCESSLANGUAGEEXPERIENCESEDIT_ACTION", "ProcessLanguageExperiencesEdit");
+    
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

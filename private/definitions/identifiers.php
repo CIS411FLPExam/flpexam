@@ -3,7 +3,7 @@
     /**
      * The identifier of the initial spoken at home level record.
      */
-    define("SPOKEATHOMEINITLEVEL_IDENTIFIER", "spokenathomeinitlevel");
+    define("SPOKENATHOMEINITLEVEL_IDENTIFIER", "spokenathomeinitlevel");
     
     /**
      * The identifier of the question statistic records.

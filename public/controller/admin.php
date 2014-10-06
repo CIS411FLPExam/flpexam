@@ -216,9 +216,115 @@
             case PROCESSLEVELINFOADDEDIT_ACTION :
                 ProcessLevelInfoAddEdit();
                 break;
+            case LANGUAGEEXPERIENCESEDIT_ACTION :
+                LanguageExperiencesEdit();
+                break;
+            case LANGUAGEEXPERIENCESVIEW_ACTION :
+                LanguageExperiencesView();
+                break;
+            case PROCESSLANGUAGEEXPERIENCESEDIT_ACTION :
+                ProcessLanguageExperiencesEdit();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function LanguageExperiencesEdit()
+    {
+        if (!userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $languageExperiences = GetLanguageExperiences();
+        $spokenAtHomeInitLevel = GetSpokenAtHomeInitLevel();
+        
+        include(EDITLANGUAGEEXPERIENCESFORM_FILE);
+    }
+    
+    function LanguageExperiencesView()
+    {
+        if (!userIsAuthorized(LANGUAGEEXPERIENCESVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $languageExperiences = GetLanguageExperiences();
+        $spokenAtHomeInitLevel = GetSpokenAtHomeInitLevel();
+        
+        include(VIEWLANGUAGEEXPERIENCESFORM_FILE);
+    }
+    
+    function ProcessLanguageExperiencesEdit()
+    {
+        if (!userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $numListed = 0;
+        $errors = array();
+        $languageExperiences = array();
+        $experience = new LanguageExperience();
+        $idKey = $experience->GetIdKey();
+        $nameKey = $experience->GetNameKey();
+        $initLevelKey = $experience->GetInitLevelKey();
+        
+        $spokenAtHomeInitLevel = 0;
+        
+        if (isset($_POST['SpokenAtHomeInitLevel']))
+        {
+            $spokenAtHomeInitLevel = $_POST['SpokenAtHomeInitLevel'];
+        }
+        
+        if ((string)(int)$spokenAtHomeInitLevel != $spokenAtHomeInitLevel)
+        {
+            $errors['SpokenAtHomeInitLevel'] = new ValidationInfo(FALSE, array('The initial level must be an integer.'));
+        }
+        else if ($spokenAtHomeInitLevel < 1)
+        {
+            $errors['SpokenAtHomeInitLevel'] = new ValidationInfo(FALSE, array('The initial level must be greater than or equal to 1.'));
+        }
+        
+        if (isset($_POST['numListed']))
+        {
+            $numListed = $_POST['numListed'];
+        }
+        
+        for ($i = 0; $i < $numListed; $i++)
+        {
+            if (isset($_POST[$idKey . $i]) && isset($_POST[$nameKey . $i]) && isset($_POST[$initLevelKey . $i]))
+            {
+                $id = $_POST[$idKey . $i];
+                $name = $_POST[$nameKey . $i];
+                $initLevel = $_POST[$initLevelKey . $i];
+                
+                $experience = new LanguageExperience($id, $name, $initLevel);
+                $experienceVI = $experience->Validate();
+                
+                $languageExperiences[] = $experience;
+                
+                if (!$experienceVI->IsValid())
+                {
+                    $errors['Experience'. $i] = $experienceVI;
+                }
+            }
+        }
+        
+        if (count($errors) < 1)
+        {
+            SetSpokenAtHomeInitLevel($spokenAtHomeInitLevel);
+            
+            SetLanguageExperiences($languageExperiences);
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION));
+        }
+        
+        include(EDITLANGUAGEEXPERIENCESFORM_FILE);
     }
     
     function ManageLevelInfos()
@@ -1265,6 +1371,10 @@
             if(!is_int($level) && (string)(int)$level != $level)
             {
                 $errors[] = 'The level must be an integer value.';
+            }
+            else if ($level < 1)
+            {
+                $errors[] = 'The level must be greater than or equal to 1.';
             }
         }
         else

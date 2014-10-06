@@ -47,40 +47,6 @@
     }
     
     /**
-     * Gets the initial level of a test taker who speaks the language at home.
-     * @return int The initial level.
-     */
-    function GetSpokenAtHomeInitLevel()
-    {
-        try
-        {
-            $initLevel = 1;
-            $db = GetDBConnection();
-            
-            $query = 'SELECT InitLevel FROM ' . SPOKEATHOMEINITLEVEL_IDENTIFIER . ';';
-            
-            $statement = $db->prepare($query);
-            
-            $statement->execute();
-            
-            $row = $statement->fetch();
-            
-            $statement->closeCursor();
-            
-            if ($row != FALSE)
-            {
-                $initLevel = (int)$row[0];
-            }
-            
-            return $initLevel;
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }
-    
-    /**
      * Gets the intial level that corresponds to the given language experiences.
      * @param string $languageExperience The name of the experience.
      * @return int The intitial level.

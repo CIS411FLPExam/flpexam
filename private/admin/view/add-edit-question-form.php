@@ -25,7 +25,7 @@
     <div class="formGroup">
         <div class="formSection">
             <label>Level<span class="redText">*</span>:</label>
-            <input type="number" name="Level" value="<?php echo(htmlspecialchars($level)); ?>" autofocus required />
+            <input type="number" name="Level" value="<?php echo(htmlspecialchars($level)); ?>" autofocus required min="1" />
             <div class="clear"></div>
         </div>
         

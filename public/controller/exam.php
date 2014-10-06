@@ -96,7 +96,9 @@
             }
         }
         
+        $contact = GetPrimaryContact();
         $message = 'Invalid key code.';
+        $collection = array('Contact ' . $contact->GetFirstName() . ' ' . $contact->GetLastName() . ' at ' . $contact->GetEmail() . ' for permissions.');
         
         include(KEYCODEFORM_FILE);
     }

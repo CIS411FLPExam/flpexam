@@ -29,9 +29,9 @@
             </div>
             <div class="formGroup">
                 <label class="srchSectLbl">Score:</label>
-                <input class="srchSectNmbr" type="number" name="MinScore" value="<?php echo(htmlspecialchars($minScore)) ?>" />
+                <input class="srchSectNmbr" type="number" name="MinScore" value="<?php echo(htmlspecialchars($minScore)) ?>" min="0" />
                 to
-                <input class="srchSectNmbr" type="number" name="MaxScore" value="<?php echo(htmlspecialchars($maxScore)) ?>" />
+                <input class="srchSectNmbr" type="number" name="MaxScore" value="<?php echo(htmlspecialchars($maxScore)) ?>" min="0"/>
             </div>
             <div class="formGroup">
                 <label class="srchSectLbl">Date:</label>

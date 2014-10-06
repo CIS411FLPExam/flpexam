@@ -5,19 +5,24 @@
         <tr>
             <?php if (userIsAuthorized(MANAGEUSERS_ACTION)) {  ?>
                 <td>
-                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION ) ) ?>">Users</a> &nbsp;
+                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION ) ) ?>">Users</a>
                 </td>
             <?php } ?>
             
             <?php if (userIsAuthorized(MANAGELANGUAGES_ACTION) ) { ?>
                 <td>
-                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)); ?>">Languages</a> &nbsp;
+                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)); ?>">Languages</a>
                 </td>
             <?php } ?>
             
             <?php if (userIsAuthorized(EXAMPARAMETERSVIEW_ACTION) ) { ?>
                 <td>
-                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)); ?>">Exam Parameters</a> &nbsp;
+                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)); ?>">Exam Params</a>
+                </td>
+            <?php } ?>
+            <?php if (userIsAuthorized(LANGUAGEEXPERIENCESVIEW_ACTION)) { ?>
+                <td>
+                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION ) ) ?>">Experiences</a>
                 </td>
             <?php } ?>
             <?php
@@ -29,21 +34,24 @@
             ?>
             <?php if (userIsAuthorized(MANAGEROLES_ACTION)) {  ?>
                 <td>
-                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION ) ) ?>">Roles</a> &nbsp;
+                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION ) ) ?>">Roles</a>
                 </td>
             <?php } ?>
             
             <?php if (userIsAuthorized(MANAGETESTS_ACTION)) {  ?>
                 <td>
-                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>">Tests</a> &nbsp;
+                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>">Tests</a>
                 </td>
             <?php } ?>
                 
             <?php if (userIsAuthorized(MANAGECONTACTS_ACTION)) {  ?>
                 <td>
-                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION ) ) ?>">Contacts</a> &nbsp;
+                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION ) ) ?>">Contacts</a>
                 </td>
             <?php } ?>
+        </tr>
+        <tr>
+            
         </tr>
     </thead>
     <tbody>

@@ -8,6 +8,112 @@
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
     require_once(CONTACTCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
+    require_once(LANGUAGEEXPERIENCECLASS_FILE);
+    
+    /**
+     * Sets the initial level that corresponds to a language spoken at home.
+     * @param int $initLevel The initial level.
+     */
+    function SetSpokenAtHomeInitLevel($initLevel)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . SPOKENATHOMEINITLEVEL_IDENTIFIER . ' SET'
+                    . ' ' . 'InitLevel'
+                    . ' = :' . 'InitLevel';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . 'InitLevel', $initLevel);
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Updates the language experiences on the records.
+     * @param array $languageExperiences The collection of language experiences.
+     */
+    function SetLanguageExperiences($languageExperiences)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $experience = New LanguageExperience();
+            $idKey = $experience->GetIdKey();
+            $nameKey = $experience->GetNameKey();
+            $initLevelKey = $experience->GetInitLevelKey();
+            
+            $query = 'UPDATE ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' SET'
+                    . ' ' . $nameKey . ' = :' . $nameKey
+                    . ', ' . $initLevelKey . ' = :' . $initLevelKey . ' WHERE'
+                    . ' ' . $idKey
+                    . ' = :' . $idKey;
+            
+            foreach ($languageExperiences as $languageExperience)
+            {
+                $statement = $db->prepare($query);
+                
+                $statement->bindValue(':' . $idKey, $languageExperience->GetId());
+                $statement->bindValue(':' . $nameKey, $languageExperience->GetName());
+                $statement->bindValue(':' . $initLevelKey, $languageExperience->GetInitLevel());
+                
+                $statement->execute();
+                
+                $statement->closeCursor();
+            }
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the collection of all language experiences on record.
+     * @return array The collection of language experiences.
+     */
+    function GetLanguageExperiences()
+    {
+        try
+        {
+            $languageExperiences = array();
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' ORDER BY'
+                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach ($results as $result)
+            {
+                $languageExperience = new LanguageExperience();
+                $languageExperience->Initialize($result);
+                
+                $languageExperiences[] = $languageExperience;
+            }
+            
+            return $languageExperiences;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
     
     function GetAllQuestionStatistics($languageID)
     {

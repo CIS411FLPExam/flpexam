@@ -266,6 +266,11 @@
      */
     define("LEVELINFOCLASS_FILE", CODE_DIR . "levelinfo-class.php");
     
+    /**
+     * The file path of the language experience class file.
+     */
+    define("LANGUAGEEXPERIENCECLASS_FILE", CODE_DIR . "languageexperience-class.php");
+    
 //Main paths.
 /******************************************************************************/
     
@@ -481,6 +486,16 @@
      * The file path of the manage level infos form file.
      */
     define("MANAGELEVELINFOSFORM_FILE", ADMINVIEW_DIR . "manage-levelinfos-form.php");
+    
+    /**
+     * The file path of the edit language experiences form file.
+     */
+    define("EDITLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "edit-languageexperiences-form.php");
+    
+    /**
+     * The file path of the view language experiences form file.
+     */
+    define("VIEWLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "view-languageexperiences-form.php");
     
 //Exam paths.
 /******************************************************************************/
