@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 05, 2014 at 09:06 PM
+-- Generation Time: Oct 07, 2014 at 06:11 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -34,69 +34,69 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=129 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=285 ;
 
 --
 -- Dumping data for table `answers`
 --
 
 INSERT INTO `answers` (`AnswerID`, `QuestionID`, `Correct`, `Name`) VALUES
-(53, 2, 1, 'La'),
-(54, 2, 0, 'Las'),
-(55, 2, 0, 'El'),
-(56, 2, 0, 'Los'),
-(57, 3, 1, 'una, la'),
-(58, 3, 0, 'un, el'),
-(59, 3, 0, 'una, el'),
-(60, 3, 0, 'un, la'),
-(65, 5, 1, 'se cepilla'),
-(66, 5, 0, 'me lavo'),
-(67, 5, 0, 'te vistes'),
-(68, 5, 0, 'nos levantamos'),
-(69, 6, 1, 'duermo'),
-(70, 6, 0, 'como'),
-(71, 6, 0, 'habla'),
-(72, 6, 0, 'escuchas'),
-(73, 7, 1, 'me levantÃ©'),
-(74, 7, 0, 'me levanto'),
-(75, 7, 0, 'te acostaste'),
-(76, 7, 0, 'te acuestas'),
-(77, 12, 1, 'visitamos'),
-(78, 12, 0, 'hablamos'),
-(79, 12, 0, 'fueron'),
-(80, 12, 0, 'dormimos'),
-(81, 8, 1, 'un piloto'),
-(82, 8, 0, 'un veterinario'),
-(83, 8, 0, 'un mÃ©dico'),
-(84, 8, 0, 'un psicÃ³logo'),
-(85, 9, 1, 'una psicÃ³loga'),
-(86, 9, 0, 'una ejecutiva'),
-(87, 9, 0, 'una veterinaria'),
-(88, 9, 0, 'una mÃ©dica'),
-(89, 10, 1, 'sea'),
-(90, 10, 0, 'seas'),
-(91, 10, 0, 'es'),
-(92, 10, 0, 'eres'),
-(97, 1, 1, 'una'),
-(98, 1, 0, 'un'),
-(99, 1, 0, 'unas'),
-(100, 1, 0, 'unos'),
-(101, 4, 1, 'interesante'),
-(102, 4, 0, 'grande'),
-(103, 4, 0, 'simpÃ¡tica'),
-(104, 4, 0, 'pequeÃ±a'),
-(109, 13, 1, 'esta'),
-(110, 13, 0, 'este'),
-(111, 13, 0, 'estos'),
-(112, 13, 0, 'estas'),
-(113, 14, 1, 'levantarme'),
-(114, 14, 0, 'acostarme'),
-(115, 14, 0, 'levantarte'),
-(116, 14, 0, 'acostarte'),
-(125, 16, 1, 'naciste'),
-(126, 16, 0, 'nacÃ­as'),
-(127, 16, 0, 'naciÃ³ '),
-(128, 16, 0, 'nacÃ­a');
+(213, 1, 1, 'una'),
+(214, 1, 0, 'un'),
+(215, 1, 0, 'unas'),
+(216, 1, 0, 'unos'),
+(217, 2, 1, 'La'),
+(218, 2, 0, 'Las'),
+(219, 2, 0, 'El'),
+(220, 2, 0, 'Los'),
+(221, 3, 1, 'una, la'),
+(222, 3, 0, 'un, el'),
+(223, 3, 0, 'una, el'),
+(224, 3, 0, 'un, la'),
+(225, 4, 1, 'interesante'),
+(226, 4, 0, 'grande'),
+(227, 4, 0, 'simpÃ¡tica\r\n\r\n'),
+(228, 4, 0, 'pequeÃ±a'),
+(233, 5, 1, 'se cepilla'),
+(234, 5, 0, 'me lavo'),
+(235, 5, 0, 'te vistes'),
+(236, 5, 0, 'nos levantamos'),
+(241, 6, 1, 'duermo'),
+(242, 6, 0, 'como'),
+(243, 6, 0, 'habla'),
+(244, 6, 0, 'escuchas'),
+(245, 13, 1, 'esta'),
+(246, 13, 0, 'este'),
+(247, 13, 0, 'estos'),
+(248, 13, 0, 'estas'),
+(249, 14, 1, 'levantarme'),
+(250, 14, 0, 'acostarme'),
+(251, 14, 0, 'levantarte'),
+(252, 14, 0, 'acostarte'),
+(257, 7, 1, 'me levantÃ©'),
+(258, 7, 0, 'te acuestas'),
+(259, 7, 0, 'me levanto'),
+(260, 7, 0, 'te acostaste'),
+(265, 16, 1, 'naciste'),
+(266, 16, 0, 'nacÃ­as'),
+(267, 16, 0, 'naciÃ³ '),
+(268, 16, 0, 'nacÃ­a'),
+(269, 12, 1, 'visitamos'),
+(270, 12, 0, 'hablamos'),
+(271, 12, 0, 'fueron'),
+(272, 12, 0, 'dormimos'),
+(273, 8, 1, 'un piloto'),
+(274, 8, 0, 'un veterinario'),
+(275, 8, 0, 'un mÃ©dico'),
+(276, 8, 0, 'un psicÃ³logo'),
+(277, 9, 1, 'una psicÃ³loga'),
+(278, 9, 0, 'una ejecutiva'),
+(279, 9, 0, 'una veterinaria'),
+(280, 9, 0, 'una mÃ©dica'),
+(281, 10, 1, 'sea'),
+(282, 10, 0, 'seas'),
+(283, 10, 0, 'es'),
+(284, 10, 0, 'eres');
 
 -- --------------------------------------------------------
 
@@ -119,6 +119,32 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 
 INSERT INTO `contacts` (`ContactID`, `FirstName`, `LastName`, `Email`, `Primary`) VALUES
 (1, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE IF NOT EXISTS `courses` (
+  `CourseID` int(11) NOT NULL AUTO_INCREMENT,
+  `LanguageID` int(11) NOT NULL,
+  `Name` varchar(32) NOT NULL,
+  PRIMARY KEY (`LanguageID`,`Name`),
+  UNIQUE KEY `CourseID` (`CourseID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`CourseID`, `LanguageID`, `Name`) VALUES
+(1, 2, 'Spanish 151'),
+(2, 2, 'Spanish 152'),
+(3, 2, 'Spanish 251'),
+(4, 2, 'Spanish 252'),
+(5, 2, 'Spanish 270'),
+(6, 2, 'Spanish 300');
 
 -- --------------------------------------------------------
 
@@ -155,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=44 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
 
 --
 -- Dumping data for table `functions`
@@ -203,7 +229,9 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (40, 'LevelInfoView', 'Allows for viewing level infos.'),
 (41, 'LevelInfoEdit', 'Allows for editing level infos.'),
 (42, 'LevelInfoDelete', 'Allows for deleting level infos.'),
-(43, 'ManageLevelInfos', 'Allows for viewing interface to add, edit, and delete level infos.');
+(43, 'ManageLevelInfos', 'Allows for viewing interface to add, edit, and delete level infos.'),
+(44, 'LanguageExperiencesEdit', 'Allows the user to edit the language experiences.'),
+(45, 'LanguageExperiencesView', 'Allows the user to view the language experiences.');
 
 -- --------------------------------------------------------
 
@@ -324,9 +352,71 @@ INSERT INTO `questions` (`QuestionID`, `Level`, `Name`, `LanguageID`, `Instructi
 
 CREATE TABLE IF NOT EXISTS `questionstatistics` (
   `AnswerID` int(11) NOT NULL,
-  `Count` int(11) NOT NULL DEFAULT '0',
+  `Count` int(11) NOT NULL DEFAULT '1',
   UNIQUE KEY `AnswerID` (`AnswerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `questionstatistics`
+--
+
+INSERT INTO `questionstatistics` (`AnswerID`, `Count`) VALUES
+(213, 0),
+(214, 0),
+(215, 0),
+(216, 0),
+(217, 0),
+(218, 0),
+(219, 0),
+(220, 0),
+(221, 0),
+(222, 0),
+(223, 0),
+(224, 0),
+(225, 0),
+(226, 0),
+(227, 0),
+(228, 0),
+(233, 0),
+(234, 0),
+(235, 0),
+(236, 0),
+(241, 0),
+(242, 0),
+(243, 0),
+(244, 0),
+(245, 0),
+(246, 0),
+(247, 0),
+(248, 0),
+(249, 0),
+(250, 0),
+(251, 0),
+(252, 0),
+(257, 0),
+(258, 0),
+(259, 0),
+(260, 0),
+(265, 0),
+(266, 0),
+(267, 0),
+(268, 0),
+(269, 0),
+(270, 0),
+(271, 0),
+(272, 0),
+(273, 0),
+(274, 0),
+(275, 0),
+(276, 0),
+(277, 0),
+(278, 0),
+(279, 0),
+(280, 0),
+(281, 0),
+(282, 0),
+(283, 0),
+(284, 0);
 
 -- --------------------------------------------------------
 
@@ -346,6 +436,30 @@ CREATE TABLE IF NOT EXISTS `rolefunctions` (
 --
 
 INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
+(3, 35),
+(3, 38),
+(3, 37),
+(3, 18),
+(3, 20),
+(3, 19),
+(3, 34),
+(3, 33),
+(3, 21),
+(3, 39),
+(3, 42),
+(3, 41),
+(3, 40),
+(3, 36),
+(3, 22),
+(3, 43),
+(3, 27),
+(3, 31),
+(3, 23),
+(3, 25),
+(3, 24),
+(3, 28),
+(3, 26),
+(3, 32),
 (1, 35),
 (1, 38),
 (1, 37),
@@ -388,30 +502,8 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 3),
 (1, 16),
 (1, 17),
-(3, 35),
-(3, 38),
-(3, 37),
-(3, 18),
-(3, 20),
-(3, 19),
-(3, 34),
-(3, 33),
-(3, 21),
-(3, 39),
-(3, 42),
-(3, 41),
-(3, 40),
-(3, 36),
-(3, 22),
-(3, 43),
-(3, 27),
-(3, 31),
-(3, 23),
-(3, 25),
-(3, 24),
-(3, 28),
-(3, 26),
-(3, 32);
+(1, 44),
+(1, 45);
 
 -- --------------------------------------------------------
 
@@ -463,6 +555,7 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
   `JrHighExp` varchar(32) NOT NULL,
   `SrHighExp` varchar(32) NOT NULL,
   `CollegeExp` varchar(32) NOT NULL,
+  `CurrentCourse` varchar(32) NOT NULL DEFAULT 'Nothing',
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `collegeexp_languageexperience_fk` (`CollegeExp`),
@@ -474,45 +567,19 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
 -- Dumping data for table `testeeexperiences`
 --
 
-INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`) VALUES
-(26, 0, '2 - 3 years', '1 - 2 years', 'None'),
-(27, 0, 'None', 'None', 'None'),
-(28, 0, 'None', 'None', 'None'),
-(29, 0, 'None', 'None', 'None'),
-(30, 0, 'None', 'None', 'None'),
-(31, 0, 'None', 'None', 'None'),
-(33, 0, 'None', 'None', 'None'),
-(34, 1, '1 - 2 years', '2 - 3 years', '4+ years'),
-(35, 0, 'None', 'None', 'None'),
-(36, 0, 'None', 'None', 'None'),
-(37, 0, 'None', 'None', 'None'),
-(38, 0, 'None', 'None', 'None'),
-(39, 0, 'None', 'None', 'None'),
-(40, 0, 'None', 'None', 'None'),
-(41, 0, 'None', 'None', 'None'),
-(42, 0, 'None', 'None', 'None'),
-(43, 0, 'None', 'None', 'None'),
-(44, 0, 'None', 'None', 'None'),
-(45, 0, 'None', 'None', 'None'),
-(46, 0, 'None', 'None', 'None'),
-(47, 0, 'None', 'None', 'None'),
-(48, 0, 'None', 'None', 'None'),
-(49, 0, 'None', 'None', 'None'),
-(50, 0, 'None', 'None', 'None'),
-(51, 0, 'None', 'None', 'None'),
-(52, 0, 'None', 'None', 'None'),
-(53, 0, 'None', 'None', 'None'),
-(54, 0, 'None', 'None', 'None'),
-(55, 0, 'None', 'None', 'None'),
-(56, 1, 'None', 'None', 'None'),
-(57, 0, 'None', 'None', 'None'),
-(58, 0, 'None', 'None', 'None'),
-(59, 0, 'None', 'None', 'None'),
-(60, 0, '1 - 2 years', '1 - 2 years', '1 - 2 years'),
-(61, 1, 'None', 'None', 'None'),
-(62, 0, '3 - 4 years', 'None', 'None'),
-(63, 0, 'None', '3 - 4 years', 'None'),
-(64, 1, 'None', 'None', 'None');
+INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`, `CurrentCourse`) VALUES
+(68, 1, 'None', 'None', 'None', ''),
+(69, 0, 'None', 'None', 'None', ''),
+(70, 1, 'None', 'None', 'None', ''),
+(71, 1, 'None', 'None', 'None', ''),
+(72, 1, 'None', 'None', 'None', ''),
+(73, 1, 'None', 'None', 'None', ''),
+(74, 1, 'None', 'None', 'None', ''),
+(75, 0, 'None', 'None', 'None', ''),
+(76, 0, 'None', 'None', 'None', ''),
+(77, 0, 'None', 'None', 'None', ''),
+(78, 0, 'None', 'None', 'None', ''),
+(79, 0, '1 - 2 years', '2 - 3 years', '3 - 4 years', 'Spanish 151');
 
 -- --------------------------------------------------------
 
@@ -537,44 +604,18 @@ CREATE TABLE IF NOT EXISTS `testees` (
 --
 
 INSERT INTO `testees` (`TestID`, `FirstName`, `LastName`, `Email`, `Major`, `HighSchool`) VALUES
-(26, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(27, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(28, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(29, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(30, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(31, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(33, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(34, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(35, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(36, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(37, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(38, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(39, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(40, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(41, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(42, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(43, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(44, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(45, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(46, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(47, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(48, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(49, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(50, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(51, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(52, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(53, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(54, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(55, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(56, 'katy', 'odonnell', 'justme@me.com', 'spanish', 'clarion'),
-(57, 'jon', 'od', 'please@gmail.com', '', ''),
-(58, 'Rebecca', 'Gardner', 'r.gardner@eagle.clarion.edu', '', ''),
-(59, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', '', ''),
-(60, 'Test', 'Test', 'Test@test.com', '', ''),
-(61, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(62, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(63, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
-(64, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana');
+(68, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(69, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(70, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(71, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(72, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(73, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(74, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(75, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(76, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(77, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Comptuer Science', 'Urbana'),
+(78, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana'),
+(79, 'Wesley', 'Garey', 'w.d.garey@eagle.clarion.edu', 'Computer Science', 'Urbana');
 
 -- --------------------------------------------------------
 
@@ -590,51 +631,25 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=65 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=80 ;
 
 --
 -- Dumping data for table `testentries`
 --
 
 INSERT INTO `testentries` (`TestID`, `Language`, `Score`, `Date`) VALUES
-(26, 'Spanish', 0, '2014-09-24 14:48:10'),
-(27, 'Spanish', 3, '2014-09-24 16:43:11'),
-(28, 'Spanish', 2, '2014-10-01 15:41:33'),
-(29, 'Spanish', 2, '2014-10-01 15:43:03'),
-(30, 'Spanish', 2, '2014-10-01 15:44:41'),
-(31, 'Spanish', 2, '2014-10-01 15:46:24'),
-(33, 'Spanish', 2, '2014-10-01 16:59:09'),
-(34, 'Spanish', 2, '2014-10-01 17:01:27'),
-(35, 'Spanish', 2, '2014-10-01 17:02:34'),
-(36, 'Spanish', 2, '2014-10-01 17:04:19'),
-(37, 'Spanish', 2, '2014-10-01 17:06:05'),
-(38, 'Spanish', 2, '2014-10-01 17:08:43'),
-(39, 'Spanish', 2, '2014-10-01 17:10:32'),
-(40, 'Spanish', 2, '2014-10-01 17:11:29'),
-(41, 'Spanish', 2, '2014-10-01 17:18:50'),
-(42, 'Spanish', 2, '2014-10-01 17:20:37'),
-(43, 'Spanish', 2, '2014-10-01 17:21:59'),
-(44, 'Spanish', 2, '2014-10-01 17:23:34'),
-(45, 'Spanish', 2, '2014-10-01 17:24:58'),
-(46, 'Spanish', 2, '2014-10-01 17:27:20'),
-(47, 'Spanish', 2, '2014-10-01 17:28:46'),
-(48, 'Spanish', 2, '2014-10-02 12:48:23'),
-(49, 'Spanish', 2, '2014-10-02 12:53:15'),
-(50, 'Spanish', 2, '2014-10-02 12:55:07'),
-(51, 'Spanish', 2, '2014-10-02 12:56:27'),
-(52, 'Spanish', 2, '2014-10-02 12:58:13'),
-(53, 'Spanish', 2, '2014-10-02 12:59:04'),
-(54, 'Spanish', 2, '2014-10-02 19:25:37'),
-(55, 'Spanish', 3, '2014-10-03 12:41:45'),
-(56, 'Spanish', 0, '2014-10-03 13:41:12'),
-(57, 'Spanish', 5, '2014-10-03 13:47:00'),
-(58, 'Spanish', 3, '2014-10-03 13:50:34'),
-(59, 'Spanish', 2, '2014-10-03 14:48:45'),
-(60, 'Spanish', 1, '2014-10-05 13:56:37'),
-(61, 'Spanish', 3, '2014-10-05 14:56:29'),
-(62, 'Spanish', 1, '2014-10-05 14:58:32'),
-(63, 'Spanish', 1, '2014-10-05 15:02:10'),
-(64, 'Spanish', 4, '2014-10-05 15:05:17');
+(68, 'Spanish', 3, '2014-10-05 15:50:54'),
+(69, 'Spanish', 1, '2014-10-05 16:43:43'),
+(70, 'Spanish', 2, '2014-10-05 16:49:52'),
+(71, 'Spanish', 4, '2014-10-05 16:52:01'),
+(72, 'Spanish', 1, '2014-10-05 16:55:33'),
+(73, 'Spanish', 2, '2014-10-05 17:08:44'),
+(74, 'Spanish', 1, '2014-10-05 17:14:02'),
+(75, 'Spanish', 4, '2014-10-05 17:42:00'),
+(76, 'Spanish', 1, '2014-10-05 17:50:07'),
+(77, 'Spanish', 1, '2014-10-05 17:52:03'),
+(78, 'Spanish', 1, '2014-10-05 17:52:41'),
+(79, 'Spanish', 2, '2014-10-06 09:31:10');
 
 -- --------------------------------------------------------
 
@@ -689,6 +704,12 @@ INSERT INTO `users` (`UserID`, `UserName`, `Password`) VALUES
 --
 ALTER TABLE `answers`
   ADD CONSTRAINT `questionid_fk` FOREIGN KEY (`QuestionID`) REFERENCES `questions` (`QuestionID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `courses`
+--
+ALTER TABLE `courses`
+  ADD CONSTRAINT `course_language_fk` FOREIGN KEY (`LanguageID`) REFERENCES `languages` (`LanguageID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `levelinfos`
