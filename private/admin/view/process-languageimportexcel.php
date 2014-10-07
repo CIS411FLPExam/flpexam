@@ -23,10 +23,6 @@
             {//If both  exists then we are doing an update.
                 $questionID = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
             }
-            else if ($column1DataType == PHPExcel_Cell_DataType::TYPE_NUMERIC || $column2DataType == PHPExcel_Cell_DataType::TYPE_NUMERIC)
-            {
-                $questionID = 0;
-            }
             else
             {
                 $errors[] = 'Row "' . $row . '" is not formated properly (missing level and/or I.D.).';
@@ -38,7 +34,7 @@
                 $instructions = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
                 $quesName = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
 
-                if($questionID != 0 && PHPExcel_Cell_DataType::dataTypeForValue($questionID) != PHPExcel_Cell_DataType::TYPE_NUMERIC)
+                if(PHPExcel_Cell_DataType::dataTypeForValue($questionID) != PHPExcel_Cell_DataType::TYPE_NUMERIC)
                 {
                     $errors[] = 'Row "' . $row . '" I.D. must be numeric.';
                 }
@@ -52,11 +48,6 @@
                     $errors[] = 'Row "' . $row . '" level must be numeric.';
                 }
 
-                if (PHPExcel_Cell_DataType::dataTypeForValue($instructions) == PHPExcel_Cell_DataType::TYPE_NULL)
-                {
-                    $errors[] = 'Row "' . $row . '" instructions cannot be empty.';
-                }
-
                 if (PHPExcel_Cell_DataType::dataTypeForValue($quesName) == PHPExcel_Cell_DataType::TYPE_NULL)
                 {
                     $errors[] = 'Row "' . $row . '" question cannot be empty.';
@@ -64,7 +55,7 @@
 
                 $answers = array();
 
-                for ($col = $column; $col < $highestColumnIndex; ++ $col)
+                for ($col = $column; $col < $highestColumnIndex; ++$col)
                 {
                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
                     $answer = $cell->getValue();

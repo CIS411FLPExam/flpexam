@@ -833,7 +833,7 @@
         {
             $file = $_FILES['file'];
             $filePath = $file ['tmp_name'];
-            $type = $file['type'];
+            $mime = $file['type'];
             $error = $file['error'];
             
             if ($error == UPLOAD_ERR_NO_FILE)
@@ -844,17 +844,35 @@
             {
                 $errors[] = 'Error uploading file to server.';
             }
-            else if($type != 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            else if($mime == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
             {
-                $errors[] = 'The file type is not of a valid Excel format.';
+                $type = 'Excel';
+            }
+            else if ($mime == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            {
+                $type = 'Word';
+            }
+            else
+            {
+                $errors[] = 'The file type is not of a valid Excel or Word format.';
             }
             
             if (count($errors) == 0)
             {
-                $objPHPExcel = OpenExcelFile($filePath);
-                
                 $questions = array();
-                include(PROCESSLANGUAGEIMPORT_FILE);
+                
+                if ($type == 'Excel')
+                {
+                    $objPHPExcel = OpenExcelFile($filePath);
+                    
+                    include(PROCESSLANGUAGEIMPORTEXCEL_FILE);
+                }
+                else
+                {
+                    $fileConents = GetWordDocContents($filePath);
+                    
+                    include(PROCESSLANGUAGEIMPORTWORD_FILE);
+                }
                 
                 if (count($errors) == 0)
                 {
@@ -1408,7 +1426,7 @@
         {
             foreach ($answers as $answer)
             {
-                if (empty($answer))
+                if (strlen($answer) < 1)
                 {
                     $errors[] = 'An answer cannot be blank.';
                     break;

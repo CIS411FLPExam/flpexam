@@ -468,9 +468,14 @@
     define("ADDEDITCONTACTFORM_FILE", ADMINVIEW_DIR . "add-edit-contact-form.php");
     
     /**
-     * The file path of the file to use to import languages.
+     * The file path of the file to use to import languages via Excel sheets.
      */
-    define("PROCESSLANGUAGEIMPORT_FILE", ADMINVIEW_DIR . "process-languageimport.php");
+    define("PROCESSLANGUAGEIMPORTEXCEL_FILE", ADMINVIEW_DIR . "process-languageimportexcel.php");
+    
+    /**
+     * The file path of the file to use to import languages via Word documents.
+     */
+    define("PROCESSLANGUAGEIMPORTWORD_FILE", ADMINVIEW_DIR . "process-languageimportword.php");
     
     /**
      * The file path of the add/edit level info form file.
