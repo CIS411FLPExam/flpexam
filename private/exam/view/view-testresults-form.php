@@ -5,7 +5,7 @@
 <h1>Test Results</h1>
 <div class="formGroup">
         <h3>Test Info</h3>
-        <h4>Thank you taking Clarion University's <?php echo(htmlspecialchars($languageName)); ?> placement test!</h4>
+        <h4>Thank you for taking Clarion University's <?php echo(htmlspecialchars($languageName)); ?> placement test!</h4>
         <?php if ($levelInfoID > 0) { ?>
             <div class="divider"></div>
             
