@@ -17,12 +17,16 @@
     </form>
 </div>
 
-<?php
-    if(isset($message))
-    {
-        include(MESSAGE_FILE);
-    }
-?>
+<?php if(isset($contact)) { ?>
+    <h3 class="redText">Invalid key code.</h3>
+    <ul>
+        <li>
+            Contact &nbsp; <b><?php echo(htmlspecialchars($contact->GetFirstName()) . ' ' . htmlspecialchars($contact->GetLastName())); ?></b>
+            &nbsp; at &nbsp; <b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b>
+            &nbsp; for permissions.
+        </li>
+    </ul>
+ <?php } ?>
 
 <!-- End main content here -->
 <?php

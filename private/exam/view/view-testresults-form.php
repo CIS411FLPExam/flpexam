@@ -37,8 +37,8 @@
         <br />
         <p>
             Contact &nbsp; <b><?php echo(htmlspecialchars($contact->GetFirstName()) . ' ' . htmlspecialchars($contact->GetLastName())); ?></b>
-             &nbsp; at &nbsp; <b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b>
-             &nbsp; for more information.
+            &nbsp; at &nbsp; <b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b>
+            &nbsp; for more information.
         </p>
     <?php } ?>
 </div>
