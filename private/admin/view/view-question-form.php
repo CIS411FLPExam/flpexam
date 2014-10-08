@@ -44,6 +44,62 @@
     ?>
 </div>
 
+<h2>Question Statistics</h2>
+
+<div class="formGroup">
+    <div class="formSection">
+        The question has been asked
+        <b>
+            <?php echo(htmlspecialchars($totalTimesAnswered)); ?>
+        </b>
+        time(s).
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="formSection">
+        The question has been answered correctly
+        <b>
+            <?php echo(htmlspecialchars($totalTimesAnsweredCorrectly)); ?>
+        </b>
+        time(s).
+    </div>
+    
+    <?php
+        $i = 1;
+        foreach ($answers as $answer)
+        { 
+            $answerID = $answer[ANSWERID_IDENTIFIER];
+    ?>
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            The answer
+            <b>"<?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?>"</b>
+            has been chosen 
+            <b>
+                <?php
+                    $found = FALSE;
+                    for ($j = 0; $j < count($answerCounts) && !$found; $j++)
+                    {
+                        $answerCount = $answerCounts[$j];
+
+                        if ($answerID == $answerCount[ANSWERID_IDENTIFIER])
+                        {
+                            $found = TRUE;
+                            echo(htmlspecialchars($answerCount['Count']));
+                        }
+                    }
+                ?>
+            </b>
+            time(s).
+        </div>
+    <?php
+            $i++;
+        } 
+    ?>
+</div>
+
 <br />
 
 <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION)); ?>" method="post">

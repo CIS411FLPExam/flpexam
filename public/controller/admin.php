@@ -1329,6 +1329,10 @@
         
         $answers = GetQuestionAnswers($questionID);
         
+        $answerCounts = GetQuestionStatisticTotalAnswerCounts($questionID);
+        $totalTimesAnswered = GetQuestionStatisticTotalTimesAnswered($questionID);
+        $totalTimesAnsweredCorrectly = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
+        
         include(VIEWQUESTIONFORM_FILE);
     }
     

@@ -126,7 +126,8 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ' FROM'
+            $query = 'SELECT ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
+                    . ', ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ' FROM'
                     . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
                     . ' ' . ANSWERS_IDENTIFIER . ' ON'
                     . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
