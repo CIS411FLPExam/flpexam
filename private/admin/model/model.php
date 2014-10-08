@@ -115,25 +115,136 @@
         }
     }
     
-    function GetAllQuestionStatistics($languageID)
+    /**
+     * Gets the total number of times each answer has been submited for a question.
+     * @param int $questionID The I.D. of the question.
+     * @return array The collection answer counts indexed by their answer I.D.
+     */
+    function GetQuestionStatisticTotalAnswerCounts($questionID)
     {
-        //SELECT questions.QuestionID AS ID, (SELECT CASE WHEN Count IS NULL THEN 0 ELSE COUNT END FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID INNER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE Correct = TRUE AND questions.QuestionID = ID)/SUM(Count) AS PercentCorrect FROM questions LEFT OUTER JOIN answers ON questions.QuestionID = answers.QuestionID LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID GROUP BY questions.QuestionID;
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ' FROM'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
+                    . ' = ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $results = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $results;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
-    function GetQuestionStatistics($questionID)
+    /**
+     * Gets the total number of times a question has been answered correctly.
+     * @param int $questionID The I.D. of the question.
+     * @return mixed The total number of a times a question has been answered correctly, or FALSE if no question was found.
+     */
+    function GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID)
     {
-        //SELECT answers.AnswerID, answers.Name, CASE WHEN questionstatistics.Count IS NULL THEN 0 ELSE questionstatistics.Count END, answers.Correct FROM answers LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE QuestionID = 4;
+        try
+        {
+            $totalTimesAnsweredCorrectly = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ' FROM'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
+                    . ' = ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ' AND'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . 'Correct'
+                    . ' = ' . 'TRUE' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $result = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($result != FALSE)
+            {
+                $totalTimesAnsweredCorrectly = $result['Count'];
+            }
+            
+            return $totalTimesAnsweredCorrectly;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
-    function GetQuestionStatisticsTotalCorrectAnswerCount($questionID)
+    /**
+     * Gets the total number of times a question has been answered.
+     * @param int $questionID The I.D. of the question.
+     * @return mixed The total number of times the question has been answered, or FALSE when the question was not found.
+     */
+    function GetQuestionStatisticTotalTimesAnswered($questionID)
     {
-        //SELECT questions.QuestionID, CASE WHEN questionstatistics.Count IS NULL THEN 0 ELSE questionstatistics.Count END FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID INNER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE Correct = TRUE WHERE questions.QuestionID = 4;
-    }
-    
-    
-    function GetQuestionStatisticsTotalAnswerCount($questionID)
-    {
-        //SELECT questions.QuestionID, SUM(CASE WHEN Count IS NULL THEN 0 ELSE COUNT END) AS TotalAnswers FROM questions INNER JOIN answers ON questions.QuestionID = answers.QuestionID LEFT OUTER JOIN questionstatistics ON questionstatistics.AnswerID = answers.AnswerID WHERE questions.QuestionID = 4;
+        try
+        {
+            $totalTimesAnswered = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT SUM(' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ') AS'
+                    . ' ' . 'TotalAnswers' . ' FROM'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
+                    . ' = ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $result = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($result != FALSE)
+            {
+                $totalTimesAnswered = $result['TotalAnswers'];
+            }
+            
+            return $totalTimesAnswered;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
     }
     
     /**
@@ -176,7 +287,7 @@
      * Creates an answer statistic
      * @param int $answerID The I.D. of the answer.
      */
-    function InsertQuestionStatisticsAnswerCount($answerID)
+    function InsertQuestionStatisticsAnswer($answerID)
     {
         try
         {
@@ -194,42 +305,8 @@
             $statement->bindValue(':' . 'Count', '0', PDO::PARAM_INT);
 
             $statement->execute();
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }
-    
-    /**
-     * Gets the number of times an answer has been submitted.
-     * @param int $answerID The I.D. of the answer.
-     * @return mixed The count if the statistic exists, or FALSE otherwise.
-     */
-    function GetQuestionStatisticAnswerCount($answerID)
-    {
-        try
-        {
-            $count = FALSE;
-            $db = GetDBConnection();
             
-            $query = 'SELECT `Count` FROM ' . QUESTIONSTATISTICS_IDENTIFIER . ' WHERE'
-                    . ' ' . ANSWERID_IDENTIFIER
-                    . ' = :' . ANSWERID_IDENTIFIER;
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
-            
-            $statement->execute();
-            
-            $result = $statement->fetch();
-            
-            if ($result != FALSE)
-            {
-                $count = $result['Count'];
-            }
-            
-            return $count;
+            $statement->closeCursor();
         }
         catch (PDOException $ex)
         {
@@ -1409,7 +1486,7 @@
                 
                 $answerID = $db->lastInsertId();
                     
-                InsertQuestionStatisticsAnswerCount($answerID);
+                InsertQuestionStatisticsAnswer($answerID);
                 
                 //Now answer all of the other answers which are inccorect.
                 for($i = 1; $i < count($answers); $i++)
@@ -1435,7 +1512,7 @@
                     
                     $answerID = $db->lastInsertId();
                     
-                    InsertQuestionStatisticsAnswerCount($answerID);
+                    InsertQuestionStatisticsAnswer($answerID);
                 }
             }
         }

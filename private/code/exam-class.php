@@ -483,6 +483,10 @@ class Exam
         {
             $this->DecreaseLevel();
         }
+        else
+        {
+            $this->RecordLvlQAs();
+        }
     }
     
     /**

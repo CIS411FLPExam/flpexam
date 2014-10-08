@@ -94,6 +94,7 @@
                     <tr>
                         <th><b>Level</b></th>
                         <th><b>Question</b></th>
+                        <th><b>Correctly&nbsp;Answered</b></th>
                         <?php if ($userCanView) { ?><th></th><?php } ?>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanDelete) { ?><th></th><?php } ?>
@@ -106,12 +107,14 @@
                         {
                             $questionID = $question[QUESTIONID_IDENTIFIER];
                             $questionName = $question[NAME_IDENTIFIER];
-                            $questionLevel = $question['Level']
+                            $questionLevel = $question['Level'];
+                            $correctlyAnsweredPercent = $question['CorrectlyAnsweredPercent'];
                     ?>
 
                     <tr>
                         <td><?php echo(htmlspecialchars($questionLevel)); ?></td>
                         <td><?php echo(htmlspecialchars($questionName)); ?></td>
+                        <td class="centerText"><?php echo(htmlspecialchars($correctlyAnsweredPercent)); ?>% of the time</td>
                         <?php if ($userCanView) { ?>
                             <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urldecode($questionID))) ?>">
