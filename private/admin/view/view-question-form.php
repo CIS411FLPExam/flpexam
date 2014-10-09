@@ -119,6 +119,7 @@
 
 <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
     <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+    <input type="hidden" name="Level" value="<?php echo(htmlspecialchars($level)); ?>" />
     <input type="submit" value="Manage Questions" />
 </form>
 <!-- End main content here -->

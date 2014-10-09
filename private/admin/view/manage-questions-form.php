@@ -22,42 +22,29 @@
     }
 ?>
 
-<?php if ($userCanImport) { ?>
-    <div class="formGroup">
-        <h4>Import Questions</h4>
-
-        <form enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="file" name="file" required/>
-            <input type="submit" value="Import Questions" />
-        </form>
-    </div>
-<?php } ?>
-
-<?php if ($userCanExport) { ?>
-    <div class="divider"></div>
-    <div class="formGroup">
-        <h4>Export Questions</h4>
-        
-        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Export Questions" />
-        </form>
-    </div>
-<?php } ?>
-
-<?php if($userCanAdd) { ?>
-    <div class="divider"></div>
-    
-    <div class="formGroup">
-        <h4>Add Question</h4>
-        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
+<div class="formGroup">
+    <?php if($userCanAdd) { ?>
+        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input type="submit" value="Add Question" />
         </form>
-    </div>
-<?php } ?>
-
+    <?php } ?>
+    <?php if ($userCanExport) { ?>
+        <div class="inlineBlock width20"> </div>
+        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Export Questions" />
+        </form>
+    <?php } ?>
+    <?php if ($userCanImport) { ?>
+        <div class="inlineBlock width20"> </div>
+        <form class="inlineBlock" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Import Questions" />
+            <input type="file" name="file" required/>
+        </form>
+    <?php } ?>
+</div>
 <?php if ($userCanSearch) { ?>
     <div class="divider"></div>
     
@@ -73,8 +60,6 @@
             <input type="submit" value="Clear" />
         </form>
     </div>
-    
-    <br />
 <?php } ?>
 
     

@@ -40,7 +40,13 @@ footer
     float: left;
 }
 
+.width20
+{
+    width: 20px;
+}
+
 .inline { display: inline; }
+.inlineBlock { display: inline-block; }
 .testBackground { background-color: #004400; }
 .stdHeight { height: 460px; }
 .categoryHeight { height: 220px; }

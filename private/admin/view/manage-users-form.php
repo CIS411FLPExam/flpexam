@@ -13,8 +13,15 @@
     $userCanDelete = userIsAuthorized(USERDELETE_ACTION);
     $userCanSearch = userIsAuthorized(USERSEARCH_ACTION);
 ?>
+<?php if ($userCanAdd) { ?>
+    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION)); ?>" method="post">
+        <input type="submit" value="Add User" />
+    </form>
 
-<?php if ($userCanSearch) { ?>
+    <br />
+<?php } ?>
+
+<?php if (FALSE) { ?>
     <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
         <label>Name:</label><input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
         <input type="submit" value="Search" />
@@ -28,11 +35,7 @@
 
     <br />
 <?php } ?>
-<?php if ($userCanAdd) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION)); ?>" method="post">
-        <input type="submit" value="Add User" />
-    </form>
-<?php } ?>
+
 
 <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <div class="datatable">

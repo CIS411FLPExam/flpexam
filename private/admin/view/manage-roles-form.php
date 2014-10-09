@@ -6,11 +6,13 @@
 
 <h2>Roles</h2>
 
-<?php
-    if (userIsAuthorized(ROLEADD_ACTION)) {
-        echo "<a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,ROLEADD_ACTION) . "\">Add Role</a><p/>";
-    }
-?>
+<?php if (userIsAuthorized(ROLEADD_ACTION)) { ?>
+    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, ROLEADD_ACTION)); ?>" method="post">
+        <input type="submit" value="Add Role" />
+    </form>
+    
+    <br />
+<?php } ?>
 <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,ROLEDELETE_ACTION)) ?>" method="post">
     <div class="datatable">
         <table id="roles" class="tablesorter">
