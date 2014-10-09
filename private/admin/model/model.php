@@ -1066,19 +1066,19 @@
                     . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
                     . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' WHERE'
                      . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :'. LANGUAGEID_IDENTIFIER . ' AND (MATCH ('
-                    . QUESTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER
-                    . ', ' . 'Instructions' . ') AGAINST'
-                    . ' (:' . NAME_IDENTIFIER . ' IN BOOLEAN MODE) OR'
+                    . ' = :'. LANGUAGEID_IDENTIFIER . ' AND ('
+                    . QUESTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER . ' LIKE'
+                    . ' :' . NAME_IDENTIFIER . ' OR' 
+                    . ' ' . 'Instructions' . ' LIKE'
+                    . ' :' . NAME_IDENTIFIER . ' OR'
                     . ' ' . ANSWERS_IDENTIFIER . '.' . NAME_IDENTIFIER . ' LIKE'
-                    . ' :' . 'AnswerName' . ') GROUP BY'
+                    . ' :' . NAME_IDENTIFIER . ') GROUP BY'
                     . ' '. QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ';';
             
 
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
-            $statement->bindValue(':' . NAME_IDENTIFIER, $name);
-            $statement->bindValue(':' . 'AnswerName', '%' . $name . '%');
+            $statement->bindValue(':' . NAME_IDENTIFIER, '%' . $name . '%');
             $statement->execute();
             
             $results = $statement->fetchAll();
@@ -1565,12 +1565,11 @@
             $db = GetDBConnection();
 
             $query = "SELECT * FROM " . USERS_IDENTIFIER . " WHERE"
-                    . " MATCH (" . FIRSTNAME_IDENTIFIER 
-                    . ", " . LASTNAME_IDENTIFIER. ") AGAINST" 
-                    . " (:" . NAME_IDENTIFIER . " IN BOOLEAN MODE);";
+                    . " " . "UserName" . " LIKE"
+                    . " :" . "UserName";
 
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . NAME_IDENTIFIER, $name);
+            $statement->bindValue(':' . 'UserName', $name);
             $statement->execute();
             $results = $statement->fetchAll();
             $statement->closeCursor();
@@ -2294,7 +2293,35 @@
                     
             if(!empty($name))
             {
-                $whereClause = ' WHERE MATCH(' . $firstNameIndex . ', ' . $lastNameIndex . ') AGAINST(:Name IN BOOLEAN MODE)';
+                $whereClause = '';
+                $namePieces = explode(' ', $name);
+                
+                if (count($namePieces) > 0)
+                {
+                    
+                    $whereClause = ' WHERE (' . $firstNameIndex . ' LIKE'
+                                    . ' :' . NAME_IDENTIFIER . '0' . ' OR'
+                                    . ' ' . $lastNameIndex . ' LIKE'
+                                    . ' :' . NAME_IDENTIFIER . '0';
+                }
+                
+                for ($i = 1; $i < count($namePieces); $i++)
+                {
+                    $namePiece = $namePieces[$i];
+                    
+                    if (!empty($namePiece))
+                    {
+                        $whereClause .= ' OR ' . $firstNameIndex . ' LIKE'
+                                    . ' :' . NAME_IDENTIFIER . $i . ' OR'
+                                    . ' ' . $lastNameIndex . ' LIKE'
+                                    . ' :' . NAME_IDENTIFIER . $i;
+                    }
+                }
+                
+                if (!empty($whereClause))
+                {
+                    $whereClause .= ')';
+                }
             }
             
             if(!empty($language))
@@ -2348,7 +2375,15 @@
             
             if(!empty($name))
             {
-                $statement->bindValue(':' . 'Name', $name);
+                for ($i = 0; $i < count($namePieces); $i++)
+                {
+                    $namePiece = $namePieces[$i];
+                    
+                    if (!empty($namePiece))
+                    {
+                        $statement->bindValue(':' . NAME_IDENTIFIER . $i, '%' . $namePiece . '%');
+                    }
+                }
             }
             
             if(!empty($language))
