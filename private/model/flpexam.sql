@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2014 at 11:35 PM
+-- Generation Time: Oct 09, 2014 at 06:23 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=285 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=305 ;
 
 -- --------------------------------------------------------
 
@@ -258,8 +258,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `LanguageID` int(11) NOT NULL,
   `Instructions` text NOT NULL,
   PRIMARY KEY (`QuestionID`),
-  KEY `question_language_fk` (`LanguageID`),
-  FULLTEXT KEY `question_instructions_ft` (`Name`,`Instructions`)
+  KEY `question_language_fk` (`LanguageID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
@@ -327,6 +326,8 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 18),
 (1, 20),
 (1, 19),
+(1, 44),
+(1, 45),
 (1, 34),
 (1, 33),
 (1, 21),
@@ -357,9 +358,7 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 4),
 (1, 3),
 (1, 16),
-(1, 17),
-(1, 44),
-(1, 45);
+(1, 17);
 
 -- --------------------------------------------------------
 
@@ -433,8 +432,7 @@ CREATE TABLE IF NOT EXISTS `testees` (
   `Major` varchar(32) NOT NULL DEFAULT 'Not Listed',
   `HighSchool` varchar(32) NOT NULL DEFAULT 'Not Listed',
   PRIMARY KEY (`TestID`),
-  UNIQUE KEY `TestID` (`TestID`),
-  FULLTEXT KEY `name_ft` (`FirstName`,`LastName`)
+  UNIQUE KEY `TestID` (`TestID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -447,11 +445,11 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   `TestID` int(11) NOT NULL AUTO_INCREMENT,
   `Language` varchar(32) NOT NULL,
   `Score` int(11) NOT NULL,
-  `Date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Date` datetime NOT NULL,
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=86 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=89 ;
 
 -- --------------------------------------------------------
 
