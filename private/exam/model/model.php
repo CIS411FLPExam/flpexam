@@ -365,8 +365,10 @@
             
             $query = 'INSERT INTO ' . TESTENTIRES_IDENTIFIER
                     . ' (' . 'Language'
+                    . ', ' . '`Date`'
                     . ', ' . 'Score' . ') VALUES'
                     . ' (:' . 'Language'
+                    . ' , ' . 'NOW()'
                     . ', :' . 'Score' . ');';
             
             $statement = $db->prepare($query);
