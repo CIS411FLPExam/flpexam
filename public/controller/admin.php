@@ -1967,6 +1967,10 @@
                     $errors[] = 'The password and retyped password do not match.';
                 }
             }
+            else
+            {
+                $password = '';
+            }
 
             if(count($errors) > 0)
             {

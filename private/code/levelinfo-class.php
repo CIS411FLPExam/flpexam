@@ -159,7 +159,7 @@ class LevelInfo
      * @param string $class The class.
      * @param string $description The description.
      */
-    public function LevelInfo($id = 0, $level = 0, $languageID = 0, $name = '', $class = '', $description = '')
+    public function LevelInfo($id = 0, $level = 1, $languageID = 0, $name = '', $class = '', $description = '')
     {
         $this->SetId($id);
         $this->SetLevel($level);

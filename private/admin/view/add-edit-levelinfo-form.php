@@ -25,7 +25,7 @@
         
         <div class="formSection">
             <label>Level<span class="redText">*</span>:</label>
-            <input type="number" class="formInput" name="<?php echo($levelInfo->GetLevelKey()); ?>" value="<?php echo(htmlspecialchars($levelInfo->GetLevel())); ?>" autofocus required min="0" />
+            <input type="number" class="formInput" name="<?php echo($levelInfo->GetLevelKey()); ?>" value="<?php echo(htmlspecialchars($levelInfo->GetLevel())); ?>" autofocus required min="1" />
             (The level that this information is for.)
             <div class="clear"></div>
         </div>
