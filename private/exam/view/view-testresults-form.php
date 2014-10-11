@@ -23,7 +23,10 @@
                 <div class="clear"></div>
             </div>
 
-            <?php if (!empty($levelInfo->GetDescription())) { ?>
+            <?php
+				$desc = $levelInfo->GetDescription();
+				if (!empty($desc)) {
+			?>
                 <div class='divider'></div>
 
                 <div class="formSection">

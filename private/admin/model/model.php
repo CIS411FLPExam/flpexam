@@ -807,7 +807,8 @@
         try
         {
             $fileName = TEMP_DIR . 'langauge_' . date("m-d-Y-G-i-s") . '.xlsx';
-            $languageName = GetLanguage($languageID)[NAME_IDENTIFIER];
+			$language = GetLanguage($languageID);
+            $languageName = $language[NAME_IDENTIFIER];
             $objPHPExcel = new PHPExcel();
                 
             // Set properties
