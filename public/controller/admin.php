@@ -878,13 +878,17 @@
                 {
                     foreach($questions as $question)
                     {
-                        $questionID = $question[QUESTIONID_IDENTIFIER];
+                        if (isset($question[QUESTIONID_IDENTIFIER]))
+                        {
+                            $questionID = $question[QUESTIONID_IDENTIFIER];
+                        }
+                        
                         $level = $question['Level'];
                         $instructions = $question['Instructions'];
                         $quesName = $question[NAME_IDENTIFIER];
                         $answers = $question['Answers'];
 
-                        if($questionID > 0)
+                        if(isset($questionID) && $questionID > 0)
                         {//Doing an update.
                             UpdateQuestion($questionID, $quesName, $instructions, $level, $answers);
                         }
