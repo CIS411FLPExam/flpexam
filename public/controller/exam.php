@@ -239,7 +239,16 @@
             $exam->Start();
         }
         
-        PresentNextQuestion();
+        if (!$exam->IsDone())
+        {
+            PresentNextQuestion();
+        }
+        else
+        {
+            $message = 'Sorry for the inconvenience, but there are no questions for this exam.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
     }
     
     function PresentNextQuestion()
