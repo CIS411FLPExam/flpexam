@@ -97,8 +97,6 @@
         }
         
         $contact = GetPrimaryContact();
-        $message = '';
-        $collection = array('Contact ' . $contact->GetFirstName() . ' ' . $contact->GetLastName() . ' at ' . $contact->GetEmail() . ' for permissions.');
         
         include(KEYCODEFORM_FILE);
     }
@@ -352,6 +350,7 @@
             $message = 'Test not found.';
             
             include(MESSAGEFORM_FILE);
+            exit();
         }
         
         $score = $testEntry['Score'];

@@ -17,7 +17,7 @@
     </form>
 </div>
 
-<?php if(isset($contact)) { ?>
+<?php if(isset($contact) && $contact->GetId() > 0) { ?>
     <h3 class="redText">Invalid key code.</h3>
     <ul>
         <li>

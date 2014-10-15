@@ -353,9 +353,18 @@
         
         $levelinfos = GetLevelInfos($languageID);
         $language = GetLanguage($languageID);
-        $languageName = $language[NAME_IDENTIFIER];
         
-        include(MANAGELEVELINFOSFORM_FILE);
+        if (count($language) > 0)
+        {
+            $languageName = $language[NAME_IDENTIFIER];
+        
+            include(MANAGELEVELINFOSFORM_FILE);
+        }
+        else
+        {
+            $message = 'The language you wish to modify does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function LevelInfoAdd()
@@ -412,7 +421,15 @@
         
         $levelInfo = GetLevelInfo($levelInfoID);
         
-        include(VIEWLEVELINFOFORM_FILE);
+        if ($levelInfo->GetId() > 0)
+        {
+            include(VIEWLEVELINFOFORM_FILE);
+        }
+        else
+        {
+            $message = 'The level information you wish to view does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function LevelInfoEdit()
@@ -442,7 +459,15 @@
         $levelInfo = GetLevelInfo($levelInfoID);
         $languageID = $levelInfo->GetLanguageId();
         
-        include(ADDEDITLEVELINFOFORM_FILE);
+        if ($levelInfo->GetId() > 0)
+        {
+            include(ADDEDITLEVELINFOFORM_FILE);
+        }
+        else
+        {
+            $message = 'The level information you wish to edit does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function ProcessLevelInfoAddEdit()
@@ -711,7 +736,15 @@
         
         $contact = GetContact($contactID);
         
-        include(ADDEDITCONTACTFORM_FILE);
+        if ($contact->GetId() > 0)
+        {
+            include(ADDEDITCONTACTFORM_FILE);
+        }
+        else
+        {
+            $message = 'The contact you wish to edit does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function ProcessContactAddEdit()
@@ -939,18 +972,27 @@
         }
         
         $language = GetLanguage($languageID);
-        $languageName = $language[NAME_IDENTIFIER];
         
-        ignore_user_abort(true);
-        
-        $file = ExportLanguageQuestions($languageID);
-        
-        header('Content-type: application/octet-stream');
-        header('Content-Length: ' . filesize($file));
-        header('Content-Disposition: attachment; filename=' . $languageName .'.xlsx');
-        readfile($file);
-        
-        DeleteFile($file);
+        if (count($language) > 0)
+        {
+            $languageName = $language[NAME_IDENTIFIER];
+
+            ignore_user_abort(true);
+
+            $file = ExportLanguageQuestions($languageID);
+
+            header('Content-type: application/octet-stream');
+            header('Content-Length: ' . filesize($file));
+            header('Content-Disposition: attachment; filename=' . $languageName .'.xlsx');
+            readfile($file);
+
+            DeleteFile($file);
+        }
+        else
+        {
+            $message = 'The language you wish to export does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function TestView()
@@ -982,7 +1024,15 @@
         
         $testInfo = GetDetailedTest($testID);
         
-        include(VIEWTESTFORM_FILE);
+        if ($testInfo->GetId() > 0)
+        {
+            include(VIEWTESTFORM_FILE);
+        }
+        else
+        {
+            $message = 'The test you wish to view does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function TestSearch()
@@ -1190,6 +1240,14 @@
         }
         
         $lang = GetLanguage($languageID);
+        
+        if (count($lang) == 0)
+        {
+            $message = 'The language of the questions you are trying to manage does not exist.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
         $questions = GetQuestions($languageID, $level);
         
         for($i = 0; $i < count($questions); $i++)
@@ -1257,6 +1315,15 @@
             unset($questionID);
         }
         
+        $lang = GetLanguage($languageID);
+        
+        if (count($lang) == 0)
+        {
+            $message = 'The language of the questions you are trying to manage does not exist.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
         $name = '';
         $level = '1';
         $instructions = '';
@@ -1292,13 +1359,21 @@
         
         $question = GetQuestion($questionID);
         
-        $name = $question[NAME_IDENTIFIER];
-        $level = $question['Level'];
-        $instructions = $question['Instructions'];
-        
-        $answers = GetQuestionAnswers($questionID);
-        
-        include(ADDEDITQUESTIONFORM_FILE);
+        if (count($question) > 0)
+        {
+            $name = $question[NAME_IDENTIFIER];
+            $level = $question['Level'];
+            $instructions = $question['Instructions'];
+
+            $answers = GetQuestionAnswers($questionID);
+
+            include(ADDEDITQUESTIONFORM_FILE);
+        }
+        else
+        {
+            $message = 'The question you wish to edit does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function ProcessQuestionView()
@@ -1327,17 +1402,25 @@
         
         $question = GetQuestion($questionID);
         
-        $name = $question[NAME_IDENTIFIER];
-        $level = $question['Level'];
-        $instructions = $question['Instructions'];
-        
-        $answers = GetQuestionAnswers($questionID);
-        
-        $answerCounts = GetQuestionStatisticTotalAnswerCounts($questionID);
-        $totalTimesAnswered = GetQuestionStatisticTotalTimesAnswered($questionID);
-        $totalTimesAnsweredCorrectly = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
-        
-        include(VIEWQUESTIONFORM_FILE);
+        if (count($question) > 0)
+        {
+            $name = $question[NAME_IDENTIFIER];
+            $level = $question['Level'];
+            $instructions = $question['Instructions'];
+
+            $answers = GetQuestionAnswers($questionID);
+
+            $answerCounts = GetQuestionStatisticTotalAnswerCounts($questionID);
+            $totalTimesAnswered = GetQuestionStatisticTotalTimesAnswered($questionID);
+            $totalTimesAnsweredCorrectly = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
+
+            include(VIEWQUESTIONFORM_FILE);
+        }
+        else
+        {
+            $message = 'The question you wish to edit does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function ProcessQuestionDelete()
@@ -1531,6 +1614,14 @@
         }
         
         $lang = GetLanguage($languageID);
+        
+        if (count($lang) == 0)
+        {
+            $message = 'The language of the questions you are trying to search for does not exist.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
         $questions = SearchForQuestion($languageID, $name);
         
         for($i = 0; $i < count($questions); $i++)
@@ -1597,10 +1688,18 @@
         
         $language = GetLanguage($languageID);
         
-        $name = $language[NAME_IDENTIFIER];
-        $active = $language['Active'];
+        if (count($language) > 0)
+        {
+            $name = $language[NAME_IDENTIFIER];
+            $active = $language['Active'];
         
-        include(ADDEDITLANGUAGEFORM_FILE);
+            include(ADDEDITLANGUAGEFORM_FILE);
+        }
+        else
+        {
+            $message = 'The language you wish to edit does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function ProcessLanguageView()
@@ -1646,10 +1745,18 @@
             unset($questionID);
         }
         
-        $name = $language[NAME_IDENTIFIER];
-        $active = $language['Active'];
+        if (count($language) > 0)
+        {
+            $name = $language[NAME_IDENTIFIER];
+            $active = $language['Active'];
         
-        include(VIEWLANGUAGEFORM_FILE);
+            include(VIEWLANGUAGEFORM_FILE);
+        }
+        else
+        {
+            $message = 'The language you wish to view does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function ProcessLanguageDelete()
@@ -1749,11 +1856,19 @@
         
         $row = getUser($userID);
         
-        $hasAttrResults = getUserRoles($userID);
+        if (count($row) > 0)
+        {
+            $hasAttrResults = getUserRoles($userID);
         
-        $userName = $row[USERNAME_IDENTIFIER];
+            $userName = $row[USERNAME_IDENTIFIER];
         
-        include(VIEWUSERFORM_FILE);
+            include(VIEWUSERFORM_FILE);
+        }
+        else
+        {
+            $message = 'The user you wish to view does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function ProcessUserSearch()
@@ -1817,7 +1932,7 @@
                 
                 if ($row == false)
                 {
-                    displayError("User ID is not on file.");
+                    displayError("The user you wish to edit does not exist.");
                 }
                 else
                 {
@@ -2046,7 +2161,7 @@
                 
                 if ($row == false)
                 {
-                    displayError("Function ID is not on file.");
+                    displayError("The function you wish to edit does not exist.");
                 }
                 else
                 {
@@ -2185,7 +2300,7 @@
             
             if ($row == false)
             {
-                displayError("Role ID is not on file.");
+                displayError("The role you wish to edit does not exist.");
             }
             else
             {
