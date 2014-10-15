@@ -354,7 +354,7 @@
         $levelinfos = GetLevelInfos($languageID);
         $language = GetLanguage($languageID);
         
-        if (count($language) > 0)
+        if ($language != FALSE)
         {
             $languageName = $language[NAME_IDENTIFIER];
         
@@ -973,7 +973,7 @@
         
         $language = GetLanguage($languageID);
         
-        if (count($language) > 0)
+        if ($language != FALSE)
         {
             $languageName = $language[NAME_IDENTIFIER];
 
@@ -1241,7 +1241,7 @@
         
         $lang = GetLanguage($languageID);
         
-        if (count($lang) == 0)
+        if ($lang == FALSE)
         {
             $message = 'The language of the questions you are trying to manage does not exist.';
             include(MESSAGEFORM_FILE);
@@ -1317,7 +1317,7 @@
         
         $lang = GetLanguage($languageID);
         
-        if (count($lang) == 0)
+        if ($lang == FALSE)
         {
             $message = 'The language of the questions you are trying to manage does not exist.';
             include(MESSAGEFORM_FILE);
@@ -1359,7 +1359,7 @@
         
         $question = GetQuestion($questionID);
         
-        if (count($question) > 0)
+        if ($question != FALSE)
         {
             $name = $question[NAME_IDENTIFIER];
             $level = $question['Level'];
@@ -1402,7 +1402,7 @@
         
         $question = GetQuestion($questionID);
         
-        if (count($question) > 0)
+        if ($question != FALSE)
         {
             $name = $question[NAME_IDENTIFIER];
             $level = $question['Level'];
@@ -1615,7 +1615,7 @@
         
         $lang = GetLanguage($languageID);
         
-        if (count($lang) == 0)
+        if ($lang == FALSE)
         {
             $message = 'The language of the questions you are trying to search for does not exist.';
             include(MESSAGEFORM_FILE);
@@ -1688,7 +1688,7 @@
         
         $language = GetLanguage($languageID);
         
-        if (count($language) > 0)
+        if ($language != FALSE)
         {
             $name = $language[NAME_IDENTIFIER];
             $active = $language['Active'];
@@ -1745,7 +1745,7 @@
             unset($questionID);
         }
         
-        if (count($language) > 0)
+        if ($language != FALSE)
         {
             $name = $language[NAME_IDENTIFIER];
             $active = $language['Active'];
@@ -1856,7 +1856,7 @@
         
         $row = getUser($userID);
         
-        if (count($row) > 0)
+        if ($row != false)
         {
             $hasAttrResults = getUserRoles($userID);
         
