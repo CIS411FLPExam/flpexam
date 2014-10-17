@@ -20,7 +20,7 @@
     <div class="formSection">
         <label>Question:</label>
         <div class="clear"></div>
-        <h3><?php echo(htmlspecialchars($name)); ?></h3>
+        <h3><pre><?php echo(htmlspecialchars($name)); ?></pre></h3>
     </div>
     
     <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION)); ?>" method="post">

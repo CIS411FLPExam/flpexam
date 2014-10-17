@@ -8,6 +8,12 @@ footer
     padding: 5px;
     text-align: center;
 }
+pre
+{
+    white-space: pre-wrap;       /* CSS 3 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
 
 #questions
 {

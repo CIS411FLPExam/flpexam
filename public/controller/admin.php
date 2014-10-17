@@ -1418,7 +1418,7 @@
         }
         else
         {
-            $message = 'The question you wish to edit does not exist.';
+            $message = 'The question you wish to view does not exist.';
             include(MESSAGEFORM_FILE);
         }
     }

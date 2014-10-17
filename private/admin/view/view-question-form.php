@@ -20,7 +20,7 @@
     <div class="divider"></div>
 
     <div class="formSection">
-        <label>Question:</label><div class="displayBox"><?php echo(htmlspecialchars($name)); ?></div>
+        <label>Question:</label><div class="displayBox"><pre><?php echo(htmlspecialchars($name)); ?></pre></div>
         <div class="clear"></div>
     </div>
 
