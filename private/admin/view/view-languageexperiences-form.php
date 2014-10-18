@@ -34,9 +34,9 @@
         ?>
         <br />
         
-        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION)); ?>">
-            Edit
-        </a>
+        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION)); ?>" method="post">
+            <input type="submit" value="Edit" />
+        </form>
 </div>
 <!-- End main content here -->
 <?php

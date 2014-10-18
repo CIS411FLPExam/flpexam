@@ -39,12 +39,12 @@
     <body>        
         <div id="wrapper">
             <header class="centerText">
-                <img src="<?php echo(LOGO_FILE) ?>" width="200" height="70"/>
-                <span class="banner">Foreign Language Placement Exam</span>
                 <?php if(loggedIn()) { ?>
-                <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); ?></span>
+                    <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); ?></span>
                 <?php }?>
                 <div class="clear"></div>
+                <img src="<?php echo(LOGO_FILE) ?>" width="100" height="50"/>
+                <span class="banner">Foreign Language Placement Exam</span>
             </header>
             <?php if(loggedIn()) { ?>
             <nav id="navbar">

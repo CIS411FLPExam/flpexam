@@ -16,27 +16,48 @@
         <div class="divider"></div>
     <?php } ?>
     
-    
     <div class="formSection">
         <label>Question:</label>
-        <div class="clear"></div>
-        <h3><pre><?php echo(htmlspecialchars($name)); ?></pre></h3>
+        <div class="question">
+            <pre><b><?php echo(htmlspecialchars($name)); ?></b></pre>
+            <div class="clear"></div>
+        </div>
     </div>
-    
+    <div class="clear"></div>
     <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION)); ?>" method="post">
         <input type="hidden" name ="<?php echo(QUESTIONID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
         <div class="formSection">
-            <input type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answers[0][ANSWERID_IDENTIFIER])) ?>" checked="checked" />
+            <input class="floatLeft" type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answers[0][ANSWERID_IDENTIFIER])) ?>" checked="checked" />
+            <span class="floatLeft">
+                <b>
+                    <?php
+                        //The starting with the ascii value of 'a'.
+                        $answerOptionAsciiVal = 97;
+                        echo(chr($answerOptionAsciiVal++));
+                    ?>)
+                </b>
+            </span>
+            <div class="inline floatLeft">&nbsp;</div>
+            <div class="displayBox"><?php echo(htmlspecialchars($answers[0][NAME_IDENTIFIER])); ?></div>
+            <div class="clear"></div>
             <?php
-                echo(htmlspecialchars($answers[0][NAME_IDENTIFIER]));
                 for ($index = 1; $index < count($answers); $index++)
                 {
                     $answer = $answers[$index];
             ?>
-            <br />
-            <br />
-            <input type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answer[ANSWERID_IDENTIFIER])) ?>" />
-                <?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?>
+                <br />
+                <br />
+                <input class="floatLeft" type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answer[ANSWERID_IDENTIFIER])) ?>" />
+                <span class="floatLeft">
+                    <b>
+                        <?php
+                            echo(chr($answerOptionAsciiVal++));
+                        ?>)
+                    </b>
+                </span>
+                <div class="inline floatLeft">&nbsp;</div>
+                <div class="displayBox"><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></div>
+                <div class="clear"></div>
             <?php
                 }
             ?>

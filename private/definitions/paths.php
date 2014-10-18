@@ -119,7 +119,7 @@
     /**
      * The file path of the sites logo image file.
      */
-    define("LOGO_FILE", IMAGE_DIR . "logo.gif");
+    define("LOGO_FILE", IMAGE_DIR . "logo1.gif");
     
     /**
      * The file path of the control panel contentes file.

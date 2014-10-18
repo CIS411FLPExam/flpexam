@@ -51,6 +51,14 @@ pre
     width: 20px;
 }
 
+.question
+{
+    font-size: 125%;
+    width: 700px;
+    float: left;
+    display: inline-block;
+}
+
 .inline { display: inline; }
 .inlineBlock { display: inline-block; }
 .testBackground { background-color: #004400; }
@@ -227,7 +235,7 @@ pre
 .banner
 {
     display: inline-block;
-    font-size: 250%;
+    font-size: 350%;
     color: #ddc873;
 }
 
