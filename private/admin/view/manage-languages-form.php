@@ -28,12 +28,12 @@
                 <thead>
                     <tr>
                         <th><b>Name</b></th>
-                        <?php if ($userCanView) { ?><th></th><?php } ?>
-                        <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanManageQuestions) { ?><th></th><?php } ?>
                         <?php if ($userCanManageLevelInfos) { ?><th></th><?php } ?>
-                        <?php if ($userCanDelete) { ?><th></th><?php } ?>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
+                        <?php if ($userCanView) { ?><th></th><?php } ?>
+                        <?php if ($userCanEdit) { ?><th></th><?php } ?>
+                        <?php if ($userCanDelete) { ?><th></th><?php } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,20 +47,6 @@
                     ?>
                     <tr>
                         <td><?php echo(htmlspecialchars($name)); ?></td>
-                        <?php if ($userCanView) { ?>
-                            <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
-                                    View
-                                </a>
-                            </td>
-                        <?php } ?>
-                        <?php if ($userCanEdit) { ?>
-                            <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
-                                    Edit
-                                </a>
-                            </td>
-                        <?php } ?>
                         <?php if ($userCanManageQuestions) { ?>
                             <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
@@ -75,11 +61,6 @@
                                 </a>
                             </td>
                         <?php } ?>
-                        <?php if ($userCanDelete) { ?>
-                            <td class="centerText">
-                                <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
-                            </td>
-                        <?php } ?>
                         <?php if ($userCanEdit) { ?>
                             <td>
                                 <?php if($active == TRUE) { ?>
@@ -91,6 +72,25 @@
                                         Activate
                                     </a>
                                 <?php } ?>
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanView) { ?>
+                            <td>
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
+                                    View
+                                </a>
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanEdit) { ?>
+                            <td>
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urldecode($languageID))); ?>">
+                                    Edit
+                                </a>
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanDelete) { ?>
+                            <td class="centerText">
+                                <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
                             </td>
                         <?php } ?>
                     </tr>

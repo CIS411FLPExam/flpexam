@@ -28,9 +28,10 @@
                     <tr>
                         <th><b>First Name</b></th>
                         <th><b>Last Name</b></th>
+                        <th>Primary</th>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanDelete) { ?><th></th><?php } ?>
-                        <?php if ($userCanEdit) { ?><th>Primary</th><?php } ?>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,19 @@
                         <td><?php echo(htmlspecialchars($lastName)); ?></td>
                         <?php if ($userCanEdit) { ?>
                             <td>
+                                <?php if($active == TRUE) { ?>
+                                    Yes
+                                <?php } else if ($userCanEdit) { ?>
+                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
+                                        Activate
+                                    </a>
+                                <?php } else { ?>
+                                        No
+                                <?php } ?>
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanEdit) { ?>
+                            <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTEDIT_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
                                     Edit
                                 </a>
@@ -56,17 +70,6 @@
                         <?php if ($userCanDelete) { ?>
                             <td class="centerText">
                                 <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($contactID)); ?>" />
-                            </td>
-                        <?php } ?>
-                        <?php if ($userCanEdit) { ?>
-                            <td>
-                                <?php if($active == TRUE) { ?>
-                                    Yes
-                                <?php } else { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
-                                        Activate
-                                    </a>
-                                <?php } ?>
                             </td>
                         <?php } ?>
                     </tr>
