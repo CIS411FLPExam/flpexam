@@ -71,7 +71,7 @@
 </form>
     
 <?php if(count($questions) > 0) { ?>
-    <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONDELETE_ACTION ) ); ?>" method="post">
+    <form onsubmit="return ConfirmationPrompt('Delete the selected questions?');" action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONDELETE_ACTION ) ); ?>" method="post">
         <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
         <div class="datatable">
             <table id="questions" class="tablesorter">

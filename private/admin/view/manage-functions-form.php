@@ -10,7 +10,7 @@
         echo "<a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONADD_ACTION ). "\">Add Function</a><p/>";
     }
 ?>
-<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONDELETE_ACTION)) ?>" method="post">
+<form onsubmit="return ConfirmationPrompt('Delete the selected functions?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONDELETE_ACTION)) ?>" method="post">
     <div class="datatable">
         <table id="functions" class="tablesorter">
             <thead>

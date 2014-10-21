@@ -13,7 +13,7 @@
     
     <br />
 <?php } ?>
-<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,ROLEDELETE_ACTION)) ?>" method="post">
+<form onsubmit="return ConfirmationPrompt('Delete the selected roles?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,ROLEDELETE_ACTION)) ?>" method="post">
     <div class="datatable">
         <table id="roles" class="tablesorter">
             <thead>

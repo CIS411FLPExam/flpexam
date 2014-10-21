@@ -21,7 +21,7 @@
 <?php } ?>
 
 <?php if(count($contacts) > 0) { ?>
-    <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, CONTACTDELETE_ACTION ) ); ?>" method="post">
+    <form onsubmit="return ConfirmationPrompt('Delete the selected contacts?');" action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, CONTACTDELETE_ACTION ) ); ?>" method="post">
         <div class="datatable">
             <table id="contacts" class="tablesorter">
                 <thead>

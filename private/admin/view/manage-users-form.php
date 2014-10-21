@@ -37,7 +37,7 @@
 <?php } ?>
 
 
-<form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
+<form onsubmit="return ConfirmationPrompt('Delete the selected users?');" action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <div class="datatable">
         <table id="users" class="tablesorter">
             <thead>

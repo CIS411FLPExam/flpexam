@@ -24,7 +24,7 @@
 
 <div class="formGroup">
     <?php if (count($levelinfos) > 0) { ?>
-        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFODELETE_ACTION)); ?>" method="post">
+        <form onsubmit="return ConfirmationPrompt('Delete the selected level\'s information?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFODELETE_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
             <div class="datatable">
                 <table id="levelInfos" class="tablesorter">

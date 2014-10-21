@@ -22,7 +22,7 @@
     <br />
 <?php } ?>
 <?php if(count($languages) > 0) { ?>
-    <form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDELETE_ACTION ) ); ?>" method="post">
+    <form onsubmit="return ConfirmationPrompt('Delete the selected languages?');" action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDELETE_ACTION ) ); ?>" method="post">
         <div class="datatable">
             <table id="languages" class="tablesorter">
                 <thead>
