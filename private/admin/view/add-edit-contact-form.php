@@ -9,15 +9,13 @@
         include(MESSAGE_FILE);
     }
 ?>
-
+<?php if(isset($contactID)) { ?>
+    <h1>Edit Contact</h1>
+<?php } else { ?>
+    <h1>Add Contact</h1>
+<?php } ?>
 <div class="formGroup">
-    <?php if(isset($contactID)) { ?>
-        <h1>Edit Contact</h1>
-    <?php } else { ?>
-        <h1>Add Contact</h1>
-    <?php } ?>
-    
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSCONTACTADDEDIT_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSCONTACTADDEDIT_ACTION)); ?>" method="post">
         <?php if(isset($contactID)) { ?>
             <input type="hidden" name="<?php echo($contact->GetIdIndex()); ?>" value="<?php echo(htmlspecialchars($contactID)); ?>" />
         <?php } ?>
@@ -49,6 +47,9 @@
         <br />
         
         <input type="submit" value="Submit" />
+    </form>
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION)); ?>" method="post">
+        <input type="submit" value="Cancel" />
     </form>
 </div>
 

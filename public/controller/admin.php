@@ -1220,8 +1220,15 @@
         
         if(isset($questionID))
         {
+            $question = GetQuestion($questionID);
             $language = GetQuestionLanguage($questionID);
             $languageID = $language[LANGUAGEID_IDENTIFIER];
+            
+            if (isset($question['Level']))
+            {
+                $level = $question['Level'];
+            }
+            
             unset($questionID);
         }
         

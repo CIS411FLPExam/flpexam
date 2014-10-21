@@ -46,61 +46,58 @@
 ?>
 <h2>Modify User</h2>
 
-<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSEREDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
-    <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($userID)); ?>"/>
-    <div class="formGroup">
+<div class="formGroup">
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSEREDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
+        <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($userID)); ?>"/>
+
         <div class="formSection">
             <label>Username<span class="redText">*</span>:</label>
             <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required maxlength="32"/>
             <div class="clear"></div>
         </div>
-        
+
         <div class="divider"></div>
-        
+
         <div class="formSection">
             <label>Password:</label>
             <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" maxlength="40" />
             <div class="clear"></div>
         </div>
-        
+
         <div class="divider"></div>
-        
+
         <div class="formSection">
             <label>Password Retype:</label>
             <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" maxlength="40" />
             <div class="clear"></div>
         </div>
-        
-        <div class="divider"></div>
-        
-        <table>
 
+        <div class="divider"></div>
+
+        <table>
             <tr>
                 <td>
                     <b>Is</b><br/>
                     <?php echo $select1; ?>
                 </td>
-
                 <td>
                     <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
                     <br/>
                     <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
                 </td>
-
                 <td>
                     <b>Is Not</b><br/>
                     <?php echo $select2; ?>
                 </td>
             </tr>
-
         </table>
-
-        <br/>
-
-        <input type="submit" value="Submit" />
-    </div>
-</form>
-
+            <br/>
+            <input type="submit" value="Submit" />
+    </form>
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>" method="post">
+        <input type="submit" value="Cancel" />
+    </form>
+</div>
 <!-- End main content here -->
 <?php
     include( FOOTER_FILE ); 

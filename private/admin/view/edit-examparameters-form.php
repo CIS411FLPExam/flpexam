@@ -10,9 +10,9 @@
     }
 ?>
 
+<h1>Exam Parameters</h1>
 <div class="formGroup">
-    <h1>Exam Parameters</h1>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSEXAMPARAMETERSEDIT_ACTION)) ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSEXAMPARAMETERSEDIT_ACTION)) ?>" method="post">
         <div class="formSection">
             <label>Key Code:</label>
             <input name="<?php echo($parameters->GetKeyCodeIndex()); ?>" type="text" value="<?php echo(htmlspecialchars($keyCode)); ?>" autofocus maxlength="40"/>
@@ -49,6 +49,9 @@
         <br />
         
         <input type="submit" value="Submit" />
+    </form>
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)); ?>" method="post">
+        <input type="submit" value="Cancel" />
     </form>
 </div>
 <!-- End main content here -->

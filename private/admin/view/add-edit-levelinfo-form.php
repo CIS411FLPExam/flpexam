@@ -17,7 +17,7 @@
 <?php } ?>
 
 <div class="formGroup">
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLEVELINFOADDEDIT_ACTION)) ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLEVELINFOADDEDIT_ACTION)) ?>" method="post">
         <?php if (isset($levelInfoID)) { ?>
             <input type="hidden" name="<?php echo(LEVELINFOID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($levelInfoID)); ?>" />
         <?php } ?>
@@ -59,6 +59,9 @@
         <br />
         
         <input type="submit" value="Submit" />
+    </form>
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID)); ?>" method="post">
+        <input type="submit" value="Cancel" />
     </form>
 </div>
 <!--End main content-->

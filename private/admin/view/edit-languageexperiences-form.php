@@ -7,7 +7,7 @@
     <h3><span class="redText">Errors on page.</span></h3>
 <?php } ?>
 <div class="formGroup">
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLANGUAGEEXPERIENCESEDIT_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLANGUAGEEXPERIENCESEDIT_ACTION)); ?>" method="post">
         <div class="formSection">
             <?php
                 if (isset($errors['SpokenAtHomeInitLevel']))
@@ -57,6 +57,10 @@
         <br />
         
         <input type="submit" value="Submit" />
+    </form>
+    
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION)); ?>" method="post">
+        <input type="submit" value="Cancel" />
     </form>
 </div>
 <!-- End main content here -->
