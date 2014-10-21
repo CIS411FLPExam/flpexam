@@ -9,7 +9,7 @@
     <?php if (!empty($instructions)) { ?>
         <div class="formSection">
             <label>Instructions:</label>
-            <div class="displayBox"><span class="crimText"><?php echo(htmlspecialchars($instructions)); ?></span></div>
+            <div class="displayBox"><b><?php echo(htmlspecialchars($instructions)); ?></b></div>
             <div class="clear"></div>
         </div>
     
