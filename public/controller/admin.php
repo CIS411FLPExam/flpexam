@@ -929,7 +929,7 @@
             {
                 $type = 'Excel';
             }
-            else if ($mime == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            else if ($mime == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || $mime = 'd2l/unknowntype')
             {
                 $type = 'Word';
             }
@@ -984,8 +984,29 @@
             }
         }
         
+        $level = 1;
         $lang = GetLanguage($languageID);
-        $questions = GetQuestions($languageID);
+        $questions = GetQuestions($languageID, $level);
+        
+        for($i = 0; $i < count($questions); $i++)
+        {
+            $question = $questions[$i];
+            
+            $correctlyAnsweredPercent = 100;
+            $questionID = $question[QUESTIONID_IDENTIFIER];
+            
+            $totalAnswers = GetQuestionStatisticTotalTimesAnswered($questionID);
+            $totalCorrectAnswers = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
+            
+            if ($totalAnswers > 0)
+            {
+                $correctlyAnsweredPercent = ($totalCorrectAnswers / $totalAnswers) * 100;
+            }
+            
+            $question['CorrectlyAnsweredPercent'] = $correctlyAnsweredPercent;
+            
+            $questions[$i] = $question;
+        }
         
         $language = $lang[NAME_IDENTIFIER];
         
