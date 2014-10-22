@@ -225,9 +225,57 @@
             case PROCESSLANGUAGEEXPERIENCESEDIT_ACTION :
                 ProcessLanguageExperiencesEdit();
                 break;
+            case QUESTIONSTATISTICSRESET_ACTION :
+                QuestionStatisticsReset();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    function QuestionStatisticsReset()
+    {
+        if(!userIsAuthorized(QUESTIONEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        else if (isset($_GET[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
+        else if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language or question I.D. provided.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        if (isset($questionID))
+        {//Reseting the statistics for one question.
+            ResetQuestionStatistics($questionID);
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION) . '&' . QUESTIONID_IDENTIFIER . '=' . urlencode($questionID));
+        }
+        else if (isset($languageID))
+        {//Reseting the statistics for an entire language.
+            ResetLanguageQuestionStatistics($languageID);
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID));
+        }
+        
+        Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
     }
     
     function LanguageExperiencesEdit()

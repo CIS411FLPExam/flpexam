@@ -23,6 +23,12 @@
 ?>
 
 <div class="formGroup">
+    <?php if (userIsAuthorized($userCanEdit)) { ?>
+        <form class="inlineBlock" onsubmit="return ConfirmationPrompt('Reset all question statistics?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSTATISTICSRESET_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Reset Stats" />
+        </form>
+    <?php } ?>
     <?php if($userCanAdd) { ?>
         <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
@@ -30,14 +36,12 @@
         </form>
     <?php } ?>
     <?php if ($userCanExport) { ?>
-        <div class="inlineBlock width20"> </div>
         <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input type="submit" value="Export Questions" />
         </form>
     <?php } ?>
     <?php if ($userCanImport) { ?>
-        <div class="inlineBlock width20"> </div>
         <form class="inlineBlock" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input type="submit" value="Import Questions" />

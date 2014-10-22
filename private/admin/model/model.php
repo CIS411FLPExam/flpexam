@@ -249,6 +249,44 @@
     }
     
     /**
+     * Resets the statistics for every question of a language.
+     * @param int $languageID The I.D. of the language.
+     */
+    function ResetLanguageQuestionStatistics($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . QUESTIONSTATISTICS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
+                    . ' = ' . QUESTIONSTATISTICS_IDENTIFIER  . '.' . ANSWERID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . LANGUAGES_IDENTIFIER . ' ON'
+                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' SET'
+                    . ' ' . 'Count'
+                    . ' = ' . '0' . ' WHERE'
+                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Resets the statistics for a question.
      * @param int $questionID The I.D. of the question to reset.
      */
@@ -268,7 +306,7 @@
                     . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' SET'
                     . ' ' . 'Count'
                     . ' = ' . '0' . ' WHERE'
-                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
                     . ' = :' . QUESTIONID_IDENTIFIER . ';';
             
             $statement = $db->prepare($query);

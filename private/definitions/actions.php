@@ -331,6 +331,11 @@
      */
     define("PROCESSLANGUAGEEXPERIENCESEDIT_ACTION", "ProcessLanguageExperiencesEdit");
     
+    /**
+     * The action word to use to rest a quetsion's statistics.
+     */
+    define("QUESTIONSTATISTICSRESET_ACTION", "QuestionStatisticsReset");
+    
     
 //Actions available through the exam controller.
 /******************************************************************************/

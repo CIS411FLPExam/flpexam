@@ -16,17 +16,20 @@
             $column = 0;
             $answers = array();
 
-            $level = $q[$column++];
-            $instructions = $q[$column++];
-            $name = $q[$column++];
+            $level = trim($q[$column++]);
+            $instructions = trim($q[$column++]);
+            $name = trim($q[$column++]);
 
             while($column < count($q))
             {
-                $answers[] = $q[$column++];
+                $answers[] = trim($q[$column++]);
             }
-
-            $answers[count($answers) - 1] = str_replace('}','', $answers[count($answers) - 1]);
-
+            
+            if (count($answers > 0))
+            {
+                $answers[count($answers) - 1] = trim(str_replace('}','', $answers[count($answers) - 1]));
+            }
+            
             $question = array('Level' => $level, 'Instructions' => $instructions, 'Name' => $name, 'Answers' => $answers);
             $questions[] = $question;
         }
