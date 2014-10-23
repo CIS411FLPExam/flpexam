@@ -1152,7 +1152,7 @@
         
         $testInfos = SearchForTestEntry($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
-        include(MANAGETESTSFORM_FILE);
+        include(MANAGETESTENTRIESFORM_FILE);
     }
     
     function ManageTestEntries()
@@ -1174,7 +1174,7 @@
         
         $testInfos = SearchForTestEntry($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
-        include(MANAGETESTSFORM_FILE);
+        include(MANAGETESTENTRIESFORM_FILE);
     }
     
     function ExamParametersView()

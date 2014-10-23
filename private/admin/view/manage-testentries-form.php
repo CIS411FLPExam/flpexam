@@ -107,7 +107,10 @@
         </div>
         <input type="hidden" name="numListed" value="<?php echo(count($testInfos)); ?>" />
         <br />
-        <input type="submit" value="Delete Selected" />
+        
+        <?php if ($userCanDelete) { ?>
+            <input type="submit" value="Delete Selected" />
+        <?php } ?>
     </form>
 <?php } else { ?>
     <h3>No tests found.</h3>

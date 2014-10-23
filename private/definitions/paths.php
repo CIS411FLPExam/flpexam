@@ -450,7 +450,7 @@
     /**
      * The file path of the manage tests form file.
      */
-    define("MANAGETESTSFORM_FILE", ADMINVIEW_DIR . "manage-tests-form.php");
+    define("MANAGETESTENTRIESFORM_FILE", ADMINVIEW_DIR . "manage-testentries-form.php");
     
     /**
      * The file path of the view test form file.
