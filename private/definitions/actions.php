@@ -217,24 +217,29 @@
     define("PROCESSEXAMPARAMETERSEDIT_ACTION", "ProccesExamParametersEdit");
     
     /**
-     * The action word to use to manage tests.
+     * The action word to use to manage test entries.
      */
     define("MANAGETESTENTRIES_ACTION", "ManageTestEntries");
     
     /**
-     * The action word to use to view a test.
+     * The action word to use to view a test entry.
      */
     define("TESTENTRYVIEW_ACTION", "TestEntryView");
     
     /**
-     * The action word to use to delete a test.
+     * The action word to use to delete a test entry.
      */
     define("TESTENTRYDELETE_ACTION", "TestEntryDelete");
     
     /**
-     * The action word to use to search tests by name.
+     * The action word to use to search test entries by name.
      */
     define("TESTENTRYSEARCH_ACTION", "TestEntrySearch");
+    
+    /**
+     * The action word to use to view a test.
+     */
+    define("TESTVIEW_ACTION", "TestView");
     
     /**
      * The action word to use to import the questions for a langauge.

@@ -448,9 +448,11 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
 CREATE TABLE IF NOT EXISTS `testeequestions` (
   `TestID` int(11) NOT NULL,
   `QuestionNo` int(11) NOT NULL,
+  `Level` int(11) NOT NULL,
   `Instructions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Question` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`TestID`,`QuestionNo`)
+  PRIMARY KEY (`TestID`,`QuestionNo`),
+  CONSTRAINT `testeequestions_testentry_fk` FOREIGN KEY (`TestID`) REFERENCES `testentries` (`TestID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

@@ -168,6 +168,9 @@
             case TESTENTRYSEARCH_ACTION :
                 TestEntrySearch();
                 break;
+            case TESTVIEW_ACTION :
+                TestView();
+                break;
             case LANGUAGEIMPORT_ACTION :
                 LanguageImport();
                 break;
@@ -233,6 +236,44 @@
                 break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        }
+    }
+    
+    function TestView()
+    {
+        if (!userIsAuthorized(TESTVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[TESTID_IDENTIFIER]))
+        {
+            $testID = $_POST[TESTID_IDENTIFIER];
+        }
+        else if (isset($_GET[TESTID_IDENTIFIER]))
+        {
+            $testID = $_GET[TESTID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No test I.D. provided.';
+            exit();
+        }
+        
+        $testQAs = GetTestQAs($testID);
+        
+        if (count($testQAs) > 0)
+        {
+            $testInfo = GetDetailedTestEntry($testID);
+            $testeeName = $testInfo->GetFirstName() . ' ' . $testInfo->GetLastName();
+            
+            include(VIEWTESTFORM_FILE);
+        }
+        else
+        {
+            $message = 'The test you are trying to view does not have any questions or answers.';
+            include(MESSAGEFORM_FILE);
         }
     }
     

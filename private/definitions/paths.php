@@ -448,14 +448,19 @@
     define("VIEWEXAMPARAMETERSFORM_FILE", ADMINVIEW_DIR . "view-examparameters-form.php");
     
     /**
-     * The file path of the manage tests form file.
+     * The file path of the manage test entries form file.
      */
     define("MANAGETESTENTRIESFORM_FILE", ADMINVIEW_DIR . "manage-testentries-form.php");
     
     /**
-     * The file path of the view test form file.
+     * The file path of the view test entry form file.
      */
     define("VIEWTESTENTRYFORM_FILE", ADMINVIEW_DIR . "view-testentry-form.php");
+    
+    /**
+     * The file path of the view test form file.
+     */
+    define("VIEWTESTFORM_FILE", ADMINVIEW_DIR . "view-test-form.php");
     
     /**
      * The file path of the manage contacts form file.

@@ -11,6 +11,87 @@
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
     
     /**
+     * Gets the questions and answers for a particular test.
+     * @param int $testID The I.D. of the test.
+     * @return array The collection of questions and answers.
+     */
+    function GetTestQAs($testID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . TESTEEQUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . TESTID_IDENTIFIER
+                    . ' = :' . TESTID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            
+            $statement->execute();
+            
+            $testQAs = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            for($i = 0; $i < count($testQAs); $i++)
+            {
+                $testQuestion = $testQAs[$i];
+                
+                $questionNo = $testQuestion['QuestionNo'];
+                
+                $questionAnswers = GetTestQuestionAnswers($testID, $questionNo);
+                
+                $testQuestion['Answers'] = $questionAnswers;
+                
+                $testQAs[$i] = $testQuestion;
+            }
+            
+            return $testQAs;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets all the answers associated with a particular test's question. 
+     * @param int $testID The I.D. of the test.
+     * @param int $questionNo The I.D. of the question for that test.
+     * @return array The collection of answers.
+     */
+    function GetTestQuestionAnswers($testID, $questionNo)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . TESTEEANSWERS_IDENTIFIER . ' WHERE'
+                    . ' ' . TESTID_IDENTIFIER
+                    . ' = :' . TESTID_IDENTIFIER . ' AND'
+                    . ' ' . 'QuestionNo'
+                    . ' = :' . 'QuestionNo' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            $statement->bindValue(':' .'QuestionNo', $questionNo);
+            
+            $statement->execute();
+            
+            $questionAnswers = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $questionAnswers;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Deletes a test from the records.
      * @param int $testID The I.D. of the test.
      * @return int The number of test that were deleted.

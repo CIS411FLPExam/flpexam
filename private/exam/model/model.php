@@ -376,16 +376,19 @@
                     $query = 'INSERT INTO ' . TESTEEQUESTIONS_IDENTIFIER
                             . ' (' . TESTID_IDENTIFIER
                             . ', ' . 'QuestionNo'
+                            . ', ' . 'Level'
                             . ', ' . 'Instructions'
                             . ', ' . 'Question' . ') VALUES'
                             . ' (:' . TESTID_IDENTIFIER
                             . ', :' . 'QuestionNo'
+                            . ', :' . 'Level'
                             . ', :' . 'Instructions'
                             . ', :' . 'Question' . ');';
 
                     $statement = $db->prepare($query);
                     $statement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
                     $statement->bindValue(':' . 'QuestionNo', $qCount);
+                    $statement->bindValue(':' . 'Level', $question['Level']);
                     $statement->bindValue(':' . 'Instructions', $question['Instructions']);
                     $statement->bindValue(':' . 'Question', $question[NAME_IDENTIFIER]);
 

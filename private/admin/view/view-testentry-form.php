@@ -4,7 +4,16 @@
 ?>
 <!-- Start main content here -->
 <h1>Test Entry</h1>
+<?php if (userIsAuthorized(TESTVIEW_ACTION)) { ?>
+    <div class="formGroup">
 
+            <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTVIEW_ACTION)); ?>" method="post">
+                <input type="hidden" name="<?php echo(TESTID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
+                <input type="submit" value="View Test" />
+            </form>
+
+    </div>
+<?php } ?>
 <div class="infoSectionCntnr">
     <div class="infoSection">
         <h3>Student Info</h3>
