@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2014 at 06:23 PM
+-- Generation Time: Oct 23, 2014 at 05:30 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -30,11 +30,11 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `AnswerID` int(11) NOT NULL AUTO_INCREMENT,
   `QuestionID` int(11) NOT NULL,
   `Correct` tinyint(1) NOT NULL DEFAULT '0',
-  `Name` text NOT NULL,
+  `Name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=305 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=829 ;
 
 -- --------------------------------------------------------
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 --
 
 INSERT INTO `contacts` (`ContactID`, `FirstName`, `LastName`, `Email`, `Primary`) VALUES
-(1, 'Katy', 'O''Donnell', 'kodonnell@clarion.edu', 1);
+(1, 'Katy', 'O\'Donnell', 'kodonnell@clarion.edu', 1);
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
   `KeyCode` varchar(40) NOT NULL,
   `QuestionCount` int(11) NOT NULL DEFAULT '10',
   `IncLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
-  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
+  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.5000',
   PRIMARY KEY (`ParameterID`),
   UNIQUE KEY `ParameterID` (`ParameterID`),
   UNIQUE KEY `KeyCode` (`KeyCode`)
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
 --
 
 INSERT INTO `examparameters` (`ParameterID`, `KeyCode`, `QuestionCount`, `IncLevelScore`, `DecLevelScore`) VALUES
-(1, 'cis411', 2, '0.9800', '0.0000');
+(1, 'cis411', 2, '0.8000', '0.5000');
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=46 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
 
 --
 -- Dumping data for table `functions`
@@ -169,7 +169,8 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (42, 'LevelInfoDelete', 'Allows for deleting level infos.'),
 (43, 'ManageLevelInfos', 'Allows for viewing interface to add, edit, and delete level infos.'),
 (44, 'LanguageExperiencesEdit', 'Allows the user to edit the language experiences.'),
-(45, 'LanguageExperiencesView', 'Allows the user to view the language experiences.');
+(45, 'LanguageExperiencesView', 'Allows the user to view the language experiences.'),
+(46, 'TestDelete', 'Allows the user to delete test records.');
 
 -- --------------------------------------------------------
 
@@ -215,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
 --
 
 INSERT INTO `languages` (`LanguageID`, `Name`, `Active`) VALUES
-(2, 'Spanish', 0);
+(1, 'Spanish', 1);
 
 -- --------------------------------------------------------
 
@@ -254,12 +255,12 @@ INSERT INTO `levelinfos` (`LevelInfoID`, `LanguageID`, `Level`, `Name`, `Course`
 CREATE TABLE IF NOT EXISTS `questions` (
   `QuestionID` int(11) NOT NULL AUTO_INCREMENT,
   `Level` int(11) NOT NULL,
-  `Name` text NOT NULL,
+  `Name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `LanguageID` int(11) NOT NULL,
-  `Instructions` text NOT NULL,
+  `Instructions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=153 ;
 
 -- --------------------------------------------------------
 
@@ -358,7 +359,8 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 4),
 (1, 3),
 (1, 16),
-(1, 17);
+(1, 17),
+(1, 46);
 
 -- --------------------------------------------------------
 
@@ -401,6 +403,23 @@ INSERT INTO `spokenathomeinitlevel` (`InitLevel`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `testeeanswers`
+--
+
+CREATE TABLE IF NOT EXISTS `testeeanswers` (
+  `TestID` int(11) NOT NULL,
+  `QuestionNo` int(11) NOT NULL,
+  `AnswerNo` int(11) NOT NULL,
+  `Answer` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Chosen` tinyint(1) NOT NULL DEFAULT '0',
+  `Correct` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`TestID`,`QuestionNo`,`AnswerNo`),
+  KEY `testeeanswers_testeequestion_fk` (`TestID`,`QuestionNo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `testeeexperiences`
 --
 
@@ -416,6 +435,20 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
   KEY `collegeexp_languageexperience_fk` (`CollegeExp`),
   KEY `jrhighexp_languageexperience_fk` (`JrHighExp`),
   KEY `srhighexp_languageexperience_fk` (`SrHighExp`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `testeequestions`
+--
+
+CREATE TABLE IF NOT EXISTS `testeequestions` (
+  `TestID` int(11) NOT NULL,
+  `QuestionNo` int(11) NOT NULL,
+  `Instructions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Question` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`TestID`,`QuestionNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -449,7 +482,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=89 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -537,6 +570,12 @@ ALTER TABLE `rolefunctions`
   ADD CONSTRAINT `rolefunctions_ibfk_2` FOREIGN KEY (`FunctionID`) REFERENCES `functions` (`FunctionID`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `testeeanswers`
+--
+ALTER TABLE `testeeanswers`
+  ADD CONSTRAINT `testeeanswers_testeequestion_fk` FOREIGN KEY (`TestID`, `QuestionNo`) REFERENCES `testeequestions` (`TestID`, `QuestionNo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `testeeexperiences`
 --
 ALTER TABLE `testeeexperiences`
@@ -544,6 +583,12 @@ ALTER TABLE `testeeexperiences`
   ADD CONSTRAINT `jrhighexp_languageexperience_fk` FOREIGN KEY (`JrHighExp`) REFERENCES `languageexperiences` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `srhighexp_languageexperience_fk` FOREIGN KEY (`SrHighExp`) REFERENCES `languageexperiences` (`Name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `testeeexperiences_testee_fk` FOREIGN KEY (`TestID`) REFERENCES `testentries` (`TestID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `testeequestions`
+--
+ALTER TABLE `testeequestions`
+  ADD CONSTRAINT `testeequestions_testentry_fk` FOREIGN KEY (`TestID`) REFERENCES `testentries` (`TestID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `testees`
