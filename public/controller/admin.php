@@ -156,17 +156,17 @@
             case PROCESSEXAMPARAMETERSEDIT_ACTION :
                 ProcessExamParametersEdit();
                 break;
-            case MANAGETESTS_ACTION :
-                ManageTests();
+            case MANAGETESTENTRIES_ACTION :
+                ManageTestEntries();
                 break;
-            case TESTVIEW_ACTION :
-                TestView();
+            case TESTENTRYVIEW_ACTION :
+                TestEntryView();
                 break;
-            case TESTDELETE_ACTION :
-                TestDelete();
+            case TESTENTRYDELETE_ACTION :
+                TestEntryDelete();
                 break;
-            case TESTSEARCH_ACTION :
-                TestSearch();
+            case TESTENTRYSEARCH_ACTION :
+                TestEntrySearch();
                 break;
             case LANGUAGEIMPORT_ACTION :
                 LanguageImport();
@@ -1067,9 +1067,9 @@
         }
     }
     
-    function TestView()
+    function TestEntryView()
     {
-        if(!userIsAuthorized(TESTVIEW_ACTION))
+        if(!userIsAuthorized(TESTENTRYVIEW_ACTION))
         {
             include(NOTAUTHORIZED_FILE);
             exit();
@@ -1094,11 +1094,11 @@
             exit();
         }
         
-        $testInfo = GetDetailedTest($testID);
+        $testInfo = GetDetailedTestEntry($testID);
         
         if ($testInfo->GetId() > 0)
         {
-            include(VIEWTESTFORM_FILE);
+            include(VIEWTESTENTRYFORM_FILE);
         }
         else
         {
@@ -1107,9 +1107,9 @@
         }
     }
     
-    function TestDelete()
+    function TestEntryDelete()
     {
-        if (!userIsAuthorized(TESTDELETE_ACTION))
+        if (!userIsAuthorized(TESTENTRYDELETE_ACTION))
         {
             include(NOTAUTHORIZED_FILE);
             exit();
@@ -1125,17 +1125,17 @@
                 {
                     $testID = $_POST["record$i"];
                     
-                    DeleteTest($testID);
+                    DeleteTestEntry($testID);
                 }
             }
         }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION));
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTENTRIES_ACTION));
     }
     
-    function TestSearch()
+    function TestEntrySearch()
     {
-        if(!userIsAuthorized(TESTSEARCH_ACTION))
+        if(!userIsAuthorized(TESTENTRYSEARCH_ACTION))
         {
             include(NOTAUTHORIZED_FILE);
             exit();
@@ -1150,14 +1150,14 @@
         
         $languageNames = GetAllLanguagesNames();
         
-        $testInfos = SearchForTest($name, $language, $minScore, $maxScore, $minDate, $maxDate);
+        $testInfos = SearchForTestEntry($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
         include(MANAGETESTSFORM_FILE);
     }
     
-    function ManageTests()
+    function ManageTestEntries()
     {
-        if(!userIsAuthorized(MANAGETESTS_ACTION))
+        if(!userIsAuthorized(MANAGETESTENTRIES_ACTION))
         {
             include(NOTAUTHORIZED_FILE);
             exit();
@@ -1172,7 +1172,7 @@
         $minDate = ToDisplayDate(date("Y-m-d", strtotime("-7 days")));
         $maxDate = ToDisplayDate(date("Y-m-d", strtotime("+1 days")));
         
-        $testInfos = SearchForTest($name, $language, $minScore, $maxScore, $minDate, $maxDate);
+        $testInfos = SearchForTestEntry($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
         include(MANAGETESTSFORM_FILE);
     }

@@ -455,7 +455,7 @@
     /**
      * The file path of the view test form file.
      */
-    define("VIEWTESTFORM_FILE", ADMINVIEW_DIR . "view-test-form.php");
+    define("VIEWTESTENTRYFORM_FILE", ADMINVIEW_DIR . "view-testentry-form.php");
     
     /**
      * The file path of the manage contacts form file.

@@ -13,8 +13,8 @@
                 <?php if (userIsAuthorized(MANAGEUSERS_ACTION)) { ?>
                     <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>"><span>Users</span></a></li>
                 <?php } ?>
-                <?php if (userIsAuthorized(MANAGETESTS_ACTION)) { ?>
-                    <li><a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>"><span>Tests</span></a></li>
+                <?php if (userIsAuthorized(MANAGETESTENTRIES_ACTION)) { ?>
+                    <li><a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTENTRIES_ACTION ) ) ?>"><span>Tests</span></a></li>
                 <?php } ?>
                 <?php if (userIsAuthorized(MANAGECONTACTS_ACTION)) { ?>
                     <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION)) ?>"><span>Contacts</span></a></li>

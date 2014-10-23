@@ -6,15 +6,15 @@
 <h1>Tests</h1>
 
 <?php
-    $userCanView = userIsAuthorized(TESTVIEW_ACTION);
-    $userCanDelete = userIsAuthorized(TESTDELETE_ACTION);
-    $userCanSearch = userIsAuthorized(TESTSEARCH_ACTION);
+    $userCanView = userIsAuthorized(TESTENTRYVIEW_ACTION);
+    $userCanDelete = userIsAuthorized(TESTENTRYDELETE_ACTION);
+    $userCanSearch = userIsAuthorized(TESTENTRYSEARCH_ACTION);
 ?>
 
 <?php if ($userCanSearch) { ?>
     <h3>Search</h3>
     <div class="formGroup">
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTSEARCH_ACTION)); ?>" method="post">
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYSEARCH_ACTION)); ?>" method="post">
             <div class="formGroup">
                 <label class="srchSectLbl">Name:</label>
                 <input class="srchSectTxt" type="text" name="Name" value="<?php echo(htmlspecialchars($name)); ?>" />
@@ -45,7 +45,7 @@
 
             <input type="submit" value="Search" />
         </form>
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION)); ?>" method="post">
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTENTRIES_ACTION)); ?>" method="post">
             <input type="submit" value="Clear" />
         </form>
     </div>
@@ -53,7 +53,7 @@
 <?php } ?>
     
 <?php if (count($testInfos)) { ?>
-    <form onsubmit="return ConfirmationPrompt('Delete the selected test records?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTDELETE_ACTION)); ?>" method="post">
+    <form onsubmit="return ConfirmationPrompt('Delete the selected test records?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYDELETE_ACTION)); ?>" method="post">
         <div class="datatable">
             <table id="tests" class="tablesorter">
                 <thead>
@@ -87,7 +87,7 @@
                         <td><?php echo(htmlspecialchars($date)); ?></td>
                         <?php if ($userCanView) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urlencode($testID))); ?>">
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urlencode($testID))); ?>">
                                     View
                                 </a>
                             </td>

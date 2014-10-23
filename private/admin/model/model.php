@@ -15,7 +15,7 @@
      * @param int $testID The I.D. of the test.
      * @return int The number of test that were deleted.
      */
-    function DeleteTest($testID)
+    function DeleteTestEntry($testID)
     {
         try
         {
@@ -1007,7 +1007,7 @@
      * @param int $testID The I.D. of the test.
      * @return \DetailedTestInfo The detailed test information.
      */
-    function GetDetailedTest($testID)
+    function GetDetailedTestEntry($testID)
     {
         try
         {
@@ -2334,7 +2334,7 @@
      * @param float $maxDate The maximum date.
      * @return \TestInfo The collection of test entries found
      */
-    function SearchForTest($name, $language, $minScore, $maxScore, $minDate, $maxDate)
+    function SearchForTestEntry($name, $language, $minScore, $maxScore, $minDate, $maxDate)
     {
         try
         {

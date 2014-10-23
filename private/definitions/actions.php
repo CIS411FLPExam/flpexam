@@ -219,22 +219,22 @@
     /**
      * The action word to use to manage tests.
      */
-    define("MANAGETESTS_ACTION", "ManageTests");
+    define("MANAGETESTENTRIES_ACTION", "ManageTestEntries");
     
     /**
      * The action word to use to view a test.
      */
-    define("TESTVIEW_ACTION", "TestView");
+    define("TESTENTRYVIEW_ACTION", "TestEntryView");
     
     /**
      * The action word to use to delete a test.
      */
-    define("TESTDELETE_ACTION", "TestDelete");
+    define("TESTENTRYDELETE_ACTION", "TestEntryDelete");
     
     /**
      * The action word to use to search tests by name.
      */
-    define("TESTSEARCH_ACTION", "TestSearch");
+    define("TESTENTRYSEARCH_ACTION", "TestEntrySearch");
     
     /**
      * The action word to use to import the questions for a langauge.

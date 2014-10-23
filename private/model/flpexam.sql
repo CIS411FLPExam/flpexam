@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2014 at 05:30 PM
+-- Generation Time: Oct 23, 2014 at 06:08 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
 --
 
 INSERT INTO `contacts` (`ContactID`, `FirstName`, `LastName`, `Email`, `Primary`) VALUES
-(1, 'Katy', 'O\'Donnell', 'kodonnell@clarion.edu', 1);
+(1, 'Katy', 'O''Donnell', 'kodonnell@clarion.edu', 1);
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
   `KeyCode` varchar(40) NOT NULL,
   `QuestionCount` int(11) NOT NULL DEFAULT '10',
   `IncLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
-  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.5000',
+  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
   PRIMARY KEY (`ParameterID`),
   UNIQUE KEY `ParameterID` (`ParameterID`),
   UNIQUE KEY `KeyCode` (`KeyCode`)
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
 --
 
 INSERT INTO `examparameters` (`ParameterID`, `KeyCode`, `QuestionCount`, `IncLevelScore`, `DecLevelScore`) VALUES
-(1, 'cis411', 2, '0.8000', '0.5000');
+(1, 'cis411', 2, '1.0000', '0.0000');
 
 -- --------------------------------------------------------
 
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
 
 --
 -- Dumping data for table `functions`
@@ -155,8 +155,8 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (28, 'QuestionSearch', 'Allows the user to search questions.'),
 (29, 'ExamParametersView', 'Allows the user to view the exam parameters.'),
 (30, 'ExamParametersEdit', 'Allows the user to edit the exam parameters.'),
-(31, 'ManageTests', 'Allows the user to manage test scores.'),
-(32, 'TestView', 'Allows the user to view a test.'),
+(31, 'ManageTestEntries', 'Allows the user to manage test scores.'),
+(32, 'TestEntryView', 'Allows the user to view a test.'),
 (33, 'LanguageImport', 'Allows the user to import the questions for a langauge.'),
 (34, 'LanguageExport', 'Allows the user to export the questions of a language.'),
 (35, 'ContactAdd', 'Allows the user to add a contact.'),
@@ -170,7 +170,8 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (43, 'ManageLevelInfos', 'Allows for viewing interface to add, edit, and delete level infos.'),
 (44, 'LanguageExperiencesEdit', 'Allows the user to edit the language experiences.'),
 (45, 'LanguageExperiencesView', 'Allows the user to view the language experiences.'),
-(46, 'TestDelete', 'Allows the user to delete test records.');
+(46, 'TestEntryDelete', 'Allows the user to delete test records.'),
+(47, 'TestEntrySearch', 'Allows the user to search test entries.');
 
 -- --------------------------------------------------------
 
@@ -216,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
 --
 
 INSERT INTO `languages` (`LanguageID`, `Name`, `Active`) VALUES
-(1, 'Spanish', 1);
+(2, 'Spanish', 1);
 
 -- --------------------------------------------------------
 
@@ -355,12 +356,13 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 12),
 (1, 14),
 (1, 13),
+(1, 46),
 (1, 32),
 (1, 4),
 (1, 3),
 (1, 16),
 (1, 17),
-(1, 46);
+(1, 47);
 
 -- --------------------------------------------------------
 
@@ -482,7 +484,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 

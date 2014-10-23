@@ -38,9 +38,9 @@
                 </td>
             <?php } ?>
             
-            <?php if (userIsAuthorized(MANAGETESTS_ACTION)) {  ?>
+            <?php if (userIsAuthorized(MANAGETESTENTRIES_ACTION)) {  ?>
                 <td>
-                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION ) ) ?>">Tests</a>
+                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTENTRIES_ACTION ) ) ?>">Tests</a>
                 </td>
             <?php } ?>
                 
