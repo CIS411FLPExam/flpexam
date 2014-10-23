@@ -1217,7 +1217,9 @@
                     . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' WHERE'
                      . ' ' . LANGUAGEID_IDENTIFIER
                     . ' = :'. LANGUAGEID_IDENTIFIER . ' AND ('
-                    . QUESTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER . ' LIKE'
+                    . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ' OR'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER . ' LIKE'
                     . ' :' . NAME_IDENTIFIER . ' OR' 
                     . ' ' . 'Instructions' . ' LIKE'
                     . ' :' . NAME_IDENTIFIER . ' OR'
@@ -1229,6 +1231,7 @@
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
             $statement->bindValue(':' . NAME_IDENTIFIER, '%' . $name . '%');
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $name);
             $statement->execute();
             
             $results = $statement->fetchAll();

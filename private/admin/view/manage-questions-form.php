@@ -81,6 +81,7 @@
             <table id="questions" class="tablesorter">
                 <thead>
                     <tr>
+                        <th><b>I.D.</b></th>
                         <th><b>Level</b></th>
                         <th><b>Question</b></th>
                         <th><b>Correctly&nbsp;Answered</b></th>
@@ -98,10 +99,16 @@
                             $questionName = $question[NAME_IDENTIFIER];
                             $questionLevel = $question['Level'];
                             $correctlyAnsweredPercent = $question['CorrectlyAnsweredPercent'];
+                            
+                            if(strlen($questionName) > 65)
+                            {
+                                $questionName = substr($questionName, 0, 62) . '...';
+                            }
                     ?>
 
                     <tr>
-                        <td><?php echo(htmlspecialchars($questionLevel)); ?></td>
+                        <td><?php echo(htmlspecialchars($questionID)); ?></td>
+                        <td class="centerText"><?php echo(htmlspecialchars($questionLevel)); ?></td>
                         <td><?php echo(htmlspecialchars($questionName)); ?></td>
                         <td class="centerText"><?php echo(htmlspecialchars($correctlyAnsweredPercent)); ?>% of the time</td>
                         <?php if ($userCanView) { ?>
