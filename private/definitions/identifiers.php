@@ -1,6 +1,16 @@
 <?php
 
     /**
+     * The identifier of the testee answer records.
+     */
+    define("TESTEEANSWERS_IDENTIFIER", "testeeanswers");
+    
+    /**
+     * The identifier of the testee question records.
+     */
+    define("TESTEEQUESTIONS_IDENTIFIER", "testeequestions");
+    
+    /**
      * The identifier of the initial spoken at home level record.
      */
     define("SPOKENATHOMEINITLEVEL_IDENTIFIER", "spokenathomeinitlevel");

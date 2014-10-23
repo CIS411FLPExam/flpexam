@@ -2,6 +2,7 @@
 
     //Need this because functions from this file will be called.
     require_once(MODEL_FILE);
+    require_once(QUESTIONANSWERCLASS_FILE);
     
     /**
      * Indicates whether or not the given level exists.
@@ -348,6 +349,97 @@
         
         return $isClear;
     }
+    
+    /**
+     * Adds a testee's questions and answers to the records.
+     * @param int $testEntryID The I.D. of the test entry.
+     * @param array $examQAs The collection of QuestionAnswers.
+     */
+    function AddTesteeQuestions($testEntryID, $examQAs)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $qCount = 0;
+            foreach ($examQAs as $qa)
+            {
+                $questionID = $qa->GetQuestionId();
+                $question = GetQuestion($questionID);
+                
+                if (count($question) > 0)
+                {
+                    $qCount++;
+                    
+                    $answers = GetQuestionAnswers($questionID);
+
+                    $query = 'INSERT INTO ' . TESTEEQUESTIONS_IDENTIFIER
+                            . ' (' . TESTID_IDENTIFIER
+                            . ', ' . 'QuestionNo'
+                            . ', ' . 'Instructions'
+                            . ', ' . 'Question' . ') VALUES'
+                            . ' (:' . TESTID_IDENTIFIER
+                            . ', :' . 'QuestionNo'
+                            . ', :' . 'Instructions'
+                            . ', :' . 'Question' . ');';
+
+                    $statement = $db->prepare($query);
+                    $statement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
+                    $statement->bindValue(':' . 'QuestionNo', $qCount);
+                    $statement->bindValue(':' . 'Instructions', $question['Instructions']);
+                    $statement->bindValue(':' . 'Question', $question[NAME_IDENTIFIER]);
+
+                    $statement->execute();
+                    
+                    $statement->closeCursor();
+                    
+                    $aCount = 0;
+                    foreach($answers as $answer)
+                    {
+                        $aCount++;
+                        
+                        $query = 'INSERT INTO ' . TESTEEANSWERS_IDENTIFIER
+                                . ' (' . TESTID_IDENTIFIER
+                                . ', ' . 'QuestionNo'
+                                . ', ' . 'AnswerNo'
+                                . ', ' . 'Answer'
+                                . ', ' . 'Correct'
+                                . ', ' . 'Chosen' . ') VALUES'
+                                . ' (:' . TESTID_IDENTIFIER
+                                . ', :' . 'QuestionNo'
+                                . ', :' . 'AnswerNo'
+                                . ', :' . 'Answer'
+                                . ', :' . 'Correct'
+                                . ', :' . 'Chosen' . ');';
+                        
+                        $chosen = '0';
+                        
+                        if ($answer[ANSWERID_IDENTIFIER] == $qa->GetAnswerId())
+                        {
+                            $chosen = '1';
+                        }
+                        
+                        $statement = $db->prepare($query);
+                        $statement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
+                        $statement->bindValue(':' . 'QuestionNo', $qCount);
+                        $statement->bindValue(':' . 'AnswerNo', $aCount);
+                        $statement->bindValue(':' . 'Answer', $answer[NAME_IDENTIFIER]);
+                        $statement->bindValue(':' . 'Chosen', $chosen);
+                        $statement->bindValue(':' . 'Correct', $answer['Correct']);
+                        
+                        $statement->execute();
+                        
+                        $statement->closeCursor();
+                    }
+                }
+            }
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
     
     /**
      * Adds a test entry to the records.

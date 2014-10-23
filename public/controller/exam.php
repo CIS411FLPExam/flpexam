@@ -28,7 +28,7 @@
         $action = "";
     }
     
-    if (!UserIsClear() && $action!= ENTERKEYCODE_ACTION && $action != PROCESSKEYCODE_ACTION)
+    if (!UserIsClear() && $action!= ENTERKEYCODE_ACTION && $action != PROCESSKEYCODE_ACTION && $action != TESTRESULTSVIEW_ACTION)
     {
         include(NOTAUTHORIZED_FILE);
         exit();
@@ -315,12 +315,13 @@
         }
         
         $profile = $exam->GetProfile();
+        $examQAs = $exam->GetAllQAs();
         
         $testEntryID = AddTestEntry($exam);
         AddTestee($testEntryID, $profile);
         AddTesteeExperiences($testEntryID, $profile);
+        AddTesteeQuestions($testEntryID, $examQAs);
         
-        $examQAs = $exam->GetAllQAs();
         foreach ($examQAs as $examQA)
         {
             $answerID = $examQA->GetAnswerId();
@@ -331,7 +332,7 @@
         
         StoreTestId($testEntryID);
         
-        TestResultsView();
+        Redirect(GetControllerScript(EXAMCONTROLLER_FILE, TESTRESULTSVIEW_ACTION));
     }
     
     function TestResultsView()

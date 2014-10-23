@@ -52,7 +52,7 @@
                                 <?php if($active == TRUE) { ?>
                                     Yes
                                 <?php } else if ($userCanEdit) { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
+                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>">
                                         Activate
                                     </a>
                                 <?php } else { ?>
@@ -62,7 +62,7 @@
                         <?php } ?>
                         <?php if ($userCanEdit) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTEDIT_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urldecode($contactID))); ?>">
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTEDIT_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>">
                                     Edit
                                 </a>
                             </td>

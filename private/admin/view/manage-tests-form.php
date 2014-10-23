@@ -7,6 +7,7 @@
 
 <?php
     $userCanView = userIsAuthorized(TESTVIEW_ACTION);
+    $userCanDelete = userIsAuthorized(TESTDELETE_ACTION);
     $userCanSearch = userIsAuthorized(TESTSEARCH_ACTION);
 ?>
 
@@ -52,52 +53,62 @@
 <?php } ?>
     
 <?php if (count($testInfos)) { ?>
-    <div class="datatable">
-        <table id="tests" class="tablesorter">
-            <thead>
-                <tr>
-                    <th><b>First Name</b></th>
-                    <th><b>Last Name</b></th>
-                    <th><b>Language</b></th>
-                    <th><b>Score</b></th>
-                    <th><b>Date</b></th>
-                    <?php if ($userCanView) { ?><th></th><?php } ?>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    $j = 0;
-                    foreach ($testInfos as $testInfo)
-                    {
-                        $testID = $testInfo->GetId();
-                        $firstName = $testInfo->GetFirstName();
-                        $lastName = $testInfo->GetLastName();
-                        $language = $testInfo->GetLanguage();
-                        $score = $testInfo->GetScore();
-                        $date = $testInfo->GetDate();
-                ?>
-                <tr>
-                    <td><?php echo(htmlspecialchars($firstName)); ?></td>
-                    <td><?php echo(htmlspecialchars($lastName)); ?></td>
-                    <td><?php echo(htmlspecialchars($language)); ?></td>
-                    <td><?php echo(htmlspecialchars($score)); ?></td>
-                    <td><?php echo(htmlspecialchars($date)); ?></td>
-                    <?php if ($userCanView) { ?>
-                        <td>
-                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urldecode($testID))); ?>">
-                                View
-                            </a>
-                        </td>
-                    <?php } ?>
-                </tr>
-                <?php
-                        ++$j;
-                    }
-                ?>
-            </tbody>
-        </table>
-    </div>
-    <input type="hidden" name="numListed" value="<?php echo count($testInfos); ?>" />
+    <form onsubmit="return ConfirmationPrompt('Delete the selected test records?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTDELETE_ACTION)); ?>" method="post">
+        <div class="datatable">
+            <table id="tests" class="tablesorter">
+                <thead>
+                    <tr>
+                        <th><b>First Name</b></th>
+                        <th><b>Last Name</b></th>
+                        <th><b>Language</b></th>
+                        <th><b>Score</b></th>
+                        <th><b>Date</b></th>
+                        <?php if ($userCanView) { ?><th></th><?php } ?>
+                        <?php if ($userCanDelete){ ?><th></th><?php } ?>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $j = 0;
+                        foreach ($testInfos as $testInfo)
+                        {
+                            $testID = $testInfo->GetId();
+                            $firstName = $testInfo->GetFirstName();
+                            $lastName = $testInfo->GetLastName();
+                            $language = $testInfo->GetLanguage();
+                            $score = $testInfo->GetScore();
+                            $date = $testInfo->GetDate();
+                    ?>
+                    <tr>
+                        <td><?php echo(htmlspecialchars($firstName)); ?></td>
+                        <td><?php echo(htmlspecialchars($lastName)); ?></td>
+                        <td><?php echo(htmlspecialchars($language)); ?></td>
+                        <td><?php echo(htmlspecialchars($score)); ?></td>
+                        <td><?php echo(htmlspecialchars($date)); ?></td>
+                        <?php if ($userCanView) { ?>
+                            <td>
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urlencode($testID))); ?>">
+                                    View
+                                </a>
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanDelete) { ?>
+                            <td>
+                                <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($testID)) ?>" />
+                            </td>
+                        <?php } ?>
+                    </tr>
+                    <?php
+                            ++$j;
+                        }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <input type="hidden" name="numListed" value="<?php echo(count($testInfos)); ?>" />
+        <br />
+        <input type="submit" value="Delete Selected" />
+    </form>
 <?php } else { ?>
     <h3>No tests found.</h3>
 <?php } ?>

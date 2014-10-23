@@ -21,7 +21,7 @@
     </div>
     
     <?php if(userIsAuthorized(USEREDIT_ACTION)) { ?>
-        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urldecode($userID))) ?>">
+        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($userID))) ?>">
             Edit
         </a>
     <?php } ?>

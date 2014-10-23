@@ -77,11 +77,11 @@
     <?php
         if (isset($questionID))
         {
-            $cancelAction = GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . QUESTIONID_IDENTIFIER . '=' . urldecode($questionID);
+            $cancelAction = GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . QUESTIONID_IDENTIFIER . '=' . urlencode($questionID);
         }
         else
         {
-            $cancelAction = GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urldecode($languageID);
+            $cancelAction = GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID);
         }
     ?>
     <form class="inline" action="<?php echo($cancelAction) ?>" method="post">

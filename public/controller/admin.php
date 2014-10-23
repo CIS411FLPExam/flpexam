@@ -162,6 +162,9 @@
             case TESTVIEW_ACTION :
                 TestView();
                 break;
+            case TESTDELETE_ACTION :
+                TestDelete();
+                break;
             case TESTSEARCH_ACTION :
                 TestSearch();
                 break;
@@ -631,7 +634,7 @@
             }
         }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urldecode($languageID));
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID));
     }
     
     function LanguageActivate()
@@ -1102,6 +1105,32 @@
             $message = 'The test you wish to view does not exist.';
             include(MESSAGEFORM_FILE);
         }
+    }
+    
+    function TestDelete()
+    {
+        if (!userIsAuthorized(TESTDELETE_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+            
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $testID = $_POST["record$i"];
+                    
+                    DeleteTest($testID);
+                }
+            }
+        }
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTS_ACTION));
     }
     
     function TestSearch()
@@ -1650,7 +1679,7 @@
                 }
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . urldecode($questionID)));
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . urlencode($questionID)));
         }
         
         $message = 'Errors';

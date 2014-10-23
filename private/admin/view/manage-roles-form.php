@@ -32,7 +32,7 @@
                     echo "<tr>";
                     echo "<td>$name</td><td>$desc</td>";
                     if (userIsAuthorized(ROLEEDIT_ACTION)) {
-                        echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,ROLEEDIT_ACTION) . "&id=" . urldecode($role_ID) . "\">Edit</a></td>";
+                        echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,ROLEEDIT_ACTION) . "&id=" . urlencode($role_ID) . "\">Edit</a></td>";
                     } else {
                         echo "<td></td>";
                     }

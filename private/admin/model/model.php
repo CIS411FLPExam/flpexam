@@ -11,6 +11,36 @@
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
     
     /**
+     * Deletes a test from the records.
+     * @param int $testID The I.D. of the test.
+     * @return int The number of test that were deleted.
+     */
+    function DeleteTest($testID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'DELETE FROM ' . TESTENTIRES_IDENTIFIER . ' WHERE'
+                    . ' ' . TESTID_IDENTIFIER
+                    . ' = :' . TESTID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            
+            $rowsDeleted = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsDeleted;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Sets the initial level that corresponds to a language spoken at home.
      * @param int $initLevel The initial level.
      */

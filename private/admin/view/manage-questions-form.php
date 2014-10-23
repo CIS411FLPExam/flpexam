@@ -106,14 +106,14 @@
                         <td class="centerText"><?php echo(htmlspecialchars($correctlyAnsweredPercent)); ?>% of the time</td>
                         <?php if ($userCanView) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urldecode($questionID))) ?>">
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urlencode($questionID))) ?>">
                                     View
                                 </a>
                             </td>
                         <?php } ?>
                         <?php if ($userCanEdit) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urldecode($questionID))) ?>">
+                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urlencode($questionID))) ?>">
                                     Edit
                                 </a>
                             </td>

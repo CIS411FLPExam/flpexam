@@ -63,14 +63,14 @@
 
                     <?php if ($userCanView) { ?>
                         <td>
-                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . "&". USERID_IDENTIFIER . "=" . urldecode($user_ID))) ?>">
+                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>">
                                 View
                             </a>
                         </td>
                     <?php } ?>
                     <?php if ($userCanEdit) { ?>
                         <td>
-                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urldecode($user_ID))) ?>">
+                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>">
                                 Edit
                             </a>
                         </td>
