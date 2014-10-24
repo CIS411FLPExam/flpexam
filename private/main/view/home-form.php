@@ -11,7 +11,7 @@
     <p>
         The following examination will help us better understand your knowledge of foreign languages.
         <br />
-        The information provided by this screening will help determine what language courses
+        The information provided by this exam will help determine what language courses
         <br />
         you will need to take upon enrollment at Clarion University.
     </p>

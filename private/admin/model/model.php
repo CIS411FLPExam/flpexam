@@ -11,6 +11,146 @@
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
     
     /**
+     * Appends the statistics of the questions to the collection of questions.
+     * @param array $questions The collection of questions.
+     */
+    function AppendQuestionStatistics(&$questions)
+    {
+        for($i = 0; $i < count($questions); $i++)
+        {
+            $question = $questions[$i];
+            
+            $correctlyAnsweredPercent = 100;
+            $markedAmbiguousCount = 0;
+            
+            $questionID = $question[QUESTIONID_IDENTIFIER];
+            
+            $totalAnswers = GetQuestionStatisticTotalTimesAnswered($questionID);
+            $totalCorrectAnswers = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
+            $totalTimesMarkedAmbig = GetQuestionAmbiguousCount($questionID);
+            
+            if ($totalAnswers > 0)
+            {
+                $correctlyAnsweredPercent = (floatval($totalCorrectAnswers) / floatval($totalAnswers)) * 100.0;                
+            }
+            
+            if (count($totalTimesMarkedAmbig) > 0)
+            {
+                $markedAmbiguousCount = $totalTimesMarkedAmbig['Count'];
+            }
+            
+            $question['CorrectlyAnsweredPercent'] = $correctlyAnsweredPercent;
+            $question['MarkedAmbiguousCount'] = $markedAmbiguousCount;
+            $questions[$i] = $question;
+        }
+    }
+    
+    /**
+     * Gets the number of times a question was marked ambiguous.
+     * @param int $questionID The I.D. of the question.
+     * @return array The ambiguous question count.
+     */
+    function GetQuestionAmbiguousCount($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . AMBIGUOUSQUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $ambiguousQuestionCounts = $statement->fetch();
+            
+            if ($ambiguousQuestionCounts == FALSE)
+            {
+                $ambiguousQuestionCounts = array();
+            }
+            
+            $statement->closeCursor();
+            
+            return $ambiguousQuestionCounts;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Resets the ambiguous question statistics for an entire language.
+     * @param int $languageID The I.D. of the language.
+     */
+    function ResetLanguageQuestionAmbiguousStats($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . AMBIGUOUSQUESTIONS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . AMBIGUOUSQUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . LANGUAGES_IDENTIFIER . ' ON'
+                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' SET'
+                    . ' ' . 'Count'
+                    . ' = ' . '0' . ' WHERE'
+                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Resets the ambiguous questions statistics for a question.
+     * @param int $questionID The I.D. of the question.
+     */
+    function ResetQuestionAmbiguousStats($questionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . AMBIGUOUSQUESTIONS_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . AMBIGUOUSQUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' SET'
+                    . ' ' . 'Count'
+                    . ' = ' . '0' . ' WHERE'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+            
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Gets the questions and answers for a particular test.
      * @param int $testID The I.D. of the test.
      * @return array The collection of questions and answers.
@@ -367,6 +507,8 @@
     {
         try
         {
+            ResetLanguageQuestionAmbiguousStats($languageID);
+            
             $db = GetDBConnection();
             
             $query = 'UPDATE ' . QUESTIONSTATISTICS_IDENTIFIER . ' INNER JOIN'
@@ -405,9 +547,10 @@
     {
         try
         {
+            ResetQuestionAmbiguousStats($questionID);
+            
             $db = GetDBConnection();
             
-            //UPDATE questionstatistics INNER JOIN answers ON answers.AnswerID = questionstatistics.AnswerID INNER JOIN questions ON questions.QuestionID = answers.QuestionID SET Count = 0 WHERE questions.QuestionID = 4;
             $query = 'UPDATE ' . QUESTIONSTATISTICS_IDENTIFIER . ' INNER JOIN'
                     . ' ' . ANSWERS_IDENTIFIER . ' ON'
                     . ' ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
@@ -426,6 +569,7 @@
             $statement->execute();
             
             $statement->closeCursor();
+            
         }
         catch (PDOException $ex)
         {

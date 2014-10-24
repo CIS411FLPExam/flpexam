@@ -1,6 +1,11 @@
 <?php
 
     /**
+     * The identifier of the ambiguous question records.
+     */
+    define("AMBIGUOUSQUESTIONS_IDENTIFIER", "ambiguousquestions");
+
+    /**
      * The identifier of the testee answer records.
      */
     define("TESTEEANSWERS_IDENTIFIER", "testeeanswers");

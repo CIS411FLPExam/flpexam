@@ -5,6 +5,38 @@
     require_once(QUESTIONANSWERCLASS_FILE);
     
     /**
+     * Marks a collection of questions as ambiguous.
+     * @param array $ambiguousQuestions The collection of question I.D.'s.
+     */
+    function MarkQuestionsAmbiguous($ambiguousQuestions)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            foreach ($ambiguousQuestions as $questionID)
+            {
+                $query = 'INSERT INTO ' . AMBIGUOUSQUESTIONS_IDENTIFIER
+                        . ' (' . QUESTIONID_IDENTIFIER . ') VALUES'
+                        . ' (:' . QUESTIONID_IDENTIFIER . ') ON DUPLICATE KEY UPDATE'
+                        . ' ' . 'Count'
+                        . ' = ' . 'Count' . '+1;';
+
+                $statement = $db->prepare($query);
+                $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+
+                $statement->execute();
+
+                $statement->closeCursor();
+            }
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Indicates whether or not the given level exists.
      * @param int $languageID The I.D. of the language.
      * @param int $level The level of the questions.

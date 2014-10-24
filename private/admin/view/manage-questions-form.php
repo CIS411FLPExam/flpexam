@@ -84,7 +84,8 @@
                         <th><b>I.D.</b></th>
                         <th><b>Level</b></th>
                         <th><b>Question</b></th>
-                        <th><b>Correctly&nbsp;Answered</b></th>
+                        <th><b>Avg&nbsp;Score</b></th>
+                        <th><b>Flagged</b></th>
                         <?php if ($userCanView) { ?><th></th><?php } ?>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanDelete) { ?><th></th><?php } ?>
@@ -99,6 +100,7 @@
                             $questionName = $question[NAME_IDENTIFIER];
                             $questionLevel = $question['Level'];
                             $correctlyAnsweredPercent = $question['CorrectlyAnsweredPercent'];
+                            $flagCount = $question['MarkedAmbiguousCount'];
                             
                             if(strlen($questionName) > 65)
                             {
@@ -110,7 +112,8 @@
                         <td><?php echo(htmlspecialchars($questionID)); ?></td>
                         <td class="centerText"><?php echo(htmlspecialchars($questionLevel)); ?></td>
                         <td><?php echo(htmlspecialchars($questionName)); ?></td>
-                        <td class="centerText"><?php echo(htmlspecialchars($correctlyAnsweredPercent)); ?>% of the time</td>
+                        <td class="centerText"><?php echo(number_format(htmlspecialchars($correctlyAnsweredPercent), 2)); ?>%</td>
+                        <td class="centerText"><?php echo(htmlspecialchars($flagCount)) ?> time(s)</td>
                         <?php if ($userCanView) { ?>
                             <td>
                                 <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urlencode($questionID))) ?>">

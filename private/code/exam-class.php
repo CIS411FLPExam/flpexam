@@ -55,6 +55,12 @@ class Exam
     private $allQAs;
     
     /**
+     * The questions that were marked as ambiguous.
+     * @var array of question I.D.'s
+     */
+    private $ambiguousQuestions;
+    
+    /**
      * Gets the flag that indicates whether or not the exam has been started.
      * @return boolean The flag that indicates whether or not the exam has been started.
      */
@@ -199,6 +205,24 @@ class Exam
     }
     
     /**
+     * Gets the collection of ambiguous questions.
+     * @return array The collection of question I.D.'s.
+     */
+    public function GetAmbiguousQuestions()
+    {
+        return $this->ambiguousQuestions;
+    }
+    
+    /**
+     * Sets the collection of ambiguous questions.
+     * @param array $ambiguousQuestions The collection of question I.D.'s.
+     */
+    public function SetAmbiguousQuestions($ambiguousQuestions)
+    {
+        $this->ambiguousQuestions = $ambiguousQuestions;
+    }
+    
+    /**
      * Creates an instance of an exam.
      * @param ExamParameters $parameters The paramaters.
      * @param Language $language The language.
@@ -214,6 +238,7 @@ class Exam
         $this->SetProfile($profile);
         $this->SetLvlQAs(array());
         $this->SetAllQAs(array());
+        $this->SetAmbiguousQuestions(array());
     }
     
     /**
@@ -523,6 +548,64 @@ class Exam
     }
     
     /**
+     * Indicates whether or not the question is in current level's question collection.
+     * @param int $questionID The I.D. of the question.
+     * @return boolean True, if the question is in the current level's question collection, or false otherwise.
+     */
+    protected function IsInLvlQAs($questionID)
+    {
+        $found = FALSE;
+        $lvlQAs = $this->GetLvlQAs();
+        
+        for ($i = 0; $i < count($lvlQAs) && !$found; $i++)
+        {
+            $lvlQA = $lvlQAs[$i];
+            
+            if ($lvlQA->IsQuestionIdSet() && $lvlQA->GetQuestionId() == $questionID)
+            {
+                $found = TRUE;
+            }
+        }
+        
+        return $found;
+    }
+    
+    /**
+     * Indicates whether or not the question is in the exam's past question collection.
+     * @param int $questionID The I.D. of the question.
+     * @return boolean True, if the question is in the exam's past question collection, or false otherwise.
+     */
+    protected function IsInAllQAs($questionID)
+    {
+        $found = FALSE;
+        $allQAs = $this->GetAllQAs();
+        
+        for ($i = 0; $i < count($allQAs) && !$found; $i++)
+        {
+            $lvlQA = $allQAs[$i];
+            
+            if ($lvlQA->IsQuestionIdSet() && $lvlQA->GetQuestionId() == $questionID)
+            {
+                $found = TRUE;
+            }
+        }
+        
+        return $found;
+    }
+    
+    /**
+     * Indciates whether or not a question is currently in the exam.
+     * @param int $questionID The I.D. of the question.
+     * @return boolean True, if the question is currently in the exam, or false otherwise.
+     */
+    protected function IsInExam($questionID)
+    {
+        $isInExam = ($this->IsInLvlQAs($questionID) || $this->IsInAllQAs($questionID));
+        
+        return $isInExam;
+    }
+    
+    /**
      * Gets the next unanswered question I.D. from the level of questions.
      * @return int The question I.D. of the next question or 0 if there are not more unanswered questions.
      */
@@ -586,6 +669,22 @@ class Exam
         $this->SetInitialLevel();
         $this->GetNewLvlQAs();
         $this->SetStarted(TRUE);
+    }
+    
+    /**
+     * Adds a question to the ambiguous question collection.
+     * @param int $questionID The I.D. of the question.
+     */
+    public function AddAmbiguousQuestion($questionID)
+    {
+        $ambiguousQuestions = $this->GetAmbiguousQuestions();
+        
+        if ($this->IsInExam($questionID))
+        {
+            $ambiguousQuestions[] = $questionID;
+        }
+        
+        $this->SetAmbiguousQuestions($ambiguousQuestions);
     }
 }
 ?>

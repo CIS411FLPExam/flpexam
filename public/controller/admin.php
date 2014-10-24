@@ -957,6 +957,7 @@
         if(isset($_FILES['file']))
         {
             $file = $_FILES['file'];
+            $fileName = $file['name'];
             $filePath = $file ['tmp_name'];
             $mime = $file['type'];
             $error = $file['error'];
@@ -973,7 +974,7 @@
             {
                 $type = 'Excel';
             }
-            else if ($mime == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || $mime = 'd2l/unknowntype')
+            else if ($mime == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
             {
                 $type = 'Word';
             }
@@ -1032,25 +1033,7 @@
         $lang = GetLanguage($languageID);
         $questions = GetQuestions($languageID, $level);
         
-        for($i = 0; $i < count($questions); $i++)
-        {
-            $question = $questions[$i];
-            
-            $correctlyAnsweredPercent = 100;
-            $questionID = $question[QUESTIONID_IDENTIFIER];
-            
-            $totalAnswers = GetQuestionStatisticTotalTimesAnswered($questionID);
-            $totalCorrectAnswers = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
-            
-            if ($totalAnswers > 0)
-            {
-                $correctlyAnsweredPercent = ($totalCorrectAnswers / $totalAnswers) * 100;
-            }
-            
-            $question['CorrectlyAnsweredPercent'] = $correctlyAnsweredPercent;
-            
-            $questions[$i] = $question;
-        }
+        AppendQuestionStatistics($questions);
         
         $language = $lang[NAME_IDENTIFIER];
         
@@ -1396,25 +1379,7 @@
         
         $questions = GetQuestions($languageID, $level);
         
-        for($i = 0; $i < count($questions); $i++)
-        {
-            $question = $questions[$i];
-            
-            $correctlyAnsweredPercent = 100;
-            $questionID = $question[QUESTIONID_IDENTIFIER];
-            
-            $totalAnswers = GetQuestionStatisticTotalTimesAnswered($questionID);
-            $totalCorrectAnswers = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
-            
-            if ($totalAnswers > 0)
-            {
-                $correctlyAnsweredPercent = ($totalCorrectAnswers / $totalAnswers) * 100;
-            }
-            
-            $question['CorrectlyAnsweredPercent'] = $correctlyAnsweredPercent;
-            
-            $questions[$i] = $question;
-        }
+        AppendQuestionStatistics($questions);
         
         $language = $lang[NAME_IDENTIFIER];
         
@@ -1559,7 +1524,14 @@
             $answerCounts = GetQuestionStatisticTotalAnswerCounts($questionID);
             $totalTimesAnswered = GetQuestionStatisticTotalTimesAnswered($questionID);
             $totalTimesAnsweredCorrectly = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
-
+            $totalTimesFlagged = 0;
+                    
+            $markedAmbiguousCount = GetQuestionAmbiguousCount($questionID);
+            if (count($markedAmbiguousCount) > 0)
+            {
+                $totalTimesFlagged = $markedAmbiguousCount['Count'];
+            }
+            
             include(VIEWQUESTIONFORM_FILE);
         }
         else
@@ -1770,25 +1742,7 @@
         
         $questions = SearchForQuestion($languageID, $name);
         
-        for($i = 0; $i < count($questions); $i++)
-        {
-            $question = $questions[$i];
-            
-            $correctlyAnsweredPercent = 100;
-            $questionID = $question[QUESTIONID_IDENTIFIER];
-            
-            $totalAnswers = GetQuestionStatisticTotalTimesAnswered($questionID);
-            $totalCorrectAnswers = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
-            
-            if ($totalAnswers > 0)
-            {
-                $correctlyAnsweredPercent = ($totalCorrectAnswers / $totalAnswers) * 100;
-            }
-            
-            $question['CorrectlyAnsweredPercent'] = $correctlyAnsweredPercent;
-            
-            $questions[$i] = $question;
-        }
+        AppendQuestionStatistics($questions);
         
         $language = $lang[NAME_IDENTIFIER];
         

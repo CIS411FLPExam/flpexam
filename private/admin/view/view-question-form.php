@@ -5,7 +5,13 @@
 <!-- Start main content here -->
 <h1>Question</h1>
 
-<div class="formGroup">   
+<div class="formGroup">
+    <div class="formSection">
+        <label>I.D.:</label><?php echo(htmlspecialchars($questionID)); ?>
+    </div>
+
+    <div class="divider"></div>
+    
     <div class="formSection">
         <label>Level:</label><?php echo(htmlspecialchars($level)); ?>
     </div>
@@ -65,6 +71,15 @@
         time(s).
     </div>
     
+    <div class="divider"></div>
+    
+    <div class="formSection">
+        The question has been flagged
+        <b>
+            <?php echo(htmlspecialchars($totalTimesFlagged)); ?>
+        </b>
+        time(s).
+    </div>
     <?php
         $i = 1;
         foreach ($answers as $answer)

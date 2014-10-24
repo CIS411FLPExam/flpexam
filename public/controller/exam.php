@@ -285,6 +285,11 @@
         {
             $questionID = $_POST[QUESTIONID_IDENTIFIER];
             $answerID = $_POST[ANSWERID_IDENTIFIER];
+            
+            if (isset($_POST['AmbiguousQuestion']))
+            {
+                $exam->AddAmbiguousQuestion($questionID);
+            }
 
             $exam->PushQuestionAnswerID($questionID, $answerID);
 
@@ -316,11 +321,13 @@
         
         $profile = $exam->GetProfile();
         $examQAs = $exam->GetAllQAs();
+        $ambiguousQuestions = $exam->GetAmbiguousQuestions();
         
         $testEntryID = AddTestEntry($exam);
         AddTestee($testEntryID, $profile);
         AddTesteeExperiences($testEntryID, $profile);
         AddTesteeQuestions($testEntryID, $examQAs);
+        MarkQuestionsAmbiguous($ambiguousQuestions);
         
         foreach ($examQAs as $examQA)
         {

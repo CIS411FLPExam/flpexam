@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2014 at 06:08 PM
+-- Generation Time: Oct 24, 2014 at 06:28 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -19,6 +19,18 @@ SET time_zone = "+00:00";
 --
 -- Database: `flpexam`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ambiguousquestions`
+--
+
+CREATE TABLE IF NOT EXISTS `ambiguousquestions` (
+  `QuestionID` int(11) NOT NULL,
+  `Count` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`QuestionID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -119,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
 
 --
 -- Dumping data for table `functions`
@@ -171,7 +183,8 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (44, 'LanguageExperiencesEdit', 'Allows the user to edit the language experiences.'),
 (45, 'LanguageExperiencesView', 'Allows the user to view the language experiences.'),
 (46, 'TestEntryDelete', 'Allows the user to delete test records.'),
-(47, 'TestEntrySearch', 'Allows the user to search test entries.');
+(47, 'TestEntrySearch', 'Allows the user to search test entries.'),
+(48, 'TestView', 'Allows the user to view an actual test.');
 
 -- --------------------------------------------------------
 
@@ -317,6 +330,7 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (3, 28),
 (3, 26),
 (3, 32),
+(3, 47),
 (1, 35),
 (1, 38),
 (1, 37),
@@ -357,12 +371,13 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 14),
 (1, 13),
 (1, 46),
+(1, 47),
 (1, 32),
 (1, 4),
 (1, 3),
 (1, 16),
 (1, 17),
-(1, 47);
+(1, 48);
 
 -- --------------------------------------------------------
 
@@ -451,8 +466,7 @@ CREATE TABLE IF NOT EXISTS `testeequestions` (
   `Level` int(11) NOT NULL,
   `Instructions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `Question` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`TestID`,`QuestionNo`),
-  CONSTRAINT `testeequestions_testentry_fk` FOREIGN KEY (`TestID`) REFERENCES `testentries` (`TestID`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`TestID`,`QuestionNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -486,7 +500,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -535,6 +549,12 @@ INSERT INTO `users` (`UserID`, `UserName`, `Password`) VALUES
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `ambiguousquestions`
+--
+ALTER TABLE `ambiguousquestions`
+  ADD CONSTRAINT `ambiguousquestions_question_fk` FOREIGN KEY (`QuestionID`) REFERENCES `questions` (`QuestionID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `answers`
