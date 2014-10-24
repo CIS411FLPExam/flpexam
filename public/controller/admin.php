@@ -177,6 +177,9 @@
             case LANGUAGEEXPORT_ACTION :
                 LanguageExport();
                 break;
+            case LANGUAGESTATISTICSEXPORT_ACTION :
+                LanguageStatisticsExport();
+                break;
             case MANAGECONTACTS_ACTION :
                 ManageContacts();
                 break;
@@ -1080,6 +1083,54 @@
             header('Content-type: application/octet-stream');
             header('Content-Length: ' . filesize($file));
             header('Content-Disposition: attachment; filename=' . $languageName .'.xlsx');
+            readfile($file);
+
+            DeleteFile($file);
+        }
+        else
+        {
+            $message = 'The language you wish to export does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
+    }
+    
+    function LanguageStatisticsExport()
+    {
+        if(!userIsAuthorized(LANGUAGESTATISTICSEXPORT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $language = GetLanguage($languageID);
+        
+        if ($language != FALSE)
+        {
+            $languageName = $language[NAME_IDENTIFIER];
+
+            ignore_user_abort(true);
+
+            $file = ExportLanguageStatistics($languageID);
+
+            header('Content-type: application/octet-stream');
+            header('Content-Length: ' . filesize($file));
+            header('Content-Disposition: attachment; filename=' . $languageName .'_stats.xlsx');
             readfile($file);
 
             DeleteFile($file);

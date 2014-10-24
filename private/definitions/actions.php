@@ -252,6 +252,11 @@
     define("LANGUAGEEXPORT_ACTION", "LanguageExport");
     
     /**
+     * The action word to use to export the statistics of a language.
+     */
+    define("LANGUAGESTATISTICSEXPORT_ACTION", "LanguageStatisticsExport");
+    
+    /**
      * The action word to use to add a contact.
      */
     define("CONTACTADD_ACTION", "ContactAdd");

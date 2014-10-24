@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2014 at 06:28 PM
+-- Generation Time: Oct 24, 2014 at 07:01 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
 --
 
 INSERT INTO `examparameters` (`ParameterID`, `KeyCode`, `QuestionCount`, `IncLevelScore`, `DecLevelScore`) VALUES
-(1, 'cis411', 2, '1.0000', '0.0000');
+(1, 'cis411', 2, '0.8000', '0.5000');
 
 -- --------------------------------------------------------
 
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `functions`
@@ -184,7 +184,8 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (45, 'LanguageExperiencesView', 'Allows the user to view the language experiences.'),
 (46, 'TestEntryDelete', 'Allows the user to delete test records.'),
 (47, 'TestEntrySearch', 'Allows the user to search test entries.'),
-(48, 'TestView', 'Allows the user to view an actual test.');
+(48, 'TestView', 'Allows the user to view an actual test.'),
+(49, 'LanguageStatisticsExport', 'Allows the user to export the statistics for a language.');
 
 -- --------------------------------------------------------
 
@@ -373,11 +374,12 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 46),
 (1, 47),
 (1, 32),
+(1, 48),
 (1, 4),
 (1, 3),
 (1, 16),
 (1, 17),
-(1, 48);
+(1, 49);
 
 -- --------------------------------------------------------
 
@@ -453,6 +455,19 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
   KEY `jrhighexp_languageexperience_fk` (`JrHighExp`),
   KEY `srhighexp_languageexperience_fk` (`SrHighExp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `testeeexperiences`
+--
+
+INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`, `CurrentCourse`) VALUES
+(1, 0, 'None', 'None', 'None', 'Nothing'),
+(2, 0, 'None', 'None', 'None', 'Nothing'),
+(3, 0, 'None', 'None', 'None', 'Nothing'),
+(4, 0, 'None', 'None', 'None', 'Nothing'),
+(5, 0, 'None', 'None', 'None', 'Nothing'),
+(6, 0, 'None', 'None', 'None', 'Nothing'),
+(7, 0, 'None', 'None', 'None', 'Nothing');
 
 -- --------------------------------------------------------
 

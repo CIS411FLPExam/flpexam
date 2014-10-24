@@ -13,6 +13,7 @@
     $userCanDelete = userIsAuthorized(QUESTIONDELETE_ACTION);
     $userCanExport = userIsAuthorized(LANGUAGEEXPORT_ACTION);
     $userCanImport = userIsAuthorized(LANGUAGEIMPORT_ACTION);
+    $userCanExportStats = userIsAuthorized(LANGUAGESTATISTICSEXPORT_ACTION);
     $userCanSearch = userIsAuthorized(QUESTIONSEARCH_ACTION);
 ?>
 <?php
@@ -23,6 +24,20 @@
 ?>
 
 <div class="formGroup">
+     <?php if ($userCanImport) { ?>
+        <form class="inlineBlock" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Import Questions" />
+            <input type="file" name="file" required/>
+        </form>
+        <br />
+    <?php } ?>
+    <?php if ($userCanExportStats) { ?>
+        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGESTATISTICSEXPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="submit" value="Export Stats" />
+        </form>
+    <?php } ?>
     <?php if (userIsAuthorized($userCanEdit)) { ?>
         <form class="inlineBlock" onsubmit="return ConfirmationPrompt('Reset all question statistics?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSTATISTICSRESET_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
@@ -39,13 +54,6 @@
         <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input type="submit" value="Export Questions" />
-        </form>
-    <?php } ?>
-    <?php if ($userCanImport) { ?>
-        <form class="inlineBlock" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Import Questions" />
-            <input type="file" name="file" required/>
         </form>
     <?php } ?>
 </div>

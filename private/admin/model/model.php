@@ -10,6 +10,66 @@
     require_once(LEVELINFOCLASS_FILE);
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
     
+    function ExportLanguageStatistics($languageID)
+    {
+        try
+        {
+            $fileName = TEMP_DIR . 'langauge_statistics_' . date("m-d-Y-G-i-s") . '.xlsx';
+            $language = GetLanguage($languageID);
+            $languageName = $language[NAME_IDENTIFIER];
+            $objPHPExcel = new PHPExcel();
+                
+            // Set properties
+            $properties = $objPHPExcel->getProperties();
+            $properties->setCreator("FLPExam site");
+            $properties->setLastModifiedBy("FLPExam site");
+            $properties->setTitle($languageName . " Exam Statistics");
+            $properties->setSubject($languageName . " Exam Statistics");
+            $properties->setDescription("Exam statistics for " . $languageName . ".");
+            $properties->setKeywords("foreign language placement exam " . $languageName);
+            $properties->setCategory("Exam Statistics");
+            
+            $workSheet = $objPHPExcel->setActiveSheetIndex(0);
+            $workSheet->setTitle('Statistics');
+            
+            $questions = GetQuestions($languageID);
+            AppendQuestionStatistics($questions);
+            
+            $row = 1;
+            $column = 0;
+            
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question I.D.');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Level');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Avg Score');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Flag Count');
+            
+            foreach ($questions as $question)
+            {
+                $row++;
+                $column = 0;
+                
+                $questionID = $question[QUESTIONID_IDENTIFIER];
+                $level = $question['Level'];
+                $avgScore = $question['CorrectlyAnsweredPercent'];
+                $flagCount = $question['MarkedAmbiguousCount'];
+                
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, number_format($avgScore, 2));
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $flagCount);
+            }
+            
+            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            $objWriter->save($fileName);
+            
+            return $fileName;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
     /**
      * Appends the statistics of the questions to the collection of questions.
      * @param array $questions The collection of questions.
@@ -1099,8 +1159,8 @@
     {
         try
         {
-            $fileName = TEMP_DIR . 'langauge_' . date("m-d-Y-G-i-s") . '.xlsx';
-			$language = GetLanguage($languageID);
+            $fileName = TEMP_DIR . 'langauge_questions_' . date("m-d-Y-G-i-s") . '.xlsx';
+            $language = GetLanguage($languageID);
             $languageName = $language[NAME_IDENTIFIER];
             $objPHPExcel = new PHPExcel();
                 
