@@ -24,10 +24,22 @@
 ?>
 
 <div class="formGroup">
+    <?php if($userCanAdd) { ?>
+        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input class="questionButton" type="submit" value="Add Question" />
+        </form>
+    <?php } ?>
+    <?php if ($userCanExport) { ?>
+        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input class="questionButton" type="submit" value="Export Questions" />
+        </form>
+    <?php } ?>
      <?php if ($userCanImport) { ?>
         <form class="inlineBlock" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Import Questions" />
+            <input class="questionButton" type="submit" value="Import Questions" />
             <input type="file" name="file" required/>
         </form>
         <br />
@@ -35,25 +47,13 @@
     <?php if ($userCanExportStats) { ?>
         <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGESTATISTICSEXPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Export Stats" />
+            <input class="questionButton" type="submit" value="Export Stats" />
         </form>
     <?php } ?>
     <?php if (userIsAuthorized($userCanEdit)) { ?>
         <form class="inlineBlock" onsubmit="return ConfirmationPrompt('Reset all question statistics?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSTATISTICSRESET_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Reset Stats" />
-        </form>
-    <?php } ?>
-    <?php if($userCanAdd) { ?>
-        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Add Question" />
-        </form>
-    <?php } ?>
-    <?php if ($userCanExport) { ?>
-        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input type="submit" value="Export Questions" />
+            <input class="questionButton" type="submit" value="Reset Stats" />
         </form>
     <?php } ?>
 </div>

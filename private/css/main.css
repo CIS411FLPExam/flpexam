@@ -59,6 +59,12 @@ pre
     display: inline-block;
 }
 
+.questionButton
+{
+    display: inline-block;
+    width: 110px;
+}
+
 .inline { display: inline; }
 .inlineBlock { display: inline-block; }
 .testBackground { background-color: #004400; }
