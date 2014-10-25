@@ -207,8 +207,10 @@
             
             $statement->closeCursor();
             
-            $contact->Initialize($row);
-            
+            if ($row != FALSE)
+            {
+                $contact->Initialize($row);
+            }
             
             return $contact;
         }
