@@ -48,11 +48,10 @@
     </div>
     <br/>
     <input type="hidden" name="numListed" value="<?php echo count($results); ?>"/>
-    <?php
-        if (userIsAuthorized(FUNCTIONDELETE_ACTION)) {
-            echo "<input type=\"submit\" value=\"Delete Selected\"/>";
-        }
-    ?>
+    <?php if (userIsAuthorized(FUNCTIONDELETE_ACTION)) { ?>
+        <input type="submit" value="Delete Selected" />
+        <input type="button" value="Select All" onclick="CheckAll();" />
+    <?php } ?>
 </form>
 
 <!-- End main content here -->

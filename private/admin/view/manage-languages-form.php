@@ -103,10 +103,9 @@
         </div>
         <input type="hidden" name="numListed" value="<?php echo count($languages); ?>" />
         <?php if ($userCanDelete) { ?>
-
-                <br />
-
-                <input type="submit" value="Delete Selected" />
+            <br />
+            <input type="submit" value="Delete Selected" />
+            <input type="button" value="Select All" onclick="CheckAll();" />
         <?php } ?>
     </form>
 <?php } else { ?>

@@ -110,6 +110,7 @@
         
         <?php if ($userCanDelete) { ?>
             <input type="submit" value="Delete Selected" />
+            <input type="button" value="Select All" onclick="CheckAll();" />
         <?php } ?>
     </form>
 <?php } else { ?>

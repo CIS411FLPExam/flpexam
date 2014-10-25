@@ -90,9 +90,9 @@
     </div>
     <input type="hidden" name="numListed" value="<?php echo count($results); ?>" />
     <?php if ($userCanDelete) { ?>
-            <br />
-            
-            <input type="submit" value="Delete Selected" />
+        <br />
+        <input type="submit" value="Delete Selected" />
+        <input type="button" value="Select All" onclick="CheckAll();" />
     <?php } ?>
 </form>
 
