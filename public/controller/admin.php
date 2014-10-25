@@ -9,11 +9,10 @@
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
     
-    //error_reporting(E_ALL ^ E_NOTICE);
-    
     error_reporting(E_ALL);
     
-    StartSession( );
+    StartSession();
+    AdjustQuotes();
     
     if (isset($_POST[ACTION_KEYWORD]))
     {

@@ -11,10 +11,11 @@
     require_once(PROFILECLASS_FILE);
     require_once(QUESTIONANSWERCLASS_FILE);
 
-    //error_reporting(E_ALL ^ E_NOTICE);
     error_reporting(E_ALL);
+    
     StartSession( );
-
+    AdjustQuotes();
+    
     if (isset($_POST[ACTION_KEYWORD]))
     {
         $action = $_POST[ACTION_KEYWORD];

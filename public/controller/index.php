@@ -1,5 +1,4 @@
 <?php
-
     require_once('../../private/definitions/paths.php');
     require_once(PATHS_FILE);
     require_once(IDENTIFIER_FILE);
@@ -7,10 +6,10 @@
     require_once(ACTIONS_FILE);
     require_once(MAINMODEL_FILE);
     
-    //error_reporting(E_ALL ^ E_NOTICE);
     error_reporting(E_ALL);
     
     StartSession( );
+    AdjustQuotes();
     
     if (isset($_POST[ACTION_KEYWORD]))
     {
