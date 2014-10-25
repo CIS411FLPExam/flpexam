@@ -62,7 +62,7 @@ pre
 .questionButton
 {
     display: inline-block;
-    width: 110px;
+    width: 120px;
 }
 
 .inline { display: inline; }
@@ -265,7 +265,7 @@ pre
 
 .controlPanel thead tr td
 {
-    width: 85px;
+    width: 90px;
     padding: 5px;
     text-align: center;
     background-color: #eeeeee;
