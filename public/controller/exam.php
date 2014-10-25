@@ -11,7 +11,7 @@
     require_once(PROFILECLASS_FILE);
     require_once(QUESTIONANSWERCLASS_FILE);
 
-    error_reporting(E_ALL);
+    error_reporting(0);
     
     StartSession( );
     AdjustQuotes();
@@ -336,6 +336,8 @@
             IncrementQuestionStatisticAnswerCount($answerID);
         }
         
+        EmailTestResults();
+        
         DisposeCurrentExam();
         
         StoreTestId($testEntryID);
@@ -372,5 +374,52 @@
         $contact = GetPrimaryContact();
         
         include(VIEWTESTRESULTSFORM_FILE);
+    }
+    
+    function EmailTestResults()
+    {
+        $exam = GetCurrentExam();
+        
+        if ($exam != FALSE)
+        {
+            $level = $exam->GetLevel();
+            $profile = $exam->GetProfile();
+            $language = $exam->GetLanguage();
+            
+            $name = $profile->GetFirstName();
+            $email = $profile->GetEmail();
+            $languageName = $language->GetName();
+            
+            $mailer = GetEmailMailer();
+            $header = GetExamResultsEmailHeader();
+            
+            $contact = GetPrimaryContact();
+            
+            $message = "Hello " . $name . ",";
+            $message .= "\r\n";
+            $message .= "\r\n";
+            $message .= "\tYou scored a " . $level . " on the " . $languageName . " placement exam.";
+            $message .= " ";
+            $message .= "This score, along with the additional information you submited, will allow us to assess your " . $languageName;
+            $message .= " ";
+            $message .= "language skills. More importantly, it will help us with placing you in the appropriate level " . $languageName . " class.";
+            $message .= " ";
+            
+            if ($contact->GetId() > 0)
+            {
+                $message .= "If you have any further questions or comments, please contact " . $contact->GetFirstName() . " " . $contact->GetLastName();
+                $message .= " ";
+                $message .= "at \"" . $contact->GetEmail() . "\".";
+                $message .= " ";
+            }
+            
+            $message .= "Thank you for taking one of Clarion University's Foreign Language placement exams.";
+            $message .= "\r\n";
+            $message .= "\r\n";
+            $message .= "DO NOT REPLY";
+            
+            $recipients = array($email);
+            $mailer->send($recipients, $header, $message);
+        }
     }
 ?>

@@ -8,8 +8,8 @@
     require_once(PHPEXCELCLASS_FILE);
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
-    
-    error_reporting(E_ALL);
+
+    error_reporting(0);
     
     StartSession();
     AdjustQuotes();

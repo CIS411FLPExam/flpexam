@@ -5,6 +5,21 @@
     require_once(QUESTIONANSWERCLASS_FILE);
     
     /**
+     * Gest the email header for sending exam results.
+     * @param string $language The name of the language.
+     * @return array The header info for the email. 
+     */
+    function GetExamResultsEmailHeader($language = 'Foreign Language')
+    {
+        $headers = array ( );
+        $headers['From'] = 'FLP Exam <flpexam@gmail.com>';
+        $headers['Subject'] = $language . ' Exam Results';
+        $headers['Content-type'] = 'text/plain';
+
+        return $headers;
+    }
+    
+    /**
      * Marks a collection of questions as ambiguous.
      * @param array $ambiguousQuestions The collection of question I.D.'s.
      */

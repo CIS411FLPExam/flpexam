@@ -11,9 +11,9 @@
      */
     function GetDBConnection( )
     {
-        $dsn = 'mysql:host=localhost;dbname=flpexam';
-        $username = 'webuser';
-        $password = 'webuser411';
+        $dsn = 'mysql:host=localhost;dbname=cis411_flpexam';
+        $username = 's_wdgarey';
+        $password = 'Pimp9919';
 
         try
         {
@@ -26,6 +26,25 @@
         }
         
         return $db;            
+    }
+    
+    /**
+     * Gets the mailer used for sending emails.
+     * @return Mailer The mailer to use to send emails.
+     */
+    function GetEmailMailer( )
+    {
+        require_once 'Mail.php';
+        
+        $options = array();
+        $options['host'] = 'ssl://smtp.gmail.com';
+        $options['port'] = 465;
+        $options['auth'] = true;
+        $options['username'] = 'flpexam@gmail.com';
+        $options['password'] = 'flpexam411';
+        $mailer = Mail::factory('smtp', $options);
+        
+        return $mailer;
     }
     
     /**

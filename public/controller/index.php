@@ -5,8 +5,8 @@
     require_once(GENERALFUNCTIONS_FILE);
     require_once(ACTIONS_FILE);
     require_once(MAINMODEL_FILE);
-    
-    error_reporting(E_ALL);
+
+    error_reporting(0);
     
     StartSession( );
     AdjustQuotes();
