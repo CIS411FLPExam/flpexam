@@ -45,7 +45,7 @@ class ExamParameters
      */
     public function SetKeyCode($keyCode)
     {
-        $this->keyCode = $keyCode;
+        $this->keyCode = trim($keyCode);
     }
     
     /**
@@ -63,7 +63,7 @@ class ExamParameters
      */
     public function SetQuestionCount($questionCount)
     {
-        $this->questionCount = $questionCount;
+        $this->questionCount = trim($questionCount);
     }
     
     /**

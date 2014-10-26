@@ -37,7 +37,7 @@ class LanguageExperience
      */
     public function SetId($id)
     {
-        $this->id = $id;
+        $this->id = trim($id);
     }
     
     /**
@@ -55,7 +55,7 @@ class LanguageExperience
      */
     public function SetName($name)
     {
-        $this->name = $name;
+        $this->name = trim($name);
     }
     
     /**
@@ -73,7 +73,7 @@ class LanguageExperience
      */
     public function SetInitLevel($initLevel)
     {
-        $this->initLevel = $initLevel;
+        $this->initLevel = trim($initLevel);
     }
     
     /**

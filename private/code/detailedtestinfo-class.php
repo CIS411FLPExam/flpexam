@@ -68,7 +68,7 @@ class DetailedTestInfo extends TestInfo
      */
     public function SetEmail($email)
     {
-        $this->email = $email;
+        $this->email = trim($email);
     }
     
     /**
@@ -86,7 +86,7 @@ class DetailedTestInfo extends TestInfo
      */
     public function SetMajor($major)
     {
-        $this->major = $major;
+        $this->major = trim($major);
     }
     
     /**
@@ -104,7 +104,7 @@ class DetailedTestInfo extends TestInfo
      */
     public function SetHighSchool($highSchool)
     {
-        $this->highSchool = $highSchool;
+        $this->highSchool = trim($highSchool);
     }
     
     /**
@@ -140,7 +140,7 @@ class DetailedTestInfo extends TestInfo
      */
     public function SetJrHighExp($jrHighExp)
     {
-        $this->jrHighExp = $jrHighExp;
+        $this->jrHighExp = trim($jrHighExp);
     }
     
     /**
@@ -158,7 +158,7 @@ class DetailedTestInfo extends TestInfo
      */
     public function SetSrHighExp($srHighExp)
     {
-        $this->srHighExp = $srHighExp;
+        $this->srHighExp = trim($srHighExp);
     }
     
     /**
@@ -176,7 +176,7 @@ class DetailedTestInfo extends TestInfo
      */
     public function SetCollegeExp($collegeExp)
     {
-        $this->collegeExp = $collegeExp;
+        $this->collegeExp = trim($collegeExp);
     }
     
     /**
@@ -194,7 +194,7 @@ class DetailedTestInfo extends TestInfo
      */
     public function SetCurrentCourse($currentCourse)
     {
-        $this->currentCourse = $currentCourse;
+        $this->currentCourse = trim($currentCourse);
     }
     
     /**

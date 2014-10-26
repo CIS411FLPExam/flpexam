@@ -12,7 +12,7 @@
 <h1>Add User</h1>
 
 <div class="formGroup">
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSUSERADD_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSUSERADD_ACTION)); ?>" method="post">
         <div class="formSection">
             <label>Username<span class="redText">*</span>:</label>
             <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required  maxlength="32"/>
@@ -38,6 +38,9 @@
         <br />
         
         <input type="submit" value="Submit" />
+    </form>
+    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)); ?>" method="post">
+        <input type="submit" value="Cancel" />
     </form>
 </div>
 <!-- End main content here -->

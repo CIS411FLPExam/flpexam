@@ -58,7 +58,16 @@
                 <div id='contnr<?php echo($i); ?>' class="formSection">
                     <b>Answer:</b>
                     <br />
-                    <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>' required><?php if (isset($answer[NAME_IDENTIFIER])) { echo(htmlspecialchars($answer[NAME_IDENTIFIER])); } ?></textarea>
+                    <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>' required><?php
+                            if (isset($answer[NAME_IDENTIFIER]))
+                            {
+                                echo(htmlspecialchars($answer[NAME_IDENTIFIER]));
+                            }
+                            else if (is_string($answer))
+                            {
+                                echo(htmlspecialchars($answer));
+                            }
+                        ?></textarea>
                     <input id='btn<?php echo($i); ?>' type='button' value='Remove Answer' onclick='RemoveItem(<?php echo($i); ?>);' />
                     <br />
                     <br />

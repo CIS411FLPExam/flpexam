@@ -34,12 +34,12 @@
                 $instructions = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
                 $quesName = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
 
-                if(PHPExcel_Cell_DataType::dataTypeForValue($questionID) != PHPExcel_Cell_DataType::TYPE_NUMERIC)
+                if(PHPExcel_Cell_DataType::dataTypeForValue($questionID) != PHPExcel_Cell_DataType::TYPE_NUMERIC || empty(trim($questionID)))
                 {
                     $errors[] = 'Row "' . $row . '" I.D. must be numeric.';
                 }
 
-                if (PHPExcel_Cell_DataType::dataTypeForValue($level) == PHPExcel_Cell_DataType::TYPE_NULL)
+                if (PHPExcel_Cell_DataType::dataTypeForValue($level) == PHPExcel_Cell_DataType::TYPE_NULL || empty(trim($level)))
                 {
                     $errors[] = 'Row "' . $row . '" level cannot be empty.';
                 }
@@ -48,7 +48,7 @@
                     $errors[] = 'Row "' . $row . '" level must be numeric.';
                 }
 
-                if (PHPExcel_Cell_DataType::dataTypeForValue($quesName) == PHPExcel_Cell_DataType::TYPE_NULL)
+                if (PHPExcel_Cell_DataType::dataTypeForValue($quesName) == PHPExcel_Cell_DataType::TYPE_NULL || empty(trim($quesName)))
                 {
                     $errors[] = 'Row "' . $row . '" question cannot be empty.';
                 }
@@ -60,7 +60,7 @@
                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
                     $answer = $cell->getValue();
                     
-                    if (PHPExcel_Cell_DataType::dataTypeForValue($answer) != PHPExcel_Cell_DataType::TYPE_NULL)
+                    if (PHPExcel_Cell_DataType::dataTypeForValue($answer) != PHPExcel_Cell_DataType::TYPE_NULL && !empty(trim($answer)))
                     {
                         $answers[] = $answer;
                     }

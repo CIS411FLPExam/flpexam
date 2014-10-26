@@ -82,7 +82,7 @@ class Profile
      */
     public function SetFirstName($firstName)
     {
-        $this->firstName = $firstName;
+        $this->firstName = trim($firstName);
     }
     
     /**
@@ -100,7 +100,7 @@ class Profile
      */
     public function SetLastName($lastName)
     {
-        $this->lastName = $lastName;
+        $this->lastName = trim($lastName);
     }
     
     /**
@@ -118,7 +118,7 @@ class Profile
      */
     public function SetEmail($email)
     {
-        $this->email = $email;
+        $this->email = trim($email);
     }
     
     /**
@@ -136,7 +136,7 @@ class Profile
      */
     public function SetMajor($major)
     {
-        $this->major = $major;
+        $this->major = trim($major);
     }
     
     /**
@@ -154,7 +154,7 @@ class Profile
      */
     public function SetHighSchool($highSchool)
     {
-        $this->highSchool = $highSchool;
+        $this->highSchool = trim($highSchool);
     }
     
     /**
@@ -190,7 +190,7 @@ class Profile
      */
     public function SetJrHighExp($jrHighExp)
     {
-        $this->jrHighExp = $jrHighExp;
+        $this->jrHighExp = trim($jrHighExp);
     }
     
     /**
@@ -208,7 +208,7 @@ class Profile
      */
     public function SetSrHighExp($srHighExp)
     {
-        $this->srHighExp = $srHighExp;
+        $this->srHighExp = trim($srHighExp);
     }
     
     /**
@@ -226,7 +226,7 @@ class Profile
      */
     public function SetCollegeExp($collegeExp)
     {
-        $this->collegeExp = $collegeExp;
+        $this->collegeExp = trim($collegeExp);
     }
     
     /**
@@ -244,7 +244,7 @@ class Profile
      */
     public function SetCurrentCourse($currentCourse)
     {
-        $this->currentCourse = $currentCourse;
+        $this->currentCourse = trim($currentCourse);
     }
     
     /**

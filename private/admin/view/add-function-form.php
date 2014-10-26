@@ -5,7 +5,7 @@
 
 <h2>Add Function</h2>
 
-<form action="<?php echo( GetControllerScript( ADMINCONTROLLER_FILE, PROCESSFUNCTIONADDEDIT ) ); ?>" method="post">
+<form class="inline" action="<?php echo( GetControllerScript( ADMINCONTROLLER_FILE, PROCESSFUNCTIONADDEDIT ) ); ?>" method="post">
     <div class="formGroup">
         <div class="formSection">
             <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" size="20" value="" autofocus required />
@@ -24,7 +24,9 @@
         <input type="submit" value="Submit" />
     </div>
 </form>
-
+<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION)); ?>" method="post">
+    <input type="submit" value="Cancel" />
+</form>
 <!-- End main content here -->
 <?php
     include( FOOTER_FILE ); 

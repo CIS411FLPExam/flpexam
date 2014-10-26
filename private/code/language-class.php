@@ -32,7 +32,7 @@ class Language
      */
     public function SetId($id)
     {
-        $this->id = $id;
+        $this->id = trim($id);
     }
     
     /**
@@ -50,7 +50,7 @@ class Language
      */
     public function SetName($name)
     {
-        $this->name = $name;
+        $this->name = trim($name);
     }
     
     /**

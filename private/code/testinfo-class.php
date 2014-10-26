@@ -56,7 +56,7 @@ class TestInfo
      */
     public function SetId($id)
     {
-        $this->id = $id;
+        $this->id = trim($id);
     }
     
     /**
@@ -74,7 +74,7 @@ class TestInfo
      */
     public function SetFirstName($firstName)
     {
-        $this->firstName = $firstName;
+        $this->firstName = trim($firstName);
     }
     
     /**
@@ -92,7 +92,7 @@ class TestInfo
      */
     public function SetLastName($lastName)
     {
-        $this->lastName = $lastName;
+        $this->lastName = trim($lastName);
     }
     
     /**
@@ -128,7 +128,7 @@ class TestInfo
      */
     public function SetScore($score)
     {
-        $this->score = $score;
+        $this->score = trim($score);
     }
     
     /**
@@ -146,7 +146,7 @@ class TestInfo
      */
     public function SetDate($date)
     {
-        $this->date = $date;
+        $this->date = trim($date);
     }
     
     /**

@@ -57,7 +57,7 @@ class LevelInfo
      */
     public function SetId($id)
     {
-        $this->id = $id;
+        $this->id = trim($id);
     }
     
     /**
@@ -75,7 +75,7 @@ class LevelInfo
      */
     public function SetLevel($level)
     {
-        $this->level = $level;
+        $this->level = trim($level);
     }
     
     /**
@@ -93,7 +93,7 @@ class LevelInfo
      */
     public function SetLanguageId($languageID)
     {
-        $this->languageID = $languageID;
+        $this->languageID = trim($languageID);
     }
     
     /**
@@ -111,12 +111,12 @@ class LevelInfo
      */
     public function SetName($name)
     {
-        $this->name = $name;
+        $this->name = trim($name);
     }
     
     /**
-     * Gets the class.
-     * @return string The class.
+     * Gets the course.
+     * @return string The course.
      */
     public function GetCourse()
     {
@@ -124,12 +124,12 @@ class LevelInfo
     }
     
     /**
-     * Sets the class.
-     * @param string $class The class.
+     * Sets the course.
+     * @param string $course The course.
      */
-    public function SetCourse($class)
+    public function SetCourse($course)
     {
-        $this->course = $class;
+        $this->course = trim($course);
     }
     
     /**
@@ -147,7 +147,7 @@ class LevelInfo
      */
     public function SetDescription($description)
     {
-        $this->description = $description;
+        $this->description = trim($description);
     }
     
     /**

@@ -68,7 +68,7 @@ class Contact
      */
     public function SetFirstName($firstName)
     {
-        $this->firstName = $firstName;
+        $this->firstName = trim($firstName);
     }
     
     /**
@@ -86,7 +86,7 @@ class Contact
      */
     public function SetLastName($lastName)
     {
-        $this->lastName = $lastName;
+        $this->lastName = trim($lastName);
     }
     
     /**
@@ -104,7 +104,7 @@ class Contact
      */
     public function SetEmail($email)
     {
-        $this->email = $email;
+        $this->email = trim($email);
     }
     
     

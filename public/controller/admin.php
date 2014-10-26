@@ -1649,7 +1649,7 @@
         
         if (isset($_POST[NAME_IDENTIFIER]))
         {
-            $name = $_POST[NAME_IDENTIFIER];
+            $name = trim($_POST[NAME_IDENTIFIER]);
             
             if (empty($name))
             {
@@ -1663,7 +1663,7 @@
         
         if (isset($_POST['Level']))
         {
-            $level = $_POST['Level'];
+            $level = trim($_POST['Level']);
             
             if(!is_int($level) && (string)(int)$level != $level)
             {
@@ -1681,11 +1681,11 @@
         
         if (isset($_POST['Instructions']))
         {
-            $instructions = $_POST['Instructions'];
+            $instructions = trim($_POST['Instructions']);
         }
         else
         {
-            $errors[] = 'Instructions were not provided.';
+            $instructions = '';
         }
         
         $answers = array();
@@ -1693,7 +1693,7 @@
         $answerNumber = 0;
         while(isset($_POST['input' . $answerNumber]))
         {
-            $answers[] = $_POST['input' . $answerNumber];
+            $answers[] = trim($_POST['input' . $answerNumber]);
             $answerNumber++;
         }
         
@@ -1941,7 +1941,7 @@
         
         if (isset($_POST[NAME_IDENTIFIER]))
         {
-            $name = $_POST[NAME_IDENTIFIER];
+            $name = trim($_POST[NAME_IDENTIFIER]);
             
             if (empty($name))
             {
@@ -2136,7 +2136,7 @@
         {
             $errors = array();
 
-            $userName = $_POST[USERNAME_IDENTIFIER];
+            $userName = trim($_POST[USERNAME_IDENTIFIER]);
             $password = $_POST[PASSWORD_IDENTIFIER];
             $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
             
@@ -2194,7 +2194,7 @@
         else
         {
             $errors = array();
-            $userName = $_POST[USERNAME_IDENTIFIER];
+            $userName = trim($_POST[USERNAME_IDENTIFIER]);
             
             if(!empty($_POST[USERID_IDENTIFIER]))
             {
@@ -2369,8 +2369,8 @@
                 $FunctionID = $_POST["FunctionID"];
             }
             
-            $name = $_POST["Name"];
-            $desc = $_POST["Description"];
+            $name = trim($_POST["Name"]);
+            $desc = trim($_POST["Description"]);
             
             if (empty($FunctionID))
             {   // No FunctionID means we are processing an ADD
@@ -2507,8 +2507,8 @@
             {
                 $RoleID = $_POST["RoleID"];
             }
-            $name = $_POST["Name"];
-            $desc = $_POST["Description"];
+            $name = trim($_POST["Name"]);
+            $desc = trim($_POST["Description"]);
             
             if (empty($RoleID))
             {   // No RoleID means we are processing an ADD
