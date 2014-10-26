@@ -25,7 +25,7 @@
                 <?php echo(htmlspecialchars($experience->GetName())); ?>
             </div>
             <div class="formSection">
-                <label>Level:</label>
+                <label>Initial Level:</label>
                 <?php echo(htmlspecialchars($experience->GetInitLevel())); ?>
             </div>
         <?php
