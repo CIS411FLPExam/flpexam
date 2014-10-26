@@ -456,19 +456,6 @@ CREATE TABLE IF NOT EXISTS `testeeexperiences` (
   KEY `srhighexp_languageexperience_fk` (`SrHighExp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `testeeexperiences`
---
-
-INSERT INTO `testeeexperiences` (`TestID`, `SpokenAtHome`, `JrHighExp`, `SrHighExp`, `CollegeExp`, `CurrentCourse`) VALUES
-(1, 0, 'None', 'None', 'None', 'Nothing'),
-(2, 0, 'None', 'None', 'None', 'Nothing'),
-(3, 0, 'None', 'None', 'None', 'Nothing'),
-(4, 0, 'None', 'None', 'None', 'Nothing'),
-(5, 0, 'None', 'None', 'None', 'Nothing'),
-(6, 0, 'None', 'None', 'None', 'Nothing'),
-(7, 0, 'None', 'None', 'None', 'Nothing');
-
 -- --------------------------------------------------------
 
 --
