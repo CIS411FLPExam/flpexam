@@ -431,7 +431,7 @@ class Exam
         }
         else
         {
-            $this->SetLevel($prevLevel);
+            $this->SetLevel($level);
         }
     }
     
