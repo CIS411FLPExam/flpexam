@@ -322,25 +322,35 @@
     }
     
     /**
-     * Sets the initial level that corresponds to a language spoken at home.
-     * @param int $initLevel The initial level.
+     * Adds a language experience to the record of language experiences.
+     * @param LanguageExperience $experience The language experience to add.
+     * @return int The new I.D. of the language experience.
      */
-    function SetSpokenAtHomeInitLevel($initLevel)
+    function AddLanguageExperience(LanguageExperience $experience)
     {
         try
         {
-            $db = GetDBConnection();
+            $nameKey = $experience->GetNameKey();
+            $initLvlKey = $experience->GetInitLevelKey();
             
-            $query = 'UPDATE ' . SPOKENATHOMEINITLEVEL_IDENTIFIER . ' SET'
-                    . ' ' . 'InitLevel'
-                    . ' = :' . 'InitLevel';
+            $db = GetDBConnection();
+            $query = 'INSERT INTO ' . LANGUAGEEXPERIENCES_IDENTIFIER
+                    . ' (' . $nameKey
+                    . ', ' . $initLvlKey . ') VALUES'
+                    . ' (:' . $nameKey
+                    . ', :' . $initLvlKey . ');';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . 'InitLevel', $initLevel);
+            $statement->bindValue(':' . $nameKey, $experience->GetName());
+            $statement->bindValue(':' . $initLvlKey, $experience->GetInitLevel());
             
             $statement->execute();
             
+            $experienceID = $db->lastInsertId();
+            
             $statement->closeCursor();
+            
+            return $experienceID;
         }
         catch (PDOException $ex)
         {
@@ -349,38 +359,64 @@
     }
     
     /**
-     * Updates the language experiences on the records.
-     * @param array $languageExperiences The collection of language experiences.
+     * Updates a language experience
+     * @param LanguageExperience $experience The language experience to update.
+     * @return int The number of rows effected by the update.
      */
-    function SetLanguageExperiences($languageExperiences)
+    function UpdateLanguageExperience(LanguageExperience $experience)
+    {
+        try
+        {
+            $nameKey = $experience->GetNameKey();
+            $initLvlKey = $experience->GetInitLevelKey();
+            
+            $db = GetDBConnection();
+            $query = 'UPDATE ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' SET'
+                    . ' ' . $nameKey . ' = :' . $nameKey
+                    . ', ' . $initLvlKey . ' = :' . $initLvlKey . ' WHERE'
+                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER
+                    . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $nameKey, $experience->GetName());
+            $statement->bindValue(':' . $initLvlKey, $experience->GetInitLevel());
+            $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experience->GetId());
+            
+            $rowsEffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsEffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Deletes the language experience from the records.
+     * @param int $experienceID The I.D. of the language experience.
+     * @return int The number of experiences deleted.
+     */
+    function DeleteLanguageExperience($experienceID)
     {
         try
         {
             $db = GetDBConnection();
             
-            $experience = New LanguageExperience();
-            $idKey = $experience->GetIdKey();
-            $nameKey = $experience->GetNameKey();
-            $initLevelKey = $experience->GetInitLevelKey();
+            $query = 'DELETE FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER
+                    . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER;
             
-            $query = 'UPDATE ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' SET'
-                    . ' ' . $nameKey . ' = :' . $nameKey
-                    . ', ' . $initLevelKey . ' = :' . $initLevelKey . ' WHERE'
-                    . ' ' . $idKey
-                    . ' = :' . $idKey;
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experienceID);
             
-            foreach ($languageExperiences as $languageExperience)
-            {
-                $statement = $db->prepare($query);
-                
-                $statement->bindValue(':' . $idKey, $languageExperience->GetId());
-                $statement->bindValue(':' . $nameKey, $languageExperience->GetName());
-                $statement->bindValue(':' . $initLevelKey, $languageExperience->GetInitLevel());
-                
-                $statement->execute();
-                
-                $statement->closeCursor();
-            }
+            $rowsDeleted = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsDeleted;
         }
         catch (PDOException $ex)
         {
@@ -1376,11 +1412,13 @@
             $questionCountIndex = $parameters->GetQuestionCountIndex();
             $incLevelScoreIndex = $parameters->GetIncLevelScoreIndex();
             $decLevelScoreIndex = $parameters->GetDecLevelScoreIndex();
+            $spokenAtHomeInitLevelIndex = $parameters->GetSpokenAtHomeInitLevelIndex();
             
             $query = 'UPDATE ' . EXAMPARAMETERS_IDENTIFIER . ' SET'
                     . ' ' . $keyCodeIndex . ' = :' . $keyCodeIndex
                     . ', ' . $questionCountIndex . ' = :' . $questionCountIndex
                     . ', ' . $incLevelScoreIndex . ' = :' . $incLevelScoreIndex
+                    . ', ' . $spokenAtHomeInitLevelIndex . ' = :' . $spokenAtHomeInitLevelIndex
                     . ', ' . $decLevelScoreIndex . ' = :' . $decLevelScoreIndex . ';';
             
             $statement = $db->prepare($query);
@@ -1388,6 +1426,7 @@
             $statement->bindValue(':' . $questionCountIndex, $parameters->GetQuestionCount());
             $statement->bindValue(':' . $incLevelScoreIndex, $parameters->GetIncLevelScore());
             $statement->bindValue(':' . $decLevelScoreIndex, $parameters->GetDecLevelScore());
+            $statement->bindValue(':' . $spokenAtHomeInitLevelIndex, $parameters->GetSpokenAtHomeInitLevel());
             
             $paramsEffected = $statement->execute();
             

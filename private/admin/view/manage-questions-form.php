@@ -40,7 +40,7 @@
         <form class="inlineBlock" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input class="questionButton" type="submit" value="Import Questions" />
-            <input type="file" name="file" required/>
+            <input type="file" name="file" required />
         </form>
         <br />
     <?php } ?>

@@ -22,7 +22,7 @@
             <?php } ?>
             <?php if (userIsAuthorized(LANGUAGEEXPERIENCESVIEW_ACTION)) { ?>
                 <td>
-                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION ) ) ?>">Experiences</a>
+                    <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGEEXPERIENCES_ACTION ) ) ?>">Experiences</a>
                 </td>
             <?php } ?>
             <?php

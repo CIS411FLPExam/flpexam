@@ -82,7 +82,7 @@ class LanguageExperience
      * @param string $name The name of the experience.
      * @param int $initLevel The initial level that corresponds to the experience.
      */
-    public function LanguageExperience($id = 0, $name = '', $initLevel = 0)
+    public function LanguageExperience($id = 0, $name = '', $initLevel = 1)
     {
         $this->SetId($id);
         $this->SetName($name);

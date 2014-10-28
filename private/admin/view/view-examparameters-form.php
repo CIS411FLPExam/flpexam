@@ -12,6 +12,11 @@
         <div class="clear"></div>
     </div>
     
+    <div class="formSection">
+        <label>Home Spoken lvl:</label>
+        <?php echo(htmlspecialchars($spokenAtHomeInitLevel));?>
+    </div>
+    
     <div class="divider"></div>
     
     <div class="formSection">

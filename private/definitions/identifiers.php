@@ -16,11 +16,6 @@
     define("TESTEEQUESTIONS_IDENTIFIER", "testeequestions");
     
     /**
-     * The identifier of the initial spoken at home level record.
-     */
-    define("SPOKENATHOMEINITLEVEL_IDENTIFIER", "spokenathomeinitlevel");
-    
-    /**
      * The identifier of the question statistic records.
      */
     define("QUESTIONSTATISTICS_IDENTIFIER", "questionstatistics");

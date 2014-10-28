@@ -18,6 +18,17 @@
             <input name="<?php echo($parameters->GetKeyCodeIndex()); ?>" type="text" value="<?php echo(htmlspecialchars($keyCode)); ?>" autofocus maxlength="40"/>
             <div class="clear"></div>
         </div>
+        
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>Home Spoken lvl:<span class="redText">*</span>:</label>
+            <div class="displayBox">
+                <input name="SpokenAtHomeInitLevel" type="number" value="<?php echo(htmlspecialchars($spokenAtHomeInitLevel));?>" autofocus required min="1" />
+                (The initial level of a test taker who speaks the language at home.)
+            </div>
+            <div class="clear"></div>
+        </div>
 
         <div class="divider"></div>
 

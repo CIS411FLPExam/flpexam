@@ -500,12 +500,14 @@
     /**
      * The file path of the edit language experiences form file.
      */
-    define("EDITLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "edit-languageexperiences-form.php");
+    define("ADDEDITLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "add-edit-languageexperiences-form.php");
     
     /**
      * The file path of the view language experiences form file.
      */
     define("VIEWLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "view-languageexperiences-form.php");
+    
+    define("MANAGELANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "manage-languageexperiences-form.php");
     
 //Exam paths.
 /******************************************************************************/

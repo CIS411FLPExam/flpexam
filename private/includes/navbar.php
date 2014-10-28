@@ -29,7 +29,7 @@
                     <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)) ?>"><span>Exam Params</span></a></li>
                 <?php } ?>
                 <?php if (userIsAuthorized(LANGUAGEEXPERIENCESVIEW_ACTION)) { ?>
-                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION)) ?>"><span>Experiences</span></a></li>
+                    <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGEEXPERIENCES_ACTION)) ?>"><span>Experiences</span></a></li>
                 <?php } ?>
             </ul>
             </li>

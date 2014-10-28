@@ -224,14 +224,23 @@
             case PROCESSLEVELINFOADDEDIT_ACTION :
                 ProcessLevelInfoAddEdit();
                 break;
+            case MANAGELANGUAGEEXPERIENCES_ACTION :
+                ManageLanguageExperiences();
+                break;
+            case LANGUAGEEXPERIENCESADD_ACTION :
+                LanguageExperiencesAdd();
+                break;
             case LANGUAGEEXPERIENCESEDIT_ACTION :
                 LanguageExperiencesEdit();
                 break;
             case LANGUAGEEXPERIENCESVIEW_ACTION :
                 LanguageExperiencesView();
                 break;
-            case PROCESSLANGUAGEEXPERIENCESEDIT_ACTION :
-                ProcessLanguageExperiencesEdit();
+            case LANGUAGEEXPERIENCESDELETE_ACTION :
+                LanguageExperiencesDelete();
+                break;
+            case PROCESSLANGUAGEEXPERIENCESADDEDIT_ACTION :
+                ProcessLanguageExperiencesAddEdit();
                 break;
             case QUESTIONSTATISTICSRESET_ACTION :
                 QuestionStatisticsReset();
@@ -324,6 +333,32 @@
         Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
     }
     
+    function ManageLanguageExperiences()
+    {
+        if (!userIsAuthorized(MANAGELANGUAGEEXPERIENCES_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $experiences = GetLanguageExperiences();
+        
+        include(MANAGELANGUAGEEXPERIENCESFORM_FILE);
+    }
+    
+    function LanguageExperiencesAdd()
+    {
+        if (!userIsAuthorized(LANGUAGEEXPERIENCESADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $experience = new LanguageExperience();
+        
+        include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+    }
+    
     function LanguageExperiencesEdit()
     {
         if (!userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION))
@@ -332,10 +367,35 @@
             exit();
         }
         
-        $languageExperiences = GetLanguageExperiences();
-        $spokenAtHomeInitLevel = GetSpokenAtHomeInitLevel();
+        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID =$_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language experience I.D. provided.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
         
-        include(EDITLANGUAGEEXPERIENCESFORM_FILE);
+        $row = GetLanguageExperience($experienceID);
+        
+        if ($row != FALSE)
+        {
+            $experience = new LanguageExperience();
+            $experience->Initialize($row);
+            
+            include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+        }
+        else
+        {
+            $message = 'The language experience you are trying to edit does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
     function LanguageExperiencesView()
@@ -346,79 +406,115 @@
             exit();
         }
         
-        $languageExperiences = GetLanguageExperiences();
-        $spokenAtHomeInitLevel = GetSpokenAtHomeInitLevel();
+        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID =$_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No language experience I.D. provided.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
         
-        include(VIEWLANGUAGEEXPERIENCESFORM_FILE);
+        $row = GetLanguageExperience($experienceID);
+        
+        if ($row != FALSE)
+        {
+            $experience = new LanguageExperience();
+            $experience->Initialize($row);
+            
+            include(VIEWLANGUAGEEXPERIENCESFORM_FILE);
+        }
+        else
+        {
+            $message = 'The language experience you are trying to view does not exist.';
+            include(MESSAGEFORM_FILE);
+        }
     }
     
-    function ProcessLanguageExperiencesEdit()
+    function ProcessLanguageExperiencesAddEdit()
     {
-        if (!userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION))
+        $userCanAdd = userIsAuthorized(LANGUAGEEXPERIENCESADD_ACTION);
+        $userCanEdit = userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION);
+        
+        if (!$userCanAdd && !$userCanEdit)
         {
             include(NOTAUTHORIZED_FILE);
             exit();
         }
         
-        $numListed = 0;
-        $errors = array();
-        $languageExperiences = array();
         $experience = new LanguageExperience();
-        $idKey = $experience->GetIdKey();
-        $nameKey = $experience->GetNameKey();
-        $initLevelKey = $experience->GetInitLevelKey();
         
-        $spokenAtHomeInitLevel = 0;
+        $experience->Initialize($_POST);
+        $experienceVI = $experience->Validate();
         
-        if (isset($_POST['SpokenAtHomeInitLevel']))
+        if ($experienceVI->IsValid())
         {
-            $spokenAtHomeInitLevel = $_POST['SpokenAtHomeInitLevel'];
-        }
-        
-        if ((string)(int)$spokenAtHomeInitLevel != $spokenAtHomeInitLevel)
-        {
-            $errors['SpokenAtHomeInitLevel'] = new ValidationInfo(FALSE, array('The initial level must be an integer.'));
-        }
-        else if ($spokenAtHomeInitLevel < 1)
-        {
-            $errors['SpokenAtHomeInitLevel'] = new ValidationInfo(FALSE, array('The initial level must be greater than or equal to 1.'));
-        }
-        
-        if (isset($_POST['numListed']))
-        {
-            $numListed = $_POST['numListed'];
-        }
-        
-        for ($i = 0; $i < $numListed; $i++)
-        {
-            if (isset($_POST[$idKey . $i]) && isset($_POST[$nameKey . $i]) && isset($_POST[$initLevelKey . $i]))
-            {
-                $id = $_POST[$idKey . $i];
-                $name = $_POST[$nameKey . $i];
-                $initLevel = $_POST[$initLevelKey . $i];
+            if ($experience->GetId() > 0)
+            {//We are doing an edit
+                $experienceID = $experience->GetId();
                 
-                $experience = new LanguageExperience($id, $name, $initLevel);
-                $experienceVI = $experience->Validate();
-                
-                $languageExperiences[] = $experience;
-                
-                if (!$experienceVI->IsValid())
+                if ($userCanEdit)
                 {
-                    $errors['Experience'. $i] = $experienceVI;
+                    UpdateLanguageExperience($experience);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
+            }
+            else
+            {//We are doing an add
+                if ($userCanAdd)
+                {
+                    $experienceID = AddLanguageExperience($experience);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
+            }
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . $experienceID);
+        }
+        
+        $message = 'Errors';
+        $collection = $experienceVI->GetErrors();
+        
+        include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+    }
+    
+    function LanguageExperiencesDelete()
+    {
+        if(!userIsAuthorized(LANGUAGEEXPERIENCESDELETE_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+            
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $experienceID = $_POST["record$i"];
+                    
+                    DeleteLanguageExperience($experienceID);
                 }
             }
         }
         
-        if (count($errors) < 1)
-        {
-            SetSpokenAtHomeInitLevel($spokenAtHomeInitLevel);
-            
-            SetLanguageExperiences($languageExperiences);
-            
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION));
-        }
-        
-        include(EDITLANGUAGEEXPERIENCESFORM_FILE);
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGEEXPERIENCES_ACTION));
     }
     
     function ManageLevelInfos()
@@ -1263,8 +1359,9 @@
         
         $keyCode = $parameters->GetKeyCode();
         $questionCount = $parameters->GetQuestionCount();
-        $incLevelScore =  $parameters->GetIncLevelScorePercent();
-        $decLevelScore =  $parameters->GetDecLevelScorePercent();
+        $incLevelScore = $parameters->GetIncLevelScorePercent();
+        $decLevelScore = $parameters->GetDecLevelScorePercent();
+        $spokenAtHomeInitLevel = $parameters->GetSpokenAtHomeInitLevel();
         
         include(VIEWEXAMPARAMETERSFORM_FILE);
     }
@@ -1283,6 +1380,7 @@
         $questionCount = $parameters->GetQuestionCount();
         $incLevelScore =  $parameters->GetIncLevelScorePercent();
         $decLevelScore =  $parameters->GetDecLevelScorePercent();
+        $spokenAtHomeInitLevel = $parameters->GetSpokenAtHomeInitLevel();
         
         include(EDITEXAMPARAMETERSFORM_FILE);
     }

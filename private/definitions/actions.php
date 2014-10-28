@@ -332,19 +332,34 @@
     define("PROCESSLEVELINFOADDEDIT_ACTION", "ProcessLevelInfoAddEdit");
     
     /**
-     * The action word to use to edit the language experiences.
+     * The action word to use to add a language experience.
+     */
+    define("LANGUAGEEXPERIENCESADD_ACTION", "LanguageExperiencesAdd");
+    
+    /**
+     * The action word to use to edit a language experience.
      */
     define("LANGUAGEEXPERIENCESEDIT_ACTION", "LanguageExperiencesEdit");
     
     /**
-     * The action word to use to view the language experiences.
+     * The action word to use to view a language experience.
      */
     define("LANGUAGEEXPERIENCESVIEW_ACTION", "LanguageExperiencesView");
     
     /**
-     * The action word to use to process a language experiences edit.
+     * The action word to use to delete a language experience.
      */
-    define("PROCESSLANGUAGEEXPERIENCESEDIT_ACTION", "ProcessLanguageExperiencesEdit");
+    define("LANGUAGEEXPERIENCESDELETE_ACTION", "LanguageExperiencesDelete");
+    
+    /**
+     * The action word to use to manage the language experiences.
+     */
+    define("MANAGELANGUAGEEXPERIENCES_ACTION", "ManageLanguageExperiences");
+    
+    /**
+     * The action word to use to process a language experience add edit.
+     */
+    define("PROCESSLANGUAGEEXPERIENCESADDEDIT_ACTION", "ProcessLanguageExperiencesAddEdit");
     
     /**
      * The action word to use to rest a quetsion's statistics.

@@ -378,7 +378,8 @@ class Exam
         
         if ($spokenAtHome)
         {
-            $level = GetSpokenAtHomeInitLevel();
+            $parameters = $this->GetParameters();
+            $level = $parameters->GetSpokenAtHomeInitLevel();
         }
         
         $highSchoolExpLevel = GetLanguageExperienceInitLevel($highSchoolExp);
