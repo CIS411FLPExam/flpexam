@@ -429,10 +429,6 @@ class Exam
             $this->SetPrevLevel($level);
             $this->GetNewLvlQAs();
         }
-        else
-        {
-            $this->SetLevel($level);
-        }
     }
     
     /**

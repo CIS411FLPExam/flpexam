@@ -14,11 +14,9 @@
 <h1>Language Experiences</h1>
 
 <?php if ($userCanAdd) { ?>
-    <div class="formGroup">
-        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESADD_ACTION)); ?>" method="post">
-            <input type="submit" value="Add Experience" />
-        </form>
-    </div>
+    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESADD_ACTION)); ?>" method="post">
+        <input type="submit" value="Add Experience" />
+    </form>
 <?php } ?>
 <div class="formGroup">
     <?php if (count($experiences) > 0) { ?>

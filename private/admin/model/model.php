@@ -1766,6 +1766,8 @@
     {
         try
         {
+            ResetQuestionAmbiguousStats($questionID);
+            
             $db = GetDBConnection();
             
             $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
