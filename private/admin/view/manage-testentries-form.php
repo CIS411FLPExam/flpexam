@@ -83,13 +83,11 @@
                         <td><?php echo(htmlspecialchars($firstName)); ?></td>
                         <td><?php echo(htmlspecialchars($lastName)); ?></td>
                         <td><?php echo(htmlspecialchars($language)); ?></td>
-                        <td><?php echo(htmlspecialchars($score)); ?></td>
+                        <td class="centerText"><?php echo(htmlspecialchars($score)); ?></td>
                         <td><?php echo(htmlspecialchars($date)); ?></td>
                         <?php if ($userCanView) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urlencode($testID))); ?>">
-                                    View
-                                </a>
+                                <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urlencode($testID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanDelete) { ?>

@@ -47,24 +47,18 @@
                     <tr>
                         <td><?php echo(htmlspecialchars($firstName)); ?></td>
                         <td><?php echo(htmlspecialchars($lastName)); ?></td>
+                        <td class="centerText">
+                            <?php if($active == TRUE) { ?>
+                                Yes
+                            <?php } else if ($userCanEdit) { ?>
+                                <input type="button" value="Activate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>');" />
+                            <?php } else { ?>
+                                    No
+                            <?php } ?>
+                        </td>
                         <?php if ($userCanEdit) { ?>
                             <td>
-                                <?php if($active == TRUE) { ?>
-                                    Yes
-                                <?php } else if ($userCanEdit) { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>">
-                                        Activate
-                                    </a>
-                                <?php } else { ?>
-                                        No
-                                <?php } ?>
-                            </td>
-                        <?php } ?>
-                        <?php if ($userCanEdit) { ?>
-                            <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTEDIT_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>">
-                                    Edit
-                                </a>
+                                <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTEDIT_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanDelete) { ?>

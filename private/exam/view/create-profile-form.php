@@ -127,5 +127,5 @@
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( PLAINFOOTER_FILE ); 
 ?>

@@ -45,7 +45,7 @@
         
         <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($levelInfo->GetLanguageId())); ?>" />
-            <input type="submit" value="Manage Level Infos" />
+            <input type="submit" value="Levels Info" />
         </form>
 </div>
 

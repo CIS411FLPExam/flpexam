@@ -25,19 +25,19 @@
 
 <div class="formGroup">
     <?php if($userCanAdd) { ?>
-        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
+        <form class="inlineBlock questionFormPad" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input class="questionButton" type="submit" value="Add Question" />
         </form>
     <?php } ?>
     <?php if ($userCanExport) { ?>
-        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
+        <form class="inlineBlock questionFormPad" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input class="questionButton" type="submit" value="Export Questions" />
         </form>
     <?php } ?>
      <?php if ($userCanImport) { ?>
-        <form class="inlineBlock" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
+        <form class="inlineBlock questionFormPad" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input class="questionButton" type="submit" value="Import Questions" />
             <input type="file" name="file" required />
@@ -45,13 +45,13 @@
         <br />
     <?php } ?>
     <?php if ($userCanExportStats) { ?>
-        <form class="inlineBlock" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGESTATISTICSEXPORT_ACTION)); ?>" method="post">
+        <form class="inlineBlock questionFormPad" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGESTATISTICSEXPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input class="questionButton" type="submit" value="Export Stats" />
         </form>
     <?php } ?>
     <?php if (userIsAuthorized($userCanEdit)) { ?>
-        <form class="inlineBlock" onsubmit="return ConfirmationPrompt('Reset all question statistics?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSTATISTICSRESET_ACTION)); ?>" method="post">
+        <form class="inlineBlock questionFormPad" onsubmit="return ConfirmationPrompt('Reset all question statistics?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSTATISTICSRESET_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input class="questionButton" type="submit" value="Reset Stats" />
         </form>
@@ -110,9 +110,9 @@
                             $correctlyAnsweredPercent = $question['CorrectlyAnsweredPercent'];
                             $flagCount = $question['MarkedAmbiguousCount'];
                             
-                            if(strlen($questionName) > 65)
+                            if(strlen($questionName) > 50)
                             {
-                                $questionName = substr($questionName, 0, 62) . '...';
+                                $questionName = substr($questionName, 0, 47) . '...';
                             }
                     ?>
 
@@ -121,19 +121,15 @@
                         <td class="centerText"><?php echo(htmlspecialchars($questionLevel)); ?></td>
                         <td><?php echo(htmlspecialchars($questionName)); ?></td>
                         <td class="centerText"><?php echo(number_format(htmlspecialchars($correctlyAnsweredPercent), 2)); ?>%</td>
-                        <td class="centerText"><?php echo(htmlspecialchars($flagCount)) ?> time(s)</td>
+                        <td class="centerText"><?php echo(htmlspecialchars($flagCount)) ?>x</td>
                         <?php if ($userCanView) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urlencode($questionID))) ?>">
-                                    View
-                                </a>
+                                <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urlencode($questionID))) ?>');"
                             </td>
                         <?php } ?>
                         <?php if ($userCanEdit) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urlencode($questionID))) ?>">
-                                    Edit
-                                </a>
+                                <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION . "&". QUESTIONID_IDENTIFIER . "=" . urlencode($questionID))) ?>');"
                             </td>
                         <?php } ?>
                         <?php if ($userCanDelete) { ?>

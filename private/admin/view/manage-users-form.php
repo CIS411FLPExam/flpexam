@@ -63,16 +63,12 @@
 
                     <?php if ($userCanView) { ?>
                         <td>
-                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>">
-                                View
-                            </a>
+                            <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>');" />
                         </td>
                     <?php } ?>
                     <?php if ($userCanEdit) { ?>
                         <td>
-                            <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>">
-                                Edit
-                            </a>
+                            <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>');" />
                         </td>
                     <?php } ?>
                     <?php if ($userCanDelete) { ?>

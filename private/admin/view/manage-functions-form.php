@@ -5,11 +5,11 @@
 <!-- Start main content here -->
 
 <h2>Manage Functions</h2>
-<?php
-    if (userIsAuthorized(FUNCTIONADD_ACTION)) {
-        echo "<a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONADD_ACTION ). "\">Add Function</a><p/>";
-    }
-?>
+<?php if (userIsAuthorized(FUNCTIONADD_ACTION)) { ?>
+<form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONADD_ACTION)); ?>" method="post">
+    <input type="submit" value="Add Function" />
+</form>
+<?php } ?>
 <form onsubmit="return ConfirmationPrompt('Delete the selected functions?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, FUNCTIONDELETE_ACTION)) ?>" method="post">
     <div class="datatable">
         <table id="functions" class="tablesorter">
@@ -29,7 +29,11 @@
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($name) . "</td><td>" . htmlspecialchars($desc) . "</td>";
                     if (userIsAuthorized(FUNCTIONEDIT_ACTION)) {
-                        echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,FUNCTIONEDIT_ACTION) . "&id=" . urlencode($function_ID) . "\">Edit</a></td>";
+            ?>
+                        <td>
+                            <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,FUNCTIONEDIT_ACTION) . "&id=" . urlencode($function_ID)); ?>');" />
+                        </td>
+            <?php
                     } else {
                         echo "<td></td>";
                     }

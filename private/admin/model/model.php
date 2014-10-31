@@ -40,8 +40,10 @@
             
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question I.D.');
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Level');
+            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question');
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Avg Score');
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Flag Count');
+            
             
             foreach ($questions as $question)
             {
@@ -50,11 +52,13 @@
                 
                 $questionID = $question[QUESTIONID_IDENTIFIER];
                 $level = $question['Level'];
+                $questionName = $question[NAME_IDENTIFIER];
                 $avgScore = $question['CorrectlyAnsweredPercent'];
                 $flagCount = $question['MarkedAmbiguousCount'];
                 
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionName);
                 $workSheet->setCellValueByColumnAndRow($column++, $row, number_format($avgScore, 2));
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $flagCount);
             }

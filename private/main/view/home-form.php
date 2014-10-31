@@ -20,7 +20,7 @@
 
     <p>Good luck!</p>
 
-    <a href="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION)); ?>">Start Exam</a>
+    <input type="button" onclick="Relocate('<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION)); ?>');" value="Start Exam" />
     
     <br />
     
@@ -28,5 +28,5 @@
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( PLAINFOOTER_FILE ); 
 ?>

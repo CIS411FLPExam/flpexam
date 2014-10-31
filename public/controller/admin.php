@@ -48,7 +48,7 @@
                 break;
             case LOGOUT_ACTION :
                 logOut();
-                Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION));
                 break;
             case CONTROLPANEL_ACTION :
                 include(CONTROLPANELFORM_FILE);
@@ -2537,7 +2537,7 @@
             exit();
         }
         
-        $id = $_GET["id"];
+        $id = $_GET[ROLEID_IDENTIFIER];
         if (empty($id))
         {
             displayError("An ID is required for this function.");

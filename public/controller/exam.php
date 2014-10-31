@@ -250,7 +250,7 @@
         }
     }
     
-    function PresentNextQuestion()
+    function PresentNextQuestion($message = '')
     {
         $exam = GetCurrentExam();
         
@@ -294,7 +294,7 @@
 
             $exam->PushQuestionAnswerID($questionID, $answerID);
 
-            if($exam->IsDone() )
+            if($exam->IsDone())
             {
                 CommitExam();
             }
@@ -305,9 +305,9 @@
         }
         else
         {
-            $message = 'ERROR: Question and/or answer not sent to server.';
+            $message = '* You must select an answer.';
             
-            include(MESSAGEFORM_FILE);
+            PresentNextQuestion($message);
         }
     }
     

@@ -17,60 +17,49 @@
     <?php } ?>
     
     <div class="formSection">
-        <label>Question:</label>
         <div class="question">
-            <pre><b><?php echo(htmlspecialchars($name)); ?></b></pre>
+            <pre class="questionText"><b><?php echo(htmlspecialchars($name)); ?></b></pre>
             <div class="clear"></div>
+            <form onsubmit="return IsOneRadChecked('You must select an answer.');" action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION)); ?>" method="post">
+                <input type="hidden" name ="<?php echo(QUESTIONID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+                <?php if (!empty($message)) { ?>
+                    <span class="redText"><b><?php echo(htmlspecialchars($message)); ?></b></span>
+                <?php } ?>
+                <div class="formSection">
+                    <?php
+                        $answerOptionAsciiVal = 97;
+                        for ($index = 0; $index < count($answers); $index++)
+                        {
+                            $answer = $answers[$index];
+                    ?>
+                        <input class="floatLeft" type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answer[ANSWERID_IDENTIFIER])) ?>" />
+                        <span class="floatLeft">
+                            <b>
+                                <?php
+                                    echo(chr($answerOptionAsciiVal++));
+                                ?>)
+                            </b>
+                        </span>
+                        <div class="inline floatLeft">&nbsp;</div>
+                        <div class="displayBox"><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></div>
+                        <div class="clear"></div>
+                        <br />
+                    <?php
+                        }
+                    ?>
+                </div>
+
+                <br />
+
+                <input type="submit" value="Submit" />
+                <input type="checkbox" name="AmbiguousQuestion" /> Does this question seem ambiguous?
+            </form>
         </div>
     </div>
     <div class="clear"></div>
-    <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION)); ?>" method="post">
-        <input type="hidden" name ="<?php echo(QUESTIONID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
-        <div class="formSection">
-            <input class="floatLeft" type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answers[0][ANSWERID_IDENTIFIER])) ?>" checked="checked" />
-            <span class="floatLeft">
-                <b>
-                    <?php
-                        //The starting with the ascii value of 'a'.
-                        $answerOptionAsciiVal = 97;
-                        echo(chr($answerOptionAsciiVal++));
-                    ?>)
-                </b>
-            </span>
-            <div class="inline floatLeft">&nbsp;</div>
-            <div class="displayBox"><?php echo(htmlspecialchars($answers[0][NAME_IDENTIFIER])); ?></div>
-            <div class="clear"></div>
-            <?php
-                for ($index = 1; $index < count($answers); $index++)
-                {
-                    $answer = $answers[$index];
-            ?>
-                <br />
-                <br />
-                <input class="floatLeft" type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answer[ANSWERID_IDENTIFIER])) ?>" />
-                <span class="floatLeft">
-                    <b>
-                        <?php
-                            echo(chr($answerOptionAsciiVal++));
-                        ?>)
-                    </b>
-                </span>
-                <div class="inline floatLeft">&nbsp;</div>
-                <div class="displayBox"><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></div>
-                <div class="clear"></div>
-            <?php
-                }
-            ?>
-        </div>
-        
-        <br />
-        
-        <input type="submit" value="Submit" />
-        <input type="checkbox" name="AmbiguousQuestion" /> Does this question seem ambiguous?
-    </form>
 </div>
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( PLAINFOOTER_FILE );
 ?>

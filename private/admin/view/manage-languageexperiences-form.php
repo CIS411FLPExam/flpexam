@@ -41,16 +41,12 @@
                                 <td><?php echo(htmlspecialchars($experience->GetName())); ?></td>
                                 <?php if ($userCanView) { ?>
                                     <td class="centerText">
-                                        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experience->GetId()));?>">
-                                            View
-                                        </a>
+                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experience->GetId()));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanEdit) { ?>
                                     <td class="centerText">
-                                        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experience->GetId()));?>">
-                                            Edit
-                                        </a>
+                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experience->GetId()));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanDelete) { ?>

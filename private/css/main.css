@@ -15,11 +15,6 @@ pre
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 
-#questions
-{
-    width:745px;
-}
-
 #navbar
 {
     float: left;
@@ -53,16 +48,24 @@ pre
 
 .question
 {
-    font-size: 125%;
-    width: 700px;
     float: left;
     display: inline-block;
+}
+
+.questionText
+{
+    font-size: 125%;
 }
 
 .questionButton
 {
     display: inline-block;
     width: 120px;
+}
+
+.questionFormPad
+{
+    padding-bottom: 4px;
 }
 
 .inline { display: inline; }
@@ -154,6 +157,11 @@ pre
     margin: auto;
 }
 
+.datatable table
+{
+    max-width: 745px;
+}
+
 .datatable table tbody tr img
 {
     width: 100px;
@@ -170,6 +178,7 @@ pre
 .datatable tbody tr td
 {
     background-color: #ddc873;
+    padding: 3px;
 }
 
 .formGroup

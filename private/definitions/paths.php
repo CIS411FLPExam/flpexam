@@ -137,6 +137,11 @@
     define("FOOTER_FILE", INCLUDES_DIR . "footer.php");
     
     /**
+     * The file path of the plain footer file.
+     */
+    define("PLAINFOOTER_FILE", INCLUDES_DIR . "plain-footer.php");
+    
+    /**
      * The file path of the header file.
      */
     define("HEADER_FILE", INCLUDES_DIR . "header.php");

@@ -49,43 +49,31 @@
                         <td><?php echo(htmlspecialchars($name)); ?></td>
                         <?php if ($userCanManageQuestions) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>">
-                                    Questions
-                                </a>
+                                <input type="button" value="Questions" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanManageLevelInfos) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>">
-                                    Level Info
-                                </a>
+                                <input type="button" value="Level Info" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanEdit) { ?>
                             <td>
                                 <?php if($active == TRUE) { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>">
-                                        Deactivate
-                                    </a>
+                                    <input type="button" value="Deactivate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
                                 <?php } else { ?>
-                                    <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>">
-                                        Activate
-                                    </a>
+                                    <input type="button" value="Activate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
                                 <?php } ?>
                             </td>
                         <?php } ?>
                         <?php if ($userCanView) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>">
-                                    View
-                                </a>
+                                <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanEdit) { ?>
                             <td>
-                                <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>">
-                                    Edit
-                                </a>
+                                <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanDelete) { ?>

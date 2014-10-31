@@ -44,20 +44,16 @@
                             {
                         ?>
                             <tr>
-                                <td><?php echo(htmlspecialchars($levelInfo->GetLevel())); ?></td>
+                                <td class="centerText"><?php echo(htmlspecialchars($levelInfo->GetLevel())); ?></td>
                                 <td><?php echo(htmlspecialchars($levelInfo->GetName())); ?></td>
                                 <?php if ($userCanView) { ?>
                                     <td class="centerText">
-                                        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOVIEW_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . htmlspecialchars($levelInfo->GetId()));?>">
-                                            View
-                                        </a>
+                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOVIEW_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . htmlspecialchars($levelInfo->GetId()));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanEdit) { ?>
                                     <td class="centerText">
-                                        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOEDIT_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . htmlspecialchars($levelInfo->GetId()));?>">
-                                            Edit
-                                        </a>
+                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOEDIT_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . htmlspecialchars($levelInfo->GetId()));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanDelete) { ?>

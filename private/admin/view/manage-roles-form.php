@@ -32,7 +32,9 @@
                     echo "<tr>";
                     echo "<td>$name</td><td>$desc</td>";
                     if (userIsAuthorized(ROLEEDIT_ACTION)) {
-                        echo "<td><a href=\"" . GetControllerScript(ADMINCONTROLLER_FILE,ROLEEDIT_ACTION) . "&id=" . urlencode($role_ID) . "\">Edit</a></td>";
+            ?>
+                <td><input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, ROLEEDIT_ACTION). '&' . ROLEID_IDENTIFIER . '=' . urlencode($role_ID)); ?>');" /></td>
+            <?php
                     } else {
                         echo "<td></td>";
                     }

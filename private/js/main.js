@@ -28,3 +28,30 @@ function CheckAll()
         }
     }
 }
+
+///Redirects the page to the given URL.
+function Relocate(url)
+{
+    window.location.href = url;
+}
+
+function IsOneRadChecked(message)
+{
+    var foundOne = false;
+    var chx = document.getElementsByTagName('input');
+  
+    for (var i = 0; i < chx.length && !foundOne; i++)
+    {
+        if (chx[i].type == 'radio' && chx[i].checked)
+        {
+            foundOne = true;
+        } 
+    }
+    
+    if (!foundOne)
+    {
+        alert(message);
+    }
+  
+    return foundOne;
+}

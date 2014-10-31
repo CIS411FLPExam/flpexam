@@ -40,10 +40,12 @@
         <br />
         <p>
             Contact &nbsp; <b><?php echo(htmlspecialchars($contact->GetFirstName()) . ' ' . htmlspecialchars($contact->GetLastName())); ?></b>
-            &nbsp; at &nbsp; <b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b>
+            &nbsp; at &nbsp; <a href="mailto:<?php echo(htmlspecialchars($contact->GetEmail())); ?>?Subject=Foreign%20Language%20Placement%20Exam%20Site" target="_top"><b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b></a>
             &nbsp; for more information.
         </p>
     <?php } ?>
+        
+    <input type="button" onclick="Relocate('<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION)); ?>');" value="Start New Exam" autofocus />
 </div>
 
 <!--End main content-->
