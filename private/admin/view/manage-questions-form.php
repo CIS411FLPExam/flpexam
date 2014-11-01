@@ -75,7 +75,7 @@
 <?php } ?>
 
 <div class="divider"></div>
-<h4>Questions</h4>
+<h4><?php echo(count($questions)); ?> Questions</h4>
 <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
     <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
     <input type="number" name="Level" value="<?php if (isset($level)) { echo(htmlspecialchars($level)); } ?>" required min="1"/>
