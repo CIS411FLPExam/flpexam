@@ -52,7 +52,9 @@
                 <br />
 
                 <input type="submit" value="Submit" />
-                <input type="checkbox" name="AmbiguousQuestion" /> Does this question seem ambiguous?
+                Is there something wrong with this question?
+                <input type="checkbox" name="AmbiguousQuestion" />
+                Yes
             </form>
         </div>
     </div>
