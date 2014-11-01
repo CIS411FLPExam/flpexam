@@ -10,6 +10,72 @@
     require_once(LEVELINFOCLASS_FILE);
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
     
+    /**
+     * Activates a language's feedback.
+     * @param int $languageID The I.D. of the language.
+     */
+    function ActivateLanguageFeedback($languageID)
+    {
+        SetLanguageFeedbackState($languageID, TRUE);
+    }
+    
+    /**
+     * Deactivates a language's feedback.
+     * @param int $languageID The I.D. of the language.
+     */
+    function DeactivateLanguageFeedback($languageID)
+    {
+        SetLanguageFeedbackState($languageID, FALSE);
+    }
+    
+    /**
+     * Sets the state of a languages feedback.
+     * @param int $languageID The I.D. of the language.
+     * @param boolean $feedback The flag that indicates whether or no the language is taking feedback.
+     * @return int The number of languages that had their feedback state changed.
+     */
+    function SetLanguageFeedbackState($languageID, $feedback)
+    {
+        try
+        {
+            if ($feedback == TRUE)
+            {
+                $feedback = 1;
+            }
+            else
+            {
+                $feedback = 0;
+            }
+            
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' SET'
+                    . ' ' . 'Feedback'
+                    . ' = :' . 'Feedback' . ' WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . 'Feedback', $feedback);
+            
+            $rowsAffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsAffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Exports the statistics for a language into an excel sheet.
+     * @param int $languageID The I.D. of the language.
+     * @return string The file path of the excel sheet with the statistics.
+     */
     function ExportLanguageStatistics($languageID)
     {
         try
@@ -1582,9 +1648,10 @@
      * @param int $languageID The I.D. of the language to udpate.
      * @param string $name The new name of the language.
      * @param boolean $active Flag indicating whether or not the language is active.
+     * @param boolean $feedback Flag indicating whether or not feedback should be collected.
      * @return int The number of languages updated.
      */
-    function UpdateLanguage($languageID, $name, $active)
+    function UpdateLanguage($languageID, $name, $active, $feedback)
     {
         try
         {
@@ -1593,6 +1660,8 @@
             $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' SET'
                     . ' ' . '`Name`'
                     . ' = :' . 'Name'
+                    . ', ' . 'Feedback'
+                    . ' = :' . 'Feedback'
                     . ', ' . 'Active'
                     . ' = :' . 'Active WHERE'
                     . ' ' . LANGUAGEID_IDENTIFIER
@@ -1601,6 +1670,7 @@
             $statement = $db->prepare($query);
             $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
             $statement->bindValue(':' . 'Name', $name);
+            $statement->bindValue(':' . 'Feedback', $feedback);
             $statement->bindValue(':' . 'Active', $active);
             
             $effectedCount = $statement->execute();

@@ -245,9 +245,74 @@
             case QUESTIONSTATISTICSRESET_ACTION :
                 QuestionStatisticsReset();
                 break;
+            case LANGUAGEFEEDBACKACTIVATE_ACTION :
+                LanguageFeedbackActivate();
+                break;
+            case LANGUAGEFEEDBACKDEACTIVATE_ACTION :
+                LanguageFeedbackDeactivate();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
+    }
+    
+    
+    function LanguageFeedbackActivate()
+    {
+        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        ActivateLanguageFeedback($languageID);
+            
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+    }
+    
+    function LanguageFeedbackDeactivate()
+    {
+        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        DeactivateLanguageFeedback($languageID);
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
     }
     
     function TestView()
@@ -778,6 +843,12 @@
     
     function LanguageActivate()
     {
+        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if(isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
@@ -794,16 +865,19 @@
             exit();
         }
         
-        if(userIsAuthorized(LANGUAGEEDIT_ACTION))
-        {
-            ActivateLanguage($languageID);
-        }
-        
+        ActivateLanguage($languageID);
+            
         Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
     }
     
     function LanguageDeactivate()
     {
+        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if(isset($_POST[LANGUAGEID_IDENTIFIER]))
         {
             $languageID = $_POST[LANGUAGEID_IDENTIFIER];
@@ -820,16 +894,19 @@
             exit();
         }
         
-        if(userIsAuthorized(LANGUAGEEDIT_ACTION))
-        {
-            DeactivateLanguage($languageID);
-        }
+        DeactivateLanguage($languageID);
         
         Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
     }
     
     function ContactActivate()
     {
+        if(!userIsAuthorized(CONTACTEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if(isset($_POST[CONTACTID_IDENTIFIER]))
         {
             $contactID = $_POST[CONTACTID_IDENTIFIER];
@@ -846,23 +923,26 @@
             exit();
         }
         
-        if(userIsAuthorized(CONTACTEDIT_ACTION))
+        $contacts = GetContacts();
+
+        foreach ($contacts as $contact)
         {
-            $contacts = GetContacts();
-            
-            foreach ($contacts as $contact)
-            {
-                DeactivateContact($contact->GetId());
-            }
-            
-            ActivateContact($contactID);
+            DeactivateContact($contact->GetId());
         }
+
+        ActivateContact($contactID);
         
         Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
     }
     
     function ContactDeactivate()
     {
+        if(!userIsAuthorized(CONTACTEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
         if(isset($_POST[CONTACTID_IDENTIFIER]))
         {
             $contactID = $_POST[CONTACTID_IDENTIFIER];
@@ -879,10 +959,7 @@
             exit();
         }
         
-        if(userIsAuthorized(CONTACTEDIT_ACTION))
-        {
-            DeactivateContact($contactID);
-        }
+        DeactivateContact($contactID);
         
         Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
     }
@@ -1940,7 +2017,8 @@
         {
             $name = $language[NAME_IDENTIFIER];
             $active = $language['Active'];
-        
+            $feedback = $language['Feedback'];
+            
             include(ADDEDITLANGUAGEFORM_FILE);
         }
         else
@@ -1997,6 +2075,7 @@
         {
             $name = $language[NAME_IDENTIFIER];
             $active = $language['Active'];
+            $feedback = $language['Feedback'];
         
             include(VIEWLANGUAGEFORM_FILE);
         }
@@ -2056,6 +2135,7 @@
         }
         
         $active = isset($_POST['Active']);
+        $feedback = isset($_POST['Feedback']);
         
         if(count($errors) < 1)
         {
@@ -2063,7 +2143,7 @@
             {
                 $languageID = $_POST[LANGUAGEID_IDENTIFIER];
                 
-                UpdateLanguage($languageID, $name, $active);
+                UpdateLanguage($languageID, $name, $active, $feedback);
             }
             else
             {

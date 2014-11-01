@@ -19,6 +19,13 @@
             <label>Active:</label><?php if ($active) { echo('Yes'); } else { echo ('No'); } ?>
             <div class="clear"></div>
         </div>
+        
+        <div class="divider"></div>
+
+        <div class="formSection">
+            <label>Feedback:</label><?php if ($feedback) { echo('Yes'); } else { echo ('No'); } ?>
+            <div class="clear"></div>
+        </div>
     </div>
     <?php if (userIsAuthorized(LANGUAGEEDIT_ACTION)) {?>
         <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION)); ?>" method="post">

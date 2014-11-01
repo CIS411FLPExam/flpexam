@@ -142,7 +142,10 @@
             
             if($isActive)
             {
-                $language = new Language($languageID, $languageName);
+                $language = new Language();
+                $languageRow = GetLanguage($languageID);
+                
+                $language->Initialze($languageRow);
                 
                 $exam->SetLanguage($language);
                 
@@ -183,7 +186,10 @@
         $profile->SetSrHighExp($initExpName);
         $profile->SetCollegeExp($initExpName);
         
-        $profile->SetCurrentCourse($courses[0]);
+        $curCouse = $courses[0];
+        $curCourseName = $curCouse['Name'];
+        
+        $profile->SetCurrentCourse($curCourseName);
         
         include(CREATEPROFILEFORM_FILE);
     }
@@ -259,6 +265,7 @@
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
         }
         
+        $language = $exam->GetLanguage();
         $questionID = $exam->PullNextQuestionID();
         
         $question = GetQuestion($questionID);
@@ -320,15 +327,22 @@
             Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
         
+        DisposeCurrentExam();
+        
+        $language = $exam->GetLanguage();
         $profile = $exam->GetProfile();
         $examQAs = $exam->GetAllQAs();
-        $ambiguousQuestions = $exam->GetAmbiguousQuestions();
         
         $testEntryID = AddTestEntry($exam);
         AddTestee($testEntryID, $profile);
         AddTesteeExperiences($testEntryID, $profile);
         AddTesteeQuestions($testEntryID, $examQAs);
-        MarkQuestionsAmbiguous($ambiguousQuestions);
+        
+        if ($language->IsAcceptingFeedback())
+        {
+            $ambiguousQuestions = $exam->GetAmbiguousQuestions();
+            MarkQuestionsAmbiguous($ambiguousQuestions);
+        }
         
         foreach ($examQAs as $examQA)
         {
@@ -336,11 +350,9 @@
             IncrementQuestionStatisticAnswerCount($answerID);
         }
         
-        EmailTestResults();
-        
-        DisposeCurrentExam();
-        
         StoreTestId($testEntryID);
+        
+        EmailTestResults($exam);
         
         Redirect(GetControllerScript(EXAMCONTROLLER_FILE, TESTRESULTSVIEW_ACTION));
     }
@@ -376,10 +388,8 @@
         include(VIEWTESTRESULTSFORM_FILE);
     }
     
-    function EmailTestResults()
+    function EmailTestResults($exam = FALSE)
     {
-        $exam = GetCurrentExam();
-        
         if ($exam != FALSE)
         {
             $level = $exam->GetLevel();

@@ -36,6 +36,14 @@
                     <input type="checkbox" name="Active" <?php if ($active) { echo('checked'); } ?> />
                     <div class="clear"></div>
                 </div>
+                
+                <div class="divider"></div>
+
+                <div class="formSection">
+                    <label>Feedback:</label>
+                    <input type="checkbox" name="Feedback" <?php if ($feedback) { echo('checked'); } ?> />
+                    <div class="clear"></div>
+                </div>
         <?php } ?>    
 
         <input type="submit" value="Submit" />

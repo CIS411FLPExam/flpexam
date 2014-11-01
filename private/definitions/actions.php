@@ -292,6 +292,16 @@
     define("LANGUAGEDEACTIVATE_ACTION", "LanguageDeactivate");
     
     /**
+     * The action word to use to activate a language's feedback option.
+     */
+    define("LANGUAGEFEEDBACKACTIVATE_ACTION", "LanguageFeedbackActivate");
+    
+    /**
+     * The action word to use to deactivate a language's feedback option.
+     */
+    define("LANGUAGEFEEDBACKDEACTIVATE_ACTION", "LanguageFeedbackDeactivate");
+    
+    /**
      * The action word to use to activate a contact.
      */
     define("CONTACTACTIVATE_ACTION", "ContactActivate");

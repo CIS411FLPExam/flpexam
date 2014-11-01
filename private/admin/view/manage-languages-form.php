@@ -28,9 +28,10 @@
                 <thead>
                     <tr>
                         <th><b>Name</b></th>
+                        <?php if ($userCanEdit) { ?><th>Exam</th><?php } ?>
+                        <?php if ($userCanEdit) { ?><th>Feedback</th><?php } ?>
                         <?php if ($userCanManageQuestions) { ?><th></th><?php } ?>
                         <?php if ($userCanManageLevelInfos) { ?><th></th><?php } ?>
-                        <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanView) { ?><th></th><?php } ?>
                         <?php if ($userCanEdit) { ?><th></th><?php } ?>
                         <?php if ($userCanDelete) { ?><th></th><?php } ?>
@@ -44,9 +45,28 @@
                             $languageID = $language[LANGUAGEID_IDENTIFIER];
                             $name = $language[NAME_IDENTIFIER];
                             $active = $language['Active'];
+                            $feedback = $language['Feedback'];
                     ?>
                     <tr>
                         <td><?php echo(htmlspecialchars($name)); ?></td>
+                        <?php if ($userCanEdit) { ?>
+                            <td>
+                                <?php if($active == TRUE) { ?>
+                                    <input type="button" value="Deactivate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
+                                <?php } else { ?>
+                                    <input type="button" value="Activate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
+                                <?php } ?>
+                            </td>
+                        <?php } ?>
+                        <?php if ($userCanEdit) { ?>
+                            <td>
+                                <?php if($feedback == TRUE) { ?>
+                                    <input type="button" value="Deactivate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEFEEDBACKDEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
+                                <?php } else { ?>
+                                    <input type="button" value="Activate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEFEEDBACKACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
+                                <?php } ?>
+                            </td>
+                        <?php } ?>
                         <?php if ($userCanManageQuestions) { ?>
                             <td>
                                 <input type="button" value="Questions" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
@@ -55,15 +75,6 @@
                         <?php if ($userCanManageLevelInfos) { ?>
                             <td>
                                 <input type="button" value="Level Info" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
-                            </td>
-                        <?php } ?>
-                        <?php if ($userCanEdit) { ?>
-                            <td>
-                                <?php if($active == TRUE) { ?>
-                                    <input type="button" value="Deactivate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEDEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
-                                <?php } else { ?>
-                                    <input type="button" value="Activate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEACTIVATE_ACTION . "&". LANGUAGEID_IDENTIFIER . "=" . urlencode($languageID))); ?>');" />
-                                <?php } ?>
                             </td>
                         <?php } ?>
                         <?php if ($userCanView) { ?>

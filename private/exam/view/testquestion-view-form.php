@@ -52,9 +52,11 @@
                 <br />
 
                 <input type="submit" value="Submit" />
-                Is there something wrong with this question?
-                <input type="checkbox" name="AmbiguousQuestion" />
-                Yes
+                <?php if (isset($language) && $language->IsAcceptingFeedback()) { ?>
+                    Is there something wrong with this question?
+                    <input type="checkbox" name="AmbiguousQuestion" />
+                    Yes
+                <?php } ?>
             </form>
         </div>
     </div>

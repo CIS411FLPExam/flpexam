@@ -209,10 +209,10 @@ CREATE TABLE IF NOT EXISTS `languageexperiences` (
 --
 
 INSERT INTO `languageexperiences` (`ExperienceID`, `Name`, `InitLevel`) VALUES
-(2, '1 - 2 years', 1),
-(3, '2 - 3 years', 1),
-(4, '3 - 4 years', 2),
-(5, '4+ years', 2),
+(2, '1 Year', 1),
+(3, '2 Years', 1),
+(4, '3 Years', 2),
+(5, '4+ Years', 2),
 (1, 'None', 1);
 
 -- --------------------------------------------------------
@@ -225,6 +225,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `LanguageID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(32) NOT NULL,
   `Active` tinyint(1) NOT NULL DEFAULT '0',
+  `Feedback` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;

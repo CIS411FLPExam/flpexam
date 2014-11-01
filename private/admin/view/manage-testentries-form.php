@@ -51,7 +51,7 @@
     </div>
     <div class="divider"></div>
 <?php } ?>
-    
+<h4><?php echo(count($testInfos)); ?> Test Entries</h4>
 <?php if (count($testInfos)) { ?>
     <form onsubmit="return ConfirmationPrompt('Delete the selected test records?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYDELETE_ACTION)); ?>" method="post">
         <div class="datatable">
