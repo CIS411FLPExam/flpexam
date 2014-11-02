@@ -55,10 +55,10 @@ class Exam
     private $allQAs;
     
     /**
-     * The questions that were marked as ambiguous.
+     * The collection of questions that were flagged.
      * @var array of question I.D.'s
      */
-    private $ambiguousQuestions;
+    private $flaggedQuestions;
     
     /**
      * Gets the flag that indicates whether or not the exam has been started.
@@ -205,21 +205,21 @@ class Exam
     }
     
     /**
-     * Gets the collection of ambiguous questions.
+     * Gets the collection of flagged questions.
      * @return array The collection of question I.D.'s.
      */
-    public function GetAmbiguousQuestions()
+    public function GetFlaggedQuestions()
     {
-        return $this->ambiguousQuestions;
+        return $this->flaggedQuestions;
     }
     
     /**
-     * Sets the collection of ambiguous questions.
-     * @param array $ambiguousQuestions The collection of question I.D.'s.
+     * Sets the collection of flagged questions.
+     * @param array $flaggedQuestions The collection of question I.D.'s.
      */
-    public function SetAmbiguousQuestions($ambiguousQuestions)
+    public function SetFlaggedQuestions($flaggedQuestions)
     {
-        $this->ambiguousQuestions = $ambiguousQuestions;
+        $this->flaggedQuestions = $flaggedQuestions;
     }
     
     /**
@@ -238,7 +238,7 @@ class Exam
         $this->SetProfile($profile);
         $this->SetLvlQAs(array());
         $this->SetAllQAs(array());
-        $this->SetAmbiguousQuestions(array());
+        $this->SetFlaggedQuestions(array());
     }
     
     /**
@@ -672,16 +672,16 @@ class Exam
      * Adds a question to the ambiguous question collection.
      * @param int $questionID The I.D. of the question.
      */
-    public function AddAmbiguousQuestion($questionID)
+    public function FlagQuestion($questionID)
     {
-        $ambiguousQuestions = $this->GetAmbiguousQuestions();
+        $flaggedQuestions = $this->GetFlaggedQuestions();
         
         if ($this->IsInExam($questionID))
         {
-            $ambiguousQuestions[] = $questionID;
+            $flaggedQuestions[] = $questionID;
         }
         
-        $this->SetAmbiguousQuestions($ambiguousQuestions);
+        $this->SetFlaggedQuestions($flaggedQuestions);
     }
 }
 ?>

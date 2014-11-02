@@ -296,7 +296,7 @@
             
             if (isset($_POST['AmbiguousQuestion']))
             {
-                $exam->AddAmbiguousQuestion($questionID);
+                $exam->FlagQuestion($questionID);
             }
 
             $exam->PushQuestionAnswerID($questionID, $answerID);
@@ -340,15 +340,19 @@
         
         if ($language->IsAcceptingFeedback())
         {
-            $ambiguousQuestions = $exam->GetAmbiguousQuestions();
-            MarkQuestionsAmbiguous($ambiguousQuestions);
+            $flaggedQuestions = $exam->GetFlaggedQuestions();
+            IncrementQuestionFlagCounts($flaggedQuestions);
         }
+        
+        $answerIDs = array();
         
         foreach ($examQAs as $examQA)
         {
             $answerID = $examQA->GetAnswerId();
-            IncrementQuestionStatisticAnswerCount($answerID);
+            $answerIDs[] = $answerID;
         }
+        
+        IncrementAnswerChosenCounts($answerIDs);
         
         StoreTestId($testEntryID);
         

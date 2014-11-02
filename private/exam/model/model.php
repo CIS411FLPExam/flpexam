@@ -20,30 +20,44 @@
     }
     
     /**
-     * Marks a collection of questions as ambiguous.
-     * @param array $ambiguousQuestions The collection of question I.D.'s.
+     * Records that the collection of questions have been flagged.
+     * @param array $questionIDs The collection of question I.D.'s.
      */
-    function MarkQuestionsAmbiguous($ambiguousQuestions)
+    function IncrementQuestionFlagCounts($questionIDs)
     {
         try
         {
+            if (count($questionIDs) < 1)
+            {
+                return;
+            }
+            
             $db = GetDBConnection();
             
-            foreach ($ambiguousQuestions as $questionID)
+            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
+                    . ' ' . 'Flagged'
+                    . ' = '. 'Flagged' . ' + 1' . ' WHERE'
+                    . ' ' . QUESTIONID_IDENTIFIER
+                    . ' = :' . QUESTIONID_IDENTIFIER . '0';
+            
+            for($count = 1; $count < count($questionIDs); $count++)
             {
-                $query = 'INSERT INTO ' . AMBIGUOUSQUESTIONS_IDENTIFIER
-                        . ' (' . QUESTIONID_IDENTIFIER . ') VALUES'
-                        . ' (:' . QUESTIONID_IDENTIFIER . ') ON DUPLICATE KEY UPDATE'
-                        . ' ' . 'Count'
-                        . ' = ' . 'Count' . '+1;';
-
-                $statement = $db->prepare($query);
-                $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
-
-                $statement->execute();
-
-                $statement->closeCursor();
+                $query .= ' OR ' . QUESTIONID_IDENTIFIER . ' = :' . QUESTIONID_IDENTIFIER . $count;
             }
+            
+            $query .= ';';
+            
+            $statement = $db->prepare($query);
+            
+            for($count = 0; $count < count($questionIDs); $count++)
+            {
+                $questionID = $questionIDs[$count];
+                $statement->bindValue(':' . QUESTIONID_IDENTIFIER . $count, $questionID);
+            }
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
         }
         catch (PDOException $ex)
         {
@@ -134,22 +148,40 @@
     }
     
     /**
-     * Records the answer for a question.
-     * @param int $answerID The I.D. of the answer that was submitted.
+     * Records that a collection of answers have been chosen.
+     * @param array $answerIDs The I.D. of the answer that was submitted.
      */
-    function IncrementQuestionStatisticAnswerCount($answerID)
+    function IncrementAnswerChosenCounts($answerIDs)
     {
         try
         {
+            if (count($answerIDs) < 1)
+            {
+                return;
+            }
+            
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . QUESTIONSTATISTICS_IDENTIFIER
-                    . ' (' . ANSWERID_IDENTIFIER . ') VALUES'
-                    . ' (:' . ANSWERID_IDENTIFIER . ') ON DUPLICATE KEY UPDATE'
-                    . ' ' . 'Count' . '=' . 'Count+1;';
+            $query = 'UPDATE ' . ANSWERS_IDENTIFIER . ' SET'
+                    . ' ' . 'Chosen'
+                    . ' = '. 'Chosen' . ' + 1' . ' WHERE'
+                    . ' ' . ANSWERID_IDENTIFIER
+                    . ' = :' . ANSWERID_IDENTIFIER . '0';
+            
+            for($count = 1; $count < count($answerIDs); $count++)
+            {
+                $query .= ' OR ' . ANSWERID_IDENTIFIER . ' = :' . ANSWERID_IDENTIFIER . $count;
+            }
+            
+            $query .= ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
+            
+            for($count = 0; $count < count($answerIDs); $count++)
+            {
+                $answerID = $answerIDs[$count];
+                $statement->bindValue(':' . ANSWERID_IDENTIFIER . $count, $answerID);
+            }
             
             $statement->execute();
             

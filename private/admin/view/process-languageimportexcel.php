@@ -52,7 +52,12 @@
                 {
                     $errors[] = 'Row "' . $row . '" question cannot be empty.';
                 }
-
+                
+                if (PHPExcel_Cell_DataType::dataTypeForValue($instructions) == PHPExcel_Cell_DataType::TYPE_NULL || empty(trim($instructions)))
+                {
+                    $errors[] = 'Row "' . $row . '" instructions cannot be empty.';
+                }
+                
                 $answers = array();
 
                 for ($col = $column; $col < $highestColumnIndex; ++$col)

@@ -14,18 +14,38 @@
         if (count($q) > 1)
         {
             $column = 0;
+            
+            $level = '';
+            $instructions = '';
+            $name = '';
             $answers = array();
 
-            $level = trim($q[$column++]);
-            $instructions = trim($q[$column++]);
-            $name = trim($q[$column++]);
-
-            while($column < count($q))
+            if (isset($q[$column]))
             {
-                $answers[] = trim($q[$column++]);
+                $level = trim($q[$column++]);
             }
             
-            if (count($answers > 0))
+            if (isset($q[$column]))
+            {
+                $instructions = trim($q[$column++]);
+            }
+            
+            if (isset($q[$column]))
+            {
+                $name = trim($q[$column++]);
+            }
+            
+            while($column < count($q))
+            {
+                if (isset($q[$column]))
+                {
+                    $answers[] = trim($q[$column]);
+                }
+                
+                $column++;
+            }
+            
+            if (count($answers) > 0)
             {
                 $answers[count($answers) - 1] = trim(str_replace('}','', $answers[count($answers) - 1]));
             }
@@ -43,7 +63,7 @@
         $name = $question['Name'];
         $answers = $question['Answers'];
         
-        if(!is_int($level) && (string)(int)$level != $level)
+        if (!is_int($level) && (string)(int)$level != $level)
         {
             $errors[] = '(Question ' . $count . ') The level must be an integer value.';
         }
@@ -55,6 +75,11 @@
         if (empty($name))
         {
             $errors[] = '(Question ' . $count . ') The question cannot be blank.';
+        }
+        
+        if (empty($instructions))
+        {
+            $errors[] = '(Question ' . $count . ') The instructions cannot be blank.';
         }
         
         if(count($answers) < 1)

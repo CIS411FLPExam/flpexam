@@ -92,21 +92,7 @@
             The answer
             <b>"<?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?>"</b>
             has been chosen 
-            <b>
-                <?php
-                    $found = FALSE;
-                    for ($j = 0; $j < count($answerCounts) && !$found; $j++)
-                    {
-                        $answerCount = $answerCounts[$j];
-
-                        if ($answerID == $answerCount[ANSWERID_IDENTIFIER])
-                        {
-                            $found = TRUE;
-                            echo(htmlspecialchars($answerCount['Count']));
-                        }
-                    }
-                ?>
-            </b>
+            <b><?php echo(htmlspecialchars($answer['Chosen'])); ?></b>
             time(s).
         </div>
     <?php

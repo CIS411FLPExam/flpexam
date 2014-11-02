@@ -107,8 +107,8 @@
                             $questionID = $question[QUESTIONID_IDENTIFIER];
                             $questionName = $question[NAME_IDENTIFIER];
                             $questionLevel = $question['Level'];
-                            $correctlyAnsweredPercent = $question['CorrectlyAnsweredPercent'];
-                            $flagCount = $question['MarkedAmbiguousCount'];
+                            $correctlyAnsweredPercent = $question['AvgScore'];
+                            $flagCount = $question['Flagged'];
                             
                             if(strlen($questionName) > 50)
                             {

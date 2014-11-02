@@ -99,7 +99,6 @@
             $workSheet->setTitle('Statistics');
             
             $questions = GetQuestions($languageID);
-            AppendQuestionStatistics($questions);
             
             $row = 1;
             $column = 0;
@@ -119,8 +118,8 @@
                 $questionID = $question[QUESTIONID_IDENTIFIER];
                 $level = $question['Level'];
                 $questionName = $question[NAME_IDENTIFIER];
-                $avgScore = $question['CorrectlyAnsweredPercent'];
-                $flagCount = $question['MarkedAmbiguousCount'];
+                $avgScore = GetQuestionAvgScore($questionID);
+                $flagCount = $question['Flagged'];
                 
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
                 $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
@@ -141,95 +140,69 @@
     }
     
     /**
-     * Appends the statistics of the questions to the collection of questions.
+     * Adds the average score to each question.
      * @param array $questions The collection of questions.
      */
-    function AppendQuestionStatistics(&$questions)
+    function AppendQuestionAvgScores(&$questions)
     {
         for($i = 0; $i < count($questions); $i++)
         {
             $question = $questions[$i];
-            
-            $correctlyAnsweredPercent = 100;
-            $markedAmbiguousCount = 0;
-            
             $questionID = $question[QUESTIONID_IDENTIFIER];
             
-            $totalAnswers = GetQuestionStatisticTotalTimesAnswered($questionID);
-            $totalCorrectAnswers = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
-            $totalTimesMarkedAmbig = GetQuestionAmbiguousCount($questionID);
+            $avgScore = GetQuestionAvgScore($questionID);
             
-            if ($totalAnswers > 0)
-            {
-                $correctlyAnsweredPercent = (floatval($totalCorrectAnswers) / floatval($totalAnswers)) * 100.0;                
-            }
-            
-            if (count($totalTimesMarkedAmbig) > 0)
-            {
-                $markedAmbiguousCount = $totalTimesMarkedAmbig['Count'];
-            }
-            
-            $question['CorrectlyAnsweredPercent'] = $correctlyAnsweredPercent;
-            $question['MarkedAmbiguousCount'] = $markedAmbiguousCount;
+            $question['AvgScore'] = $avgScore;
             $questions[$i] = $question;
         }
     }
     
     /**
-     * Gets the number of times a question was marked ambiguous.
-     * @param int $questionID The I.D. of the question.
-     * @return array The ambiguous question count.
+     * Gets the average score of a question.
+     * @param int $questionID The I.D. of a question.
+     * @return float The percent score.
      */
-    function GetQuestionAmbiguousCount($questionID)
+    function GetQuestionAvgScore($questionID)
     {
-        try
+        $avgScore = 100.0;
+        $answers = GetQuestionAnswers($questionID);
+        
+        $totalCount = 0;
+        $correctCount = 0;
+        foreach($answers as $answer)
         {
-            $db = GetDBConnection();
+            $count = (int)$answer['Chosen'];
+            $totalCount = $totalCount + $count;
             
-            $query = 'SELECT * FROM ' . AMBIGUOUSQUESTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
-            
-            $statement->execute();
-            
-            $ambiguousQuestionCounts = $statement->fetch();
-            
-            if ($ambiguousQuestionCounts == FALSE)
+            if ((boolean)$answer['Correct'] == TRUE)
             {
-                $ambiguousQuestionCounts = array();
+                $correctCount = $count;
             }
-            
-            $statement->closeCursor();
-            
-            return $ambiguousQuestionCounts;
         }
-        catch (PDOException $ex)
+        
+        if ($totalCount > 0)
         {
-            LogError($ex);
+            $avgScore = ((float)$correctCount / (float)$totalCount) * 100.0;
         }
+        
+        return $avgScore;
     }
     
     /**
      * Resets the ambiguous question statistics for an entire language.
      * @param int $languageID The I.D. of the language.
      */
-    function ResetLanguageQuestionAmbiguousStats($languageID)
+    function ResetLanguageQuestionsFlagCount($languageID)
     {
         try
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . AMBIGUOUSQUESTIONS_IDENTIFIER . ' INNER JOIN'
+            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
                     . ' ' . QUESTIONS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . AMBIGUOUSQUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . LANGUAGES_IDENTIFIER . ' ON'
-                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' SET'
-                    . ' ' . 'Count'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' SET'
+                    . ' ' . 'Flagged'
                     . ' = ' . '0' . ' WHERE'
                     . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
                     . ' = :' . LANGUAGEID_IDENTIFIER . ';';
@@ -251,17 +224,14 @@
      * Resets the ambiguous questions statistics for a question.
      * @param int $questionID The I.D. of the question.
      */
-    function ResetQuestionAmbiguousStats($questionID)
+    function ResetQuestionFlagCount($questionID)
     {
         try
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . AMBIGUOUSQUESTIONS_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . AMBIGUOUSQUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' SET'
-                    . ' ' . 'Count'
+            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
+                    . ' ' . 'Flagged'
                     . ' = ' . '0' . ' WHERE'
                     . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
                     . ' = :' . QUESTIONID_IDENTIFIER . ';';
@@ -533,139 +503,6 @@
     }
     
     /**
-     * Gets the total number of times each answer has been submited for a question.
-     * @param int $questionID The I.D. of the question.
-     * @return array The collection answer counts indexed by their answer I.D.
-     */
-    function GetQuestionStatisticTotalAnswerCounts($questionID)
-    {
-        try
-        {
-            $db = GetDBConnection();
-            
-            $query = 'SELECT ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
-                    . ', ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ' FROM'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
-                    . ' = ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
-            
-            $statement->execute();
-            
-            $results = $statement->fetchAll();
-            
-            $statement->closeCursor();
-            
-            return $results;
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }
-    
-    /**
-     * Gets the total number of times a question has been answered correctly.
-     * @param int $questionID The I.D. of the question.
-     * @return mixed The total number of a times a question has been answered correctly, or FALSE if no question was found.
-     */
-    function GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID)
-    {
-        try
-        {
-            $totalTimesAnsweredCorrectly = FALSE;
-            $db = GetDBConnection();
-            
-            $query = 'SELECT ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ' FROM'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
-                    . ' = ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ' AND'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . 'Correct'
-                    . ' = ' . 'TRUE' . ';';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
-            
-            $statement->execute();
-            
-            $result = $statement->fetch();
-            
-            $statement->closeCursor();
-            
-            if ($result != FALSE)
-            {
-                $totalTimesAnsweredCorrectly = $result['Count'];
-            }
-            
-            return $totalTimesAnsweredCorrectly;
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }
-    
-    /**
-     * Gets the total number of times a question has been answered.
-     * @param int $questionID The I.D. of the question.
-     * @return mixed The total number of times the question has been answered, or FALSE when the question was not found.
-     */
-    function GetQuestionStatisticTotalTimesAnswered($questionID)
-    {
-        try
-        {
-            $totalTimesAnswered = FALSE;
-            $db = GetDBConnection();
-            
-            $query = 'SELECT SUM(' . QUESTIONSTATISTICS_IDENTIFIER . '.' . 'Count' . ') AS'
-                    . ' ' . 'TotalAnswers' . ' FROM'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONSTATISTICS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
-                    . ' = ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
-            
-            $statement->execute();
-            
-            $result = $statement->fetch();
-            
-            $statement->closeCursor();
-            
-            if ($result != FALSE)
-            {
-                $totalTimesAnswered = $result['TotalAnswers'];
-            }
-            
-            return $totalTimesAnswered;
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }
-    
-    /**
      * Resets the statistics for every question of a language.
      * @param int $languageID The I.D. of the language.
      */
@@ -673,21 +510,18 @@
     {
         try
         {
-            ResetLanguageQuestionAmbiguousStats($languageID);
+            ResetLanguageQuestionsFlagCount($languageID);
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . QUESTIONSTATISTICS_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
-                    . ' = ' . QUESTIONSTATISTICS_IDENTIFIER  . '.' . ANSWERID_IDENTIFIER . ' INNER JOIN'
+            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
                     . ' ' . QUESTIONS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . LANGUAGES_IDENTIFIER . ' ON'
-                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' SET'
-                    . ' ' . 'Count'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = ' . LANGUAGES_IDENTIFIER  . '.' . LANGUAGEID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' SET'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . 'Chosen'
                     . ' = ' . '0' . ' WHERE'
                     . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
                     . ' = :' . LANGUAGEID_IDENTIFIER . ';';
@@ -713,18 +547,15 @@
     {
         try
         {
-            ResetQuestionAmbiguousStats($questionID);
+            ResetQuestionFlagCount($questionID);
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . QUESTIONSTATISTICS_IDENTIFIER . ' INNER JOIN'
+            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
                     . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . ANSWERID_IDENTIFIER
-                    . ' = ' . QUESTIONSTATISTICS_IDENTIFIER  . '.' . ANSWERID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' SET'
-                    . ' ' . 'Count'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER  . '.' . QUESTIONID_IDENTIFIER . ' SET'
+                    . ' ' . ANSWERS_IDENTIFIER . '.' . 'Chosen'
                     . ' = ' . '0' . ' WHERE'
                     . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
                     . ' = :' . QUESTIONID_IDENTIFIER . ';';
@@ -736,37 +567,6 @@
             
             $statement->closeCursor();
             
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }
-    
-    /**
-     * Creates an answer statistic
-     * @param int $answerID The I.D. of the answer.
-     */
-    function InsertQuestionStatisticsAnswer($answerID)
-    {
-        try
-        {
-            $db = GetDBConnection();
-            
-            $query = 'INSERT INTO ' . QUESTIONSTATISTICS_IDENTIFIER
-                    . ' (' . ANSWERID_IDENTIFIER
-                    . ', ' . 'Count' . ') VALUES'
-                    . ' (:' . ANSWERID_IDENTIFIER
-                    . ', :' . 'Count' . ');';
-
-            $statement = $db->prepare($query);
-
-            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
-            $statement->bindValue(':' . 'Count', '0', PDO::PARAM_INT);
-
-            $statement->execute();
-            
-            $statement->closeCursor();
         }
         catch (PDOException $ex)
         {
@@ -1840,7 +1640,7 @@
     {
         try
         {
-            ResetQuestionAmbiguousStats($questionID);
+            ResetQuestionFlagCount($questionID);
             
             $db = GetDBConnection();
             
@@ -1958,8 +1758,6 @@
                 $statement->closeCursor();
                 
                 $answerID = $db->lastInsertId();
-                    
-                InsertQuestionStatisticsAnswer($answerID);
                 
                 //Now answer all of the other answers which are inccorect.
                 for($i = 1; $i < count($answers); $i++)
@@ -1984,8 +1782,6 @@
                     $statement->closeCursor();
                     
                     $answerID = $db->lastInsertId();
-                    
-                    InsertQuestionStatisticsAnswer($answerID);
                 }
             }
         }

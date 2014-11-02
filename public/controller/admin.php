@@ -1208,7 +1208,7 @@
         $lang = GetLanguage($languageID);
         $questions = GetQuestions($languageID, $level);
         
-        AppendQuestionStatistics($questions);
+        AppendQuestionAvgScores($questions);
         
         $language = $lang[NAME_IDENTIFIER];
         
@@ -1604,7 +1604,7 @@
         
         $questions = GetQuestions($languageID, $level);
         
-        AppendQuestionStatistics($questions);
+        AppendQuestionAvgScores($questions);
         
         $language = $lang[NAME_IDENTIFIER];
         
@@ -1743,18 +1743,23 @@
             $name = $question[NAME_IDENTIFIER];
             $level = $question['Level'];
             $instructions = $question['Instructions'];
-
+            $totalTimesFlagged = $question['Flagged'];
+            
             $answers = GetQuestionAnswers($questionID);
-
-            $answerCounts = GetQuestionStatisticTotalAnswerCounts($questionID);
-            $totalTimesAnswered = GetQuestionStatisticTotalTimesAnswered($questionID);
-            $totalTimesAnsweredCorrectly = GetQuestionStatisticTotalTimesAnsweredCorrectly($questionID);
-            $totalTimesFlagged = 0;
-                    
-            $markedAmbiguousCount = GetQuestionAmbiguousCount($questionID);
-            if (count($markedAmbiguousCount) > 0)
+            
+            $totalTimesAnswered = 0;
+            $totalTimesAnsweredCorrectly = 0;
+            
+            
+            foreach($answers as $answer)
             {
-                $totalTimesFlagged = $markedAmbiguousCount['Count'];
+                $count = $answer['Chosen'];
+                $totalTimesAnswered += $count;
+                
+                if ((boolean)$answer['Correct'] == TRUE)
+                {
+                    $totalTimesAnsweredCorrectly = $count;
+                }
             }
             
             include(VIEWQUESTIONFORM_FILE);
@@ -1967,7 +1972,7 @@
         
         $questions = SearchForQuestion($languageID, $name);
         
-        AppendQuestionStatistics($questions);
+        AppendQuestionAvgScores($questions);
         
         $language = $lang[NAME_IDENTIFIER];
         
