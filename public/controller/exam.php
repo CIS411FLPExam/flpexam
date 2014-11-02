@@ -383,7 +383,7 @@
         
         StoreTestId($testEntryID);
         
-        EmailTestResults($exam);
+        //EmailTestResults($exam);//TODO: Uncomment this because it is for testing purposes only.
         
         Redirect(GetControllerScript(EXAMCONTROLLER_FILE, TESTRESULTSVIEW_ACTION));
     }
@@ -413,6 +413,9 @@
         
         $levelInfoID = GetLevelInfoID($languageID, $score);
         
+        
+        $levelInfoID = 0;//TODO: Get rid of this because it is for testing purposes only.
+        
         $levelInfo = GetLevelInfo($levelInfoID);
         $contact = GetPrimaryContact();
         
@@ -441,7 +444,7 @@
             $message .= "\r\n";
             $message .= "\tYou scored a " . $level . " on the " . $languageName . " placement exam.";
             $message .= " ";
-            $message .= "This score, along with the additional information you submited, will allow us to assess your " . $languageName;
+            $message .= "This score, along with the additional information you submitted, will allow us to assess your " . $languageName;
             $message .= " ";
             $message .= "language skills. More importantly, it will help us with placing you in the appropriate level " . $languageName . " class.";
             $message .= " ";

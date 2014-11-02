@@ -396,18 +396,18 @@ class Exam
     protected function IncreaseLevel()
     {
         $level = $this->GetLevel();
-        $languageID = $this->GetLanguage()->GetId();
+        //$languageID = $this->GetLanguage()->GetId();
         
         $this->RecordLvlQAs();
         
         $nextLevel = $level + 1;
         
-        if (LevelExists($languageID, $nextLevel))
-        {
+        //if (LevelExists($languageID, $nextLevel))
+        //{
             $this->SetLevel($nextLevel);
             $this->SetPrevLevel($level);
             $this->GetNewLvlQAs();
-        }
+        //}
     }
     
     /**

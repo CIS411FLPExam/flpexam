@@ -24,9 +24,9 @@
             </div>
 
             <?php
-				$desc = $levelInfo->GetDescription();
-				if (!empty($desc)) {
-			?>
+                    $desc = $levelInfo->GetDescription();
+                    if (!empty($desc)) {
+            ?>
                 <div class='divider'></div>
 
                 <div class="formSection">
