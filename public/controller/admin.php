@@ -251,11 +251,42 @@
             case LANGUAGEFEEDBACKDEACTIVATE_ACTION :
                 LanguageFeedbackDeactivate();
                 break;
+            case QUESTIONCOMMENTSVIEW_ACTION :
+                QuestionCommentsView();
+                break;
             default:
                 Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
         }
     }
     
+    function QuestionCommentsView()
+    {
+        if (!userIsAuthorized(QUESTIONVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+        }
+        else if (isset($_GET[QUESTIONID_IDENTIFIER]))
+        {
+            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No question I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $comments = GetQuestionComments($questionID);
+        
+        include(VIEWQUESTIONCOMMENTSFORM_FILE);
+    }
     
     function LanguageFeedbackActivate()
     {

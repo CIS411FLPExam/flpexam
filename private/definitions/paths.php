@@ -276,6 +276,11 @@
      */
     define("LANGUAGEEXPERIENCECLASS_FILE", CODE_DIR . "languageexperience-class.php");
     
+    /**
+     * The file path of the question comment class file.
+     */
+    define("QUESTIONCOMMENTCLASS_FILE", CODE_DIR . "questioncomment-class.php");
+    
 //Main paths.
 /******************************************************************************/
     
@@ -512,7 +517,15 @@
      */
     define("VIEWLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "view-languageexperiences-form.php");
     
+    /**
+     * The file path of the manage language experiences form file.
+     */
     define("MANAGELANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "manage-languageexperiences-form.php");
+    
+    /**
+     * The file path of the view question comments form file.
+     */
+    define("VIEWQUESTIONCOMMENTSFORM_FILE", ADMINVIEW_DIR . "view-questioncomments-form.php");
     
 //Exam paths.
 /******************************************************************************/

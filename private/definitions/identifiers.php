@@ -1,9 +1,9 @@
 <?php
 
     /**
-     * The identifier of the ambiguous question records.
+     * The identifier of the question comment records.
      */
-    define("AMBIGUOUSQUESTIONS_IDENTIFIER", "ambiguousquestions");
+    define("QUESTIONCOMMENTS_IDENTIFIER", "questioncomments");
 
     /**
      * The identifier of the testee answer records.
@@ -15,11 +15,6 @@
      */
     define("TESTEEQUESTIONS_IDENTIFIER", "testeequestions");
     
-    /**
-     * The identifier of the question statistic records.
-     */
-    define("QUESTIONSTATISTICS_IDENTIFIER", "questionstatistics");
-
     /**
      * The identifier of the levelinfos records.
      */

@@ -376,6 +376,11 @@
      */
     define("QUESTIONSTATISTICSRESET_ACTION", "QuestionStatisticsReset");
     
+    /**
+     * The action word to view the comments submitted for a question.
+     */
+    define("QUESTIONCOMMENTSVIEW_ACTION", "QuestionCommentsView");
+    
     
 //Actions available through the exam controller.
 /******************************************************************************/

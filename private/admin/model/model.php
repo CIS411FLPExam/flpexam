@@ -9,6 +9,120 @@
     require_once(CONTACTCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
+    require_once(QUESTIONCOMMENTCLASS_FILE);
+    
+    /**
+     * Gets all the comments on record for a question.
+     * @param int $questionID The I.D. of the question.
+     * @return array The collection of question comments.
+     */
+    function GetQuestionComments($questionID)
+    {
+        try
+        {
+            $qcs = array();
+            $qc = new QuestionComment();
+            $questionIdKey = $qc->GetQuestionIdKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . QUESTIONCOMMENTS_IDENTIFIER . ' WHERE'
+                    . ' ' . $questionIdKey
+                    . ' = :' . $questionIdKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $questionIdKey, $questionID);
+            
+            $statement->execute();
+            
+            $rows = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach($rows as $row)
+            {
+                $qc = new QuestionComment();
+                $qc->Initialize($row);
+                
+                $qcs[] = $qc;
+            }
+            
+            return $qcs;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Deletes all comments on record for each question of a language.
+     * @param int $languageID The I.D. of the lanuage.
+     * @return int The number of comments deleted.
+     */
+    function DeleteLanguageQuestionComments($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'DELETE ' . QUESTIONCOMMENTS_IDENTIFIER . '.* FROM ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . QUESTIONCOMMENTS_IDENTIFIER . ' ON'
+                    . ' ' . QUESTIONCOMMENTS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
+                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            $rowsDeleted = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsDeleted;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Deletes all comments on record for a question.
+     * @param int $questionID The I.D. of the question.
+     * @return int The number of comments deleted.
+     */
+    function DeleteQuestionComments($questionID)
+    {
+        try
+        {
+            $qc = new QuestionComment();
+            $questionIdKey = $qc->GetQuestionIdKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'DELETE FROM ' . QUESTIONCOMMENTS_IDENTIFIER . ' WHERE'
+                    . ' ' . $questionIdKey
+                    . ' = :' . $questionIdKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $questionIdKey, $questionID);
+            
+            $rowsDeleted = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsDeleted;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
     
     /**
      * Activates a language's feedback.
@@ -510,6 +624,7 @@
     {
         try
         {
+            DeleteLanguageQuestionComments($languageID);
             ResetLanguageQuestionsFlagCount($languageID);
             
             $db = GetDBConnection();
@@ -547,6 +662,7 @@
     {
         try
         {
+            DeleteQuestionComments($questionID);
             ResetQuestionFlagCount($questionID);
             
             $db = GetDBConnection();
@@ -1640,6 +1756,7 @@
     {
         try
         {
+            DeleteQuestionComments($questionID);
             ResetQuestionFlagCount($questionID);
             
             $db = GetDBConnection();

@@ -669,16 +669,18 @@ class Exam
     }
     
     /**
-     * Adds a question to the ambiguous question collection.
-     * @param int $questionID The I.D. of the question.
+     * Adds a question comment to the flagged question collection.
+     * @param QuestionComment $qc The question comment.
      */
-    public function FlagQuestion($questionID)
+    public function FlagQuestion(QuestionComment $qc)
     {
         $flaggedQuestions = $this->GetFlaggedQuestions();
         
+        $questionID = $qc->GetQuestionId();
+        
         if ($this->IsInExam($questionID))
         {
-            $flaggedQuestions[] = $questionID;
+            $flaggedQuestions[] = $qc;
         }
         
         $this->SetFlaggedQuestions($flaggedQuestions);

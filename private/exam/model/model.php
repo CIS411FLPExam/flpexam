@@ -5,6 +5,59 @@
     require_once(QUESTIONANSWERCLASS_FILE);
     
     /**
+     * Records the comments for a question.
+     * @param array $questionComments The collection of question comments.
+     */
+    function RecordQuestionComments($questionComments)
+    {
+        try
+        {
+            if (count($questionComments) < 1)
+            {
+                return;
+            }
+            
+            $quesCom = new QuestionComment();
+            $questionIdKey= $quesCom->GetQuestionIdKey();
+            $commentKey = $quesCom->GetCommentKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'INSERT INTO ' . QUESTIONCOMMENTS_IDENTIFIER
+                    . ' (' . $questionIdKey
+                    . ', ' . $commentKey . ') VALUES'
+                    . ' (:' . $questionIdKey . '0'
+                    . ', :' . $commentKey . '0' . ')';
+            
+            for ($i = 1; $i < count($questionComments); $i++)
+            {
+                $query .= ', (:' . $questionIdKey . $i
+                        . ', :' . $commentKey . $i . ')';
+            }
+            
+            $query .= ';';
+            
+            $statement = $db->prepare($query);
+            
+            for ($i = 0; $i < count($questionComments); $i++)
+            {
+                $qc = $questionComments[$i];
+                
+                $statement->bindValue(':' . $questionIdKey . $i, $qc->GetQuestionId());
+                $statement->bindvalue(':' . $commentKey . $i, $qc->GetComment());
+            }
+            
+            $statement->execute();
+            
+            $statement->closeCursor();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Gest the email header for sending exam results.
      * @param string $language The name of the language.
      * @return array The header info for the email. 

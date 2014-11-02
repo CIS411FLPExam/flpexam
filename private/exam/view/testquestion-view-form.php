@@ -47,22 +47,29 @@
                     <?php
                         }
                     ?>
-                </div>
+                    <?php if (isset($language) && $language->IsAcceptingFeedback()) { ?>
+                        Is there something wrong with this question?
+                        <input id="chkbx" onclick="UpdateQuestionCommentBox();" type="checkbox" name="FlagQuestion" />
+                        Yes
 
+                        <br />
+
+                        <textarea id="questionComment" name="Comment" rows="2" cols="37" maxlength="110" onkeyup="DisplayQuestionCommentTextCount();" placeholder="Tell us what's wrong here."></textarea>
+                        <span id="questionCommentInfo"></span>
+                    <?php } ?>
+                </div>
+                    
                 <br />
 
                 <input type="submit" value="Submit" />
-                <?php if (isset($language) && $language->IsAcceptingFeedback()) { ?>
-                    Is there something wrong with this question?
-                    <input type="checkbox" name="AmbiguousQuestion" />
-                    Yes
-                <?php } ?>
             </form>
         </div>
     </div>
     <div class="clear"></div>
 </div>
-
+<script>
+        UpdateQuestionCommentBox(document.getElementById('chkbx'));
+</script>
 <!-- End main content here -->
 <?php
     include( PLAINFOOTER_FILE );

@@ -4,12 +4,6 @@
 ?>
 <h1><?php if (isset($testeeName)) { echo($testeeName . "'s"); } ?> Test</h1>
 <div class="formGroup">
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(TESTID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
-        <input type="submit" value="View Test Entry" />
-    </form>
-</div>
-<div class="formGroup">
     <?php
         $count = 1;
         foreach($testQAs as $testQA)
@@ -74,6 +68,12 @@
             $count++;
         }
     ?>
+</div>
+<div class="formGroup">
+    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION)); ?>" method="post">
+        <input type="hidden" name="<?php echo(TESTID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
+        <input type="submit" value="View Test Entry" />
+    </form>
 </div>
 <?php
     include(FOOTER_FILE);

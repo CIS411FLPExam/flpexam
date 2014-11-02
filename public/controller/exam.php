@@ -10,6 +10,7 @@
     require_once(LANGUAGECLASS_FILE);
     require_once(PROFILECLASS_FILE);
     require_once(QUESTIONANSWERCLASS_FILE);
+    require_once(QUESTIONCOMMENTCLASS_FILE);
 
     error_reporting(0);
     
@@ -294,9 +295,20 @@
             $questionID = $_POST[QUESTIONID_IDENTIFIER];
             $answerID = $_POST[ANSWERID_IDENTIFIER];
             
-            if (isset($_POST['AmbiguousQuestion']))
+            if (isset($_POST['FlagQuestion']))
             {
-                $exam->FlagQuestion($questionID);
+                $comment = '';
+                
+                if (isset($_POST['Comment']))
+                {
+                    $comment = $_POST['Comment'];
+                }
+                
+                $qc = new QuestionComment();
+                $qc->SetQuestionId($questionID);
+                $qc->SetComment($comment);
+                
+                $exam->FlagQuestion($qc);
             }
 
             $exam->PushQuestionAnswerID($questionID, $answerID);
@@ -340,8 +352,22 @@
         
         if ($language->IsAcceptingFeedback())
         {
+            $questionIDs = array();
+            $questionCommnents = array();
             $flaggedQuestions = $exam->GetFlaggedQuestions();
-            IncrementQuestionFlagCounts($flaggedQuestions);
+            
+            foreach($flaggedQuestions as $qc)
+            {
+                $questionIDs[] = $qc->GetQuestionId();
+                
+                if (!empty($qc->GetComment()))
+                {
+                    $questionCommnents[] = $qc;
+                }
+            }
+            
+            IncrementQuestionFlagCounts($questionIDs);
+            RecordQuestionComments($questionCommnents);
         }
         
         $answerIDs = array();

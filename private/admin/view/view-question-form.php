@@ -79,6 +79,10 @@
             <?php echo(htmlspecialchars($totalTimesFlagged)); ?>
         </b>
         time(s).
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONCOMMENTSVIEW_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+            <input type="submit" value="View Comments" />
+        </form>
     </div>
     <?php
         $i = 1;

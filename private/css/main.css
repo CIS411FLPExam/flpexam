@@ -35,6 +35,11 @@ pre
     border-radius: 10px;
 }
 
+#questionComment
+{
+    resize: none;
+}
+
 .shiftContent
 {
     width: 746px;

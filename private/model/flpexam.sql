@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2014 at 02:23 AM
+-- Generation Time: Nov 02, 2014 at 08:12 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `AnswerID` int(11) NOT NULL AUTO_INCREMENT,
   `QuestionID` int(11) NOT NULL,
   `Correct` tinyint(1) NOT NULL DEFAULT '0',
-  `Chosen` int(11) NOT NULL DEFAULT '0',  
-  `Name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,  
+  `Name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Chosen` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
   `KeyCode` varchar(40) NOT NULL,
   `QuestionCount` int(11) NOT NULL DEFAULT '10',
   `IncLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
-  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.5000',
+  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
   `SpokenAtHomeInitLevel` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ParameterID`),
   UNIQUE KEY `ParameterID` (`ParameterID`)
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
 --
 
 INSERT INTO `languages` (`LanguageID`, `Name`, `Active`, `Feedback`) VALUES
-(3, 'Spanish', 1, 1);
+(3, 'Spanish', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -257,16 +257,30 @@ INSERT INTO `levelinfos` (`LevelInfoID`, `LanguageID`, `Level`, `Name`, `Course`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `questioncomments`
+--
+
+CREATE TABLE IF NOT EXISTS `questioncomments` (
+  `CommentID` int(11) NOT NULL AUTO_INCREMENT,
+  `QuestionID` int(11) NOT NULL,
+  `Com` varchar(110) NOT NULL DEFAULT '',
+  PRIMARY KEY (`CommentID`),
+  KEY `questioncomments_question_fk` (`QuestionID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `questions`
 --
 
 CREATE TABLE IF NOT EXISTS `questions` (
   `QuestionID` int(11) NOT NULL AUTO_INCREMENT,
   `Level` int(11) NOT NULL,
-  `Flagged` int(11) NOT NULL DEFAULT '0',
   `Name` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `LanguageID` int(11) NOT NULL,
-  `Instructions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,  
+  `Instructions` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Flagged` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=169 ;
@@ -466,7 +480,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=34 ;
 
 -- --------------------------------------------------------
 
@@ -533,6 +547,12 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `levelinfos`
   ADD CONSTRAINT `levels_language_fk` FOREIGN KEY (`LanguageID`) REFERENCES `languages` (`LanguageID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `questioncomments`
+--
+ALTER TABLE `questioncomments`
+  ADD CONSTRAINT `questioncomments_question_fk` FOREIGN KEY (`QuestionID`) REFERENCES `questions` (`QuestionID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `questions`

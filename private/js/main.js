@@ -55,3 +55,30 @@ function IsOneRadChecked(message)
   
     return foundOne;
 }
+
+function UpdateQuestionCommentBox()
+{
+    var chkbx = document.getElementById('chkbx');
+    var box = document.getElementById('questionComment');
+    var span = document.getElementById('questionCommentInfo');
+    
+    if (chkbx.checked)
+    {
+        box.style.display = 'block';
+        box.focus();
+        span.style.display = 'inline';
+    }
+    else
+    {
+        box.style.display = 'none';
+        span.style.display = 'none';
+    }
+}
+
+function DisplayQuestionCommentTextCount()
+{
+    var element = document.getElementById('questionCommentInfo');
+    var box = document.getElementById('questionComment');
+    
+    element.innerHTML = box.value.length + '/' + box.maxLength;
+}
