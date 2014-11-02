@@ -359,8 +359,9 @@
             foreach($flaggedQuestions as $qc)
             {
                 $questionIDs[] = $qc->GetQuestionId();
+                $commentTxt = $qc->GetComment();
                 
-                if (!empty($qc->GetComment()))
+                if (!empty($commentTxt))
                 {
                     $questionCommnents[] = $qc;
                 }
