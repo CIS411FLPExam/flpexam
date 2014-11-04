@@ -54,7 +54,7 @@
         <div class="divider"></div>
         
         <div class="formSection">
-            <b>Do you speak <?php echo(htmlspecialchars($language->GetName())); ?> at home?<span class="redText">*</span></b>
+            <b>Is <?php echo(htmlspecialchars($language->GetName())); ?> spoken at home?<span class="redText">*</span></b>
             <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="Y" />Yes
             <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="N" checked />No
         </div>

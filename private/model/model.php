@@ -795,7 +795,7 @@
                 $rows = array();
             }
             
-            array_unshift($rows, array('Name' => 'Nothing'));
+            array_unshift($rows, array('Name' => 'Not Enrolled'));
             
             return $rows;
         }

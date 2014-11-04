@@ -2,9 +2,6 @@
     include( HEADER_FILE );
 ?>
 <!-- Start main content here -->
-
-<h1>Question</h1>
-
 <div class="formGroup">
     <?php if (!empty($instructions)) { ?>
         <div class="formSection">

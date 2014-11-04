@@ -13,6 +13,7 @@ pre
     white-space: pre-wrap;       /* CSS 3 */
     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    font-family: "Times New Roman", Times, serif;
 }
 
 #navbar
@@ -38,6 +39,29 @@ pre
 #questionComment
 {
     resize: none;
+}
+
+.logoDiv
+{
+    width: 200px;
+}
+
+.clarionSpan
+{
+    font-size: 160%;
+}
+
+.universitySpan
+{
+    font-size: 110%;
+}
+
+.banner
+{
+    display: inline-block;
+    width: 755px;
+    font-size: 325%;
+    color: #ddc873;
 }
 
 .shiftContent
@@ -250,13 +274,6 @@ pre
 #summary
 {
     width:100%;
-}
-
-.banner
-{
-    display: inline-block;
-    font-size: 350%;
-    color: #ddc873;
 }
 
 .username

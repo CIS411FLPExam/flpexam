@@ -43,7 +43,11 @@
                     <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); ?></span>
                 <?php }?>
                 <div class="clear"></div>
-                <img src="<?php echo(LOGO_FILE) ?>" width="100" height="50"/>
+                <div class="inlineBlock centerText logoDiv">
+                    <span class="whiteText clarionSpan">CLARION</span>
+                    <br />
+                    <span class="whiteText universitySpan">UNIVERSITY</span>
+                </div>
                 <span class="banner">Foreign Language Placement Exam</span>
             </header>
             <?php if(loggedIn()) { ?>
