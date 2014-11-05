@@ -487,6 +487,7 @@
      * @param int $testEntryID The I.D. of the test entry.
      * @param array $examQAs The collection of QuestionAnswers.
      */
+    /*
     function AddTesteeQuestions($testEntryID, $examQAs)
     {
         try
@@ -573,8 +574,143 @@
         {
             LogError($ex);
         }
-    }
+    }*/
     
+    /**
+     * Adds a testee's questions and answers to the records.
+     * @param int $testEntryID The I.D. of the test entry.
+     * @param array $examQAs The collection of QuestionAnswers.
+     */
+    function AddTesteeQuestions($testEntryID, $examQAs)
+    {
+        try
+        {
+            if (count($examQAs) < 1)
+            {
+                return;
+            }
+            
+            $db = GetDBConnection();
+            
+            $qCount = 1;
+            $questions = array();
+            foreach ($examQAs as $qa)
+            {
+                $questionID = $qa->GetQuestionId();
+                $question = GetQuestion($questionID);
+                
+                if ($question != FALSE)
+                {
+                    $aCount = 1;
+                    $answers = GetQuestionAnswers($questionID);
+                    
+                    for ($i = 0; $i < count($answers); $i++)
+                    {
+                        $chosen = '0';
+                        $answer = $answers[$i];
+                        $answer['AnswerNo'] = $aCount;
+                        
+                        if ($answer[ANSWERID_IDENTIFIER] == $qa->GetAnswerId())
+                        {
+                            $chosen = '1';
+                        }
+                        
+                        $answer['Chosen'] = $chosen;
+                        
+                        $answers[$i] = $answer;
+                        
+                        $aCount++;
+                    }
+                    
+                    $question['QuestionNo'] = $qCount;
+                    $question['Answers'] = $answers;
+                    
+                    $questions[] = $question;
+                    
+                    $qCount++;
+                }
+            }
+            
+            $qQuery = 'INSERT INTO ' . TESTEEQUESTIONS_IDENTIFIER
+                            . ' (' . TESTID_IDENTIFIER
+                            . ', ' . 'QuestionNo'
+                            . ', ' . 'Level'
+                            . ', ' . 'Instructions'
+                            . ', ' . 'Question' . ') VALUES';
+            
+            $aQuery = 'INSERT INTO ' . TESTEEANSWERS_IDENTIFIER
+                                . ' (' . TESTID_IDENTIFIER
+                                . ', ' . 'QuestionNo'
+                                . ', ' . 'AnswerNo'
+                                . ', ' . 'Answer'
+                                . ', ' . 'Correct'
+                                . ', ' . 'Chosen' . ') VALUES';
+            
+            foreach($questions as $question)
+            {
+                $answers = $question['Answers'];
+                $questionNo = $question['QuestionNo'];
+                
+                $qQuery .= ' (:' . TESTID_IDENTIFIER
+                        . ', :' . 'QuestionNo' . $questionNo
+                        . ', :' . 'Level' . $questionNo
+                        . ', :' . 'Instructions' . $questionNo
+                        . ', :' . 'Question' . $questionNo . '),';
+                
+                foreach($answers as $answer)
+                {
+                    $answerNo = $answer['AnswerNo'];
+                    
+                    $aQuery .= ' (:' . TESTID_IDENTIFIER
+                                . ', :' . 'QuestionNo' . $questionNo . $answerNo
+                                . ', :' . 'AnswerNo' . $questionNo . $answerNo
+                                . ', :' . 'Answer' . $questionNo . $answerNo
+                                . ', :' . 'Correct' . $questionNo . $answerNo
+                                . ', :' . 'Chosen' . $questionNo . $answerNo . '),';
+                }
+            }
+            
+            $qQuery = rtrim($qQuery, ',') . ';';
+            $aQuery = rtrim($aQuery, ',') . ';';
+            
+            $qStatement = $db->prepare($qQuery);
+            $aStatement = $db->prepare($aQuery);
+            
+            foreach($questions as $question)
+            {
+                $answers = $question['Answers'];
+                $questionNo = $question['QuestionNo'];
+                
+                foreach($answers as $answer)
+                {
+                    $answerNo = $answer['AnswerNo'];
+                    
+                    $aStatement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
+                    $aStatement->bindValue(':' . 'QuestionNo' . $questionNo . $answerNo, $questionNo);
+                    $aStatement->bindValue(':' . 'AnswerNo' . $questionNo . $answerNo, $answerNo);
+                    $aStatement->bindValue(':' . 'Answer' . $questionNo . $answerNo, $answer[NAME_IDENTIFIER]);
+                    $aStatement->bindValue(':' . 'Chosen' . $questionNo . $answerNo, $answer['Chosen']);
+                    $aStatement->bindValue(':' . 'Correct' . $questionNo . $answerNo, $answer['Correct']);
+                }
+                
+                $qStatement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
+                $qStatement->bindValue(':' . 'QuestionNo' . $questionNo, $questionNo);
+                $qStatement->bindValue(':' . 'Level' . $questionNo, $question['Level']);
+                $qStatement->bindValue(':' . 'Instructions' . $questionNo, $question['Instructions']);
+                $qStatement->bindValue(':' . 'Question' . $questionNo, $question[NAME_IDENTIFIER]);
+            }
+            
+            $qStatement->execute();
+            $qStatement->closeCursor();
+            
+            $aStatement->execute();
+            $aStatement->closeCursor();
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
     
     /**
      * Adds a test entry to the records.
