@@ -210,6 +210,11 @@ pre
     padding: 3px;
 }
 
+.datatable tbody tr:hover td
+{
+    background-color: #eeeeee;
+}
+
 .formGroup
 {
     padding: 5px;
