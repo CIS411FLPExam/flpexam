@@ -255,7 +255,7 @@
                 QuestionCommentsView();
                 break;
             default:
-                Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION));
         }
     }
     

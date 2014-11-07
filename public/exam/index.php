@@ -32,8 +32,7 @@
     
     if (!UserIsClear() && $action!= ENTERKEYCODE_ACTION && $action != PROCESSKEYCODE_ACTION && $action != TESTRESULTSVIEW_ACTION)
     {
-        include(NOTAUTHORIZED_FILE);
-        exit();
+        $action = ENTERKEYCODE_ACTION;
     }
     else
     {

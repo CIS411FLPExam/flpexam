@@ -3,6 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <title>Foreign Language Placement Exam Redirect</title>
-        <meta http-equiv="refresh" content="0; url=./main" />
+        <meta http-equiv="refresh" content="0; url=./public/" />
     </head>
 </html>

@@ -36,10 +36,19 @@
     define("DEFINITIONS_DIR", PRIVATE_DIR . "definitions/");
     
     /**
-     * The file path of the controller directory.
+     * The file path of the main controller directory.
      */
-    define("CONTROLLER_DIR", PUBLIC_DIR . "controller/");
+    define("MAINCONTROLLER_DIR", PUBLIC_DIR . "main/");
     
+    /**
+     * The file path of the exam controller directory.
+     */
+    define("EXAMCONTROLLER_DIR", PUBLIC_DIR . "exam/");
+    
+    /**
+     * The file path of the admin controller directory.
+     */
+    define("ADMINCONTROLLER_DIR", PUBLIC_DIR . "admin/");
     /**
      * The file path of the image directory.
      */
@@ -304,7 +313,7 @@
     /**
      * The file path of the main controller file.
      */
-    define("MAINCONTROLLER_FILE", CONTROLLER_DIR . "index.php");
+    define("MAINCONTROLLER_FILE", MAINCONTROLLER_DIR . "index.php");
     
     /**
      * The file path of the main model file.
@@ -355,7 +364,7 @@
     /**
      * The file path of the admin controller file.
      */
-    define("ADMINCONTROLLER_FILE", CONTROLLER_DIR . "admin.php");
+    define("ADMINCONTROLLER_FILE", ADMINCONTROLLER_DIR . "index.php");
     
     /**
      * The file path of the login form file.
@@ -548,7 +557,7 @@
     /**
      * The file path of the exam controller file.
      */
-    define("EXAMCONTROLLER_FILE", CONTROLLER_DIR . "exam.php");
+    define("EXAMCONTROLLER_FILE", EXAMCONTROLLER_DIR . "index.php");
     
     /**
      * The file path of the exam model file.
