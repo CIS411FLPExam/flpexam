@@ -1505,6 +1505,15 @@
 
         $parameters->Initialize($_POST);
         
+        $incLvlScoreIndex = $parameters->GetIncLevelScoreIndex();
+        $decLvlScoreIndex = $parameters->GetDecLevelScoreIndex();
+        
+        $incLvlScorePct = $_POST[$incLvlScoreIndex];
+        $decLvlScorePct = $_POST[$decLvlScoreIndex];
+        
+        $parameters->SetIncLevelScorePercent($incLvlScorePct);
+        $parameters->SetDecLevelScorePercent($decLvlScorePct);
+        
         $parametersVI = $parameters->Validate();
         
         if($parametersVI->IsValid())
@@ -1520,6 +1529,7 @@
         $questionCount = $parameters->GetQuestionCount();
         $incLevelScore =  $parameters->GetIncLevelScorePercent();
         $decLevelScore =  $parameters->GetDecLevelScorePercent();
+        $spokenAtHomeInitLevel = $parameters->GetSpokenAtHomeInitLevel();
         
         include(EDITEXAMPARAMETERSFORM_FILE);
     }

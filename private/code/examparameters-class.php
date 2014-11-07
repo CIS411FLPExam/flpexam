@@ -87,16 +87,6 @@ class ExamParameters
      */
     public function SetIncLevelScore($incLevelScore)
     {
-        if ($incLevelScore < 0)
-        {
-            $incLevelScore *= -1;
-        }
-        
-        while($incLevelScore > 1)
-        {
-            $incLevelScore = $incLevelScore / 10.0;
-        }
-        
         $this->incLevelScore = $incLevelScore;
     }
     
@@ -115,16 +105,6 @@ class ExamParameters
      */
     public function SetDecLevelScore($decLevelScore)
     {
-        if ($decLevelScore < 0)
-        {
-            $decLevelScore *= -1;
-        }
-        
-        while($decLevelScore > 1)
-        {
-            $decLevelScore = $decLevelScore / 10.0;
-        }
-        
         $this->decLevelScore = $decLevelScore;
     }
     
@@ -255,7 +235,7 @@ class ExamParameters
     {
         $incLevelScore = $this->GetIncLevelScore();
         
-        return $incLevelScore * 100;
+        return $incLevelScore * 100.0;
     }
     
      /**
@@ -266,8 +246,27 @@ class ExamParameters
     {
         $decLevelScore = $this->GetDecLevelScore();
         
-        return $decLevelScore * 100;
+        return $decLevelScore * 100.0;
     }
+    
+    /**
+     * Sets the percent value of incLevelScore
+     * @param float $incLvlScorePct The percent value.
+     */
+    public function SetIncLevelScorePercent($incLvlScorePct)
+    {
+        $this->SetIncLevelScore($incLvlScorePct / 100.0);
+    }
+    
+     /**
+     * Sets the percent value of decLevelScore
+     * @param float $decLvlScorePct The percent value.
+     */
+    public function SetDecLevelScorePercent($decLvlScorePct)
+    {
+        $this->SetDecLevelScore($decLvlScorePct / 100.0);
+    }
+    
     
     /**
      * Validates the key code.
@@ -363,6 +362,7 @@ class ExamParameters
         $valid = TRUE;
         $errors = array();
         
+        $incLevelScore = $this->GetIncLevelScore();
         $decLevelScore = $this->GetDecLevelScore();
         
         if (!is_float($decLevelScore))
@@ -376,6 +376,11 @@ class ExamParameters
             {
                 $valid = FALSE;
                 $errors[] = 'The decrement level score must be a value between 0 and 1.';
+            }
+            else if ($decLevelScore >= $incLevelScore)
+            {
+                $valid = FALSE;
+                $errors[] = 'The decrement level score must be less than the increment level score.';
             }
         }
         

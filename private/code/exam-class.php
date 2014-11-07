@@ -396,18 +396,14 @@ class Exam
     protected function IncreaseLevel()
     {
         $level = $this->GetLevel();
-        //$languageID = $this->GetLanguage()->GetId();
         
         $this->RecordLvlQAs();
         
         $nextLevel = $level + 1;
         
-        //if (LevelExists($languageID, $nextLevel))
-        //{
-            $this->SetLevel($nextLevel);
-            $this->SetPrevLevel($level);
-            $this->GetNewLvlQAs();
-        //}
+        $this->SetLevel($nextLevel);
+        $this->SetPrevLevel($level);
+        $this->GetNewLvlQAs();
     }
     
     /**
@@ -423,11 +419,15 @@ class Exam
         
         $nextLevel = $level - 1;
         
-        if ($prevLevel != $nextLevel && LevelExists($languageID, $nextLevel))
+        if (LevelExists($languageID, $nextLevel))
         {
             $this->SetLevel($nextLevel);
             $this->SetPrevLevel($level);
-            $this->GetNewLvlQAs();
+            
+            if ($prevLevel != $nextLevel)
+            {
+                $this->GetNewLvlQAs();
+            }
         }
     }
     
@@ -465,7 +465,9 @@ class Exam
         {
             if ($lvlQA->IsAnswerIdSet())
             {
-                $allQAs[] = $lvlQA;
+                $questionID = $lvlQA->GetQuestionId();
+                
+                $allQAs[$questionID] = $lvlQA;
             }
         }
         
@@ -474,48 +476,67 @@ class Exam
     
     /**
      * Assess the score of the exam and decides whether to decrease, increase, or do nothing to the level.
-     * If nothing is done then the exam is done.
+     * If nothing is done then the exam is done and the questions for the level are recorded.
      */
     protected function AssessLvlAnswers()
     {
-        $lvlQAs = $this->GetLvlQAs();
-        $parameters = $this->GetParameters();
+        $lvlDecreased = $this->TryToDecreaseLevel();
         
-        $questionCount = count($lvlQAs);
-        $correctAnsCount = 0;
-        
-        foreach ($lvlQAs as $lvlQA)
+        if (!$lvlDecreased)
         {
-            $answerID = $lvlQA->GetAnswerId();
-            $questionID = $lvlQA->GetQuestionId();
+            $lvlIncreased = $this->TryToIncreaseLevel();
             
-            if (IsAnswerCorrect($questionID, $answerID))
+            if (!$lvlIncreased && $this->IsDone())
             {
-                $correctAnsCount++;
+                $this->RecordLvlQAs();
             }
-        }
-        
-        $percentScore = $correctAnsCount / $questionCount;
-        
-        if ($percentScore >= $parameters->GetIncLevelScore())
-        {
-            $this->IncreaseLevel();
-        }
-        else if ($percentScore <= $parameters->GetDecLevelScore())
-        {
-            $this->DecreaseLevel();
-        }
-        else
-        {
-            $this->RecordLvlQAs();
         }
     }
     
     /**
-     * Tries to decrease the current level.
+     * Tries to increase the current level based on the current answers.
+     * @return boolean True, if the level was decreased, or false otherwise.
+     */
+    protected function TryToIncreaseLevel()
+    {
+        $success = FALSE;
+        $correctAnsCount = 0;
+        $lvlQAs = $this->GetLvlQAs();
+        $parameters = $this->GetParameters();
+        $questionCount = count($lvlQAs);
+        
+        foreach ($lvlQAs as $lvlQA)
+        {
+            if ($lvlQA->IsAnswerIdSet())
+            {
+                $answerID = $lvlQA->GetAnswerId();
+                $questionID = $lvlQA->GetQuestionId();
+
+                if (IsAnswerCorrect($questionID, $answerID))
+                {
+                    $correctAnsCount++;
+                }
+            }
+        }
+        
+        $percentCorrect = floatval($correctAnsCount) / floatval($questionCount);
+        
+        if ($percentCorrect >= $parameters->GetIncLevelScore())
+        {
+            $this->IncreaseLevel();
+            $success = TRUE;
+        }
+        
+        return $success;
+    }
+    
+    /**
+     * Tries to decrease the current level based on the current answers.
+     * @return boolean True, if the level was decreased, or false otherwise.
      */
     protected function TryToDecreaseLevel()
     {
+        $success = FALSE;
         $lvlQAs = $this->GetLvlQAs();
         $parameters = $this->GetParameters();
         
@@ -536,12 +557,15 @@ class Exam
             }
         }
         
-        $percentScore = $incorrectAnsCount / $questionCount;
+        $percentScore = 1.0 - (floatval($incorrectAnsCount) / floatval($questionCount));
         
-        if (1 - $percentScore <= $parameters->GetDecLevelScore())
+        if ($percentScore <= $parameters->GetDecLevelScore())
         {
             $this->DecreaseLevel();
+            $success = TRUE;
         }
+        
+        return $success;
     }
     
     /**
@@ -648,14 +672,7 @@ class Exam
             }
         }
         
-        if(!$this->IsQuestionsLeft())
-        {
-            $this->AssessLvlAnswers();
-        }
-        else
-        {
-            $this->TryToDecreaseLevel();
-        }
+        $this->AssessLvlAnswers();
     }
     
     /**
