@@ -32,7 +32,7 @@
     
     if (!UserIsClear() && $action!= ENTERKEYCODE_ACTION && $action != PROCESSKEYCODE_ACTION && $action != TESTRESULTSVIEW_ACTION)
     {
-        $action = ENTERKEYCODE_ACTION;
+        Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
     }
     else
     {
