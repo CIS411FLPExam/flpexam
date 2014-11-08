@@ -290,6 +290,11 @@
      */
     define("QUESTIONCOMMENTCLASS_FILE", CODE_DIR . "questioncomment-class.php");
     
+    /**
+     * The file path of the experience option class file.
+     */
+    define("EXPERIENCEOPTIONCLASS_FILE", CODE_DIR . "experienceoption-class.php");
+    
 //Main paths.
 /******************************************************************************/
     
@@ -535,6 +540,21 @@
      * The file path of the view question comments form file.
      */
     define("VIEWQUESTIONCOMMENTSFORM_FILE", ADMINVIEW_DIR . "view-questioncomments-form.php");
+    
+    /**
+     * The file path of the add/edit experience option form file.
+     */
+    define("ADDEDITEXPERIENCEOPTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-experienceoption-form.php");
+    
+    /**
+     * The file path of the view experience option form file.
+     */
+    define("VIEWEXPERIENCEOPTIONFORM_FILE", ADMINVIEW_DIR . "view-experienceoption-form.php");
+    
+    /**
+     * The file path of the manage experience options form file.
+     */
+    define("MANAGEEXPERIENCEOPTIONSFORM_FILE", ADMINVIEW_DIR . "manage-experienceoptions-form.php");
     
 //Exam paths.
 /******************************************************************************/

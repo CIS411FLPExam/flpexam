@@ -10,6 +10,247 @@
     require_once(LEVELINFOCLASS_FILE);
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
     require_once(QUESTIONCOMMENTCLASS_FILE);
+    require_once(EXPERIENCEOPTIONCLASS_FILE);
+    
+    /**
+     * Deletes an experience option from the records.
+     * @param int $optionID The I.D. of the experience option.
+     * @return int The number of rows that was deleted.
+     */
+    function DeleteExperienceOption($optionID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'DELETE FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . EXPERIENCEOPTIONID_IDENTIFIER
+                    . ' = :' . EXPERIENCEOPTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . EXPERIENCEOPTIONID_IDENTIFIER, $optionID);
+            
+            $rowsDeleted = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsDeleted;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Adds an expreince option to the records.
+     * @param int $experienceID The I.D. of the language experience to add the option to.
+     * @param ExperienceOption $option The exprience option.
+     * @return int The new I.D. of the experience option.
+     */
+    function AddExperienceOption(ExperienceOption $option)
+    {
+        try
+        {
+            $experienceIdKey = $option->GetExperienceIdKey();
+            $nameKey = $option->GetNameKey();
+            $initLevelKey = $option->GetInitLevelKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'INSERT INTO ' . EXPERIENCEOPTIONS_IDENTIFIER
+                    . ' (' . $experienceIdKey
+                    . ', ' . $nameKey
+                    . ', ' . $initLevelKey . ') VALUES'
+                    . ' (:' . $experienceIdKey
+                    . ', :' . $nameKey
+                    . ', :' . $initLevelKey . ');';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $experienceIdKey, $option->GetExperienceId());
+            $statement->bindValue(':' . $nameKey, $option->GetName());
+            $statement->bindValue(':' . $initLevelKey, $option->GetInitLevel());
+            
+            $statement->execute();
+            
+            $optionID = $db->lastInsertId();
+            
+            $statement->closeCursor();
+            
+            return $optionID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Updates an experience option.
+     * @param ExperienceOption $option The experience option to update with the updated values.
+     * @return int The number of rows affected by the update.
+     */
+    function UpdateExperienceOption(ExperienceOption $option)
+    {
+        try
+        {
+            $idKey = $option->GetIdKey();
+            $experienceIdKey = $option->GetExperienceIdKey();
+            $nameKey = $option->GetNameKey();
+            $initLevelKey = $option->GetInitLevelKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'UPDATE ' . EXPERIENCEOPTIONS_IDENTIFIER . ' SET'
+                    . ' ' . $experienceIdKey . ' = :' . $experienceIdKey 
+                    . ', ' . $nameKey . ' = :' . $nameKey
+                    . ', ' . $initLevelKey . ' = :' . $initLevelKey . ' WHERE'
+                    . ' ' . $idKey
+                    . ' = :' . $idKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $idKey, $option->GetId());
+            $statement->bindValue(':' . $experienceIdKey, $option->GetExperienceId());
+            $statement->bindValue(':' . $nameKey, $option->GetName());
+            $statement->bindValue(':' . $initLevelKey, $option->GetInitLevel());
+            
+            $rowsAffected = $statement->execute();
+            
+            $statement->closeCursor();
+            
+            return $rowsAffected;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets an experience option.
+     * @param int $optionID The I.D. of the experience option.
+     * @return \ExperienceOption The experience option.
+     */
+    function GetExperienceOption($optionID)
+    {
+        try
+        {
+            $option = new ExperienceOption();
+            $idKey = $option->GetIdKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . $idKey
+                    . ' = :' . $idKey .';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $idKey, $optionID);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($row != FALSE)
+            {
+                $option->Initialize($row);
+            }
+            
+            return $option;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the collection of options that correspond to the an experience.
+     * @param int $experienceID The I.D. of the experience.
+     * @return \ExperienceOption The collection of experience options.
+     */
+    function GetExperienceOptions($experienceID)
+    {
+        try
+        {
+            $options = array();
+            $option = new ExperienceOption();
+            $experienceIdKey = $option->GetExperienceIdKey();
+            
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . $experienceIdKey
+                    . ' = :' . $experienceIdKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $experienceIdKey, $experienceID);
+            
+            $statement->execute();
+            
+            $rows = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach($rows as $row)
+            {
+                $option = new ExperienceOption();
+                $option->Initialize($row);
+                
+                $options[] = $option;
+            }
+            
+            return $options;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the I.D. of the language experience for an option.
+     * @param int $optionID The I.D. of the option.
+     * @return int The I.D. of the language experience.
+     */
+    function GetOptionExperienceID($optionID)
+    {
+        try
+        {
+            $experienceID = 0;
+            $option = new ExperienceOption();
+            $idKey = $option->GetIdKey();
+            $experienceIdKey = $option->GetExperienceIdKey();
+            
+            $db = GetDBConnection();
+            
+            $query  = 'SELECT ' . $experienceIdKey . ' FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . $idKey
+                    . ' = :' . $idKey . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . $idKey, $optionID);
+            
+            $statement->execute();
+            
+            $row = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($row != FALSE)
+            {
+                $experienceID = $row[0];
+            }
+            
+            return $experienceID;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
     
     /**
      * Gets all the comments on record for a question.
@@ -485,18 +726,13 @@
         try
         {
             $nameKey = $experience->GetNameKey();
-            $initLvlKey = $experience->GetInitLevelKey();
-            
             $db = GetDBConnection();
             $query = 'INSERT INTO ' . LANGUAGEEXPERIENCES_IDENTIFIER
-                    . ' (' . $nameKey
-                    . ', ' . $initLvlKey . ') VALUES'
-                    . ' (:' . $nameKey
-                    . ', :' . $initLvlKey . ');';
+                    . ' (' . $nameKey. ') VALUES'
+                    . ' (:' . $nameKey . ');';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $nameKey, $experience->GetName());
-            $statement->bindValue(':' . $initLvlKey, $experience->GetInitLevel());
             
             $statement->execute();
             
@@ -522,18 +758,14 @@
         try
         {
             $nameKey = $experience->GetNameKey();
-            $initLvlKey = $experience->GetInitLevelKey();
-            
             $db = GetDBConnection();
             $query = 'UPDATE ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' SET'
-                    . ' ' . $nameKey . ' = :' . $nameKey
-                    . ', ' . $initLvlKey . ' = :' . $initLvlKey . ' WHERE'
+                    . ' ' . $nameKey . ' = :' . $nameKey . ' WHERE'
                     . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER
                     . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $nameKey, $experience->GetName());
-            $statement->bindValue(':' . $initLvlKey, $experience->GetInitLevel());
             $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experience->GetId());
             
             $rowsEffected = $statement->execute();

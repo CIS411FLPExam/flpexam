@@ -1,6 +1,16 @@
 <?php
 
     /**
+     * The language experience option I.D. identifier.
+     */
+    define("EXPERIENCEOPTIONID_IDENTIFIER", "OptionID");
+
+    /**
+     * The identifier of the language experience option records
+     */
+    define("EXPERIENCEOPTIONS_IDENTIFIER", "experienceoptions");
+    
+    /**
      * The identifier of the question comment records.
      */
     define("QUESTIONCOMMENTS_IDENTIFIER", "questioncomments");
@@ -128,7 +138,7 @@
     /**
      * The language experience ID identifier.
      */
-    define("LANGUAGEEXPERIENCEID_IDENTIFIER", 'ExperienceID');
+    define("LANGUAGEEXPERIENCEID_IDENTIFIER", "ExperienceID");
     
     /**
      * The role ID identifier.

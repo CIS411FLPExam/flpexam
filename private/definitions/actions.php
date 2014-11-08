@@ -381,6 +381,35 @@
      */
     define("QUESTIONCOMMENTSVIEW_ACTION", "QuestionCommentsView");
     
+    /**
+     * The action word to use to manage the experience options.
+     */
+    define("MANAGEEXPERIENCEOPTIONS_ACTION", "ManageExperienceOptions");
+    
+    /**
+     * The action word to use to add an experience option.
+     */
+    define("EXPERIENCEOPTIONADD_ACTION", "ExperienceOptionAdd");
+    
+    /**
+     * The action word to use to edit an experience option.
+     */
+    define("EXPERIENCEOPTIONEDIT_ACTION", "ExperienceOptionEdit");
+    
+    /**
+     * The action word to use to view an experience option.
+     */
+    define("EXPERIENCEOPTIONVIEW_ACTION", "ExperienceOptionView");
+    
+    /**
+     * The action word to use to delete an experience option.
+     */
+    define("EXPERIENCEOPTIONDELETE_ACTION", "ExperienceOptionDelete");
+    
+    /**
+     * The action word to use to process an experience option add/edit.
+     */
+    define("PROCESSEXPERIENCEOPTIONADDEDIT_ACTION", "ProcessExperienceOptionAddEdit");
     
 //Actions available through the exam controller.
 /******************************************************************************/

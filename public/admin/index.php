@@ -8,8 +8,9 @@
     require_once(PHPEXCELCLASS_FILE);
     require_once(PHPEXCELIOFACTORYCLASS_FILE);
     require_once(LEVELINFOCLASS_FILE);
+    require_once(EXPERIENCEOPTIONCLASS_FILE);
 
-    error_reporting(0);
+    error_reporting(E_ALL);
     
     StartSession();
     AdjustQuotes();
@@ -254,9 +255,294 @@
             case QUESTIONCOMMENTSVIEW_ACTION :
                 QuestionCommentsView();
                 break;
+            case MANAGEEXPERIENCEOPTIONS_ACTION :
+                ManageExperienceOptions();
+                break;
+            case EXPERIENCEOPTIONADD_ACTION :
+                ExperienceOptionAdd();
+                break;
+            case EXPERIENCEOPTIONEDIT_ACTION :
+                ExperienceOptionEdit();
+                break;
+            case EXPERIENCEOPTIONVIEW_ACTION :
+                ExperienceOptionView();
+                break;
+            case EXPERIENCEOPTIONDELETE_ACTION :
+                ExperienceOptionDelete();
+                break;
+            case PROCESSEXPERIENCEOPTIONADDEDIT_ACTION :
+                ProcessExperienceOptionAddEdit();
+                break;
             default:
                 Redirect(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION));
         }
+    }
+    
+    function ManageExperienceOptions()
+    {
+        if (!userIsAuthorized(MANAGEEXPERIENCEOPTIONS_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        
+        if (isset($optionID))
+        {
+            $experienceID = GetOptionExperienceID($optionID);
+        }
+        
+        if (!isset($experienceID))
+        {
+            $message = 'No language experience or experience option I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $experience = GetLanguageExperience($experienceID);
+        
+        if ($experience == FALSE)
+        {
+            $message = 'The language experience\'s options you wish to manage does not exist.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $experienceName = $experience[NAME_IDENTIFIER];
+        $options = GetExperienceOptions($experienceID);
+        
+        include(MANAGEEXPERIENCEOPTIONSFORM_FILE);
+    }
+    
+    function ExperienceOptionAdd()
+    {
+        if(!userIsAuthorized(EXPERIENCEOPTIONADD_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage experience I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $option = new ExperienceOption();
+        
+        include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
+    }
+    
+    function ExperienceOptionEdit()
+    {
+        if (!userIsAuthorized(EXPERIENCEOPTIONEDIT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No experience option I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $option = GetExperienceOption($optionID);
+        
+        if ($option->GetId() > 0)
+        {
+            $experienceID = $option->GetExperienceId();
+            include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
+        }
+        else
+        {
+            $message = 'The experience option you wish to edit does not exist.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+    }
+    
+    function ExperienceOptionView()
+    {
+        if (!userIsAuthorized(EXPERIENCEOPTIONVIEW_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No experience option I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $option = GetExperienceOption($optionID);
+        
+        if ($option->GetId() > 0)
+        {
+            include(VIEWEXPERIENCEOPTIONFORM_FILE);
+        }
+        else
+        {
+            $message = 'The experience option you wish to view does not exist.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+    }
+    
+    function ExperienceOptionDelete()
+    {
+        if(!userIsAuthorized(EXPERIENCEOPTIONDELETE_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $experienceID = 0;
+        
+        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        
+        if(isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+            
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $optionID = $_POST["record$i"];
+                    
+                    DeleteExperienceOption($optionID);
+                }
+            }
+        }
+        
+        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEEXPERIENCEOPTIONS_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experienceID));
+    }
+    
+    function ProcessExperienceOptionAddEdit()
+    {
+        if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        {
+            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+        }
+        else if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        {
+            $experienceID = $_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+        }
+        
+        $option = new ExperienceOption();
+        $option->Initialize($_POST);
+        $optionVI = $option->Validate();
+        
+        if ($optionVI->IsValid())
+        {
+            if (isset($optionID))
+            {//We are doing an edit.
+                if (userIsAuthorized(EXPERIENCEOPTIONEDIT_ACTION))
+                {
+                    UpdateExperienceOption($option);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
+            }
+            else if (isset($experienceID))
+            {//We are doing an add.
+                
+                if (userIsAuthorized(EXPERIENCEOPTIONADD_ACTION))
+                {
+                    $optionID = AddExperienceOption($option);
+                    
+                    if ($optionID == 0)
+                    {
+                        unset($optionID);
+                        $message = 'The option already exists.';
+                        include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
+                        exit();
+                    }
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
+            }
+            else
+            {
+                $message = 'No experience option or language experience I.D. provided.';
+
+                include(MESSAGEFORM_FILE);
+                exit();
+            }
+            
+            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, EXPERIENCEOPTIONVIEW_ACTION) . '&' . EXPERIENCEOPTIONID_IDENTIFIER . '=' . urlencode($optionID));
+        }
+        
+        $message = 'Errors';
+        $collection = $optionVI->GetErrors();
+        
+        include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
     }
     
     function QuestionCommentsView()
@@ -570,6 +856,24 @@
                 if ($userCanAdd)
                 {
                     $experienceID = AddLanguageExperience($experience);
+                    
+                    if ($experienceID > 0)
+                    {
+                        $option = new ExperienceOption();
+                        $option->SetExperienceId($experienceID);
+                        $option->SetName('None');
+                        $option->SetInitLevel(1);
+                    
+                        AddExperienceOption($option);
+                    }
+                    else
+                    {
+                        unset($experienceID);
+                        $message = 'The language experience already exists.';
+                        
+                        include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+                        exit();
+                    }
                 }
                 else
                 {
@@ -2189,11 +2493,35 @@
             {
                 $languageID = $_POST[LANGUAGEID_IDENTIFIER];
                 
-                UpdateLanguage($languageID, $name, $active, $feedback);
+                if (userIsAuthorized(LANGUAGEEDIT_ACTION))
+                {
+                    UpdateLanguage($languageID, $name, $active, $feedback);
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
             }
             else
             {
-                $languageID = AddLanguage($name);
+                if (userIsAuthorized(LANGUAGEADD_ACTION))
+                {
+                    $languageID = AddLanguage($name);
+                    
+                    if ($languageID == 0)
+                    {
+                        unset($languageID);
+                        $message = 'The language already exists.';
+                        include(ADDEDITLANGUAGEFORM_FILE);
+                        exit();
+                    }
+                }
+                else
+                {
+                    include(NOTAUTHORIZED_FILE);
+                    exit();
+                }
             }
             
             Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID)));

@@ -9,6 +9,7 @@
     $userCanView = userIsAuthorized(LANGUAGEEXPERIENCESVIEW_ACTION);
     $userCanEdit = userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION);
     $userCanDelete = userIsAuthorized(LANGUAGEEXPERIENCESDELETE_ACTION);
+    $userCanManageOptions = userIsAuthorized(MANAGEEXPERIENCEOPTIONS_ACTION);
 ?>
 
 <h1>Language Experiences</h1>
@@ -26,6 +27,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <?php if ($userCanManageOptions) { ?><th></th><?php } ?>
                             <?php if ($userCanView) { ?><th></th><?php } ?>
                             <?php if ($userCanEdit) { ?><th></th><?php } ?>
                             <?php if ($userCanDelete) { ?><th></th><?php } ?>
@@ -36,22 +38,29 @@
                             $j = 0;
                             foreach ($experiences as $experience)
                             {
+                                $id = $experience->GetId();
+                                $name = $experience->GetName();
                         ?>
                             <tr>
-                                <td><?php echo(htmlspecialchars($experience->GetName())); ?></td>
+                                <td><?php echo(htmlspecialchars($name)); ?></td>
+                                <?php if ($userCanManageOptions) { ?>
+                                    <td class="centerText">
+                                        <input type="button" value="Options" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEEXPERIENCEOPTIONS_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($id)); ?>');" />
+                                    </td>
+                                <?php } ?>
                                 <?php if ($userCanView) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experience->GetId()));?>');" />
+                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($id));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanEdit) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experience->GetId()));?>');" />
+                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($id));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanDelete) { ?>
                                     <td class="centerText">
-                                        <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($experience->GetId())); ?>" />
+                                        <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($id)); ?>" />
                                     </td>
                                 <?php } ?>
                             </tr>

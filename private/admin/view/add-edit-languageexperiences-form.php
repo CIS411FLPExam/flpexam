@@ -21,14 +21,7 @@
         <?php } ?>
         <div class="formSection">
             <label>Name<span class="redText">*</span>:</label>
-            <input type="text" name="<?php echo($experience->GetNameKey()); ?>" value="<?php echo(htmlspecialchars($experience->GetName())); ?>" required maxlength="32" />
-        </div>
-            
-        <div class="divider"></div>
-            
-        <div class="formSection">
-            <label>Initial Level<span class="redText">*</span>:</label>
-            <input type="number" name="<?php echo($experience->GetInitLevelKey()); ?>" value="<?php echo(htmlspecialchars($experience->GetInitLevel())); ?>" required min="1"/>
+            <input type="text" name="<?php echo($experience->GetNameKey()); ?>" value="<?php echo(htmlspecialchars($experience->GetName())); ?>" required maxlength="32" autofocus />
         </div>
         
         <br />
