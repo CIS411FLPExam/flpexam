@@ -1677,6 +1677,7 @@
         }
         
         $testInfo = GetDetailedTestEntry($testID);
+        $leopairs = GetTesteeExperiences($testID);
         
         if ($testInfo->GetId() > 0)
         {

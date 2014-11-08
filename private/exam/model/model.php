@@ -3,6 +3,74 @@
     //Need this because functions from this file will be called.
     require_once(MODEL_FILE);
     require_once(QUESTIONANSWERCLASS_FILE);
+    require_once(EXPERIENCEOPTIONCLASS_FILE);
+    
+    /**
+     * Gets all language experiences with their options.
+     * @return array The collection of  language experiences.
+     */
+    function GetAllLanguageExperiencesWithOptions()
+    {
+        $expOptions = array();
+        $experiences = GetAllLanguageExperiences();
+        $options = GetAllExperienceOptions();
+        
+        foreach($experiences as $experience)
+        {
+            $expID = $experience->GetId();
+            $expOptions["$expID"] = $experience;
+        }
+        
+        foreach($options as $option)
+        {
+            $expID = $option->GetExperienceId();
+            $exp = $expOptions["$expID"];
+            
+            $exp->AddOption($option);
+            
+            $expOptions["$expID"] = $exp;
+        }
+        
+        return $expOptions;
+    }
+    
+    /**
+     * Gets all possible experience options.
+     * @return ExperienceOption A collection of experience options.
+     */
+    function GetAllExperienceOptions()
+    {
+        try
+        {
+            $options = array();
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM '  . EXPERIENCEOPTIONS_IDENTIFIER
+                    . ' ORDER BY ' . EXPERIENCEOPTIONID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            
+            $statement->execute();
+            
+            $rows = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            foreach($rows as $row)
+            {
+                $option = new ExperienceOption();
+                $option->Initialize($row);
+                
+                $options[] = $option;
+            }
+            
+            return $options;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
     
     /**
      * Records the comments for a question.
@@ -166,20 +234,25 @@
      * @param string $languageExperience The name of the experience.
      * @return int The intitial level.
      */
-    function GetLanguageExperienceInitLevel($languageExperience)
+    function GetLanguageExperienceInitLevel($experienceName, $optionName)
     {
         try
         {
             $initLevel = 1;
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . 'InitLevel' . ' FROM'
-                    . ' ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
-                    . ' ' . NAME_IDENTIFIER
-                    . ' = :' . NAME_IDENTIFIER;
+            $query = 'SELECT InitLevel FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' INNER JOIN'
+                    . ' ' . EXPERIENCEOPTIONS_IDENTIFIER . ' ON'
+                    . ' ' . EXPERIENCEOPTIONS_IDENTIFIER . '.' . LANGUAGEEXPERIENCEID_IDENTIFIER
+                    . ' = ' . LANGUAGEEXPERIENCES_IDENTIFIER . '.' . LANGUAGEEXPERIENCEID_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEEXPERIENCES_IDENTIFIER . '.' . NAME_IDENTIFIER
+                    . ' = :' . 'ExperienceName' . ' AND'
+                    . ' ' . EXPERIENCEOPTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER
+                    . ' = :' . 'OptionName' . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . NAME_IDENTIFIER, $languageExperience);
+            $statement->bindValue(':' . 'ExperienceName', $experienceName);
+            $statement->bindValue(':' . 'OptionName', $optionName);
             
             $statement->execute();
             
@@ -487,100 +560,6 @@
      * @param int $testEntryID The I.D. of the test entry.
      * @param array $examQAs The collection of QuestionAnswers.
      */
-    /*
-    function AddTesteeQuestions($testEntryID, $examQAs)
-    {
-        try
-        {
-            $db = GetDBConnection();
-            
-            $qCount = 0;
-            foreach ($examQAs as $qa)
-            {
-                $questionID = $qa->GetQuestionId();
-                $question = GetQuestion($questionID);
-                
-                if (count($question) > 0)
-                {
-                    $qCount++;
-                    
-                    $answers = GetQuestionAnswers($questionID);
-
-                    $query = 'INSERT INTO ' . TESTEEQUESTIONS_IDENTIFIER
-                            . ' (' . TESTID_IDENTIFIER
-                            . ', ' . 'QuestionNo'
-                            . ', ' . 'Level'
-                            . ', ' . 'Instructions'
-                            . ', ' . 'Question' . ') VALUES'
-                            . ' (:' . TESTID_IDENTIFIER
-                            . ', :' . 'QuestionNo'
-                            . ', :' . 'Level'
-                            . ', :' . 'Instructions'
-                            . ', :' . 'Question' . ');';
-
-                    $statement = $db->prepare($query);
-                    $statement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
-                    $statement->bindValue(':' . 'QuestionNo', $qCount);
-                    $statement->bindValue(':' . 'Level', $question['Level']);
-                    $statement->bindValue(':' . 'Instructions', $question['Instructions']);
-                    $statement->bindValue(':' . 'Question', $question[NAME_IDENTIFIER]);
-
-                    $statement->execute();
-                    
-                    $statement->closeCursor();
-                    
-                    $aCount = 0;
-                    foreach($answers as $answer)
-                    {
-                        $aCount++;
-                        
-                        $query = 'INSERT INTO ' . TESTEEANSWERS_IDENTIFIER
-                                . ' (' . TESTID_IDENTIFIER
-                                . ', ' . 'QuestionNo'
-                                . ', ' . 'AnswerNo'
-                                . ', ' . 'Answer'
-                                . ', ' . 'Correct'
-                                . ', ' . 'Chosen' . ') VALUES'
-                                . ' (:' . TESTID_IDENTIFIER
-                                . ', :' . 'QuestionNo'
-                                . ', :' . 'AnswerNo'
-                                . ', :' . 'Answer'
-                                . ', :' . 'Correct'
-                                . ', :' . 'Chosen' . ');';
-                        
-                        $chosen = '0';
-                        
-                        if ($answer[ANSWERID_IDENTIFIER] == $qa->GetAnswerId())
-                        {
-                            $chosen = '1';
-                        }
-                        
-                        $statement = $db->prepare($query);
-                        $statement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
-                        $statement->bindValue(':' . 'QuestionNo', $qCount);
-                        $statement->bindValue(':' . 'AnswerNo', $aCount);
-                        $statement->bindValue(':' . 'Answer', $answer[NAME_IDENTIFIER]);
-                        $statement->bindValue(':' . 'Chosen', $chosen);
-                        $statement->bindValue(':' . 'Correct', $answer['Correct']);
-                        
-                        $statement->execute();
-                        
-                        $statement->closeCursor();
-                    }
-                }
-            }
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
-    }*/
-    
-    /**
-     * Adds a testee's questions and answers to the records.
-     * @param int $testEntryID The I.D. of the test entry.
-     * @param array $examQAs The collection of QuestionAnswers.
-     */
     function AddTesteeQuestions($testEntryID, $examQAs)
     {
         try
@@ -767,17 +746,20 @@
             $emailIndex = $profile->GetEmailIndex();
             $majorIndex = $profile->GetMajorIndex();
             $highSchoolIndex = $profile->GetHighSchoolIndex();
+            $spokenAtHomeIndex = $profile->GetSpokenAtHomeIndex();
             
             $db = GetDBConnection();
             
             $query = 'INSERT INTO ' . TESTEES_IDENTIFIER
                     . ' ('  . TESTID_IDENTIFIER
+                    . ', ' . $spokenAtHomeIndex
                     . ', ' . $firstNameIndex
                     . ', ' . $lastNameIndex
                     . ', ' . $emailIndex
                     . ', ' . $majorIndex
                     . ', ' . $highSchoolIndex . ') VALUES'
                     . ' (:' . TESTID_IDENTIFIER
+                    . ', :' . $spokenAtHomeIndex
                     . ', :' . $firstNameIndex
                     . ', :' . $lastNameIndex
                     . ', :' . $emailIndex
@@ -786,6 +768,7 @@
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . TESTID_IDENTIFIER, $testentryID);
+            $statement->bindValue(':' . $spokenAtHomeIndex, $profile->GetSpokenAtHome());
             $statement->bindValue(':' . $firstNameIndex, $profile->GetFirstName());
             $statement->bindValue(':' . $lastNameIndex, $profile->GetLastName());
             $statement->bindValue(':' . $emailIndex, $profile->GetEmail());
@@ -811,37 +794,45 @@
     {
         try
         {
-            $spokenAtHomeIndex = $profile->GetSpokenAtHomeIndex();
-            $jrHighExpIndex = $profile->GetJrHighExpIndex();
-            $srHighExpIndex = $profile->GetSrHighExpIndex();
-            $collegeExpIndex = $profile->GetCollegeExpIndex();
-            $currentCourseIndex = $profile->GetCurrentCourseIndex();
+            $leoP = new LEOPair();
+            $experienceNameKey = $leoP->GetExperienceNameKey();
+            $optionNameKey = $leoP->GetOptionNameKey();
+            
+            $leopairs = $profile->GetLeoPairs();
+            
+            if (count($leopairs) < 1)
+            {
+                return;
+            }
             
             $db = GetDBConnection();
             
             $query = 'INSERT INTO ' . TESTEEEXPERIENCES_IDENTIFIER
                     . ' ('  . TESTID_IDENTIFIER
-                    . ', ' . $spokenAtHomeIndex
-                    . ', ' . $jrHighExpIndex
-                    . ', ' . $srHighExpIndex
-                    . ', ' . $currentCourseIndex
-                    . ', ' . $collegeExpIndex . ') VALUES'
-                    . ' (:' . TESTID_IDENTIFIER
-                    . ', :' . $spokenAtHomeIndex
-                    . ', :' . $jrHighExpIndex
-                    . ', :' . $srHighExpIndex
-                    . ', :' . $currentCourseIndex
-                    . ', :' . $collegeExpIndex . ');';
+                    . ', ' . $experienceNameKey
+                    . ', ' . $optionNameKey . ') VALUES';
             
+            for ($i = 0; $i < count($leopairs); $i++)
+            {
+                $query .= ' (:' . TESTID_IDENTIFIER
+                        . ', :' . $experienceNameKey . $i
+                        . ', :' . $optionNameKey . $i . '),';
+            }
+            
+            $query = rtrim($query, ',') . ';';
             
             $statement = $db->prepare($query);
             
             $statement->bindValue(':' . TESTID_IDENTIFIER, $testeeID);
-            $statement->bindValue(':' . $spokenAtHomeIndex, $profile->GetSpokenAtHome());
-            $statement->bindValue(':' . $jrHighExpIndex, $profile->GetJrHighExp());
-            $statement->bindValue(':' . $srHighExpIndex, $profile->GetSrHighExp());
-            $statement->bindValue(':' . $collegeExpIndex, $profile->GetCollegeExp());
-            $statement->bindValue(':' . $currentCourseIndex, $profile->GetCurrentCourse());
+            
+            $count = 0;
+            foreach($leopairs as $leopair)
+            {
+                $statement->bindValue(':' . $experienceNameKey . $count, $leopair->GetExperienceName());
+                $statement->bindValue(':' . $optionNameKey . $count, $leopair->GetOptionName());
+                
+                $count++;
+            }
             
             $statement->execute();
             

@@ -30,30 +30,6 @@ class DetailedTestInfo extends TestInfo
     private $spokenAtHome;
     
     /**
-     * The name of the junior high experience with the language.
-     * @var string 
-     */
-    private $jrHighExp;
-    
-    /**
-     * The name of the senior high experience with the language.
-     * @var string 
-     */
-    private $srHighExp;
-    
-    /**
-     * The name of the college experience with the language.
-     * @var string 
-     */
-    private $collegeExp;
-    
-    /**
-     * The name of the current course.
-     * @var string
-     */
-    private $currentCourse;
-    
-    /**
      * Gets the email address.
      * @return string The email address.
      */
@@ -126,78 +102,6 @@ class DetailedTestInfo extends TestInfo
     }
     
     /**
-     * Gets the name of the junior high experience with the language.
-     * @return strng The name of the experience.
-     */
-    public function GetJrHighExp()
-    {
-        return $this->jrHighExp;
-    }
-    
-    /**
-     * Sets the name of the junior high experience with the language.
-     * @param string $jrHighExp The name of the junior high exp.
-     */
-    public function SetJrHighExp($jrHighExp)
-    {
-        $this->jrHighExp = trim($jrHighExp);
-    }
-    
-    /**
-     * Gets the name of the senior high experience with the language.
-     * @return string The name.
-     */
-    public function GetSrHighExp()
-    {
-        return $this->srHighExp;
-    }
-    
-    /**
-     * Sets the name of the senior high experience with the language.
-     * @param string $srHighExp The name.
-     */
-    public function SetSrHighExp($srHighExp)
-    {
-        $this->srHighExp = trim($srHighExp);
-    }
-    
-    /**
-     * Gets the name of the college experience with the language.
-     * @return string The name.
-     */
-    public function GetCollegeExp()
-    {
-        return $this->collegeExp;
-    }
-    
-    /**
-     * Sets the name of the college experience with the language.
-     * @param string $collegeExp The name.
-     */
-    public function SetCollegeExp($collegeExp)
-    {
-        $this->collegeExp = trim($collegeExp);
-    }
-    
-    /**
-     * Gets the current course.
-     * @return string The name of the current course.
-     */
-    public function GetCurrentCourse()
-    {
-        return $this->currentCourse;
-    }
-    
-    /**
-     * Sets the current course.
-     * @param string $currentCourse THe name of the current course.
-     */
-    public function SetCurrentCourse($currentCourse)
-    {
-        $this->currentCourse = trim($currentCourse);
-    }
-    
-    /**
      * Creates an instance of DetailedTestInfo.
      * @param int $id The I.D. of the test.
      * @param string $firstName The first name of the person who took the test.
@@ -209,12 +113,8 @@ class DetailedTestInfo extends TestInfo
      * @param string $major The major.
      * @param string $highSchool The high school.
      * @param boolean $spokenAtHome The flag that indicates whether or not the language is spoken at home.
-     * @param string $jrHighExp The name of the junior high experience with the language.
-     * @param string $srHighExp The name of the senior high experience with the language.
-     * @param string $collegeExp The name of the college experience with the language.
-     * @param string $currentCourse The name of the current course.
      */
-    public function DetailedTestInfo($id = 0, $firstName = '', $lastName = '', $language = '', $score = 0.0, $date = '', $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE, $jrHighExp = "", $srHighExp = "", $collegeExp = "", $currentCourse = "")
+    public function DetailedTestInfo($id = 0, $firstName = '', $lastName = '', $language = '', $score = 0.0, $date = '', $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE)
     {
         parent::TestInfo($id, $firstName, $lastName, $language, $score, $date);
         
@@ -222,10 +122,6 @@ class DetailedTestInfo extends TestInfo
         $this->SetMajor($major);
         $this->SetHighSchool($highSchool);
         $this->SetSpokenAtHome($spokenAtHome);
-        $this->SetJrHighExp($jrHighExp);
-        $this->SetSrHighExp($srHighExp);
-        $this->SetCollegeExp($collegeExp);
-        $this->SetCurrentCourse($currentCourse);
     }
     
     /**
@@ -258,30 +154,6 @@ class DetailedTestInfo extends TestInfo
         {
             $spokenAtHome = TRUE;
             $this->SetSpokenAtHome($spokenAtHome);
-        }
-        
-        if(isset($row[$this->GetJrHighExpIndex()]))
-        {
-            $jrHighExp = $row[$this->GetJrHighExpIndex()];
-            $this->SetJrHighExp($jrHighExp);
-        }
-        
-        if(isset($row[$this->GetSrHighExpIndex()]))
-        {
-            $srHighExp = $row[$this->GetSrHighExpIndex()];
-            $this->SetSrHighExp($srHighExp);
-        }
-        
-        if(isset($row[$this->GetCollegeExpIndex()]))
-        {
-            $collegeExp = $row[$this->GetCollegeExpIndex()];
-            $this->SetCollegeExp($collegeExp);
-        }
-        
-        if(isset($row[$this->GetCurrentCourseIndex()]))
-        {
-            $currentCourse = $row[$this->GetCurrentCourseIndex()];
-            $this->SetCurrentCourse($currentCourse);
         }
     }
     
@@ -319,42 +191,6 @@ class DetailedTestInfo extends TestInfo
     public function GetSpokenAtHomeIndex()
     {
         return 'SpokenAtHome';
-    }
-    
-    /**
-     * Gets the index indentifier for the junior high experience name.
-     * @return string The junior high experience name index identifier.
-     */
-    public function GetJrHighExpIndex()
-    {
-        return 'JrHighExp';
-    }
-    
-    /**
-     * Gets the index indentifier for the senior high experience name.
-     * @return string The senior high experience name index identifier.
-     */
-    public function GetSrHighExpIndex()
-    {
-        return 'SrHighExp';
-    }
-    
-    /**
-     * Gets the index indentifier for the college experience name.
-     * @return string The college experience name index identifier.
-     */
-    public function GetCollegeExpIndex()
-    {
-        return 'CollegeExp';
-    }
-    
-    /**
-     * Gets the index identifier for the current course name.
-     * @return string The current course name index identifier.
-     */
-    public function GetCurrentCourseIndex()
-    {
-        return 'CurrentCourse';
     }
 }
 ?>

@@ -44,28 +44,10 @@ class Profile
     private $spokenAtHome;
     
     /**
-     * The name of the junior high experience with the language.
-     * @var string 
+     * The collection of language experince option pairs.
+     * @var array
      */
-    private $jrHighExp;
-    
-    /**
-     * The name of the senior high experience with the language.
-     * @var string 
-     */
-    private $srHighExp;
-    
-    /**
-     * The name of the college experience with the language.
-     * @var string 
-     */
-    private $collegeExp;
-    
-    /**
-     * The name of the course that the student is currently enrolled in.
-     * @var string 
-     */
-    private $currentCourse;
+    private $leopairs;
     
     /**
      * Gets the first name.
@@ -176,75 +158,21 @@ class Profile
     }
     
     /**
-     * Gets the name of the junior high experience with the language.
-     * @return strng The name of the experience.
+     * Gets the collection of language experience option pairs.
+     * @return array The collection of LEOPairs.
      */
-    public function GetJrHighExp()
+    public function GetLeoPairs()
     {
-        return $this->jrHighExp;
+        return $this->leopairs;
     }
     
     /**
-     * Sets the name of the junior high experience with the language.
-     * @param string $jrHighExp The name of the junior high exp.
+     * Sets the collection of language experience option pairs.
+     * @param array $leopairs The collection of LEOPairs.
      */
-    public function SetJrHighExp($jrHighExp)
+    public function SetLeoPairs($leopairs)
     {
-        $this->jrHighExp = trim($jrHighExp);
-    }
-    
-    /**
-     * Gets the name of the senior high experience with the language.
-     * @return string The name.
-     */
-    public function GetSrHighExp()
-    {
-        return $this->srHighExp;
-    }
-    
-    /**
-     * Sets the name of the senior high experience with the language.
-     * @param string $srHighExp The name.
-     */
-    public function SetSrHighExp($srHighExp)
-    {
-        $this->srHighExp = trim($srHighExp);
-    }
-    
-    /**
-     * Gets the name of the college experience with the language.
-     * @return string The name.
-     */
-    public function GetCollegeExp()
-    {
-        return $this->collegeExp;
-    }
-    
-    /**
-     * Sets the name of the college experience with the language.
-     * @param string $collegeExp The name.
-     */
-    public function SetCollegeExp($collegeExp)
-    {
-        $this->collegeExp = trim($collegeExp);
-    }
-    
-    /**
-     * Gets the name of the current course for the language.
-     * @return string The name.
-     */
-    public function GetCurrentCourse()
-    {
-        return $this->currentCourse;
-    }
-    
-    /**
-     * Sets the name of the current course for the language.
-     * @param string $currentCourse The name.
-     */
-    public function SetCurrentCourse($currentCourse)
-    {
-        $this->currentCourse = trim($currentCourse);
+        $this->leopairs = $leopairs;
     }
     
     /**
@@ -255,12 +183,9 @@ class Profile
      * @param string $major The major.
      * @param string $highSchool The high school.
      * @param boolean $spokenAtHome The flag that indicates whether or not the language is spoken at home.
-     * @param string $jrHighExp The name of the junior high experience with the language.
-     * @param string $srHighExp The name of the senior high experience with the language.
-     * @param string $collegeExp The name of the college experience with the language.
-     * @param string $currentCourse The name of the current course in the language.
+     * @param array $leopairs The collection of language experience option pairs.
      */
-    public function Profile($firstName = "", $lastName = "", $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE, $jrHighExp = "", $srHighExp = "", $collegeExp = "", $currentCourse = "")
+    public function Profile($firstName = "", $lastName = "", $email = "", $major = "", $highSchool = "", $spokenAtHome = FALSE, $leopairs = array())
     {
         $this->SetFirstName($firstName);
         $this->SetLastName($lastName);
@@ -268,10 +193,7 @@ class Profile
         $this->SetMajor($major);
         $this->SetHighSchool($highSchool);
         $this->SetSpokenAtHome($spokenAtHome);
-        $this->SetJrHighExp($jrHighExp);
-        $this->SetSrHighExp($srHighExp);
-        $this->SetCollegeExp($collegeExp);
-        $this->SetCurrentCourse($currentCourse);
+        $this->SetLeoPairs($leopairs);
     }
 
     /**
@@ -316,29 +238,28 @@ class Profile
             $this->SetSpokenAtHome($spokenAtHome);
         }
         
-        if(isset($row[$this->GetJrHighExpIndex()]))
+        $leopairs = $this->GetLeoPairs();
+        $leoP = new LEOPair();
+        $sig = $leoP->GetLEOPairSignature();
+        $keys = array_keys($row);
+        
+        foreach ($keys as $key)
         {
-            $jrHighExp = $row[$this->GetJrHighExpIndex()];
-            $this->SetJrHighExp($jrHighExp);
+            if (strpos($key, $sig) !== FALSE)
+            {
+                $bareKey = str_replace($sig, '', $key);
+                $experienceName = str_replace('_', ' ', $bareKey);
+                $optionName = $row[$key];
+                
+                $leopair = new LEOPair();
+                $leopair->SetExperienceName($experienceName);
+                $leopair->SetOptionName($optionName);
+                
+                $leopairs[$key] = $leopair;
+            }
         }
         
-        if(isset($row[$this->GetSrHighExpIndex()]))
-        {
-            $srHighExp = $row[$this->GetSrHighExpIndex()];
-            $this->SetSrHighExp($srHighExp);
-        }
-        
-        if(isset($row[$this->GetCollegeExpIndex()]))
-        {
-            $collegeExp = $row[$this->GetCollegeExpIndex()];
-            $this->SetCollegeExp($collegeExp);
-        }
-        
-        if (isset($row[$this->GetCurrentCourseIndex()]))
-        {
-            $currentCourse = $row[$this->GetCurrentCourseIndex()];
-            $this->SetCurrentCourse($currentCourse);
-        }
+        $this->SetLeoPairs($leopairs);
     }
     
     /**
@@ -393,42 +314,6 @@ class Profile
     public function GetSpokenAtHomeIndex()
     {
         return 'SpokenAtHome';
-    }
-    
-    /**
-     * Gets the index indentifier for the junior high experience name.
-     * @return string The junior high experience name index identifier.
-     */
-    public function GetJrHighExpIndex()
-    {
-        return 'JrHighExp';
-    }
-    
-    /**
-     * Gets the index indentifier for the senior high experience name.
-     * @return string The senior high experience name index identifier.
-     */
-    public function GetSrHighExpIndex()
-    {
-        return 'SrHighExp';
-    }
-    
-    /**
-     * Gets the index identifier for the current course name.
-     * @return string The current course name index identifier.
-     */
-    public function GetCurrentCourseIndex()
-    {
-        return 'CurrentCourse';
-    }
-    
-    /**
-     * Gets the index indentifier for the college experience name.
-     * @return string The college experience name index identifier.
-     */
-    public function GetCollegeExpIndex()
-    {
-        return 'CollegeExp';
     }
     
     /**
@@ -578,72 +463,6 @@ class Profile
     }
     
     /**
-     * Validates the junior high experience field.
-     * @return \ValidationInfo The validation info.
-     */
-    protected function ValidateJrHighExp()
-    {
-        $valid = TRUE;
-        $errors = array();
-        
-        $jrHighExp = $this->GetJrHighExp();
-        
-        if (empty($jrHighExp))
-        {
-            $valid = FALSE;
-            $errors[] = "Junior high experience can't be blank.";
-        }
-        
-        $vInfo = new ValidationInfo($valid, $errors);
-        
-        return $vInfo;
-    }
-    
-    /**
-     * Validates the high school experience field.
-     * @return \ValidationInfo The validation info.
-     */
-    protected  function ValidateSrHighExp()
-    {
-        $valid = TRUE;
-        $errors = array();
-        
-        $srHighExp = $this->GetSrHighExp();
-        
-        if (empty($srHighExp))
-        {
-            $valid = FALSE;
-            $errors[] = "High school experience can't be blank.";
-        }
-        
-        $vInfo = new ValidationInfo($valid, $errors);
-        
-        return $vInfo;
-    }
-    
-    /**
-     * Validates the college experience field
-     * @return \ValidationInfo The validation info.
-     */
-    protected function ValidateCollegeExp()
-    {
-        $valid = TRUE;
-        $errors = array();
-        
-        $collegeExp = $this->GetCollegeExp();
-        
-        if (empty($collegeExp))
-        {
-            $valid = FALSE;
-            $errors[] = "College experience can't be blank.";
-        }
-        
-        $vInfo = new ValidationInfo($valid, $errors);
-        
-        return $vInfo;
-    }
-    
-    /**
      * Validates the profile.
      * @return \ValidationInfo The validation info.
      */
@@ -656,11 +475,52 @@ class Profile
         $validInfo->Merge($this->ValidateEmail());
         $validInfo->Merge($this->ValidateMajor());
         $validInfo->Merge($this->ValidateHighSchool());
-        $validInfo->Merge($this->ValidateJrHighExp());
-        $validInfo->Merge($this->ValidateSrHighExp());
-        $validInfo->Merge($this->ValidateCollegeExp());
         
         return $validInfo;
+    }
+    
+    /**
+     * Adds an language experience option pair to the collection of language experience option pairs.
+     * @param LEOPair $leopair The language experience option pair.
+     */
+    public function AddLeoPair($leopair)
+    {
+        $leopairs = $this->GetLeoPairs();
+        $key = $leopair->GetExperienceName();
+        
+        $leopairs[$key] = $leopair;
+        
+        $this->SetLeoPairs($leopairs);
+    }
+    
+    /**
+     * Initializes the collection language experience options to the default.
+     */
+    public function InitializeLEOs()
+    {
+        $languageExperiences = GetAllLanguageExperiencesWithOptions();
+        
+        $count = 1;
+        foreach($languageExperiences as $languageExperience)
+        {
+            $leopair = new LEOPair($count);
+            $optionName = '';
+            $experienceName = $languageExperience->GetName();
+            $options = $languageExperience->GetOptions();
+            
+            if (count($options) > 0)
+            {
+                $option1 = $options[0];
+                $optionName = $option1->GetName();
+            }
+            
+            $leopair->SetExperienceName($experienceName);
+            $leopair->SetOptionName($optionName);
+            
+            $count++;
+            
+            $this->AddLeoPair($leopair);
+        }
     }
 }
 ?>

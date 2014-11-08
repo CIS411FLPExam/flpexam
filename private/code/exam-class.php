@@ -372,22 +372,29 @@ class Exam
      */
     public function SetInitialLevel()
     {
-        $level = 1;
-        $spokenAtHome = $this->GetProfile()->GetSpokenAtHome();
-        $highSchoolExp = $this->GetProfile()->GetSrHighExp();
+        $initLvls = array(1);
+        $profile = $this->GetProfile();
+        $spokenAtHome = $profile->GetSpokenAtHome();
+        $leopairs = $profile->GetLeoPairs();
         
         if ($spokenAtHome)
         {
             $parameters = $this->GetParameters();
-            $level = $parameters->GetSpokenAtHomeInitLevel();
+            $initLvls[] = $parameters->GetSpokenAtHomeInitLevel();
         }
         
-        $highSchoolExpLevel = GetLanguageExperienceInitLevel($highSchoolExp);
+        foreach($leopairs as $leopair)
+        {
+            $experienceName = $leopair->GetExperienceName();
+            $optionName = $leopair->GetOptionName();
+            
+            $initLvls[] = GetLanguageExperienceInitLevel($experienceName, $optionName);
+        }
         
-        $level = max(array($level, $highSchoolExpLevel));
+        $initLvl = max($initLvls);
         
-        $this->SetLevel($level);
-        $this->SetPrevLevel($level);
+        $this->SetLevel($initLvl);
+        $this->SetPrevLevel($initLvl);
     }
     
     /**

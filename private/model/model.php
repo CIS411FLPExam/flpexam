@@ -4,6 +4,7 @@
     require_once(LEVELINFOCLASS_FILE);
     require_once(EXAMPARAMETERSCLASS_FILE);
     require_once(VALIDATIONINFOCLASS_FILE);
+    require_once(LANGUAGEEXPERIENCECLASS_FILE);
     
     /**
      * Gets a connection fo the database.
@@ -730,6 +731,7 @@
     {
         try
         {
+            $experiences = array();
             $db = GetDBConnection();
         
             $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' ORDER BY'
@@ -739,9 +741,17 @@
             
             $statement->execute();
             
-            $experiences = $statement->fetchAll();
+            $rows = $statement->fetchAll();
             
             $statement->closeCursor();
+            
+            foreach($rows as $row)
+            {
+                $experience = new LanguageExperience();
+                $experience->Initialize($row);
+                
+                $experiences[] = $experience;
+            }
             
             return $experiences;
         }
@@ -762,47 +772,10 @@
         
         foreach ($languageExperiences as $experience)
         {
-            $names[] = $experience[NAME_IDENTIFIER];
+            $names[] = $experience->GetName();
         }
         
         return $names;
-    }
-    
-    /**
-     * Gets all courses on record for this language.
-     * @param type $languageID
-     * @return type
-     */
-    function GetLanguageCourses($languageID)
-    {
-        try
-        {
-            $db = GetDBConnection();
-            
-            $query = 'SELECT * FROM courses WHERE LanguageID = :LanguageID;';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':LanguageID', $languageID);
-            
-            $statement->execute();
-            
-            $rows = $statement->fetchAll();
-            
-            $statement->closeCursor();
-            
-            if($rows == FALSE || count($rows) < 0)
-            {
-                $rows = array();
-            }
-            
-            array_unshift($rows, array('Name' => 'Not Enrolled'));
-            
-            return $rows;
-        }
-        catch (PDOException $ex)
-        {
-            LogError($ex);
-        }
     }
     
     /**

@@ -17,6 +17,12 @@ class LanguageExperience
     private $name;
     
     /**
+     * The options that correspond this language experience.
+     * @var array 
+     */
+    private $options;
+    
+    /**
      * Gets the I.D. of the language experience.
      * @return int The I.D.
      */
@@ -53,14 +59,34 @@ class LanguageExperience
     }
     
     /**
+     * Gets the collection of options.
+     * @return array The collection of options.
+     */
+    public function GetOptions()
+    {
+        return $this->options;
+    }
+    
+    /**
+     * Sets the collection of options.
+     * @param array $options The collection of options.
+     */
+    public function SetOptions($options)
+    {
+        $this->options = $options;
+    }
+    
+    /**
      * Creates an instance of LanguageExperience.
      * @param int $id The I.D. of the experience.
      * @param string $name The name of the experience.
+     * @param array $options The collection of options.
      */
-    public function LanguageExperience($id = 0, $name = '')
+    public function LanguageExperience($id = 0, $name = '', $options = array())
     {
         $this->SetId($id);
         $this->SetName($name);
+        $this->SetOptions($options);
     }
     
     /**
@@ -146,6 +172,19 @@ class LanguageExperience
         $vi->Merge($this->ValidateName());
         
         return $vi;
+    }
+    
+    /**
+     * Adds an option to the language experience.
+     * @param ExperienceOption $option The option to add.
+     */
+    public function AddOption(ExperienceOption $option)
+    {
+        $options = $this->GetOptions();
+        
+        $options[] = $option;
+        
+        $this->SetOptions($options);
     }
 }
 ?>

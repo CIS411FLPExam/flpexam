@@ -295,6 +295,11 @@
      */
     define("EXPERIENCEOPTIONCLASS_FILE", CODE_DIR . "experienceoption-class.php");
     
+    /**
+     * The file path of the leo pair class file.
+     */
+    define("LEOPAIRCLASS_FILE", CODE_DIR . "leopair-class.php");
+    
 //Main paths.
 /******************************************************************************/
     

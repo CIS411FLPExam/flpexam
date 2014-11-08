@@ -11,6 +11,7 @@
     require_once(LANGUAGEEXPERIENCECLASS_FILE);
     require_once(QUESTIONCOMMENTCLASS_FILE);
     require_once(EXPERIENCEOPTIONCLASS_FILE);
+    require_once(LEOPAIRCLASS_FILE);
     
     /**
      * Deletes an experience option from the records.
@@ -183,7 +184,8 @@
             
             $query = 'SELECT * FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
                     . ' ' . $experienceIdKey
-                    . ' = :' . $experienceIdKey . ';';
+                    . ' = :' . $experienceIdKey
+                    . ' ORDER BY ' . EXPERIENCEOPTIONID_IDENTIFIER . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $experienceIdKey, $experienceID);
@@ -1542,6 +1544,45 @@
     }
     
     /**
+     * Gets the collectoin of experiences on record for a previous testee.
+     * @param int $testID The I.D.
+     * @return \LEOPair The collection LEOPairs.
+     */
+    function GetTesteeExperiences($testID)
+    {
+        try
+        {
+            $leopairs = array();
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . TESTEEEXPERIENCES_IDENTIFIER . ' WHERE'
+                    . ' ' . TESTID_IDENTIFIER
+                    . ' = :' . TESTID_IDENTIFIER . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            
+            $statement->execute();
+            
+            $rows = $statement->fetchAll();
+            
+            foreach($rows as $row)
+            {
+                $leopair = new LEOPair();
+                $leopair->Initialize($row);
+                
+                $leopairs[] = $leopair;
+            }
+            
+            return $leopairs;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Gets the detailed test information.
      * @param int $testID The I.D. of the test.
      * @return \DetailedTestInfo The detailed test information.
@@ -1561,11 +1602,6 @@
             $majorIndex = $testInfo->GetMajorIndex();
             $highSchoolIndex = $testInfo->GetHighSchoolIndex();
             $spokenAtHomeIndex = $testInfo->GetSpokenAtHomeIndex();
-            $jrHighExpIndex = $testInfo->GetJrHighExpIndex();
-            $srHighExpIndex = $testInfo->GetSrHighExpIndex();
-            $collegeExpIndex = $testInfo->GetCollegeExpIndex();
-            $currentCourseIndex = $testInfo->GetCurrentCourseIndex();
-            
             
             $db = GetDBConnection();
             
@@ -1578,10 +1614,6 @@
                     . ', ' . $majorIndex
                     . ', ' . $highSchoolIndex
                     . ', ' . $spokenAtHomeIndex
-                    . ', ' . $jrHighExpIndex
-                    . ', ' . $srHighExpIndex
-                    . ', ' . $collegeExpIndex
-                    . ', ' . $currentCourseIndex
                     . ', ' . $dateIndex . ' FROM'
                     . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
                     . ' ' . TESTEES_IDENTIFIER . ' ON'

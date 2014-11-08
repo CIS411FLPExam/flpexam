@@ -11,8 +11,9 @@
     require_once(PROFILECLASS_FILE);
     require_once(QUESTIONANSWERCLASS_FILE);
     require_once(QUESTIONCOMMENTCLASS_FILE);
+    require_once(LEOPAIRCLASS_FILE);
 
-    error_reporting(0);
+    error_reporting(E_ALL);
     
     StartSession( );
     AdjustQuotes();
@@ -173,23 +174,13 @@
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
         }
         
-        $experiences = GetLanguageExperienceNames();
-        $initExpName = $experiences[0];
+        $languageExperiences = GetAllLanguageExperiencesWithOptions();
         
         $language = $exam->GetLanguage();        
         
-        $courses = GetLanguageCourses($language->GetId());
-        
         $profile = new Profile();
         
-        $profile->SetJrHighExp($initExpName);
-        $profile->SetSrHighExp($initExpName);
-        $profile->SetCollegeExp($initExpName);
-        
-        $curCouse = $courses[0];
-        $curCourseName = $curCouse['Name'];
-        
-        $profile->SetCurrentCourse($curCourseName);
+        $profile->InitializeLEOs();
         
         include(CREATEPROFILEFORM_FILE);
     }
@@ -214,18 +205,17 @@
         
         $profileVI = $profile->Validate();
         
-        if($profileVI->IsValid())
+        if ($profileVI->IsValid())
         {
             $exam->SetProfile($profile);
             Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
         }
-        else
-        {
-            $message = 'Profile Errors';
-            $collection = $profileVI->GetErrors();
-        }
         
-        $experiences = GetLanguageExperienceNames();
+        $message = 'Profile Errors';
+        $collection = $profileVI->GetErrors();
+        
+        $profile->InitializeLEOs();
+        $languageExperiences = GetAllLanguageExperiencesWithOptions();
         
         include(CREATEPROFILEFORM_FILE);
     }

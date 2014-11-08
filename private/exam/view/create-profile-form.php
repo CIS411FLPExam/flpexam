@@ -40,7 +40,7 @@
         <div class="formSection">
             <label>Major:</label>
             <input name="<?php echo($profile->GetMajorIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetMajor())); ?>" maxlength="32" />
-            (The name of your major if you are attending college.)
+            (The name of your current or desired college major.)
         </div>
         
         <div class="divider"></div>
@@ -55,69 +55,42 @@
         
         <div class="formSection">
             <b>Is <?php echo(htmlspecialchars($language->GetName())); ?> spoken at home?<span class="redText">*</span></b>
-            <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="Y" />Yes
-            <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="N" checked />No
+            <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="Y" <?php if ($profile->GetSpokenAtHome()) { echo('checked'); } ?> />Yes
+            <input name="<?php echo($profile->GetSpokenAtHomeIndex()); ?>" type="radio" value="N" <?php if (!$profile->GetSpokenAtHome()) { echo('checked'); } ?> />No
         </div>
         
+        <?php
+            $leopairs = $profile->GetLeoPairs();
+            foreach($languageExperiences as $le)
+            {
+                $leopair = new LEOPair();
+                $experienceName = $le->GetName();
+                $options = $le->GetOptions();
+                
+                foreach($leopairs as $leo)
+                {
+                    if ($experienceName == $leo->GetExperienceName())
+                    {
+                        $leopair = $leo;
+                        break;
+                    }
+                }
+        ?>
         <div class="divider"></div>
         
         <div class="formSection">
-            <label>Junior High Exp<span class="redText">*</span>:</label>
-            <select name="<?php echo($profile->GetJrHighExpIndex()); ?>" class="formInput">
-                <?php foreach ($experiences as $experience) { ?>
-                    <option <?php if ($experience == $profile->GetJrHighExp()) { echo('selected="selected"'); } ?>>
-                        <?php echo(htmlspecialchars($experience)); ?>
+            <label><?php echo(htmlspecialchars($experienceName)); ?><span class="redText">*</span>:</label>
+            <select name="<?php echo(htmlspecialchars($leo->GetLEOPairKey())); ?>" class="formInput">
+                <?php foreach ($options as $option) { ?>
+                    <option <?php if ($option->GetName() == $leopair->GetOptionName()) { echo('selected="selected"'); } ?>>
+                        <?php echo(htmlspecialchars($option->GetName())); ?>
                     </option>
                 <?php } ?>
             </select>
-            <div class="displayBox">(The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in middle school.)</div>
+            <div class="displayBox">(The <?php echo(htmlspecialchars($experienceName)); ?> experience you have.)</div>
             <div class="clear"></div>
         </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
-            <label>High School Exp<span class="redText">*</span>:</label>
-            <select name="<?php echo($profile->GetSrHighExpIndex()); ?>" class="formInput">
-                <?php foreach ($experiences as $experience) { ?>
-                    <option <?php if ($experience == $profile->GetSrHighExp()) { echo('selected="selected"'); } ?>>
-                        <?php echo(htmlspecialchars($experience)); ?>
-                    </option>
-                <?php } ?>
-            </select>
-            <div class="displayBox">(The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in high school.)</div>
-            <div class="clear"></div>
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
-            <label>College Exp<span class="redText">*</span>:</label>
-            <select name="<?php echo($profile->GetCollegeExpIndex()); ?>" class="formInput">
-                <?php foreach ($experiences as $experience) { ?>
-                    <option <?php if ($experience == $profile->GetCollegeExp()) { echo('selected="selected"'); } ?>>
-                        <?php echo(htmlspecialchars($experience)); ?>
-                    </option>
-                <?php } ?>
-            </select>
-            <div class="displayBox">(The estimated amount of experience you have had with <?php echo(htmlspecialchars($language->GetName())); ?> in college.)</div>
-            <div class="clear"></div>
-        </div>
-        
-        <div class="divider"></div>
-        
-        <div class="formSection">
-            <label>Current Course<span class="redText">*</span>:</label>
-            <select name="<?php echo($profile->GetCurrentCourseIndex()); ?>" class="formInput">
-                <?php foreach ($courses as $course) { ?>
-                    <option <?php if ($course[NAME_IDENTIFIER] == $profile->GetCurrentCourse()) { echo('selected="selected"'); } ?>>
-                        <?php echo(htmlspecialchars($course[NAME_IDENTIFIER])); ?>
-                    </option>
-                <?php } ?>
-            </select>
-            <div class="displayBox">(The <?php echo(htmlspecialchars($language->GetName())); ?> class you are currently enrolled in.)</div>
-            <div class="clear"></div>
-        </div>
+        <?php } ?>
         
         <br />
         

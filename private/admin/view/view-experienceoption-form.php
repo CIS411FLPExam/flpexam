@@ -26,4 +26,10 @@
         <input type="hidden" name="<?php echo($option->GetIdKey()); ?>" value="<?php echo(htmlspecialchars($option->GetId())); ?>" />
         <input type="submit" value="Options" />
     </form>
+    <?php if (userIsAuthorized(EXPERIENCEOPTIONADD_ACTION)) { ?>
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXPERIENCEOPTIONADD_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo($option->GetExperienceIdKey()); ?>" value="<?php echo(htmlspecialchars($option->GetExperienceId())); ?>" />
+            <input type="submit" value="Add New Option" />
+        </form>
+    <?php } ?>
 </div>
