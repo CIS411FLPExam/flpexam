@@ -16,7 +16,8 @@
         <div class="formSection">
             <label>First Name<span class="redText">*</span>:</label>
             <input name="<?php echo($profile->GetFirstNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetFirstName())); ?>" autofocus required maxlength="32"/>
-            (Your first name.)
+            <div class="displayBox">(Your first name.)</div>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -24,7 +25,8 @@
         <div class="formSection">
             <label>Last Name<span class="redText">*</span>:</label>
             <input name="<?php echo($profile->GetLastNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetLastName())); ?>" required maxlength="32" />
-            (Your last name.)
+            <div class="displayBox">(Your last name.)</div>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -32,7 +34,8 @@
         <div class="formSection">
             <label>Email<span class="redText">*</span>:</label>
             <input name="<?php echo($profile->GetEmailIndex()); ?>" type="email" class="formInput" value="<?php echo(htmlspecialchars($profile->GetEmail())); ?>" required maxlength="40" />
-            (An e-mail address that you can be contacted at.)
+            <div class="displayBox">(An e-mail address that you can be contacted at.)</div>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -40,7 +43,8 @@
         <div class="formSection">
             <label>Major:</label>
             <input name="<?php echo($profile->GetMajorIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetMajor())); ?>" maxlength="32" />
-            (The name of your current or desired college major.)
+            <div class="displayBox">(The name of your current or desired college major.)</div>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -48,7 +52,8 @@
         <div class="formSection">
             <label>High School:</label>
             <input name="<?php echo($profile->GetHighSchoolIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetHighSchool())); ?>" maxlength="32"/>
-            (The name of your current or past high school.)
+            <div class="displayBox">(The name of your current or past high school.)</div>
+            <div class="clear"></div>
         </div>
         
         <div class="divider"></div>
@@ -65,6 +70,7 @@
             {
                 $leopair = new LEOPair();
                 $experienceName = $le->GetName();
+                $experienceDesc = $le->GetDescription();
                 $options = $le->GetOptions();
                 
                 foreach($leopairs as $leo)
@@ -87,7 +93,7 @@
                     </option>
                 <?php } ?>
             </select>
-            <div class="displayBox">(The <?php echo(htmlspecialchars($experienceName)); ?> experience you have.)</div>
+            <div class="displayBox">(<?php echo(htmlspecialchars($experienceDesc)); ?>)</div>
             <div class="clear"></div>
         </div>
         <?php } ?>

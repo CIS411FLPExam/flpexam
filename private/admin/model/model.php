@@ -728,13 +728,19 @@
         try
         {
             $nameKey = $experience->GetNameKey();
+            $descKey = $experience->GetDescriptionKey();
+            
             $db = GetDBConnection();
+            
             $query = 'INSERT INTO ' . LANGUAGEEXPERIENCES_IDENTIFIER
-                    . ' (' . $nameKey. ') VALUES'
-                    . ' (:' . $nameKey . ');';
+                    . ' (' . $nameKey
+                    . ', ' . $descKey . ') VALUES'
+                    . ' (:' . $nameKey
+                    . ', :' . $descKey . ');';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $nameKey, $experience->GetName());
+            $statement->bindValue(':' . $descKey, $experience->GetDescription());
             
             $statement->execute();
             
@@ -760,14 +766,19 @@
         try
         {
             $nameKey = $experience->GetNameKey();
+            $descKey = $experience->GetDescriptionKey();
+            
             $db = GetDBConnection();
+            
             $query = 'UPDATE ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' SET'
-                    . ' ' . $nameKey . ' = :' . $nameKey . ' WHERE'
+                    . ' ' . $nameKey . ' = :' . $nameKey
+                    . ', ' . $descKey . ' = :' . $descKey . ' WHERE'
                     . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER
                     . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $nameKey, $experience->GetName());
+            $statement->bindValue(':' . $descKey, $experience->GetDescription());
             $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experience->GetId());
             
             $rowsEffected = $statement->execute();

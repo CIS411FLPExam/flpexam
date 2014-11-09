@@ -24,6 +24,13 @@
             <input type="text" name="<?php echo($experience->GetNameKey()); ?>" value="<?php echo(htmlspecialchars($experience->GetName())); ?>" required maxlength="32" autofocus />
         </div>
         
+        <div class="divider"></div>
+        
+        <div class="formSection">
+            <label>Description<span class="redText">*</span>:</label>
+            <textarea name="<?php echo($experience->GetDescriptionKey()); ?>" rows="5" cols="70" required><?php echo(htmlspecialchars($experience->GetDescription())); ?></textarea>
+        </div>
+        
         <br />
         
         <input type="submit" value="Submit" />

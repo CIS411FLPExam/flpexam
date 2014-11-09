@@ -11,6 +11,13 @@
         <?php echo(htmlspecialchars($experience->GetName())); ?>
     </div>
     
+    <div class="divider"></div>
+    
+    <div class="formSection">
+        <label>Description:</label>
+        <div class="displayBox"><?php echo(htmlspecialchars($experience->GetDescription())); ?></div>
+    </div>
+    
     <br />
     
     <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION)); ?>" method="post">
