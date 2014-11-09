@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2014 at 09:43 PM
+-- Generation Time: Nov 09, 2014 at 05:08 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1241 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=66 ;
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
   `KeyCode` varchar(40) NOT NULL,
   `QuestionCount` int(11) NOT NULL DEFAULT '10',
   `IncLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
-  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.5000',
+  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
   `SpokenAtHomeInitLevel` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ParameterID`),
   UNIQUE KEY `ParameterID` (`ParameterID`)
@@ -209,6 +209,7 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 CREATE TABLE IF NOT EXISTS `languageexperiences` (
   `ExperienceID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(32) NOT NULL,
+  `Description` text NOT NULL,
   PRIMARY KEY (`Name`),
   UNIQUE KEY `ExperienceID` (`ExperienceID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
@@ -217,11 +218,11 @@ CREATE TABLE IF NOT EXISTS `languageexperiences` (
 -- Dumping data for table `languageexperiences`
 --
 
-INSERT INTO `languageexperiences` (`ExperienceID`, `Name`) VALUES
-(1, 'Middle School'),
-(2, 'High School'),
-(3, 'College'),
-(4, 'Current Course');
+INSERT INTO `languageexperiences` (`ExperienceID`, `Name`, `Description`) VALUES
+(3, 'College', 'The estimated amount of college experience you have had with the language.'),
+(4, 'Current Course', 'The highest course you are currently enrolled in, if you are enrolled in any.'),
+(2, 'High School', 'The estimated amount of high school experience you have had with the language.'),
+(1, 'Middle School', 'The estimated amount of middle school experience you have with the language.');
 
 -- --------------------------------------------------------
 
@@ -236,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `Feedback` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -254,7 +255,7 @@ CREATE TABLE IF NOT EXISTS `levelinfos` (
   PRIMARY KEY (`Level`,`LanguageID`),
   UNIQUE KEY `LevelInfoID` (`LevelInfoID`),
   KEY `levels_language_fk` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -285,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `Flagged` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=185 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
@@ -483,7 +484,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=61 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
