@@ -21,9 +21,7 @@
     </div>
     
     <?php if(userIsAuthorized(USEREDIT_ACTION)) { ?>
-        <a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($userID))) ?>">
-            Edit
-        </a>
+        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($userID))) ?>');" />
     <?php } ?>
 </div>
 
