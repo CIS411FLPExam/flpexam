@@ -22,7 +22,7 @@
     <ul>
         <li>
             Contact &nbsp; <b><?php echo(htmlspecialchars($contact->GetFirstName()) . ' ' . htmlspecialchars($contact->GetLastName())); ?></b>
-            &nbsp; at &nbsp; <b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b>
+            &nbsp; at &nbsp; <a href="mailto:<?php echo(htmlspecialchars($contact->GetEmail())); ?>?Subject=Foreign%20Language%20Placement%20Exam%20Site" target="_top"><b><?php echo(htmlspecialchars($contact->GetEmail())); ?></b></a>
             &nbsp; for permissions.
         </li>
     </ul>
