@@ -60,6 +60,15 @@
             <label>Date Submitted:</label>
             <?php echo(htmlspecialchars($testInfo->GetDate())); ?>
         </div>
+        <?php if (userIsAuthorized(TESTVIEW_ACTION)) { ?>
+            <div class="divider"></div>
+            <div class="formSection">
+                <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTVIEW_ACTION)); ?>" method="post">
+                    <input type="hidden" name="<?php echo(TESTID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
+                    <input type="submit" value="View Test" />
+                </form>
+            </div>
+        <?php } ?>
     </div>
     
     <div class="clear"></div>
@@ -90,17 +99,6 @@
         <?php } ?>
     </div>
 </div>
-
-<?php if (userIsAuthorized(TESTVIEW_ACTION)) { ?>
-    <div class="infoSection">
-        <div class="formGroup">
-            <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTVIEW_ACTION)); ?>" method="post">
-                <input type="hidden" name="<?php echo(TESTID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
-                <input type="submit" value="View Test" />
-            </form>
-        </div>
-    </div>
-<?php } ?>
 
 <div class="clear"></div>
 <!-- End main content here -->
