@@ -13,7 +13,7 @@
     require_once(QUESTIONCOMMENTCLASS_FILE);
     require_once(LEOPAIRCLASS_FILE);
 
-    error_reporting(E_ALL);
+    error_reporting(0);
     
     StartSession( );
     AdjustQuotes();
