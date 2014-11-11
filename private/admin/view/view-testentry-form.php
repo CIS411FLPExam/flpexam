@@ -91,6 +91,7 @@
                 $experienceName = $leopair->GetExperienceName();
                 $optionName = $leopair->GetOptionName();
         ?>
+            <div class="clear"></div>
             <div class="divider"></div>
             <div class="formSection">
                 <label><?php echo(htmlspecialchars($experienceName)); ?>:</label>
