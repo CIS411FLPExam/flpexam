@@ -416,6 +416,11 @@
      */
     define("TESTRESULTSEXPORT_ACTION", "TestResultsExport");
     
+    /**
+     * The action word to use to upload the test entries.
+     */
+    define("TESTENTRIESUPLOAD_ACTION", "TestEntriesUpload");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

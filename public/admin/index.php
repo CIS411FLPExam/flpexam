@@ -276,8 +276,28 @@
             case TESTRESULTSEXPORT_ACTION :
                 TestResultsExport();
                 break;
+            case TESTENTRIESUPLOAD_ACTION :
+                TestEntriesUpload();
+                break;
             default:
                 Redirect(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION));
+        }
+    }
+    
+    function TestEntriesUpload()
+    {
+        if (isset($_POST['Export']))
+        {
+            TestResultsExport();
+        }
+        else if (isset($_POST['Delete']))
+        {
+            TestEntryDelete();
+        }
+        else
+        {
+            $message = 'The action you wish to perform could not be resolved.';
+            include(MESSAGEFORM_FILE);
         }
     }
     
