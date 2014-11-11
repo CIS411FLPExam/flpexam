@@ -9,6 +9,7 @@
     $userCanView = userIsAuthorized(TESTENTRYVIEW_ACTION);
     $userCanDelete = userIsAuthorized(TESTENTRYDELETE_ACTION);
     $userCanSearch = userIsAuthorized(TESTENTRYSEARCH_ACTION);
+    $userCanExportResults = userIsAuthorized(TESTRESULTSEXPORT_ACTION);
 ?>
 
 <?php if ($userCanSearch) { ?>
@@ -53,7 +54,7 @@
 <?php } ?>
 <h4><?php echo(count($testInfos)); ?> Test Entries</h4>
 <?php if (count($testInfos)) { ?>
-    <form onsubmit="return ConfirmationPrompt('Delete the selected test records?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYDELETE_ACTION)); ?>" method="post">
+    <form id="TestEntriesForm" onsubmit="return ConfirmationPrompt('Delete the selected test records?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYDELETE_ACTION)); ?>" method="post">
         <div class="datatable">
             <table id="tests" class="tablesorter">
                 <thead>
@@ -107,7 +108,12 @@
         <br />
         
         <?php if ($userCanDelete) { ?>
-            <input type="submit" value="Delete Selected" />
+            <input type="submit" value="Delete Selected" onclick="DeleteTestEntriesClick('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYDELETE_ACTION)); ?>');" />
+        <?php } ?>
+        <?php if ($userCanExportResults) { ?>
+            <input type="submit" value="Export Selected" onclick="ExportTestResultsClick('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTRESULTSEXPORT_ACTION)) ?>');" />
+        <?php } ?>
+        <?php if ($userCanDelete || $userCanExportResults) { ?>
             <input type="button" value="Select All" onclick="CheckAll();" />
         <?php } ?>
     </form>

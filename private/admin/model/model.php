@@ -14,6 +14,73 @@
     require_once(LEOPAIRCLASS_FILE);
     
     /**
+     * Exports the test results of the given test I.D.s into an excel file.
+     * @param array $testIDs The collection of test I.D.s.
+     * @return mixed The file path of the excel file, or FALSE if no test entries were retrieved.
+     */
+    function ExportTestResults($testIDs)
+    {
+        $testEntries = GetBasicTestEntries($testIDs);
+        
+        if ($testEntries == FALSE)
+        {
+            return $testEntries;
+        }
+        
+        $fileName = TEMP_DIR . 'test_results_' . date("m-d-Y-G-i-s") . '.xlsx';
+        $objPHPExcel = new PHPExcel();
+
+        // Set properties
+        $properties = $objPHPExcel->getProperties();
+        $properties->setCreator("FLPExam site");
+        $properties->setLastModifiedBy("FLPExam site");
+        $properties->setTitle("Test Results");
+        $properties->setSubject("Test Results");
+        $properties->setDescription("Test results.");
+        $properties->setKeywords("foreign language placement exam test results");
+        $properties->setCategory("Test Results");
+
+        $workSheet = $objPHPExcel->setActiveSheetIndex(0);
+        $workSheet->setTitle('Test Results');
+
+        $row = 1;
+        $column = 0;
+
+        $workSheet->setCellValueByColumnAndRow($column++, $row, 'First Name');
+        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Last Name');
+        $workSheet->setCellValueByColumnAndRow($column++, $row, 'High School');
+        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Language');
+        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Score');
+        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Date');
+
+
+        foreach ($testEntries as $testEntry)
+        {
+            $row++;
+            $column = 0;
+
+            $firstName = $testEntry[FIRSTNAME_IDENTIFIER];
+            $lastName = $testEntry[LASTNAME_IDENTIFIER];
+            $highSchool = $testEntry['HighSchool'];
+            $language = $testEntry['Language'];
+            $score = $testEntry['Score'];
+            $date = ToDisplayDate($testEntry['Date']);
+
+            $workSheet->setCellValueByColumnAndRow($column++, $row, $firstName);
+            $workSheet->setCellValueByColumnAndRow($column++, $row, $lastName);
+            $workSheet->setCellValueByColumnAndRow($column++, $row, $highSchool);
+            $workSheet->setCellValueByColumnAndRow($column++, $row, $language);
+            $workSheet->setCellValueByColumnAndRow($column++, $row, $score);
+            $workSheet->setCellValueByColumnAndRow($column++, $row, $date);
+        }
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save($fileName);
+
+        return $fileName;
+    }
+    
+    /**
      * Deletes an experience option from the records.
      * @param int $optionID The I.D. of the experience option.
      * @return int The number of rows that was deleted.
@@ -1586,6 +1653,59 @@
             }
             
             return $leopairs;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets a collection of basic test entries.
+     * @param array $testIDs The collection of test I.D.s
+     * @return mixed The collection of testentires, or FALSE if no test entries were retrived.
+     */
+    function GetBasicTestEntries($testIDs)
+    {
+        try
+        {
+            $testEntries = array();
+            
+            if (count($testIDs) > 0)
+            {   
+                $db = GetDBConnection();
+
+                $query = 'SELECT * FROM ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
+                        . ' ' . TESTEES_IDENTIFIER . ' ON'
+                        . ' ' . TESTEES_IDENTIFIER . '.' . TESTID_IDENTIFIER
+                        . ' = ' . TESTENTIRES_IDENTIFIER . '.' . TESTID_IDENTIFIER . ' WHERE';
+                
+                for ($i = 0; $i < count($testIDs); $i++)
+                {
+                    $query .= ' ' . TESTEES_IDENTIFIER . '.' . TESTID_IDENTIFIER . ' = :' . TESTID_IDENTIFIER . $i . ' OR';
+                }
+                
+                $query = rtrim($query, ' OR');
+
+                $query .= ';';
+                
+                $statement = $db->prepare($query);
+                
+                $count = 0;
+                foreach ($testIDs as $testID)
+                {
+                    $statement->bindValue(':' . TESTID_IDENTIFIER . $count, $testID);
+                    $count++;
+                }
+                
+                $statement->execute();
+                
+                $testEntries = $statement->fetchAll();
+                
+                $statement->closeCursor();
+            }
+            
+            return $testEntries;
         }
         catch (PDOException $ex)
         {

@@ -411,6 +411,11 @@
      */
     define("PROCESSEXPERIENCEOPTIONADDEDIT_ACTION", "ProcessExperienceOptionAddEdit");
     
+    /**
+     * The action word to use to export test results.
+     */
+    define("TESTRESULTSEXPORT_ACTION", "TestResultsExport");
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

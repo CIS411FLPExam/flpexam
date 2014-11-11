@@ -273,8 +273,56 @@
             case PROCESSEXPERIENCEOPTIONADDEDIT_ACTION :
                 ProcessExperienceOptionAddEdit();
                 break;
+            case TESTRESULTSEXPORT_ACTION :
+                TestResultsExport();
+                break;
             default:
                 Redirect(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION));
+        }
+    }
+    
+    function TestResultsExport()
+    {
+        if (!userIsAuthorized(TESTRESULTSEXPORT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        $testIDs = array();
+        
+        if (isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+            
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $testID = $_POST["record$i"];
+                    
+                    $testIDs[] = $testID;
+                }
+            }
+        }
+        
+        $file = ExportTestResults($testIDs);
+        
+        if ($file != FALSE)
+        {
+            ignore_user_abort(true);
+
+            header('Content-type: application/octet-stream');
+            header('Content-Length: ' . filesize($file));
+            header('Content-Disposition: attachment; filename=Test_Results_' . date("m-d-Y-G-i-s") . '.xlsx');
+            readfile($file);
+
+            DeleteFile($file);
+        }
+        else
+        {
+            $message = 'No tests were found to export.';
+            include(MESSAGEFORM_FILE);
         }
     }
     

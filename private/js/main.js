@@ -82,3 +82,17 @@ function DisplayQuestionCommentTextCount()
     
     element.innerHTML = box.value.length + '/' + box.maxLength;
 }
+
+function DeleteTestEntriesClick(action)
+{
+    var form = document.getElementById('TestEntriesForm');
+    form.action = action;
+    form.onsubmit = function() { return ConfirmationPrompt('Delete the selected test records?'); };
+}
+
+function ExportTestResultsClick(action)
+{
+    var form = document.getElementById('TestEntriesForm');
+    form.action = action;
+    form.onsubmit = function() { };
+}
