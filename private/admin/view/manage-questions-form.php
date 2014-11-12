@@ -64,8 +64,14 @@
         <h4>Find Questions</h4>
         <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSEARCH_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input name="<?php echo(NAME_IDENTIFIER) ?>" type="text" class="formInput" />
+            <input name="<?php echo(NAME_IDENTIFIER) ?>" type="text" class="formInput" value="<?php if (isset($name)) { echo(htmlspecialchars($name)); } ?>" />
+            &nbsp;
             <input type="submit" value="Search Questions" />
+        </form>
+        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSEARCH_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="hidden" name="Flagged" />
+            <input type="submit" value="View Flagged" />
         </form>
         <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
@@ -75,7 +81,7 @@
 <?php } ?>
 
 <div class="divider"></div>
-<h4><?php echo(count($questions)); ?> Questions</h4>
+<h4><?php echo(count($questions)); ?> Question(s)</h4>
 <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
     <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
     <input type="number" name="Level" value="<?php if (isset($level)) { echo(htmlspecialchars($level)); } ?>" required min="1"/>

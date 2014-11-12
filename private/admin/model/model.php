@@ -1823,6 +1823,41 @@
     }
     
     /**
+     * Gets all the questions that have been flagged in a language.
+     * @param int $languageID The I.D. of the language.
+     * @return array The collection of flagged questions.
+     */
+    function SearchForFlaggedQuestions($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . 'Flagged'
+                    . ' > ' . '0' . ' AND'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER . ' ORDER BY'
+                    . ' ' . 'Flagged' . ' DESC';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            $statement->execute();
+            
+            $flaggedQuestions = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            return $flaggedQuestions;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Searches all users for the given name.
      * @param int $languageID The I.D. of the language to search.
      * @param string $name The user's first and/or last name.

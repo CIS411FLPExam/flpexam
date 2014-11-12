@@ -2364,11 +2364,18 @@
             exit();
         }
         
+        $flagged = FALSE;
+        if (isset($_POST['Flagged']) || isset($_GET['Flagged']))
+        {
+            $flagged = TRUE;
+        }
+        
         if (isset($_POST[NAME_IDENTIFIER]))
         {
             $name = $_POST[NAME_IDENTIFIER];
         }
-        else
+        
+        if ($flagged == FALSE && !isset($name))
         {
             $message = 'The search criteria could not be resolved.';
             include(MESSAGEFORM_FILE);
@@ -2384,10 +2391,16 @@
             exit();
         }
         
-        $questions = SearchForQuestion($languageID, $name);
+        if ($flagged == TRUE)
+        {
+            $questions = SearchForFlaggedQuestions($languageID);
+        }
+        else
+        {
+            $questions = SearchForQuestion($languageID, $name);
+        }
         
         AppendQuestionAvgScores($questions);
-        
         $language = $lang[NAME_IDENTIFIER];
         
         include(MANAGEQUESTIONSFORM_FILE);

@@ -25,7 +25,9 @@
                 <select class="srchSectSelect" name="Language" class="formInput">
                     <option selected="selected"></option>
                     <?php foreach ($languageNames as $languageName) { ?>
-                        <option><?php echo(htmlspecialchars($languageName)); ?></option>
+                        <option <?php if (isset($language) && $language == $languageName) { echo('selected'); } ?>>
+                            <?php echo(htmlspecialchars($languageName)); ?>
+                        </option>
                     <?php } ?>
                 </select>
             </div>
