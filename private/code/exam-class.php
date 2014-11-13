@@ -429,12 +429,13 @@ class Exam
         if (LevelExists($languageID, $nextLevel))
         {
             $this->SetLevel($nextLevel);
-            $this->SetPrevLevel($level);
             
             if ($prevLevel != $nextLevel)
             {
                 $this->GetNewLvlQAs();
             }
+            
+            $this->SetPrevLevel($level);
         }
     }
     
@@ -479,6 +480,7 @@ class Exam
         }
         
         $this->SetAllQAs($allQAs);
+        $this->SetLvlQAs(array());
     }
     
     /**
@@ -489,13 +491,18 @@ class Exam
     {
         $lvlDecreased = $this->TryToDecreaseLevel();
         
-        if (!$lvlDecreased)
+        if ($lvlDecreased == FALSE)
         {
             $lvlIncreased = $this->TryToIncreaseLevel();
             
-            if (!$lvlIncreased && $this->IsDone())
+            if ($lvlIncreased == FALSE)
             {
-                $this->RecordLvlQAs();
+                $isDone = $this->IsDone();
+                
+                if ($isDone == TRUE)
+                {
+                    $this->RecordLvlQAs();
+                }
             }
         }
     }
