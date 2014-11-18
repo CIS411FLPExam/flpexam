@@ -145,13 +145,13 @@ pre
 .infoSection
 {
     float: left;
-    width: 360px;
+    min-width: 360px;
     margin: 5px;
 }
 
 .infoDisplayBox
 {
-    width: 220px;
+    min-width: 220px;
     float: left;
     display: inline-block;
 }
