@@ -1618,6 +1618,11 @@
         $message = 'Error Importing Questions.';
         $collection = $errors;
         
+        if (isset($name))
+        {
+            unset($name);
+        }
+        
         include(MANAGEQUESTIONSFORM_FILE);
     }
     

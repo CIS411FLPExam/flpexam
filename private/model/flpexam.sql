@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2014 at 05:08 PM
+-- Generation Time: Nov 18, 2014 at 01:20 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=66 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `examparameters` (
   `KeyCode` varchar(40) NOT NULL,
   `QuestionCount` int(11) NOT NULL DEFAULT '10',
   `IncLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
-  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.8000',
+  `DecLevelScore` decimal(5,4) NOT NULL DEFAULT '0.5000',
   `SpokenAtHomeInitLevel` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ParameterID`),
   UNIQUE KEY `ParameterID` (`ParameterID`)
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `experienceoptions` (
   `InitLevel` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ExperienceID`,`Name`),
   UNIQUE KEY `OptionID` (`OptionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `experienceoptions`
@@ -116,14 +116,7 @@ INSERT INTO `experienceoptions` (`OptionID`, `ExperienceID`, `Name`, `InitLevel`
 (18, 3, '2 Semesters', 1),
 (19, 3, '3 Semesters', 1),
 (20, 3, '4+ Semesters', 1),
-(7, 3, 'None', 1),
-(21, 4, 'Not Enrolled', 1),
-(22, 4, 'Spanish 151', 1),
-(23, 4, 'Spanish 152', 1),
-(24, 4, 'Spanish 251', 1),
-(25, 4, 'Spanish 252', 1),
-(26, 4, 'Spanish 270', 1),
-(27, 4, 'Spanish 300', 1);
+(7, 3, 'None', 1);
 
 -- --------------------------------------------------------
 
@@ -136,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=59 ;
 
 --
 -- Dumping data for table `functions`
@@ -198,7 +191,8 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (54, 'ExperienceOptionEdit', 'Allows the user to edit an experience option'),
 (55, 'ExperienceOptionView', 'Allows the user to view an experience option.'),
 (56, 'ExperienceOptionDelete', 'Allows the user to delete an experience option.'),
-(57, 'ManageExperienceOptions', 'Allows the user to manage the experience options.');
+(57, 'ManageExperienceOptions', 'Allows the user to manage the experience options.'),
+(58, 'TestResultsExport', 'Allows the user to export basic test information.');
 
 -- --------------------------------------------------------
 
@@ -212,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `languageexperiences` (
   `Description` text NOT NULL,
   PRIMARY KEY (`Name`),
   UNIQUE KEY `ExperienceID` (`ExperienceID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `languageexperiences`
@@ -220,7 +214,6 @@ CREATE TABLE IF NOT EXISTS `languageexperiences` (
 
 INSERT INTO `languageexperiences` (`ExperienceID`, `Name`, `Description`) VALUES
 (3, 'College', 'The estimated amount of college experience you have had with the language.'),
-(4, 'Current Course', 'The highest course you are currently enrolled in, if you are enrolled in any.'),
 (2, 'High School', 'The estimated amount of high school experience you have had with the language.'),
 (1, 'Middle School', 'The estimated amount of middle school experience you have with the language.');
 
@@ -237,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `Feedback` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -286,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `Flagged` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -306,30 +299,6 @@ CREATE TABLE IF NOT EXISTS `rolefunctions` (
 --
 
 INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
-(3, 35),
-(3, 38),
-(3, 37),
-(3, 18),
-(3, 19),
-(3, 34),
-(3, 33),
-(3, 21),
-(3, 39),
-(3, 42),
-(3, 41),
-(3, 40),
-(3, 36),
-(3, 22),
-(3, 43),
-(3, 27),
-(3, 31),
-(3, 23),
-(3, 25),
-(3, 24),
-(3, 28),
-(3, 26),
-(3, 47),
-(3, 32),
 (1, 35),
 (1, 38),
 (1, 37),
@@ -380,11 +349,53 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (1, 46),
 (1, 47),
 (1, 32),
+(1, 58),
 (1, 48),
 (1, 4),
 (1, 3),
 (1, 16),
-(1, 17);
+(1, 17),
+(1, 20),
+(3, 35),
+(3, 38),
+(3, 37),
+(3, 18),
+(3, 19),
+(3, 34),
+(3, 33),
+(3, 21),
+(3, 39),
+(3, 42),
+(3, 41),
+(3, 40),
+(3, 36),
+(3, 22),
+(3, 43),
+(3, 27),
+(3, 31),
+(3, 23),
+(3, 25),
+(3, 24),
+(3, 28),
+(3, 26),
+(3, 47),
+(3, 32),
+(3, 30),
+(3, 29),
+(3, 53),
+(3, 56),
+(3, 54),
+(3, 55),
+(3, 50),
+(3, 51),
+(3, 44),
+(3, 45),
+(3, 49),
+(3, 57),
+(3, 52),
+(3, 46),
+(3, 58),
+(3, 48);
 
 -- --------------------------------------------------------
 
@@ -484,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
