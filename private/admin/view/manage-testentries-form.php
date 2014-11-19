@@ -67,7 +67,7 @@
                         <th><b>Score</b></th>
                         <th><b>Date</b></th>
                         <?php if ($userCanView) { ?><th></th><?php } ?>
-                        <?php if ($userCanDelete){ ?><th></th><?php } ?>
+                        <?php if ($userCanDelete || $userCanExportResults){ ?><th></th><?php } ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,7 +93,7 @@
                                 <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urlencode($testID))); ?>');" />
                             </td>
                         <?php } ?>
-                        <?php if ($userCanDelete) { ?>
+                        <?php if ($userCanDelete || $userCanExportResults) { ?>
                             <td>
                                 <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($testID)) ?>" />
                             </td>
