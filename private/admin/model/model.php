@@ -2493,16 +2493,16 @@
         try
         {
             $query = 'SELECT * FROM ' . USERS_IDENTIFIER . ' WHERE'
-                    . ' ' . USERID_IDENTIFIER
+                    . ' ' . USERNAME_IDENTIFIER
                     . ' = :' . USERNAME_IDENTIFIER . ';';
 
             $statement = $db->prepare($query);
             $statement->bindValue(':'. USERNAME_IDENTIFIER, $userName);
             $statement->execute();
-            $results = $statement->fetchAll();
+            $results = $statement->fetch();
             $statement->closeCursor();
 
-            if (count($results) > 0)
+            if ($results != FALSE)
             {
                 $exists = true;
             }
@@ -2680,6 +2680,12 @@
         }
     }
     
+    /**
+     * Updates a user's password.
+     * @param int $userID The I.D. of the user whose password to change.
+     * @param string $password The new user password.
+     * @return int The number of records affected.
+     */
     function UpdateUserPassword($userID, $password)
     {
         try
@@ -2773,31 +2779,6 @@
     }
 
     /**
-     * Gets all functions on record.
-     * @return array The collection of functions on record.
-     */
-    function getAllFunctions()
-    {
-        try
-        {
-            $db = GetDBConnection();
-            
-            $query = "SELECT FunctionID, Name, Description FROM functions ORDER BY Name";
-            
-            $statement = $db->prepare($query);
-            $statement->execute();
-            $results = $statement->fetchAll();
-            $statement->closeCursor();
-            
-            return $results;
-        }
-        catch (PDOException $e)
-        {
-            LogError($e);
-        }
-    }
-    
-    /**
      * Gets a function's information from the record.
      * @param int $FunctionID The ID of the function.
      * @return array The function's information.
@@ -2824,97 +2805,6 @@
         }
     }
     
-    /**
-     * Adds a function to the records.
-     * @param string $name The name of the function.
-     * @param string $desc The function's description.
-     * @return int The ID of the newly added function.
-     */
-    function addFunction($name, $desc)
-    {
-        try
-        {
-            $db = GetDBConnection();
-            
-            $query = 'INSERT INTO functions (Name, Description)
-                      VALUES (:Name, :Description)';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':Name', $name);
-            $statement->bindValue(':Description', $desc);
-
-            $success = $statement->execute();
-            $row_count = $statement->rowCount();
-            $statement->closeCursor();
-            $ID = $db->lastInsertId();    // Get the last ID that was generated
-            
-            return $ID;
-        }
-        catch (PDOException $e)
-        {
-            LogError($e);
-        }
-    }
-    
-    /**
-     * Updates a function's information.
-     * @param int $functionID The ID of the function to update.
-     * @param string $name The new name of the function.
-     * @param string $desc The new description of the function.
-     */
-    function updateFunction($functionID, $name, $desc)
-    {
-        try
-        {
-            $db = GetDBConnection();
-            
-            $query = 'UPDATE functions SET Name = :Name,
-                                       Description = :Description
-                                   WHERE FunctionID = :FunctionID';
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':FunctionID', $functionID);
-            $statement->bindValue(':Description', $desc);
-            $statement->bindValue(':Name', $name);
-            
-            $row_count = $statement->execute();
-            
-            $statement->closeCursor();
-        }
-        catch (PDOException $e)
-        {
-            LogError($e);
-        }
-    }
-    
-    /**
-     * Deletes a function's information from the records.
-     * @param int $FunctionID The ID of the function to delete.
-     * @return int The number of functions that were deleted.
-     */
-    function deleteFunction($FunctionID)
-    {
-        try
-        {
-            $db = getDBConnection();
-            
-            $query = "DELETE FROM functions WHERE FunctionID = :FunctionID";
-            
-            $statement = $db->prepare($query);
-            $statement->bindValue(':FunctionID', $FunctionID);
-            
-            $row_count = $statement->execute();
-            
-            $statement->closeCursor();
-            
-            return $row_count;
-        }
-        catch (PDOException $e)
-        {
-            LogError($e);
-        }
-    }
-
     /**
      * Gets all roles on record.
      * @return array The collection of roles.

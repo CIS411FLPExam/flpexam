@@ -87,31 +87,6 @@
     define("PROCESSUSEREDIT_ACTION", "ProcessUserEdit");
     
     /**
-     * The action word to use to manage functions.
-     */
-    define("MANAGEFUNCTIONS_ACTION", "ManageFunctions");
-    
-    /**
-     * The action word to use to add a function.
-     */
-    define("FUNCTIONADD_ACTION", "FunctionAdd");
-    
-    /**
-     * The action word to use to edit a function.
-     */
-    define("FUNCTIONEDIT_ACTION", "FunctionEdit");
-    
-    /**
-     * The action word to use to delete a function.
-     */
-    define("FUNCTIONDELETE_ACTION", "FunctionDelete");
-    
-    /**
-     * The action word to use to process a function add or edit.
-     */
-    define("PROCESSFUNCTIONADDEDIT", "ProcessFunctionAddEdit");
-    
-    /**
      * The action word to use to maange roles.
      */
     define("MANAGEROLES_ACTION", "ManageRoles");

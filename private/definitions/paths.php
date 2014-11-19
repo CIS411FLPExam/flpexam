@@ -382,11 +382,6 @@
     define("LOGINFORM_FILE", ADMINVIEW_DIR . "login-form.php");
     
     /**
-     * The file path of the add fucntion form file.
-     */
-    define("ADDFUNCTIONFORM_FILE", ADMINVIEW_DIR . "add-function-form.php");
-    
-    /**
      * The file path of the add role form file.
      */
     define("ADDROLEFORM_FILE", ADMINVIEW_DIR . "add-role-form.php");
@@ -402,11 +397,6 @@
     define("CONTROLPANELFORM_FILE", ADMINVIEW_DIR . "control-panel-form.php");
     
     /**
-     * The file path of the edit function form file.
-     */
-    define("EDITFUNCTIONFORM_FILE", ADMINVIEW_DIR . "edit-function-form.php");
-    
-    /**
      * The file path of the edit role form file.
      */
     define("EDITROLEFORM_FILE", ADMINVIEW_DIR . "edit-role-form.php");
@@ -415,11 +405,6 @@
      * The file path of the edit user form file.
      */
     define("EDITUSERFORM_FILE", ADMINVIEW_DIR . "edit-user-form.php");
-    
-    /**
-     * The file path of the manage functions form file.
-     */
-    define("MANAGEFUNCTIONSFORM_FILE", ADMINVIEW_DIR . "manage-functions-form.php");
     
     /**
      * The file path of the manage roles form file.

@@ -22,9 +22,6 @@
                 <?php if (userIsAuthorized(MANAGELANGUAGES_ACTION)) { ?>
                     <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)) ?>"><span>Languages</span></a></li>
                 <?php } ?>
-                <?php if (userIsAuthorized(MANAGEFUNCTIONS_ACTION)) { ?>
-                    <?php //<li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION)) ?"><span>Functions</span></a></li>?>
-                <?php } ?>
                 <?php if (userIsAuthorized(EXAMPARAMETERSVIEW_ACTION)) { ?>
                     <li><a href="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)) ?>"><span>Exam Params</span></a></li>
                 <?php } ?>

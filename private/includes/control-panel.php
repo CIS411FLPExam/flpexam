@@ -25,13 +25,6 @@
                     <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGEEXPERIENCES_ACTION ) ) ?>">Experiences</a>
                 </td>
             <?php } ?>
-            <?php
-            //<?php if (userIsAuthorized(MANAGEFUNCTIONS_ACTION)) {  //?
-                ///<td>
-                    //<a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEFUNCTIONS_ACTION ) ) ?">Functions</a> &nbsp;
-                //</td>
-            //?php } ?
-            ?>
             <?php if (userIsAuthorized(MANAGEROLES_ACTION)) {  ?>
                 <td>
                     <a href="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION ) ) ?>">Roles</a>

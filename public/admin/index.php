@@ -72,21 +72,6 @@
             case PROCESSUSEREDIT_ACTION :
                 ProcessUserEdit();
                 break;
-            case MANAGEFUNCTIONS_ACTION :
-                ManageFunctions();
-                break;
-            case FUNCTIONADD_ACTION :
-                FunctionAdd();
-                break;
-            case FUNCTIONEDIT_ACTION :
-                FunctionEdit();
-                break;
-            case FUNCTIONDELETE_ACTION :
-                FunctionDelete();
-                break;
-            case PROCESSFUNCTIONADDEDIT :
-                ProcessFunctionAddEdit();
-                break;
             case MANAGEROLES_ACTION :
                 ManageRoles();
                 break;
@@ -2799,6 +2784,11 @@
                 {
                     $errors[] = 'The username is too long.';
                 }
+                
+                if (UserNameExists($userName))
+                {
+                    $errors[] = 'The user name already exists.';
+                }
             }
             
             if (empty($password))
@@ -2854,6 +2844,8 @@
                 displayError('User I.D. could not be resolved.');
             }
             
+            $user = getUser($userID);
+            
             if (empty($userName))
             {
                 $errors[] = 'Username cannot be blank.';
@@ -2863,6 +2855,11 @@
                 if (strlen($userName) > 32)
                 {
                     $errors[] = 'The username is too long.';
+                }
+                
+                if ($userName != $user[USERNAME_IDENTIFIER] && UserNameExists($userName))
+                {
+                    $errors[] = 'The user name already exists.';
                 }
             }
 
@@ -2910,150 +2907,11 @@
                 Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
             }
             
+            $vital = $user['Vital'];
             $hasAttrResults = getUserRoles($userID);
             $hasNotAttrResults = getNotUserRoles($userID);
             
             include(EDITUSERFORM_FILE);
-        }
-    }
-
-    function ManageFunctions()
-    {
-        if (!userIsAuthorized(MANAGEFUNCTIONS_ACTION))
-        {
-            include(NOTAUTHORIZED_FILE);
-        }
-        else
-        {
-            $results = getAllFunctions();
-            
-            include(MANAGEFUNCTIONSFORM_FILE);
-        }
-    }
-    
-    function FunctionAdd()
-    {
-        if (!userIsAuthorized(FUNCTIONADD_ACTION))
-        {
-            include(NOTAUTHORIZED_FILE);
-        }
-        else
-        {
-            include(ADDFUNCTIONFORM_FILE);
-        }
-    }
-    
-    function FunctionEdit()
-    {
-        if (!userIsAuthorized(FUNCTIONEDIT_ACTION))
-        {
-            include(NOTAUTHORIZED_FILE);
-        }
-        else
-        {
-            $id = $_GET["id"];
-            
-            if (empty($id))
-            {
-                displayError("An ID is required for this function.");
-            }
-            else
-            {
-                $row = getFunction($id);
-                
-                if ($row == false)
-                {
-                    displayError("The function you wish to edit does not exist.");
-                }
-                else
-                {
-                    $id = $row["FunctionID"];
-                    $name = $row["Name"];
-                    $desc = $row["Description"];
-                    
-                    include(EDITFUNCTIONFORM_FILE);
-                }
-            }
-        }
-    }
-    
-    function FunctionDelete()
-    {
-        if (!userIsAuthorized(FUNCTIONDELETE_ACTION))
-        {
-            include(NOTAUTHORIZED_FILE);
-        }
-        else
-        {
-            if(isset($_POST["numListed"]))
-            {
-                $numListed = $_POST["numListed"];
-                for($i = 0; $i < $numListed; ++$i)
-                {
-                    if(isset($_POST["record$i"]))
-                    {
-                        deleteFunction($_POST["record$i"]);
-                    }
-                }
-            }
-            
-            $results = getAllFunctions();
-            
-            include(MANAGEFUNCTIONSFORM_FILE);
-        }
-    }
-    
-    function ProcessFunctionAddEdit()
-    {
-        $message = "";
-        $errors = array( );
-        
-        if(empty($_POST["Name"]))
-        {
-            $message = "Error";
-            $errors[] = "Error, field \"Name\" is blank.";
-        }
-        
-        if($message == "")
-        {
-            if(!empty($_POST["FunctionID"]))
-            {
-                $FunctionID = $_POST["FunctionID"];
-            }
-            
-            $name = trim($_POST["Name"]);
-            $desc = trim($_POST["Description"]);
-            
-            if (empty($FunctionID))
-            {   // No FunctionID means we are processing an ADD
-                if (userIsAuthorized(FUNCTIONADD_ACTION))
-                {
-                    $FunctionID = addFunction($name, $desc);
-                }
-                else
-                {
-                    include(NOTAUTHORIZED_FILE);
-                }
-            }
-            else
-            {
-                if (userIsAuthorized(FUNCTIONEDIT_ACTION))
-                {
-                    updateFunction($FunctionID, $name, $desc);
-                }
-                else
-                {
-                    include(NOTAUTHORIZED_FILE);
-                }
-            }
-            
-            $results = getAllFunctions();
-            
-            include(MANAGEFUNCTIONSFORM_FILE);
-        }
-        else
-        {
-            displayErrors($message, $errors);
         }
     }
 
