@@ -14,6 +14,88 @@
     require_once(LEOPAIRCLASS_FILE);
     
     /**
+     * Indicates whether or not a user is vital.
+     * @param int $userID The I.D. of the user.
+     * @return boolean TRUE, if the user is vital, or FALSE otherwise.
+     */
+    function UserIsVital($userID)
+    {
+        try
+        {
+            $isVital = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . USERS_IDENTIFIER . ' WHERE'
+                    . ' ' . USERID_IDENTIFIER
+                    . ' = :' . USERID_IDENTIFIER . ' AND'
+                    . ' ' . 'Vital'
+                    . ' = :' . 'Vital' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . 'Vital', 1);
+            
+            $statement->execute();
+            
+            $vitalUser = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($vitalUser != FALSE)
+            {
+                $isVital = TRUE;
+            }
+            
+            return $isVital;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Indicates whether or not a role is vital.
+     * @param int $roleID The I.D. of the role.
+     * @return boolean TRUE, if the role is vital, or FALSE otherwise.
+     */
+    function RoleIsVital($roleID)
+    {
+        try
+        {
+            $isVital = FALSE;
+            $db = GetDBConnection();
+            
+            $query = 'SELECT * FROM ' . ROLES_IDENTIFIER . ' WHERE'
+                    . ' ' . ROLEID_IDENTIFIER
+                    . ' = :' . ROLEID_IDENTIFIER . ' AND'
+                    . ' ' . 'Vital'
+                    . ' = :' . 'Vital' . ';';
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . ROLEID_IDENTIFIER, $roleID);
+            $statement->bindValue(':' . 'Vital', 1);
+            
+            $statement->execute();
+            
+            $vitalRole = $statement->fetch();
+            
+            $statement->closeCursor();
+            
+            if ($vitalRole != FALSE)
+            {
+                $isVital = TRUE;
+            }
+            
+            return $isVital;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
      * Exports the test results of the given test I.D.s into an excel file.
      * @param array $testIDs The collection of test I.D.s.
      * @return mixed The file path of the excel file, or FALSE if no test entries were retrieved.
@@ -2459,7 +2541,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -2491,7 +2573,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -2515,7 +2597,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -2686,7 +2768,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
 
@@ -2711,7 +2793,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -2738,7 +2820,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -2829,7 +2911,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
 
@@ -2843,7 +2925,7 @@
         {
             $db = GetDBConnection();
             
-            $query = "SELECT RoleID, Name, Description FROM roles ORDER BY Name";
+            $query = "SELECT RoleID, Name, Description, Vital FROM roles ORDER BY Name";
             
             $statement = $db->prepare($query);
             $statement->execute();
@@ -2856,7 +2938,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -2885,7 +2967,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -3000,7 +3082,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     
@@ -3066,7 +3148,7 @@
         }
         catch (PDOException $e)
         {
-            displayDBError($e->getMessage());
+            LogError($e);
         }
     }
     

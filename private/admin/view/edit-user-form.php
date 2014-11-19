@@ -44,7 +44,7 @@
         include(MESSAGE_FILE);
     }
 ?>
-<h2>Modify User</h2>
+<h2>Edit User</h2>
 
 <div class="formGroup">
     <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSEREDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
@@ -72,27 +72,29 @@
             <div class="clear"></div>
         </div>
 
-        <div class="divider"></div>
+        <?php if ($vital == '0') { ?>
+            <div class="divider"></div>
 
-        <table>
-            <tr>
-                <td>
-                    <b>Is</b><br/>
-                    <?php echo $select1; ?>
-                </td>
-                <td>
-                    <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
-                    <br/>
-                    <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
-                </td>
-                <td>
-                    <b>Is Not</b><br/>
-                    <?php echo $select2; ?>
-                </td>
-            </tr>
-        </table>
-            <br/>
-            <input type="submit" value="Submit" />
+            <table>
+                <tr>
+                    <td>
+                        <b>Is</b><br/>
+                        <?php echo $select1; ?>
+                    </td>
+                    <td>
+                        <input type="button" value=">>" onclick="swap('hasAttributes','hasntAttributes')"><br/>
+                        <br/>
+                        <input type="button" value="<<" onclick="swap('hasntAttributes','hasAttributes')"><br/>
+                    </td>
+                    <td>
+                        <b>Is Not</b><br/>
+                        <?php echo $select2; ?>
+                    </td>
+                </tr>
+            </table>
+        <?php } ?>
+        <br/>
+        <input type="submit" value="Submit" />
     </form>
     <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>" method="post">
         <input type="submit" value="Cancel" />

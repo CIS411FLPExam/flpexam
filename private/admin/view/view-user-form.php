@@ -3,6 +3,8 @@
     include( CONTROLPANEL_FILE );
 ?>
 <!-- Start main content here -->
+<h1>User</h1>
+
 <div class="formGroup">
     
     <div class="formSection">

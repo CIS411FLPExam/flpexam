@@ -2730,6 +2730,7 @@
                     
                     $userID = $row[USERID_IDENTIFIER];
                     $userName = $row[USERNAME_IDENTIFIER];
+                    $vital = $row['Vital'];
                     
                     include(EDITUSERFORM_FILE);
                 }
@@ -2754,7 +2755,16 @@
                 {
                     if(isset($_POST["record$i"]))
                     {
-                        deleteUser($_POST["record$i"]);
+                        $userID = $_POST["record$i"];
+                        
+                        if (!UserIsVital($userID))
+                        {
+                            deleteUser($userID);
+                        }
+                        else
+                        {
+                            $message = 'Cannot delete a vital user.';
+                        }
                     }
                 }
             }
@@ -2890,7 +2900,10 @@
                     $hasAttributes = $_POST["hasAttributes"];
                 }
                 
-                updateUserAttributes($userID, $hasAttributes);
+                if (!UserIsVital($userID))
+                {
+                    updateUserAttributes($userID, $hasAttributes);
+                }
                 
                 UpdateUser($userID, $userName, $password);
 
@@ -3091,6 +3104,10 @@
             {
                 displayError("The role you wish to edit does not exist.");
             }
+            else if (RoleIsVital($id))
+            {
+                displayError('Cannot edit a vital role.');
+            }
             else
             {
                 $hasAttrResults = getRoleFunctions($id);
@@ -3118,7 +3135,16 @@
                 {
                     if(isset($_POST["record$i"]))
                     {
-                        deleteRole($_POST["record$i"]);
+                        $roleID = $_POST["record$i"];
+                        
+                        if (!RoleIsVital($roleID))
+                        {
+                            deleteRole($roleID);
+                        }
+                        else
+                        {
+                            $message = 'Cannot delete a vital role.';
+                        }
                     }
                 }
             }
@@ -3162,16 +3188,25 @@
             }
             else
             {
-                if(userIsAuthorized( ROLEEDIT_ACTION))
+                if(userIsAuthorized(ROLEEDIT_ACTION))
                 {
-                    $hasAttributes = array();
-                    
-                    if(!empty($_POST["hasAttributes"]))
+                    if (!RoleIsVital($RoleID))
                     {
-                        $hasAttributes = $_POST["hasAttributes"];
+                        $hasAttributes = array();
+
+                        if(!empty($_POST["hasAttributes"]))
+                        {
+                            $hasAttributes = $_POST["hasAttributes"];
+                        }
+
+                        updateRole($RoleID, $name, $desc, $hasAttributes);
                     }
-                    
-                    updateRole($RoleID, $name, $desc, $hasAttributes);
+                    else
+                    {
+                        $message = 'Cannot edit a vital role.';
+                        include(MESSAGEFORM_FILE);
+                        exit();
+                    }
                 }
                 else
                 {

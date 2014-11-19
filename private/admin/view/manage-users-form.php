@@ -36,7 +36,12 @@
     <br />
 <?php } ?>
 
-
+<?php
+    if (isset($message))
+    {
+        include(MESSAGE_FILE);
+    }
+?>
 <form onsubmit="return ConfirmationPrompt('Delete the selected users?');" action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
     <div class="datatable">
         <table id="users" class="tablesorter">
@@ -55,6 +60,7 @@
                     {
                         $userName = $record[USERNAME_IDENTIFIER];
                         $user_ID = $record[USERID_IDENTIFIER];
+                        $vital = $record['Vital'];
                 ?>
 
 
@@ -73,7 +79,9 @@
                     <?php } ?>
                     <?php if ($userCanDelete) { ?>
                         <td class="centerText">
-                            <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($user_ID)); ?>" />
+                            <?php if ($vital == '0') { ?>
+                                <input type="checkbox" name="record<?php echo($j); ?>" value="<?php echo(htmlspecialchars($user_ID)); ?>" />
+                            <?php } ?>
                         </td>
                     <?php } ?>
                 </tr>

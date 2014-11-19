@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 18, 2014 at 01:20 AM
+-- Generation Time: Nov 19, 2014 at 03:25 PM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -359,16 +359,29 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (3, 35),
 (3, 38),
 (3, 37),
+(3, 30),
+(3, 29),
+(3, 53),
+(3, 56),
+(3, 54),
+(3, 55),
 (3, 18),
 (3, 19),
+(3, 50),
+(3, 51),
+(3, 44),
+(3, 45),
 (3, 34),
 (3, 33),
+(3, 49),
 (3, 21),
 (3, 39),
 (3, 42),
 (3, 41),
 (3, 40),
 (3, 36),
+(3, 57),
+(3, 52),
 (3, 22),
 (3, 43),
 (3, 27),
@@ -378,22 +391,9 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (3, 24),
 (3, 28),
 (3, 26),
+(3, 46),
 (3, 47),
 (3, 32),
-(3, 30),
-(3, 29),
-(3, 53),
-(3, 56),
-(3, 54),
-(3, 55),
-(3, 50),
-(3, 51),
-(3, 44),
-(3, 45),
-(3, 49),
-(3, 57),
-(3, 52),
-(3, 46),
 (3, 58),
 (3, 48);
 
@@ -407,16 +407,17 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `RoleID` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(32) NOT NULL,
   `Description` text,
+  `Vital` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`RoleID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`RoleID`, `Name`, `Description`) VALUES
-(1, 'Admin', 'Full privileges.'),
-(3, 'Manager', 'Granted all neccessary permission to manage the site.');
+INSERT INTO `roles` (`RoleID`, `Name`, `Description`, `Vital`) VALUES
+(1, 'Admin', 'Full privileges.', 1),
+(3, 'Manager', 'Granted all neccessary permission to manage the site.', 0);
 
 -- --------------------------------------------------------
 
@@ -529,17 +530,18 @@ CREATE TABLE IF NOT EXISTS `users` (
   `UserID` int(11) NOT NULL AUTO_INCREMENT,
   `UserName` varchar(32) NOT NULL,
   `Password` varchar(40) NOT NULL,
+  `Vital` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`UserID`, `UserName`, `Password`) VALUES
-(1, 'wdgarey', '9c22f986c7a4149924fb8b016ef2958687f9f6b2'),
-(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997'),
-(4, 'manager', '1a8565a9dc72048ba03b4156be3e569f22771f23');
+INSERT INTO `users` (`UserID`, `UserName`, `Password`, `Vital`) VALUES
+(1, 'wdgarey', '9c22f986c7a4149924fb8b016ef2958687f9f6b2', 0),
+(2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1),
+(4, 'manager', '1a8565a9dc72048ba03b4156be3e569f22771f23', 0);
 
 --
 -- Constraints for dumped tables
