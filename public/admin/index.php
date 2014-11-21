@@ -1515,12 +1515,148 @@
             exit();
         }
         
+        if (isset($_POST['Add']))
+        {
+            LanguageImportAdd();
+        }
+        else if (isset($_POST['Update']))
+        {
+            LanguageImportUpdate();
+        }
+        else
+        {
+            $message = 'Could not reslove import type.';
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+    }
+    
+    function LanguageImportAdd()
+    {
+        if(!userIsAuthorized(LANGUAGEIMPORT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
         $errors = array();
         
         if(isset($_FILES['file']))
         {
             $file = $_FILES['file'];
-            $fileName = $file['name'];
+            $filePath = $file ['tmp_name'];
+            $mime = $file['type'];
+            $error = $file['error'];
+            
+            if ($error == UPLOAD_ERR_NO_FILE)
+            {
+                $errors[] = 'No file selected for upload.';
+            }
+            else if ($error != 0)
+            {
+                $errors[] = 'Error uploading file to server.';
+            }
+            else if ($mime == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+            {
+                $type = 'Word';
+            }
+            else
+            {
+                $errors[] = 'The file type is not of a valid Word format.';
+            }
+            
+            if (count($errors) == 0)
+            {
+                $questions = array();
+                
+                if ($type == 'Word')
+                {
+                    $fileConents = GetWordDocContents($filePath);
+                    
+                    include(PROCESSLANGUAGEIMPORTWORD_FILE);
+                }
+                
+                if (count($errors) == 0)
+                {
+                    foreach($questions as $question)
+                    {
+                        $level = $question['Level'];
+                        $instructions = $question['Instructions'];
+                        $quesName = $question[NAME_IDENTIFIER];
+                        $answers = $question['Answers'];
+
+                        AddQuestion($languageID, $quesName, $instructions, $level, $answers);
+                    }
+
+                    Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
+                }
+            }
+        }
+        
+        $level = 1;
+        $lang = GetLanguage($languageID);
+        $questions = GetQuestions($languageID, $level);
+        
+        AppendQuestionAvgScores($questions);
+        
+        $language = $lang[NAME_IDENTIFIER];
+        
+        $message = 'Error Adding Questions.';
+        $collection = $errors;
+        
+        if (isset($name))
+        {
+            unset($name);
+        }
+        
+        include(MANAGEQUESTIONSFORM_FILE);
+    }
+    
+    function LanguageImportUpdate()
+    {
+        if(!userIsAuthorized(LANGUAGEIMPORT_ACTION))
+        {
+            include(NOTAUTHORIZED_FILE);
+            exit();
+        }
+        
+        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+        }
+        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        {
+            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+        }
+        else
+        {
+            $message = 'No lanugage I.D. provided.';
+            
+            include(MESSAGEFORM_FILE);
+            exit();
+        }
+        
+        $errors = array();
+        
+        if(isset($_FILES['file']))
+        {
+            $file = $_FILES['file'];
             $filePath = $file ['tmp_name'];
             $mime = $file['type'];
             $error = $file['error'];
@@ -1537,13 +1673,9 @@
             {
                 $type = 'Excel';
             }
-            else if ($mime == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-            {
-                $type = 'Word';
-            }
             else
             {
-                $errors[] = 'The file type is not of a valid Excel or Word format.';
+                $errors[] = 'The file type is not of a valid Excel format.';
             }
             
             if (count($errors) == 0)
@@ -1556,34 +1688,20 @@
                     
                     include(PROCESSLANGUAGEIMPORTEXCEL_FILE);
                 }
-                else
-                {
-                    $fileConents = GetWordDocContents($filePath);
-                    
-                    include(PROCESSLANGUAGEIMPORTWORD_FILE);
-                }
                 
                 if (count($errors) == 0)
                 {
                     foreach($questions as $question)
                     {
-                        if (isset($question[QUESTIONID_IDENTIFIER]))
-                        {
-                            $questionID = $question[QUESTIONID_IDENTIFIER];
-                        }
-                        
+                        $questionID = $question[QUESTIONID_IDENTIFIER];
                         $level = $question['Level'];
                         $instructions = $question['Instructions'];
                         $quesName = $question[NAME_IDENTIFIER];
                         $answers = $question['Answers'];
 
-                        if(isset($questionID) && $questionID > 0)
-                        {//Doing an update.
+                        if($questionID > 0)
+                        {
                             UpdateQuestion($questionID, $quesName, $instructions, $level, $answers);
-                        }
-                        else
-                        {//Doing an add.
-                            AddQuestion($languageID, $quesName, $instructions, $level, $answers);
                         }
                     }
 
@@ -1600,7 +1718,7 @@
         
         $language = $lang[NAME_IDENTIFIER];
         
-        $message = 'Error Importing Questions.';
+        $message = 'Error Updating Questions.';
         $collection = $errors;
         
         if (isset($name))

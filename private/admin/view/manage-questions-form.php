@@ -36,14 +36,6 @@
             <input class="questionButton" type="submit" value="Export Questions" />
         </form>
     <?php } ?>
-     <?php if ($userCanImport) { ?>
-        <form class="inlineBlock questionFormPad" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
-            <input class="questionButton" type="submit" value="Import Questions" />
-            <input type="file" name="file" required />
-        </form>
-        <br />
-    <?php } ?>
     <?php if ($userCanExportStats) { ?>
         <form class="inlineBlock questionFormPad" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGESTATISTICSEXPORT_ACTION)); ?>" method="post">
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
@@ -55,6 +47,21 @@
             <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
             <input class="questionButton" type="submit" value="Reset Stats" />
         </form>
+    <?php } ?>
+     <?php if ($userCanImport) { ?>
+        <br />
+        <form class="inlineBlock questionFormPad" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input class="questionButton" name="Add" type="submit" value="Add Questions" />
+            <input type="file" name="file" required />
+        </form>
+        <br />
+        <form class="inlineBlock questionFormPad" enctype="multipart/form-data" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEIMPORT_ACTION)); ?>" method="post">
+            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input class="questionButton" name="Update" type="submit" value="Edit Questions" />
+            <input type="file" name="file" required />
+        </form>
+        <br />
     <?php } ?>
 </div>
 <?php if ($userCanSearch) { ?>
