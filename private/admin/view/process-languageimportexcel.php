@@ -21,7 +21,7 @@
             //Check to see if a question I.D. and a level exists.
             if($column1DataType == PHPExcel_Cell_DataType::TYPE_NUMERIC && $column2DataType == PHPExcel_Cell_DataType::TYPE_NUMERIC)
             {//If both  exists then we are doing an update.
-                $questionID = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
+                $questionID = trim($worksheet->getCellByColumnAndRow($column++, $row)->getValue());
             }
             else
             {
@@ -30,16 +30,16 @@
             
             if(isset($questionID))
             {
-                $level = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
-                $instructions = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
-                $quesName = $worksheet->getCellByColumnAndRow($column++, $row)->getValue();
+                $level = trim($worksheet->getCellByColumnAndRow($column++, $row)->getValue());
+                $instructions = trim($worksheet->getCellByColumnAndRow($column++, $row)->getValue());
+                $quesName = trim($worksheet->getCellByColumnAndRow($column++, $row)->getValue());
 
-                if(PHPExcel_Cell_DataType::dataTypeForValue($questionID) != PHPExcel_Cell_DataType::TYPE_NUMERIC || empty(trim($questionID)))
+                if(PHPExcel_Cell_DataType::dataTypeForValue($questionID) != PHPExcel_Cell_DataType::TYPE_NUMERIC || empty($questionID))
                 {
                     $errors[] = 'Row "' . $row . '" I.D. must be numeric.';
                 }
 
-                if (PHPExcel_Cell_DataType::dataTypeForValue($level) == PHPExcel_Cell_DataType::TYPE_NULL || empty(trim($level)))
+                if (PHPExcel_Cell_DataType::dataTypeForValue($level) == PHPExcel_Cell_DataType::TYPE_NULL || empty($level))
                 {
                     $errors[] = 'Row "' . $row . '" level cannot be empty.';
                 }
@@ -48,12 +48,12 @@
                     $errors[] = 'Row "' . $row . '" level must be numeric.';
                 }
 
-                if (PHPExcel_Cell_DataType::dataTypeForValue($quesName) == PHPExcel_Cell_DataType::TYPE_NULL || empty(trim($quesName)))
+                if (PHPExcel_Cell_DataType::dataTypeForValue($quesName) == PHPExcel_Cell_DataType::TYPE_NULL || empty($quesName))
                 {
                     $errors[] = 'Row "' . $row . '" question cannot be empty.';
                 }
                 
-                if (PHPExcel_Cell_DataType::dataTypeForValue($instructions) == PHPExcel_Cell_DataType::TYPE_NULL || empty(trim($instructions)))
+                if (PHPExcel_Cell_DataType::dataTypeForValue($instructions) == PHPExcel_Cell_DataType::TYPE_NULL || empty($instructions))
                 {
                     $errors[] = 'Row "' . $row . '" instructions cannot be empty.';
                 }
@@ -63,9 +63,9 @@
                 for ($col = $column; $col < $highestColumnIndex; ++$col)
                 {
                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
-                    $answer = $cell->getValue();
+                    $answer = trim($cell->getValue());
                     
-                    if (PHPExcel_Cell_DataType::dataTypeForValue($answer) != PHPExcel_Cell_DataType::TYPE_NULL && !empty(trim($answer)))
+                    if (PHPExcel_Cell_DataType::dataTypeForValue($answer) != PHPExcel_Cell_DataType::TYPE_NULL && !empty($answer))
                     {
                         $answers[] = $answer;
                     }
