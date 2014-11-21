@@ -1782,12 +1782,42 @@
             exit();
         }
         
-        $name = $_POST['Name'];
-        $language = $_POST['Language'];
-        $minScore = $_POST['MinScore'];
-        $maxScore = $_POST['MaxScore'];
-        $minDate = $_POST['MinDate'];
-        $maxDate = $_POST['MaxDate'];
+        $name = '';
+        $language = '';
+        $minScore = '';
+        $maxScore = '';
+        $minDate = '';
+        $maxDate = '';
+        
+        if (isset($_POST['Name']))
+        {
+            $name = $_POST['Name'];
+        }
+        
+        if (isset($_POST['Language']))
+        {
+            $language = $_POST['Language'];
+        }
+        
+        if (isset($_POST['MinScore']))
+        {
+            $minScore = $_POST['MinScore'];
+        }
+        
+        if (isset($_POST['MaxScore']))
+        {
+            $maxScore = $_POST['MaxScore'];
+        }
+        
+        if (isset($_POST['MinDate']))
+        {
+            $minDate = $_POST['MinDate'];
+        }
+        
+        if (isset($_POST['MaxDate']))
+        {
+            $maxDate = $_POST['MaxDate'];
+        }
         
         $languageNames = GetAllLanguagesNames();
         
@@ -1809,7 +1839,7 @@
         $languageNames = GetAllLanguagesNames();
         
         $minScore = 0.0;
-        $maxScore = 100;
+        $maxScore = 10;
         $minDate = ToDisplayDate(date("Y-m-d", strtotime("-7 days")));
         $maxDate = ToDisplayDate(date("Y-m-d", strtotime("+1 days")));
         
