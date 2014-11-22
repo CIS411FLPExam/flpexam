@@ -89,6 +89,11 @@
      */
     define("TEMP_DIR", PRIVATE_DIR . "temp/");
     
+    /**
+     * The file path of the error log directory.
+     */
+    define("ERRORLOG_DIR", PRIVATE_DIR . "log/");
+    
     //Base file paths.
     /**
      * The file path of the PHPExcell class file.
@@ -299,6 +304,11 @@
      * The file path of the leo pair class file.
      */
     define("LEOPAIRCLASS_FILE", CODE_DIR . "leopair-class.php");
+    
+    /**
+     * The file path of the error log file.
+     */
+    define("ERRORLOG_FILE", ERRORLOG_DIR . 'log.txt');
     
 //Main paths.
 /******************************************************************************/

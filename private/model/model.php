@@ -487,11 +487,17 @@
     
     /**
      * Logs a database error.
-     * @param PDOException $error The sql error.
+     * @param Exception $error The sql error.
      */
     function LogError($error)
     {
-        displayError($error->getMessage());
+        $handle = fopen(ERRORLOG_FILE, 'a');
+        
+        fwrite($handle, $error->getMessage());
+        
+        fclose($handle);
+        
+        displayError('A fatal error has occured. Please contact an administrator.');
     }
     
     /**
