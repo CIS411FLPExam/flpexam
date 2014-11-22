@@ -604,8 +604,6 @@
             $workSheet = $objPHPExcel->setActiveSheetIndex(0);
             $workSheet->setTitle('Statistics');
             
-            $questions = GetQuestions($languageID);
-            
             $row = 1;
             $column = 0;
             
@@ -615,23 +613,34 @@
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Avg Score');
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Flag Count');
             
+            $levels = GetAllLevels($languageID);
             
-            foreach ($questions as $question)
+            foreach ($levels as $level)
             {
-                $row++;
-                $column = 0;
+                $number = $level['Level'];
                 
-                $questionID = $question[QUESTIONID_IDENTIFIER];
-                $level = $question['Level'];
-                $questionName = $question[NAME_IDENTIFIER];
-                $avgScore = GetQuestionAvgScore($questionID);
-                $flagCount = $question['Flagged'];
+                $questions = GetQuestions($languageID, $number);
                 
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionName);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, number_format($avgScore, 2));
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $flagCount);
+                foreach ($questions as $question)
+                {
+                    $row++;
+                    $column = 0;
+
+                    $questionID = $question[QUESTIONID_IDENTIFIER];
+                    $level = $question['Level'];
+                    $questionName = $question[NAME_IDENTIFIER];
+                    $avgScore = GetQuestionAvgScore($questionID);
+                    $flagCount = $question['Flagged'];
+
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $questionName);
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, number_format($avgScore, 2));
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $flagCount);
+                }
+                
+                unset($questions);
+                $questions = NULL;
             }
             
             $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -1595,8 +1604,6 @@
             
             $workSheet->getColumnDimensionByColumn(0)->setVisible(false);
             
-            $questions = GetQuestions($languageID);
-            
             $row = 1;
             $column = 0;
             
@@ -1606,28 +1613,40 @@
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question');
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Correct Answer');
             
-            foreach ($questions as $question)
+            $levels = GetAllLevels($languageID);
+            
+            foreach ($levels as $level)
             {
-                $row++;
-                $column = 0;
+                $number = $level['Level'];
                 
-                $questionID = $question[QUESTIONID_IDENTIFIER];
-                $level = $question['Level'];
-                $instructions = $question['Instructions'];
-                $quesName = $question[NAME_IDENTIFIER];
-                
-                $answers = GetQuestionAnswers($questionID);
-                
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $instructions);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $quesName);
-                
-                foreach ($answers as $answer)
+                $questions = GetQuestions($languageID, $number);
+
+                foreach ($questions as $question)
                 {
-                    $ansName = $answer[NAME_IDENTIFIER];
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
+                    $row++;
+                    $column = 0;
+
+                    $questionID = $question[QUESTIONID_IDENTIFIER];
+                    $level = $question['Level'];
+                    $instructions = $question['Instructions'];
+                    $quesName = $question[NAME_IDENTIFIER];
+
+                    $answers = GetQuestionAnswers($questionID);
+
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $instructions);
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $quesName);
+
+                    foreach ($answers as $answer)
+                    {
+                        $ansName = $answer[NAME_IDENTIFIER];
+                        $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
+                    }
                 }
+                
+                unset($questions);
+                $questions = NULL;
             }
             
             $workSheet->getProtection()->setSheet(true);
@@ -2217,6 +2236,43 @@
             $statement->closeCursor();
             
             return $questions;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets the distinct levels of a language.
+     * @param int $languageID The I.D. of the language.
+     * @return mixed The collection of distinct levels.
+     */
+    function GetAllLevels($languageID)
+    {
+        try
+        {
+            $db = GetDBConnection();
+            
+            $query = 'SELECT Distinct(' . 'Level' . ') FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
+                    . ' ' . LANGUAGEID_IDENTIFIER
+                    . ' = :' . LANGUAGEID_IDENTIFIER;
+            
+            $statement = $db->prepare($query);
+            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            
+            $statement->execute();
+            
+            $levels = $statement->fetchAll();
+            
+            $statement->closeCursor();
+            
+            if ($levels == FALSE)
+            {
+                $levels = array();
+            }
+            
+            return $levels;
         }
         catch (PDOException $ex)
         {
