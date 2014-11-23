@@ -1,21 +1,21 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!--Start main content here-->
 <h1>Tests</h1>
 
 <?php
-    $userCanView = userIsAuthorized(TESTENTRYVIEW_ACTION);
-    $userCanDelete = userIsAuthorized(TESTENTRYDELETE_ACTION);
-    $userCanSearch = userIsAuthorized(TESTENTRYSEARCH_ACTION);
-    $userCanExportResults = userIsAuthorized(TESTRESULTSEXPORT_ACTION);
+    $userCanView = userIsAuthorized(GetTestEntryViewAction());
+    $userCanDelete = userIsAuthorized(GetTestEntryDeleteAction());
+    $userCanSearch = userIsAuthorized(GetTestEntrySearchAction());
+    $userCanExportResults = userIsAuthorized(GetTestResultsExportAction());
 ?>
 
 <?php if ($userCanSearch) { ?>
     <h3>Search</h3>
     <div class="formGroup">
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYSEARCH_ACTION)); ?>" method="post">
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetTestEntrySearchAction())); ?>" method="post">
             <div class="formGroup">
                 <label class="srchSectLbl">Name:</label>
                 <input class="srchSectTxt" type="text" name="Name" value="<?php echo(htmlspecialchars($name)); ?>" />
@@ -48,7 +48,7 @@
 
             <input type="submit" value="Search" />
         </form>
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTENTRIES_ACTION)); ?>" method="post">
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageTestEntriesAction())); ?>" method="post">
             <input type="submit" value="Clear" />
         </form>
     </div>
@@ -56,7 +56,7 @@
 <?php } ?>
 <h4><?php echo(count($testInfos)); ?> Test Entries</h4>
 <?php if (count($testInfos)) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRIESUPLOAD_ACTION)); ?>" method="post">
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetTestEntriesUploadAction())); ?>" method="post">
         <div class="datatable">
             <table id="tests" class="tablesorter">
                 <thead>
@@ -90,7 +90,7 @@
                         <td><?php echo(htmlspecialchars($date)); ?></td>
                         <?php if ($userCanView) { ?>
                             <td>
-                                <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION . "&". TESTID_IDENTIFIER . "=" . urlencode($testID))); ?>');" />
+                                <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetTestEntryViewAction() . "&". GetTestIdIdentifier() . "=" . urlencode($testID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanDelete || $userCanExportResults) { ?>
@@ -124,7 +124,7 @@
 <?php } ?>
 <!--End main content here-->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>
 <script>
     $( document ).ready( function( ) 

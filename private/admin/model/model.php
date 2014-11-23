@@ -1,17 +1,17 @@
 <?php
 
     //Include the base model file becasue functions from that files will be used here.
-    require_once(MODEL_FILE);
-    require_once(TESTINFOCLASS_FILE);
-    require_once(DETAILEDTESTINFOCLASS_FILE);
-    require_once(PHPEXCELCLASS_FILE);
-    require_once(PHPEXCELIOFACTORYCLASS_FILE);
-    require_once(CONTACTCLASS_FILE);
-    require_once(LEVELINFOCLASS_FILE);
-    require_once(LANGUAGEEXPERIENCECLASS_FILE);
-    require_once(QUESTIONCOMMENTCLASS_FILE);
-    require_once(EXPERIENCEOPTIONCLASS_FILE);
-    require_once(LEOPAIRCLASS_FILE);
+    require_once(GetModelFile());
+    require_once(GetTestInfoClassFile());
+    require_once(GetDetailTestInfoClassFile());
+    require_once(GetPHPExcelClassFile());
+    require_once(GetPHPExcelIOFactoryClassFile());
+    require_once(GetContactClassFile());
+    require_once(GetLevelInfoClassFile());
+    require_once(GetLanguageExperiencesClassFile());
+    require_once(GetQuestionCommentClassFile());
+    require_once(GetExperienceOptionClassFile());
+    require_once(GetLeoPairClassFile());
     
     /**
      * Indicates whether or not a user is vital.
@@ -25,14 +25,14 @@
             $isVital = FALSE;
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . USERS_IDENTIFIER . ' WHERE'
-                    . ' ' . USERID_IDENTIFIER
-                    . ' = :' . USERID_IDENTIFIER . ' AND'
+            $query = 'SELECT * FROM ' . GetUsersIdentifier() . ' WHERE'
+                    . ' ' . GetUserIdIdentifier()
+                    . ' = :' . GetUserIdIdentifier() . ' AND'
                     . ' ' . 'Vital'
                     . ' = :' . 'Vital' . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
+            $statement->bindValue(':' . GetUserIdIdentifier(), $userID);
             $statement->bindValue(':' . 'Vital', 1);
             
             $statement->execute();
@@ -66,14 +66,14 @@
             $isVital = FALSE;
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . ROLES_IDENTIFIER . ' WHERE'
-                    . ' ' . ROLEID_IDENTIFIER
-                    . ' = :' . ROLEID_IDENTIFIER . ' AND'
+            $query = 'SELECT * FROM ' . GetRolesIdentifier() . ' WHERE'
+                    . ' ' . GetRoleIdIDentifier()
+                    . ' = :' . GetRoleIdIDentifier() . ' AND'
                     . ' ' . 'Vital'
                     . ' = :' . 'Vital' . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . ROLEID_IDENTIFIER, $roleID);
+            $statement->bindValue(':' . GetRoleIdIDentifier(), $roleID);
             $statement->bindValue(':' . 'Vital', 1);
             
             $statement->execute();
@@ -109,7 +109,7 @@
             return $testEntries;
         }
         
-        $fileName = TEMP_DIR . 'test_results_' . date("m-d-Y-G-i-s") . '.xlsx';
+        $fileName = GetTempDir() . 'test_results_' . date("m-d-Y-G-i-s") . '.xlsx';
         $objPHPExcel = new PHPExcel();
 
         // Set properties
@@ -141,8 +141,8 @@
             $row++;
             $column = 0;
 
-            $firstName = $testEntry[FIRSTNAME_IDENTIFIER];
-            $lastName = $testEntry[LASTNAME_IDENTIFIER];
+            $firstName = $testEntry[GetFirstNameIdentifier()];
+            $lastName = $testEntry[GetLastNameIdentifier()];
             $highSchool = $testEntry['HighSchool'];
             $language = $testEntry['Language'];
             $score = $testEntry['Score'];
@@ -173,12 +173,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . EXPERIENCEOPTIONID_IDENTIFIER
-                    . ' = :' . EXPERIENCEOPTIONID_IDENTIFIER . ';';
+            $query = 'DELETE FROM ' . GetExperinceOptionsIdentifier() . ' WHERE'
+                    . ' ' . GetExperienceOptionIdIdentifier()
+                    . ' = :' . GetExperienceOptionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . EXPERIENCEOPTIONID_IDENTIFIER, $optionID);
+            $statement->bindValue(':' . GetExperienceOptionIdIdentifier(), $optionID);
             
             $rowsDeleted = $statement->execute();
             
@@ -208,7 +208,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . EXPERIENCEOPTIONS_IDENTIFIER
+            $query = 'INSERT INTO ' . GetExperinceOptionsIdentifier()
                     . ' (' . $experienceIdKey
                     . ', ' . $nameKey
                     . ', ' . $initLevelKey . ') VALUES'
@@ -251,7 +251,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . EXPERIENCEOPTIONS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetExperinceOptionsIdentifier() . ' SET'
                     . ' ' . $experienceIdKey . ' = :' . $experienceIdKey 
                     . ', ' . $nameKey . ' = :' . $nameKey
                     . ', ' . $initLevelKey . ' = :' . $initLevelKey . ' WHERE'
@@ -290,7 +290,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetExperinceOptionsIdentifier() . ' WHERE'
                     . ' ' . $idKey
                     . ' = :' . $idKey .';';
             
@@ -331,10 +331,10 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetExperinceOptionsIdentifier() . ' WHERE'
                     . ' ' . $experienceIdKey
                     . ' = :' . $experienceIdKey
-                    . ' ORDER BY ' . EXPERIENCEOPTIONID_IDENTIFIER . ';';
+                    . ' ORDER BY ' . GetExperienceOptionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $experienceIdKey, $experienceID);
@@ -377,7 +377,7 @@
             
             $db = GetDBConnection();
             
-            $query  = 'SELECT ' . $experienceIdKey . ' FROM ' . EXPERIENCEOPTIONS_IDENTIFIER . ' WHERE'
+            $query  = 'SELECT ' . $experienceIdKey . ' FROM ' . GetExperinceOptionsIdentifier() . ' WHERE'
                     . ' ' . $idKey
                     . ' = :' . $idKey . ';';
             
@@ -418,7 +418,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . QUESTIONCOMMENTS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetQuestionCommentsIdentifier() . ' WHERE'
                     . ' ' . $questionIdKey
                     . ' = :' . $questionIdKey . ';';
             
@@ -458,18 +458,18 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE ' . QUESTIONCOMMENTS_IDENTIFIER . '.* FROM ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONCOMMENTS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONCOMMENTS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            $query = 'DELETE ' . GetQuestionCommentsIdentifier() . '.* FROM ' . GetLanguagesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetQuestionsIdentifier() . ' ON'
+                    . ' ' . GetQuestionsIdentifier() . '.' . GetLanguageIdIdentifier()
+                    . ' = ' . GetLanguagesIdentifier() . '.' . GetLanguageIdIdentifier() . ' INNER JOIN'
+                    . ' ' . GetQuestionCommentsIdentifier() . ' ON'
+                    . ' ' . GetQuestionCommentsIdentifier() . '.' . GetQuestionIdIdentifier()
+                    . ' = ' . GetQuestionsIdentifier() . '.' . GetQuestionIdIdentifier() . ' WHERE'
+                    . ' ' . GetLanguagesIdentifier() . '.' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             $rowsDeleted = $statement->execute();
             
@@ -497,7 +497,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . QUESTIONCOMMENTS_IDENTIFIER . ' WHERE'
+            $query = 'DELETE FROM ' . GetQuestionCommentsIdentifier() . ' WHERE'
                     . ' ' . $questionIdKey
                     . ' = :' . $questionIdKey . ';';
             
@@ -555,14 +555,14 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetLanguagesIdentifier() . ' SET'
                     . ' ' . 'Feedback'
                     . ' = :' . 'Feedback' . ' WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             $statement->bindValue(':' . 'Feedback', $feedback);
             
             $rowsAffected = $statement->execute();
@@ -586,9 +586,9 @@
     {
         try
         {
-            $fileName = TEMP_DIR . 'langauge_statistics_' . date("m-d-Y-G-i-s") . '.xlsx';
+            $fileName = GetTempDir() . 'langauge_statistics_' . date("m-d-Y-G-i-s") . '.xlsx';
             $language = GetLanguage($languageID);
-            $languageName = $language[NAME_IDENTIFIER];
+            $languageName = $language[GetNameIdentifier()];
             $objPHPExcel = new PHPExcel();
                 
             // Set properties
@@ -626,9 +626,9 @@
                     $row++;
                     $column = 0;
 
-                    $questionID = $question[QUESTIONID_IDENTIFIER];
+                    $questionID = $question[GetQuestionIdIdentifier()];
                     $level = $question['Level'];
-                    $questionName = $question[NAME_IDENTIFIER];
+                    $questionName = $question[GetNameIdentifier()];
                     $avgScore = GetQuestionAvgScore($questionID);
                     $flagCount = $question['Flagged'];
 
@@ -663,7 +663,7 @@
         for($i = 0; $i < count($questions); $i++)
         {
             $question = $questions[$i];
-            $questionID = $question[QUESTIONID_IDENTIFIER];
+            $questionID = $question[GetQuestionIdIdentifier()];
             
             $avgScore = GetQuestionAvgScore($questionID);
             
@@ -713,17 +713,17 @@
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetLanguagesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetQuestionsIdentifier() . ' ON'
+                    . ' ' . GetQuestionsIdentifier() . '.' . GetLanguageIdIdentifier()
+                    . ' = ' . GetLanguagesIdentifier() . '.' . GetLanguageIdIdentifier() . ' SET'
                     . ' ' . 'Flagged'
                     . ' = ' . '0' . ' WHERE'
-                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+                    . ' ' . GetLanguagesIdentifier() . '.' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             $statement->execute();
             
@@ -745,14 +745,14 @@
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetQuestionsIdentifier() . ' SET'
                     . ' ' . 'Flagged'
                     . ' = ' . '0' . ' WHERE'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+                    . ' ' . GetQuestionsIdentifier() . '.' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier(), $questionID);
             
             $statement->execute();
             
@@ -776,12 +776,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . TESTEEQUESTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . TESTID_IDENTIFIER
-                    . ' = :' . TESTID_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetTesteeQuestionsIdentifier() . ' WHERE'
+                    . ' ' . GetTestIdIdentifier()
+                    . ' = :' . GetTestIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            $statement->bindValue(':' . GetTestIdIdentifier(), $testID);
             
             $statement->execute();
             
@@ -822,14 +822,14 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . TESTEEANSWERS_IDENTIFIER . ' WHERE'
-                    . ' ' . TESTID_IDENTIFIER
-                    . ' = :' . TESTID_IDENTIFIER . ' AND'
+            $query = 'SELECT * FROM ' . GetTesteeAnswersIdentifier() . ' WHERE'
+                    . ' ' . GetTestIdIdentifier()
+                    . ' = :' . GetTestIdIdentifier() . ' AND'
                     . ' ' . 'QuestionNo'
                     . ' = :' . 'QuestionNo' . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            $statement->bindValue(':' . GetTestIdIdentifier(), $testID);
             $statement->bindValue(':' .'QuestionNo', $questionNo);
             
             $statement->execute();
@@ -857,12 +857,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . TESTENTIRES_IDENTIFIER . ' WHERE'
-                    . ' ' . TESTID_IDENTIFIER
-                    . ' = :' . TESTID_IDENTIFIER . ';';
+            $query = 'DELETE FROM ' . GetTestEntriesIdentifier() . ' WHERE'
+                    . ' ' . GetTestIdIdentifier()
+                    . ' = :' . GetTestIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            $statement->bindValue(':' . GetTestIdIdentifier(), $testID);
             
             $rowsDeleted = $statement->execute();
             
@@ -890,7 +890,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . LANGUAGEEXPERIENCES_IDENTIFIER
+            $query = 'INSERT INTO ' . GetLanguageExperiencesIdentifier()
                     . ' (' . $nameKey
                     . ', ' . $descKey . ') VALUES'
                     . ' (:' . $nameKey
@@ -928,16 +928,16 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetLanguageExperiencesIdentifier() . ' SET'
                     . ' ' . $nameKey . ' = :' . $nameKey
                     . ', ' . $descKey . ' = :' . $descKey . ' WHERE'
-                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER
-                    . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
+                    . ' ' . GetLanguageExperienceIdIdentifier()
+                    . ' = :' . GetLanguageExperienceIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . $nameKey, $experience->GetName());
             $statement->bindValue(':' . $descKey, $experience->GetDescription());
-            $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experience->GetId());
+            $statement->bindValue(':' . GetLanguageExperienceIdIdentifier(), $experience->GetId());
             
             $rowsEffected = $statement->execute();
             
@@ -962,12 +962,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER
-                    . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER;
+            $query = 'DELETE FROM ' . GetLanguageExperiencesIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageExperienceIdIdentifier()
+                    . ' = :' . GetLanguageExperienceIdIdentifier();
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experienceID);
+            $statement->bindValue(':' . GetLanguageExperienceIdIdentifier(), $experienceID);
             
             $rowsDeleted = $statement->execute();
             
@@ -992,8 +992,8 @@
             $languageExperiences = array();
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' ORDER BY'
-                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetLanguageExperiencesIdentifier() . ' ORDER BY'
+                    . ' ' . GetLanguageExperienceIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
             
@@ -1032,20 +1032,20 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = ' . LANGUAGES_IDENTIFIER  . '.' . LANGUAGEID_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' SET'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . 'Chosen'
+            $query = 'UPDATE ' . GetLanguagesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetQuestionsIdentifier() . ' ON'
+                    . ' ' . GetQuestionsIdentifier() . '.' . GetLanguageIdIdentifier()
+                    . ' = ' . GetLanguagesIdentifier()  . '.' . GetLanguageIdIdentifier() . ' INNER JOIN'
+                    . ' ' . GetAnswersIdentifier() . ' ON'
+                    . ' ' . GetAnswersIdentifier() . '.' . GetQuestionIdIdentifier()
+                    . ' = ' . GetQuestionsIdentifier() . '.' . GetQuestionIdIdentifier() . ' SET'
+                    . ' ' . GetAnswersIdentifier() . '.' . 'Chosen'
                     . ' = ' . '0' . ' WHERE'
-                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+                    . ' ' . GetLanguagesIdentifier() . '.' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             $statement->execute();
             
@@ -1070,17 +1070,17 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER  . '.' . QUESTIONID_IDENTIFIER . ' SET'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . 'Chosen'
+            $query = 'UPDATE ' . GetQuestionsIdentifier() . ' INNER JOIN'
+                    . ' ' . GetAnswersIdentifier() . ' ON'
+                    . ' ' . GetAnswersIdentifier() . '.' . GetQuestionIdIdentifier()
+                    . ' = ' . GetQuestionsIdentifier()  . '.' . GetQuestionIdIdentifier() . ' SET'
+                    . ' ' . GetAnswersIdentifier() . '.' . 'Chosen'
                     . ' = ' . '0' . ' WHERE'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+                    . ' ' . GetQuestionsIdentifier() . '.' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier(), $questionID);
             
             $statement->execute();
             
@@ -1158,7 +1158,7 @@
             $descriptionKey = $levelInfo->GetDescriptionKey();
             
             $db = GetDBConnection();
-            $query = 'INSERT INTO ' . LEVELINFOS_IDENTIFIER
+            $query = 'INSERT INTO ' . GetLevelInfosIdentifier()
                     . ' (' . $levelKey
                     . ', ' . $languageIdKey
                     . ', ' . $nameKey
@@ -1206,7 +1206,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetLevelInfosIdentifier() . ' WHERE'
                     . ' ' . $languagekey
                     . ' = :' . $languagekey . ' ORDER BY'
                     . ' ' . $levelKey . ';';
@@ -1254,7 +1254,7 @@
             $descriptionKey = $levelInfo->GetDescriptionKey();
             
             $db = GetDBConnection();
-            $query = 'UPDATE ' . LEVELINFOS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetLevelInfosIdentifier() . ' SET'
                     . ' ' . $levelKey . ' = :' . $levelKey
                     . ', ' . $languageIdKey . ' = :' . $languageIdKey
                     . ', ' . $nameKey . ' = :' . $nameKey
@@ -1294,12 +1294,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
-                    . ' ' . LEVELINFOID_IDENTIFIER
-                    . ' = :' . LEVELINFOID_IDENTIFIER . ';';
+            $query = 'DELETE FROM ' . GetLevelInfosIdentifier() . ' WHERE'
+                    . ' ' . GetLevelInfoIdIdentifier()
+                    . ' = :' . GetLevelInfoIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LEVELINFOID_IDENTIFIER, $levelInfoId);
+            $statement->bindValue(':' . GetLevelInfoIdIdentifier(), $levelInfoId);
             
             $rowsEffected = $statement->execute();
             
@@ -1368,13 +1368,13 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . CONTACTS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetContactsIdentifier() . ' SET'
                     . ' `' . $primaryIndex . '` = :' . $primaryIndex . ' WHERE'
-                    . ' ' . CONTACTID_IDENTIFIER 
-                    . ' = :' . CONTACTID_IDENTIFIER . ';';
+                    . ' ' . GetContactsIdIdentifier() 
+                    . ' = :' . GetContactsIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            $statement->bindValue(':' . GetContactsIdIdentifier(), $contactID);
             $statement->bindValue(':' . $primaryIndex, $primary, PDO::PARAM_BOOL);
             
             $contactsEffected = $statement->execute();
@@ -1405,7 +1405,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . CONTACTS_IDENTIFIER
+            $query = 'INSERT INTO ' . GetContactsIdentifier()
                     . ' (' . $firstNameIndex
                     . ', ' . $lastNameIndex
                     . ', ' . $emailIndex . ') VALUES'                    
@@ -1444,12 +1444,12 @@
             $contact = new Contact();
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . CONTACTS_IDENTIFIER . ' WHERE'
-                    . ' ' . CONTACTID_IDENTIFIER
-                    . ' = :' . CONTACTID_IDENTIFIER;
+            $query = 'SELECT * FROM ' . GetContactsIdentifier() . ' WHERE'
+                    . ' ' . GetContactsIdIdentifier()
+                    . ' = :' . GetContactsIdIdentifier();
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            $statement->bindValue(':' . GetContactsIdIdentifier(), $contactID);
             
             $statement->execute();
             
@@ -1483,15 +1483,15 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . CONTACTS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetContactsIdentifier() . ' SET'
                     . ' ' . $firstNameIndex . ' = :' . $firstNameIndex
                     . ', ' . $lastNameIndex . ' = :' . $lastNameIndex
                     . ', ' . $emailIndex . ' = :' . $emailIndex . ' WHERE'
-                    . ' ' . CONTACTID_IDENTIFIER
-                    . ' = :' . CONTACTID_IDENTIFIER . ';';
+                    . ' ' . GetContactsIdIdentifier()
+                    . ' = :' . GetContactsIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            $statement->bindValue(':' . GetContactsIdIdentifier(), $contactID);
             $statement->bindValue(':' . $firstNameIndex, $contact->GetFirstName());
             $statement->bindValue(':' . $lastNameIndex, $contact->GetLastName());
             $statement->bindValue(':' . $emailIndex, $contact->GetEmail());
@@ -1519,12 +1519,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . CONTACTS_IDENTIFIER . ' WHERE'
-                    . ' ' . CONTACTID_IDENTIFIER
-                    . ' = :' . CONTACTID_IDENTIFIER;
+            $query = 'DELETE FROM ' . GetContactsIdentifier() . ' WHERE'
+                    . ' ' . GetContactsIdIdentifier()
+                    . ' = :' . GetContactsIdIdentifier();
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . CONTACTID_IDENTIFIER, $contactID);
+            $statement->bindValue(':' . GetContactsIdIdentifier(), $contactID);
             
             $contactsDeleted = $statement->execute();
             
@@ -1549,7 +1549,7 @@
             $contacts = array();
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . CONTACTS_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetContactsIdentifier() . ';';
             
             $statement = $db->prepare($query);
             
@@ -1584,9 +1584,9 @@
     {
         try
         {
-            $fileName = TEMP_DIR . 'langauge_questions_' . date("m-d-Y-G-i-s") . '.xlsx';
+            $fileName = GetTempDir() . 'langauge_questions_' . date("m-d-Y-G-i-s") . '.xlsx';
             $language = GetLanguage($languageID);
-            $languageName = $language[NAME_IDENTIFIER];
+            $languageName = $language[GetNameIdentifier()];
             $objPHPExcel = new PHPExcel();
                 
             // Set properties
@@ -1626,10 +1626,10 @@
                     $row++;
                     $column = 0;
 
-                    $questionID = $question[QUESTIONID_IDENTIFIER];
+                    $questionID = $question[GetQuestionIdIdentifier()];
                     $level = $question['Level'];
                     $instructions = $question['Instructions'];
-                    $quesName = $question[NAME_IDENTIFIER];
+                    $quesName = $question[GetNameIdentifier()];
 
                     $answers = GetQuestionAnswers($questionID);
 
@@ -1640,7 +1640,7 @@
 
                     foreach ($answers as $answer)
                     {
-                        $ansName = $answer[NAME_IDENTIFIER];
+                        $ansName = $answer[GetNameIdentifier()];
                         $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
                     }
                 }
@@ -1686,16 +1686,16 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+            $query = 'SELECT ' . GetTestEntriesIdentifier() . '.' . $testIdIndex
                     . ', ' . $firstNameIndex
                     . ', ' . $lastNameIndex
                     . ', ' . $languageIndex
                     . ', ' . $scoreIndex
                     . ', ' . $dateIndex . ' FROM'
-                    . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . TESTEES_IDENTIFIER . ' ON'
-                    . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
-                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ' ' . GetTestEntriesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetTesteesIdentifier() . ' ON'
+                    . ' ' . GetTesteesIdentifier() . '.' . $testIdIndex
+                    . ' = ' . GetTestEntriesIdentifier() . '.' . $testIdIndex
                     . ' ORDER BY ' . $dateIndex . ' DESC;';
             
             $statement = $db->prepare($query);
@@ -1734,12 +1734,12 @@
             $leopairs = array();
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . TESTEEEXPERIENCES_IDENTIFIER . ' WHERE'
-                    . ' ' . TESTID_IDENTIFIER
-                    . ' = :' . TESTID_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetTesteeExperiencesIdentifier() . ' WHERE'
+                    . ' ' . GetTestIdIdentifier()
+                    . ' = :' . GetTestIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            $statement->bindValue(':' . GetTestIdIdentifier(), $testID);
             
             $statement->execute();
             
@@ -1776,14 +1776,14 @@
             {   
                 $db = GetDBConnection();
 
-                $query = 'SELECT * FROM ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
-                        . ' ' . TESTEES_IDENTIFIER . ' ON'
-                        . ' ' . TESTEES_IDENTIFIER . '.' . TESTID_IDENTIFIER
-                        . ' = ' . TESTENTIRES_IDENTIFIER . '.' . TESTID_IDENTIFIER . ' WHERE';
+                $query = 'SELECT * FROM ' . GetTestEntriesIdentifier() . ' INNER JOIN'
+                        . ' ' . GetTesteesIdentifier() . ' ON'
+                        . ' ' . GetTesteesIdentifier() . '.' . GetTestIdIdentifier()
+                        . ' = ' . GetTestEntriesIdentifier() . '.' . GetTestIdIdentifier() . ' WHERE';
                 
                 for ($i = 0; $i < count($testIDs); $i++)
                 {
-                    $query .= ' ' . TESTEES_IDENTIFIER . '.' . TESTID_IDENTIFIER . ' = :' . TESTID_IDENTIFIER . $i . ' OR';
+                    $query .= ' ' . GetTesteesIdentifier() . '.' . GetTestIdIdentifier() . ' = :' . GetTestIdIdentifier() . $i . ' OR';
                 }
                 
                 $query = rtrim($query, ' OR');
@@ -1795,7 +1795,7 @@
                 $count = 0;
                 foreach ($testIDs as $testID)
                 {
-                    $statement->bindValue(':' . TESTID_IDENTIFIER . $count, $testID);
+                    $statement->bindValue(':' . GetTestIdIdentifier() . $count, $testID);
                     $count++;
                 }
                 
@@ -1837,7 +1837,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+            $query = 'SELECT ' . GetTestEntriesIdentifier() . '.' . $testIdIndex
                     . ', ' . $firstNameIndex
                     . ', ' . $lastNameIndex
                     . ', ' . $languageIndex
@@ -1847,14 +1847,14 @@
                     . ', ' . $highSchoolIndex
                     . ', ' . $spokenAtHomeIndex
                     . ', ' . $dateIndex . ' FROM'
-                    . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . TESTEES_IDENTIFIER . ' ON'
-                    . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
-                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex . ' INNER JOIN'
-                    . ' ' . TESTEEEXPERIENCES_IDENTIFIER . ' ON'
-                    . ' ' . TESTEEEXPERIENCES_IDENTIFIER . '.' . $testIdIndex
-                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex . ' WHERE'
-                    . ' ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+                    . ' ' . GetTestEntriesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetTesteesIdentifier() . ' ON'
+                    . ' ' . GetTesteesIdentifier() . '.' . $testIdIndex
+                    . ' = ' . GetTestEntriesIdentifier() . '.' . $testIdIndex . ' INNER JOIN'
+                    . ' ' . GetTesteeExperiencesIdentifier() . ' ON'
+                    . ' ' . GetTesteeExperiencesIdentifier() . '.' . $testIdIndex
+                    . ' = ' . GetTestEntriesIdentifier() . '.' . $testIdIndex . ' WHERE'
+                    . ' ' . GetTestEntriesIdentifier() . '.' . $testIdIndex
                     . ' = :' . $testIdIndex . ';';
             
             $statement = $db->prepare($query);
@@ -1896,7 +1896,7 @@
             $decLevelScoreIndex = $parameters->GetDecLevelScoreIndex();
             $spokenAtHomeInitLevelIndex = $parameters->GetSpokenAtHomeInitLevelIndex();
             
-            $query = 'UPDATE ' . EXAMPARAMETERS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetExamParametersIdentifier() . ' SET'
                     . ' ' . $keyCodeIndex . ' = :' . $keyCodeIndex
                     . ', ' . $questionCountIndex . ' = :' . $questionCountIndex
                     . ', ' . $incLevelScoreIndex . ' = :' . $incLevelScoreIndex
@@ -1934,15 +1934,15 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetQuestionsIdentifier() . ' WHERE'
                     . ' ' . 'Flagged'
                     . ' > ' . '0' . ' AND'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ' ORDER BY'
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ' ORDER BY'
                     . ' ' . 'Flagged' . ' DESC';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             $statement->execute();
             
@@ -1970,28 +1970,28 @@
         {
             $db = GetDBConnection();
 
-            $query = 'SELECT ' . QUESTIONS_IDENTIFIER . '.* FROM'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . ANSWERS_IDENTIFIER . ' ON'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = ' . ANSWERS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ' WHERE'
-                     . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :'. LANGUAGEID_IDENTIFIER . ' AND ('
-                    . QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ' OR'
-                    . ' ' . QUESTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER . ' LIKE'
-                    . ' :' . NAME_IDENTIFIER . ' OR' 
+            $query = 'SELECT ' . GetQuestionsIdentifier() . '.* FROM'
+                    . ' ' . GetQuestionsIdentifier() . ' INNER JOIN'
+                    . ' ' . GetAnswersIdentifier() . ' ON'
+                    . ' ' . GetQuestionsIdentifier() . '.' . GetQuestionIdIdentifier()
+                    . ' = ' . GetAnswersIdentifier() . '.' . GetQuestionIdIdentifier() . ' WHERE'
+                     . ' ' . GetLanguageIdIdentifier()
+                    . ' = :'. GetLanguageIdIdentifier() . ' AND ('
+                    . GetQuestionsIdentifier() . '.' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ' OR'
+                    . ' ' . GetQuestionsIdentifier() . '.' . GetNameIdentifier() . ' LIKE'
+                    . ' :' . GetNameIdentifier() . ' OR' 
                     . ' ' . 'Instructions' . ' LIKE'
-                    . ' :' . NAME_IDENTIFIER . ' OR'
-                    . ' ' . ANSWERS_IDENTIFIER . '.' . NAME_IDENTIFIER . ' LIKE'
-                    . ' :' . NAME_IDENTIFIER . ') GROUP BY'
-                    . ' '. QUESTIONS_IDENTIFIER . '.' . QUESTIONID_IDENTIFIER . ';';
+                    . ' :' . GetNameIdentifier() . ' OR'
+                    . ' ' . GetAnswersIdentifier() . '.' . GetNameIdentifier() . ' LIKE'
+                    . ' :' . GetNameIdentifier() . ') GROUP BY'
+                    . ' '. GetQuestionsIdentifier() . '.' . GetQuestionIdIdentifier() . ';';
             
 
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
-            $statement->bindValue(':' . NAME_IDENTIFIER, '%' . $name . '%');
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $name);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
+            $statement->bindValue(':' . GetNameIdentifier(), '%' . $name . '%');
+            $statement->bindValue(':' . GetQuestionIdIdentifier(), $name);
             $statement->execute();
             
             $results = $statement->fetchAll();
@@ -2036,14 +2036,14 @@
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetLanguagesIdentifier() . ' SET'
                     . ' ' . 'Active'
                     . ' = :' . 'Active WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             $statement->bindValue(':' . 'Active', $active, PDO::PARAM_BOOL);
             
             $effectedCount = $statement->execute();
@@ -2069,7 +2069,7 @@
         {
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . LANGUAGES_IDENTIFIER
+            $query = 'INSERT INTO ' . GetLanguagesIdentifier()
                     . ' (' . '`Name`' . ') VALUES'
                     . '(:' . 'Name' . ');';
             
@@ -2104,18 +2104,18 @@
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . LANGUAGES_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetLanguagesIdentifier() . ' SET'
                     . ' ' . '`Name`'
                     . ' = :' . 'Name'
                     . ', ' . 'Feedback'
                     . ' = :' . 'Feedback'
                     . ', ' . 'Active'
                     . ' = :' . 'Active WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             $statement->bindValue(':' . 'Name', $name);
             $statement->bindValue(':' . 'Feedback', $feedback);
             $statement->bindValue(':' . 'Active', $active);
@@ -2142,12 +2142,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            $query = 'DELETE FROM ' . GetLanguagesIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             $languagesDeleted = $statement->execute();
             
@@ -2172,17 +2172,17 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . LANGUAGES_IDENTIFIER . '.* FROM'
-                    . ' ' . LANGUAGES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . QUESTIONS_IDENTIFIER .' ON'
-                    . ' ' . LANGUAGES_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER
-                    . ' = ' . QUESTIONS_IDENTIFIER . '.' . LANGUAGEID_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            $query = 'SELECT ' . GetLanguagesIdentifier() . '.* FROM'
+                    . ' ' . GetLanguagesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetQuestionsIdentifier() .' ON'
+                    . ' ' . GetLanguagesIdentifier() . '.' . GetLanguageIdIdentifier()
+                    . ' = ' . GetQuestionsIdentifier() . '.' . GetLanguageIdIdentifier() . ' WHERE'
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
             
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier(), $questionID);
             
             $statement->execute();
             
@@ -2210,9 +2210,9 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER;
+            $query = 'SELECT * FROM ' . GetQuestionsIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier();
             
             if ($level > 0)
             {
@@ -2222,7 +2222,7 @@
             $query .= ' ORDER BY' . ' ' . 'Level' . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             if ($level > 0)
             {
@@ -2254,12 +2254,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT Distinct(' . 'Level' . ') FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER;
+            $query = 'SELECT Distinct(' . 'Level' . ') FROM ' . GetQuestionsIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier();
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             $statement->execute();
             
@@ -2293,12 +2293,12 @@
             
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            $query = 'DELETE FROM ' . GetQuestionsIdentifier() . ' WHERE'
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER , $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier() , $questionID);
 
             $questionsDeleted = $statement->execute();
 
@@ -2329,18 +2329,18 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetQuestionsIdentifier() . ' SET'
                     . ' ' . '`Level`'
                     . ' = :' . 'Level'
                     . ', ' . 'Instructions'
                     . ' = :' . 'Instructions'
                     . ', ' . '`Name`'
                     . ' = :' . 'Name WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier(), $questionID);
             $statement->bindValue(':' . 'Name', $name);
             $statement->bindValue(':' . 'Instructions', $instructions);
             $statement->bindValue(':' . 'Level', $level);
@@ -2373,19 +2373,19 @@
         {
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . QUESTIONS_IDENTIFIER
+            $query = 'INSERT INTO ' . GetQuestionsIdentifier()
                     . ' (' . 'Level'
-                    . ', ' . LANGUAGEID_IDENTIFIER
+                    . ', ' . GetLanguageIdIdentifier()
                     . ', ' . 'Instructions'
                     . ', ' . 'Name' . ') VALUES'
                     . ' (:' . 'Level'
-                    . ', :' . LANGUAGEID_IDENTIFIER
+                    . ', :' . GetLanguageIdIdentifier()
                     . ', :' . 'Instructions'
                     . ', :' . 'Name' . ');';
             
             $statement = $db->prepare($query);
             $statement->bindValue(':' . 'Name', $name);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             $statement->bindValue(':' . 'Instructions', $instructions);
             $statement->bindValue(':' . 'Level', $level);
             
@@ -2425,16 +2425,16 @@
                 $answer = $answers[0];
                 
                 //Insert the first answer and set CORRECT = TRUE since it is the correct answer.
-                $query = 'INSERT INTO ' . ANSWERS_IDENTIFIER
-                        . ' ('. QUESTIONID_IDENTIFIER
+                $query = 'INSERT INTO ' . GetAnswersIdentifier()
+                        . ' ('. GetQuestionIdIdentifier()
                         . ', ' . 'Correct'
                         . ', ' . 'Name' . ') VALUES'
-                        . ' (:' . QUESTIONID_IDENTIFIER
+                        . ' (:' . GetQuestionIdIdentifier()
                         . ', :' . 'Correct'
                         . ', :' . 'Name' . ');';
                 
                 $statement = $db->prepare($query);
-                $statement->bindValue(':' . QUESTIONID_IDENTIFIER ,$questionID);
+                $statement->bindValue(':' . GetQuestionIdIdentifier() ,$questionID);
                 $statement->bindValue(':' . 'Correct', '1');
                 $statement->bindValue(':' . 'Name', $answer);
                 
@@ -2449,16 +2449,16 @@
                 {
                     $answer = $answers[$i];
                     
-                    $query = 'INSERT INTO ' . ANSWERS_IDENTIFIER
-                        . ' ('. QUESTIONID_IDENTIFIER
+                    $query = 'INSERT INTO ' . GetAnswersIdentifier()
+                        . ' ('. GetQuestionIdIdentifier()
                         . ', ' . 'Correct'
                         . ', ' . 'Name' . ') VALUES'
-                        . ' (:' . QUESTIONID_IDENTIFIER
+                        . ' (:' . GetQuestionIdIdentifier()
                         . ', :' . 'Correct'
                         . ', :' . 'Name' . ');';
                 
                     $statement = $db->prepare($query);
-                    $statement->bindValue(':' . QUESTIONID_IDENTIFIER , $questionID);
+                    $statement->bindValue(':' . GetQuestionIdIdentifier() , $questionID);
                     $statement->bindValue(':' . 'Correct', '0');
                     $statement->bindValue(':' . 'Name', $answer);
 
@@ -2487,12 +2487,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'DELETE FROM ' . ANSWERS_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ';';
+            $query = 'DELETE FROM ' . GetAnswersIdentifier() . ' WHERE'
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER , $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier() , $questionID);
 
             $answersDeleted = $statement->execute();
 
@@ -2517,7 +2517,7 @@
         {
             $db = GetDBConnection();
 
-            $query = "SELECT * FROM " . USERS_IDENTIFIER . " WHERE"
+            $query = "SELECT * FROM " . GetUsersIdentifier() . " WHERE"
                     . " " . "UserName" . " LIKE"
                     . " :" . "UserName";
 
@@ -2548,12 +2548,12 @@
         
         try
         {
-            $query = 'SELECT * FROM ' . USERS_IDENTIFIER . ' WHERE'
-                    . ' ' . USERNAME_IDENTIFIER
-                    . ' = :' . USERNAME_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetUsersIdentifier() . ' WHERE'
+                    . ' ' . GetUserNameIdentifier()
+                    . ' = :' . GetUserNameIdentifier() . ';';
 
             $statement = $db->prepare($query);
-            $statement->bindValue(':'. USERNAME_IDENTIFIER, $userName);
+            $statement->bindValue(':'. GetUserNameIdentifier(), $userName);
             $statement->execute();
             $results = $statement->fetch();
             $statement->closeCursor();
@@ -2668,11 +2668,11 @@
         try
         {
             $db = GetDBConnection();
-            $query = 'INSERT INTO ' . USERS_IDENTIFIER
-                    . ' (' . USERNAME_IDENTIFIER
-                    . ', ' . PASSWORD_IDENTIFIER . ') VALUES'
-                    . ' (:' . USERNAME_IDENTIFIER
-                    . ', :' . PASSWORD_IDENTIFIER . ');';
+            $query = 'INSERT INTO ' . GetUsersIdentifier()
+                    . ' (' . GetUserNameIdentifier()
+                    . ', ' . GetPasswordIdentifier() . ') VALUES'
+                    . ' (:' . GetUserNameIdentifier()
+                    . ', :' . GetPasswordIdentifier() . ');';
             
             $statement = $db->prepare($query);
 
@@ -2714,15 +2714,15 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . USERS_IDENTIFIER . ' SET'
-                    . ' ' . USERNAME_IDENTIFIER
-                    . ' = :' . USERNAME_IDENTIFIER . ' WHERE'
-                    . ' ' . USERID_IDENTIFIER
-                    . ' = :' . USERID_IDENTIFIER . ';';
+            $query = 'UPDATE ' . GetUsersIdentifier() . ' SET'
+                    . ' ' . GetUserNameIdentifier()
+                    . ' = :' . GetUserNameIdentifier() . ' WHERE'
+                    . ' ' . GetUserIdIdentifier()
+                    . ' = :' . GetUserIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
-            $statement->bindValue(':' . USERNAME_IDENTIFIER, $userName);
+            $statement->bindValue(':' . GetUserIdIdentifier(), $userID);
+            $statement->bindValue(':' . GetUserNameIdentifier(), $userName);
             
             $rowsEffected = $statement->execute();
             
@@ -2748,15 +2748,15 @@
         {
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . USERS_IDENTIFIER . ' SET'
-                    . ' ' . PASSWORD_IDENTIFIER
-                    . ' = :' . PASSWORD_IDENTIFIER . ' WHERE'
-                    . ' ' . USERID_IDENTIFIER
-                    . ' = :' . USERID_IDENTIFIER . ';';
+            $query = 'UPDATE ' . GetUsersIdentifier() . ' SET'
+                    . ' ' . GetPasswordIdentifier()
+                    . ' = :' . GetPasswordIdentifier() . ' WHERE'
+                    . ' ' . GetUserIdIdentifier()
+                    . ' = :' . GetUserIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . USERID_IDENTIFIER, $userID);
-            $statement->bindValue(':' . PASSWORD_IDENTIFIER, sha1($password));
+            $statement->bindValue(':' . GetUserIdIdentifier(), $userID);
+            $statement->bindValue(':' . GetPasswordIdentifier(), sha1($password));
             
             $rowsEffected = $statement->execute();
             
@@ -3123,16 +3123,16 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex
+            $query = 'SELECT ' . GetTestEntriesIdentifier() . '.' . $testIdIndex
                     . ', ' . $firstNameIndex
                     . ', ' . $lastNameIndex
                     . ', ' . $languageIndex
                     . ', ' . $scoreIndex
                     . ', ' . $dateIndex . ' FROM'
-                    . ' ' . TESTENTIRES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . TESTEES_IDENTIFIER . ' ON'
-                    . ' ' . TESTEES_IDENTIFIER . '.' . $testIdIndex
-                    . ' = ' . TESTENTIRES_IDENTIFIER . '.' . $testIdIndex;
+                    . ' ' . GetTestEntriesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetTesteesIdentifier() . ' ON'
+                    . ' ' . GetTesteesIdentifier() . '.' . $testIdIndex
+                    . ' = ' . GetTestEntriesIdentifier() . '.' . $testIdIndex;
                     
             if(!empty($name))
             {
@@ -3143,9 +3143,9 @@
                 {
                     
                     $whereClause = ' WHERE (' . $firstNameIndex . ' LIKE'
-                                    . ' :' . NAME_IDENTIFIER . '0' . ' OR'
+                                    . ' :' . GetNameIdentifier() . '0' . ' OR'
                                     . ' ' . $lastNameIndex . ' LIKE'
-                                    . ' :' . NAME_IDENTIFIER . '0';
+                                    . ' :' . GetNameIdentifier() . '0';
                 }
                 
                 for ($i = 1; $i < count($namePieces); $i++)
@@ -3155,9 +3155,9 @@
                     if (!empty($namePiece))
                     {
                         $whereClause .= ' OR ' . $firstNameIndex . ' LIKE'
-                                    . ' :' . NAME_IDENTIFIER . $i . ' OR'
+                                    . ' :' . GetNameIdentifier() . $i . ' OR'
                                     . ' ' . $lastNameIndex . ' LIKE'
-                                    . ' :' . NAME_IDENTIFIER . $i;
+                                    . ' :' . GetNameIdentifier() . $i;
                     }
                 }
                 
@@ -3224,7 +3224,7 @@
                     
                     if (!empty($namePiece))
                     {
-                        $statement->bindValue(':' . NAME_IDENTIFIER . $i, '%' . $namePiece . '%');
+                        $statement->bindValue(':' . GetNameIdentifier() . $i, '%' . $namePiece . '%');
                     }
                 }
             }

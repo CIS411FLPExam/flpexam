@@ -1,271 +1,271 @@
 <?php
     require_once('../../private/definitions/paths.php');
-    require_once(ADMINMODEL_FILE);
-    require_once(PATHS_FILE);
-    require_once(IDENTIFIER_FILE);
-    require_once(GENERALFUNCTIONS_FILE);
-    require_once(ACTIONS_FILE);
-    require_once(PHPEXCELCLASS_FILE);
-    require_once(PHPEXCELIOFACTORYCLASS_FILE);
-    require_once(LEVELINFOCLASS_FILE);
-    require_once(EXPERIENCEOPTIONCLASS_FILE);
+    require_once(GetAdminModelFile());
+    require_once(GetPathsFile());
+    require_once(GetIdentifierFile());
+    require_once(GetGeneralFunctionsFile());
+    require_once(GetActionsFile());
+    require_once(GetPHPExcelClassFile());
+    require_once(GetPHPExcelIOFactoryClassFile());
+    require_once(GetLevelInfoClassFile());
+    require_once(GetExperienceOptionClassFile());
 
     error_reporting(0);
     
     StartSession();
     AdjustQuotes();
     
-    if (isset($_POST[ACTION_KEYWORD]))
+    if (isset($_POST[GetActionKeyWord()]))
     {
-        $action = $_POST[ACTION_KEYWORD];
+        $action = $_POST[GetActionKeyWord()];
     }
-    else if (isset($_GET[ACTION_KEYWORD]))
+    else if (isset($_GET[GetActionKeyWord()]))
     {
-        $action = $_GET[ACTION_KEYWORD];
+        $action = $_GET[GetActionKeyWord()];
     }
     else
     {
         $action ="";
     }
     
-    if(!loggedIn() && $action != LOGIN_ACTION && $action != PROCESSLOGIN_ACTION)
+    if(!loggedIn() && $action != GetLoginAction() && $action != GetProcessLoginAction())
     {
-        $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION) . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . GetRequestedURI( );
+        $url = GetControllerScript(GetAdminControllerFile(), GetLoginAction()) . '&' . GetRequestedPageIdentifier() . '=' . GetRequestedURI( );
         Redirect( $url );
     }
     else if (!userIsAuthorized($action))
     {
-        include( NOTAUTHORIZED_FILE );
+        include( GetNotAuthorizedFile() );
     }
     else
     {
         switch ($action)
         {
-            case LOGIN_ACTION :
+            case GetLoginAction() :
                 HandleLogin();
                 break;
-            case PROCESSLOGIN_ACTION :
+            case GetProcessLoginAction() :
                 ProcessLogin();
                 break;
-            case LOGOUT_ACTION :
+            case GetLogoutAction() :
                 logOut();
-                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION));
+                Redirect(GetControllerScript(GetAdminControllerFile(), GetControlPanelAction()));
                 break;
-            case CONTROLPANEL_ACTION :
-                include(CONTROLPANELFORM_FILE);
+            case GetControlPanelAction() :
+                include(GetControlPanelFormFile());
                 break;
-            case MANAGEUSERS_ACTION :
+            case GetManageUsersAction() :
                 ManageUsers();
                 break;
-            case USERADD_ACTION :
+            case GetUserAddAction() :
                 UserAdd();
                 break;
-            case USEREDIT_ACTION :
+            case GetUserEditAction() :
                 UserEdit();
                 break;
-            case USERDELETE_ACTION :
+            case GetUserDeleteAction() :
                 UserDelete();
                 break;
-            case PROCESSUSERADD_ACTION :
+            case GetProcessUserAddAction() :
                 ProcessUserAdd();
                 break;
-            case PROCESSUSEREDIT_ACTION :
+            case GetProcessUserEditAction() :
                 ProcessUserEdit();
                 break;
-            case MANAGEROLES_ACTION :
+            case GetManageRolesAction() :
                 ManageRoles();
                 break;
-            case ROLEADD_ACTION :
+            case GetRoleAddAction() :
                 RoleAdd();
                 break;
-            case ROLEEDIT_ACTION :
+            case GetRoleEditAction() :
                 RoleEdit();
                 break;
-            case ROLEDELETE_ACTION :
+            case GetRoleDeleteAction() :
                 RoleDelete();
                 break;
-            case PROCESSROLEADDEDIT_ACTION :
+            case GetProcessRoleAddEditAction() :
                 ProcessRoleAddEdit();
                 break;
-            case USERSEARCH_ACTION :
+            case GetUserSearchAction() :
                 ProcessUserSearch();
                 break;
-            case USERVIEW_ACTION :
+            case GetUserViewAction() :
                 ProcessUserView();
                 break;
-            case MANAGELANGUAGES_ACTION :
+            case GetManageLanguagesAction() :
                 ManageLanguages();
                 break;
-            case LANGUAGEADD_ACTION :
+            case GetLanguageAddAction() :
                 ProcessLanguageAdd();
                 break;
-            case LANGUAGEEDIT_ACTION :
+            case GetLanguageEditAction() :
                 ProcessLanguageEdit();
                 break;
-            case LANGUAGEVIEW_ACTION :
+            case GetLanguageViewAction() :
                 ProcessLanguageView();
                 break;
-            case LANGUAGEDELETE_ACTION :
+            case GetLanguageDeleteAction() :
                 ProcessLanguageDelete();
                 break;
-            case PROCESSLANGUAGEADDEDIT_ACTION :
+            case GetProcessLanguageAddEditAction() :
                 ProcessLanguageAddEdit();
                 break;
-            case MANAGEQUESTIONS_ACTION :
+            case GetManageQuestionsAction() :
                 ManageQuestions();
                 break;
-            case QUESTIONADD_ACTION :
+            case GetQuestionAddAction() :
                 ProcessQuestionAdd();
                 break;
-            case QUESTIONEDIT_ACTION :
+            case GetQuestionEditAction() :
                 ProcessQuestionEdit();
                 break;
-            case QUESTIONVIEW_ACTION:
+            case GetQuestionViewAction():
                 ProcessQuestionView();
                 break;
-            case QUESTIONDELETE_ACTION :
+            case GetQuestionDeleteAction() :
                 ProcessQuestionDelete();
                 break;
-            case PROCESSQUESTIONADDEDIT_ACTION :
+            case GetProcessQuestionAddEditAction() :
                 ProcessQuestionAddEdit();
                 break;
-            case QUESTIONSEARCH_ACTION :
+            case GetQuestionSearchAction() :
                 ProcessQuestionSearch();
                 break;
-            case EXAMPARAMETERSVIEW_ACTION :
+            case GetExamParametersViewAction() :
                 ExamParametersView();
                 break;
-            case EXAMPARAMETERSEDIT_ACTION :
+            case GetExamParametersEditAction() :
                 ExamParametersEdit();
                 break;
-            case PROCESSEXAMPARAMETERSEDIT_ACTION :
+            case GetProcessExamParametersEditAction() :
                 ProcessExamParametersEdit();
                 break;
-            case MANAGETESTENTRIES_ACTION :
+            case GetManageTestEntriesAction() :
                 ManageTestEntries();
                 break;
-            case TESTENTRYVIEW_ACTION :
+            case GetTestEntryViewAction() :
                 TestEntryView();
                 break;
-            case TESTENTRYDELETE_ACTION :
+            case GetTestEntryDeleteAction() :
                 TestEntryDelete();
                 break;
-            case TESTENTRYSEARCH_ACTION :
+            case GetTestEntrySearchAction() :
                 TestEntrySearch();
                 break;
-            case TESTVIEW_ACTION :
+            case GetTestViewAction() :
                 TestView();
                 break;
-            case LANGUAGEIMPORT_ACTION :
+            case GetLanguageImportAction() :
                 LanguageImport();
                 break;
-            case LANGUAGEEXPORT_ACTION :
+            case GetLanguageExportAction() :
                 LanguageExport();
                 break;
-            case LANGUAGESTATISTICSEXPORT_ACTION :
+            case GetLanguageStatisticsExportAction() :
                 LanguageStatisticsExport();
                 break;
-            case MANAGECONTACTS_ACTION :
+            case GetManageContactsAction() :
                 ManageContacts();
                 break;
-            case CONTACTADD_ACTION :
+            case GetContactAddAction() :
                 ContactAdd();
                 break;
-            case CONTACTEDIT_ACTION :
+            case GetContactEditAction() :
                 ContactEdit();
                 break;
-            case PROCESSCONTACTADDEDIT_ACTION :
+            case GetProcessContactAddEditAction() :
                 ProcessContactAddEdit();
                 break;
-            case CONTACTDELETE_ACTION :
+            case GetContactDeleteAction() :
                 ContactDelete();
                 break;
-            case LANGUAGEACTIVATE_ACTION :
+            case GetLanguageActivateAction() :
                 LanguageActivate();
                 break;
-            case LANGUAGEDEACTIVATE_ACTION :
+            case GetLangaugeDeactivateAction() :
                 LanguageDeactivate();
                 break;
-            case CONTACTACTIVATE_ACTION :
+            case GetContactActivateAction() :
                 ContactActivate();
                 break;
-            case CONTACTDEACTIVATE_ACTION :
+            case GetContactDeactivateAction() :
                 ContactDeactivate();
                 break;
-            case MANAGELEVELINFOS_ACTION :
+            case GetManageLevelInfosAction() :
                 ManageLevelInfos();
                 break;
-            case LEVELINFOADD_ACTION :
+            case GetLevelInfoAddAction() :
                 LevelInfoAdd();
                 break;
-            case LEVELINFOVIEW_ACTION :
+            case GetLevelInfoViewAction() :
                 LevelInfoView();
                 break;
-            case LEVELINFOEDIT_ACTION :
+            case GetLevelInfoEditAction() :
                 LevelInfoEdit();
                 break;
-            case LEVELINFODELETE_ACTION :
+            case GetLevelInfoDeleteAction() :
                 LevelInfoDelete();
                 break;
-            case PROCESSLEVELINFOADDEDIT_ACTION :
+            case GetProcessLevelInfoAddEditAction() :
                 ProcessLevelInfoAddEdit();
                 break;
-            case MANAGELANGUAGEEXPERIENCES_ACTION :
+            case GetManageLanguageExperiencesAction() :
                 ManageLanguageExperiences();
                 break;
-            case LANGUAGEEXPERIENCESADD_ACTION :
+            case GetLanguageExperieneceAddAction() :
                 LanguageExperiencesAdd();
                 break;
-            case LANGUAGEEXPERIENCESEDIT_ACTION :
+            case GetLanguageExperienceEditAction() :
                 LanguageExperiencesEdit();
                 break;
-            case LANGUAGEEXPERIENCESVIEW_ACTION :
+            case GetLanguageExperienceViewAction() :
                 LanguageExperiencesView();
                 break;
-            case LANGUAGEEXPERIENCESDELETE_ACTION :
+            case GetLanguageExperienceDeleteAction() :
                 LanguageExperiencesDelete();
                 break;
-            case PROCESSLANGUAGEEXPERIENCESADDEDIT_ACTION :
+            case GetProcessLanguageExperienceAddEditAction() :
                 ProcessLanguageExperiencesAddEdit();
                 break;
-            case QUESTIONSTATISTICSRESET_ACTION :
+            case GetQuestionStatisticsResetAction() :
                 QuestionStatisticsReset();
                 break;
-            case LANGUAGEFEEDBACKACTIVATE_ACTION :
+            case GetLanguageFeedbackActivateAction() :
                 LanguageFeedbackActivate();
                 break;
-            case LANGUAGEFEEDBACKDEACTIVATE_ACTION :
+            case GetLanguageFeedbackDeactivateAction() :
                 LanguageFeedbackDeactivate();
                 break;
-            case QUESTIONCOMMENTSVIEW_ACTION :
+            case GetQuestionCommentsViewAction() :
                 QuestionCommentsView();
                 break;
-            case MANAGEEXPERIENCEOPTIONS_ACTION :
+            case GetManageExperienceOptionsAction() :
                 ManageExperienceOptions();
                 break;
-            case EXPERIENCEOPTIONADD_ACTION :
+            case GetExperienceOptionAddAction() :
                 ExperienceOptionAdd();
                 break;
-            case EXPERIENCEOPTIONEDIT_ACTION :
+            case GetExperienceOptionEditAction() :
                 ExperienceOptionEdit();
                 break;
-            case EXPERIENCEOPTIONVIEW_ACTION :
+            case GetExperienceOptionViewAction() :
                 ExperienceOptionView();
                 break;
-            case EXPERIENCEOPTIONDELETE_ACTION :
+            case GetExperienceOptionDeleteAction() :
                 ExperienceOptionDelete();
                 break;
-            case PROCESSEXPERIENCEOPTIONADDEDIT_ACTION :
+            case GetProcessExperienceOptionAddEditAction() :
                 ProcessExperienceOptionAddEdit();
                 break;
-            case TESTRESULTSEXPORT_ACTION :
+            case GetTestResultsExportAction() :
                 TestResultsExport();
                 break;
-            case TESTENTRIESUPLOAD_ACTION :
+            case GetTestEntriesUploadAction() :
                 TestEntriesUpload();
                 break;
             default:
-                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, CONTROLPANEL_ACTION));
+                Redirect(GetControllerScript(GetAdminControllerFile(), GetControlPanelAction()));
         }
     }
     
@@ -282,15 +282,15 @@
         else
         {
             $message = 'The action you wish to perform could not be resolved.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function TestResultsExport()
     {
-        if (!userIsAuthorized(TESTRESULTSEXPORT_ACTION))
+        if (!userIsAuthorized(GetTestResultsExportAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -327,33 +327,33 @@
         else
         {
             $message = 'No tests were found to export.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ManageExperienceOptions()
     {
-        if (!userIsAuthorized(MANAGEEXPERIENCEOPTIONS_ACTION))
+        if (!userIsAuthorized(GetManageExperienceOptionsAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_POST[GetLanguageExperienceIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_GET[GetLanguageExperienceIdIdentifier()];
         }
-        else if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        else if (isset($_POST[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_POST[GetExperienceOptionIdIdentifier()];
         }
-        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        else if (isset($_GET[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_GET[GetExperienceOptionIdIdentifier()];
         }
         
         if (isset($optionID))
@@ -365,7 +365,7 @@
         {
             $message = 'No language experience or experience option I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -374,66 +374,66 @@
         if ($experience == FALSE)
         {
             $message = 'The language experience\'s options you wish to manage does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
-        $experienceName = $experience[NAME_IDENTIFIER];
+        $experienceName = $experience[GetNameIdentifier()];
         $options = GetExperienceOptions($experienceID);
         
-        include(MANAGEEXPERIENCEOPTIONSFORM_FILE);
+        include(GetManageExperienceOptionsFormFile());
     }
     
     function ExperienceOptionAdd()
     {
-        if(!userIsAuthorized(EXPERIENCEOPTIONADD_ACTION))
+        if(!userIsAuthorized(GetExperienceOptionAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_POST[GetLanguageExperienceIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_GET[GetLanguageExperienceIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage experience I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         $option = new ExperienceOption();
         
-        include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
+        include(GetAddEditExperienceOptionFormFile());
     }
     
     function ExperienceOptionEdit()
     {
-        if (!userIsAuthorized(EXPERIENCEOPTIONEDIT_ACTION))
+        if (!userIsAuthorized(GetExperienceOptionEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        if (isset($_POST[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_POST[GetExperienceOptionIdIdentifier()];
         }
-        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        else if (isset($_GET[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_GET[GetExperienceOptionIdIdentifier()];
         }
         else
         {
             $message = 'No experience option I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -442,37 +442,37 @@
         if ($option->GetId() > 0)
         {
             $experienceID = $option->GetExperienceId();
-            include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
+            include(GetAddEditExperienceOptionFormFile());
         }
         else
         {
             $message = 'The experience option you wish to edit does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
     }
     
     function ExperienceOptionView()
     {
-        if (!userIsAuthorized(EXPERIENCEOPTIONVIEW_ACTION))
+        if (!userIsAuthorized(GetExperienceOptionViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        if (isset($_POST[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_POST[GetExperienceOptionIdIdentifier()];
         }
-        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        else if (isset($_GET[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_GET[GetExperienceOptionIdIdentifier()];
         }
         else
         {
             $message = 'No experience option I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -480,29 +480,29 @@
         
         if ($option->GetId() > 0)
         {
-            include(VIEWEXPERIENCEOPTIONFORM_FILE);
+            include(GetViewExperienceOptionFormFile());
         }
         else
         {
             $message = 'The experience option you wish to view does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
     }
     
     function ExperienceOptionDelete()
     {
-        if(!userIsAuthorized(EXPERIENCEOPTIONDELETE_ACTION))
+        if(!userIsAuthorized(GetExperienceOptionDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $experienceID = 0;
         
-        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_POST[GetLanguageExperienceIdIdentifier()];
         }
         
         if(isset($_POST["numListed"]))
@@ -520,26 +520,26 @@
             }
         }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEEXPERIENCEOPTIONS_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($experienceID));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageExperienceOptionsAction()) . '&' . GetLanguageExperienceIdIdentifier() . '=' . urlencode($experienceID));
     }
     
     function ProcessExperienceOptionAddEdit()
     {
-        if (isset($_POST[EXPERIENCEOPTIONID_IDENTIFIER]))
+        if (isset($_POST[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_POST[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_POST[GetExperienceOptionIdIdentifier()];
         }
-        else if (isset($_GET[EXPERIENCEOPTIONID_IDENTIFIER]))
+        else if (isset($_GET[GetExperienceOptionIdIdentifier()]))
         {
-            $optionID = $_GET[EXPERIENCEOPTIONID_IDENTIFIER];
+            $optionID = $_GET[GetExperienceOptionIdIdentifier()];
         }
-        else if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        else if (isset($_POST[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_POST[GetLanguageExperienceIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_GET[GetLanguageExperienceIdIdentifier()];
         }
         
         $option = new ExperienceOption();
@@ -550,20 +550,20 @@
         {
             if (isset($optionID))
             {//We are doing an edit.
-                if (userIsAuthorized(EXPERIENCEOPTIONEDIT_ACTION))
+                if (userIsAuthorized(GetExperienceOptionEditAction()))
                 {
                     UpdateExperienceOption($option);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             else if (isset($experienceID))
             {//We are doing an add.
                 
-                if (userIsAuthorized(EXPERIENCEOPTIONADD_ACTION))
+                if (userIsAuthorized(GetExperienceOptionAddAction()))
                 {
                     $optionID = AddExperienceOption($option);
                     
@@ -571,13 +571,13 @@
                     {
                         unset($optionID);
                         $message = 'The option already exists.';
-                        include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
+                        include(GetAddEditExperienceOptionFormFile());
                         exit();
                     }
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
@@ -585,121 +585,121 @@
             {
                 $message = 'No experience option or language experience I.D. provided.';
 
-                include(MESSAGEFORM_FILE);
+                include(GetMessageFormFile());
                 exit();
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, EXPERIENCEOPTIONVIEW_ACTION) . '&' . EXPERIENCEOPTIONID_IDENTIFIER . '=' . urlencode($optionID));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetExperienceOptionViewAction()) . '&' . GetExperienceOptionIdIdentifier() . '=' . urlencode($optionID));
         }
         
         $message = 'Errors';
         $collection = $optionVI->GetErrors();
         
-        include(ADDEDITEXPERIENCEOPTIONFORM_FILE);
+        include(GetAddEditExperienceOptionFormFile());
     }
     
     function QuestionCommentsView()
     {
-        if (!userIsAuthorized(QUESTIONVIEW_ACTION))
+        if (!userIsAuthorized(GetQuestionViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
-        else if (isset($_GET[QUESTIONID_IDENTIFIER]))
+        else if (isset($_GET[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+            $questionID = $_GET[GetQuestionIdIdentifier()];
         }
         else
         {
             $message = 'No question I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         $comments = GetQuestionComments($questionID);
         
-        include(VIEWQUESTIONCOMMENTSFORM_FILE);
+        include(GetViewQuestionCommentsFormFile());
     }
     
     function LanguageFeedbackActivate()
     {
-        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        if(!userIsAuthorized(GetLanguageEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         ActivateLanguageFeedback($languageID);
             
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageLanguagesAction()));
     }
     
     function LanguageFeedbackDeactivate()
     {
-        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        if(!userIsAuthorized(GetLanguageEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         DeactivateLanguageFeedback($languageID);
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageLanguagesAction()));
     }
     
     function TestView()
     {
-        if (!userIsAuthorized(TESTVIEW_ACTION))
+        if (!userIsAuthorized(GetTestViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[TESTID_IDENTIFIER]))
+        if (isset($_POST[GetTestIdIdentifier()]))
         {
-            $testID = $_POST[TESTID_IDENTIFIER];
+            $testID = $_POST[GetTestIdIdentifier()];
         }
-        else if (isset($_GET[TESTID_IDENTIFIER]))
+        else if (isset($_GET[GetTestIdIdentifier()]))
         {
-            $testID = $_GET[TESTID_IDENTIFIER];
+            $testID = $_GET[GetTestIdIdentifier()];
         }
         else
         {
@@ -714,106 +714,106 @@
             $testInfo = GetDetailedTestEntry($testID);
             $testeeName = $testInfo->GetFirstName() . ' ' . $testInfo->GetLastName();
             
-            include(VIEWTESTFORM_FILE);
+            include(GetViewTestFormFile());
         }
         else
         {
             $message = 'The test you are trying to view does not have any questions or answers.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function QuestionStatisticsReset()
     {
-        if(!userIsAuthorized(QUESTIONEDIT_ACTION))
+        if(!userIsAuthorized(GetQuestionEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
-        else if (isset($_GET[QUESTIONID_IDENTIFIER]))
+        else if (isset($_GET[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+            $questionID = $_GET[GetQuestionIdIdentifier()];
         }
-        else if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No language or question I.D. provided.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         if (isset($questionID))
         {//Reseting the statistics for one question.
             ResetQuestionStatistics($questionID);
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION) . '&' . QUESTIONID_IDENTIFIER . '=' . urlencode($questionID));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetQuestionViewAction()) . '&' . GetQuestionIdIdentifier() . '=' . urlencode($questionID));
         }
         else if (isset($languageID))
         {//Reseting the statistics for an entire language.
             ResetLanguageQuestionStatistics($languageID);
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction()) . '&' . GetLanguageIdIdentifier() . '=' . urlencode($languageID));
         }
         
-        Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        Redirect(GetControllerScript(GetMainControllerFile(), GetHomeAction()));
     }
     
     function ManageLanguageExperiences()
     {
-        if (!userIsAuthorized(MANAGELANGUAGEEXPERIENCES_ACTION))
+        if (!userIsAuthorized(GetManageLanguageExperiencesAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $experiences = GetLanguageExperiences();
         
-        include(MANAGELANGUAGEEXPERIENCESFORM_FILE);
+        include(GetManageLanguageExperiencesFormFile());
     }
     
     function LanguageExperiencesAdd()
     {
-        if (!userIsAuthorized(LANGUAGEEXPERIENCESADD_ACTION))
+        if (!userIsAuthorized(GetLanguageExperieneceAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $experience = new LanguageExperience();
         
-        include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+        include(GetAddEditLanguageExperienceFormFile());
     }
     
     function LanguageExperiencesEdit()
     {
-        if (!userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION))
+        if (!userIsAuthorized(GetLanguageExperienceEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_POST[GetLanguageExperienceIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID =$_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID =$_GET[GetLanguageExperienceIdIdentifier()];
         }
         else
         {
             $message = 'No language experience I.D. provided.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -824,35 +824,35 @@
             $experience = new LanguageExperience();
             $experience->Initialize($row);
             
-            include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+            include(GetAddEditLanguageExperienceFormFile());
         }
         else
         {
             $message = 'The language experience you are trying to edit does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function LanguageExperiencesView()
     {
-        if (!userIsAuthorized(LANGUAGEEXPERIENCESVIEW_ACTION))
+        if (!userIsAuthorized(GetLanguageExperienceViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID = $_POST[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID = $_POST[GetLanguageExperienceIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEEXPERIENCEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageExperienceIdIdentifier()]))
         {
-            $experienceID =$_GET[LANGUAGEEXPERIENCEID_IDENTIFIER];
+            $experienceID =$_GET[GetLanguageExperienceIdIdentifier()];
         }
         else
         {
             $message = 'No language experience I.D. provided.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -863,23 +863,23 @@
             $experience = new LanguageExperience();
             $experience->Initialize($row);
             
-            include(VIEWLANGUAGEEXPERIENCESFORM_FILE);
+            include(GetViewLanguageExperienceFormFile());
         }
         else
         {
             $message = 'The language experience you are trying to view does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessLanguageExperiencesAddEdit()
     {
-        $userCanAdd = userIsAuthorized(LANGUAGEEXPERIENCESADD_ACTION);
-        $userCanEdit = userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION);
+        $userCanAdd = userIsAuthorized(GetLanguageExperieneceAddAction());
+        $userCanEdit = userIsAuthorized(GetLanguageExperienceEditAction());
         
         if (!$userCanAdd && !$userCanEdit)
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -900,7 +900,7 @@
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
@@ -924,31 +924,31 @@
                         unset($experienceID);
                         $message = 'The language experience already exists.';
                         
-                        include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+                        include(GetAddEditLanguageExperienceFormFile());
                         exit();
                     }
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . $experienceID);
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetLanguageExperienceViewAction()) . '&' . GetLanguageExperienceIdIdentifier() . '=' . $experienceID);
         }
         
         $message = 'Errors';
         $collection = $experienceVI->GetErrors();
         
-        include(ADDEDITLANGUAGEEXPERIENCESFORM_FILE);
+        include(GetAddEditLanguageExperienceFormFile());
     }
     
     function LanguageExperiencesDelete()
     {
-        if(!userIsAuthorized(LANGUAGEEXPERIENCESDELETE_ACTION))
+        if(!userIsAuthorized(GetLanguageExperienceDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -967,30 +967,30 @@
             }
         }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGEEXPERIENCES_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageLanguageExperiencesAction()));
     }
     
     function ManageLevelInfos()
     {
-        if(!userIsAuthorized(MANAGELEVELINFOS_ACTION))
+        if(!userIsAuthorized(GetManageLevelInfosAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No language I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -999,66 +999,66 @@
         
         if ($language != FALSE)
         {
-            $languageName = $language[NAME_IDENTIFIER];
+            $languageName = $language[GetNameIdentifier()];
         
-            include(MANAGELEVELINFOSFORM_FILE);
+            include(GetManageLevelInfosFormFile());
         }
         else
         {
             $message = 'The language you wish to modify does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function LevelInfoAdd()
     {
-        if(!userIsAuthorized(LEVELINFOADD_ACTION))
+        if(!userIsAuthorized(GetLevelInfoAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No language I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         $levelInfo = new LevelInfo();
         
-        include(ADDEDITLEVELINFOFORM_FILE);
+        include(GetAddEditLevelInfoFormFile());
     }
     
     function LevelInfoView()
     {
-        if(!userIsAuthorized(LEVELINFOVIEW_ACTION))
+        if(!userIsAuthorized(GetLevelInfoViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
-        if (isset($_POST[LEVELINFOID_IDENTIFIER]))
+        if (isset($_POST[GetLevelInfoIdIdentifier()]))
         {
-            $levelInfoID = $_POST[LEVELINFOID_IDENTIFIER];
+            $levelInfoID = $_POST[GetLevelInfoIdIdentifier()];
         }
-        else if (isset($_GET[LEVELINFOID_IDENTIFIER]))
+        else if (isset($_GET[GetLevelInfoIdIdentifier()]))
         {
-            $levelInfoID = $_GET[LEVELINFOID_IDENTIFIER];
+            $levelInfoID = $_GET[GetLevelInfoIdIdentifier()];
         }
         else
         {
             $message = 'No level information I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1066,36 +1066,36 @@
         
         if ($levelInfo->GetId() > 0)
         {
-            include(VIEWLEVELINFOFORM_FILE);
+            include(GetViewLevelInfoFormFile());
         }
         else
         {
             $message = 'The level information you wish to view does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function LevelInfoEdit()
     {
-        if(!userIsAuthorized(LEVELINFOEDIT_ACTION))
+        if(!userIsAuthorized(GetLevelInfoEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LEVELINFOID_IDENTIFIER]))
+        if (isset($_POST[GetLevelInfoIdIdentifier()]))
         {
-            $levelInfoID = $_POST[LEVELINFOID_IDENTIFIER];
+            $levelInfoID = $_POST[GetLevelInfoIdIdentifier()];
         }
-        else if (isset($_GET[LEVELINFOID_IDENTIFIER]))
+        else if (isset($_GET[GetLevelInfoIdIdentifier()]))
         {
-            $levelInfoID = $_GET[LEVELINFOID_IDENTIFIER];
+            $levelInfoID = $_GET[GetLevelInfoIdIdentifier()];
         }
         else
         {
             $message = 'No level information I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1104,35 +1104,35 @@
         
         if ($levelInfo->GetId() > 0)
         {
-            include(ADDEDITLEVELINFOFORM_FILE);
+            include(GetAddEditLevelInfoFormFile());
         }
         else
         {
             $message = 'The level information you wish to edit does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessLevelInfoAddEdit()
     {
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No language I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         $language = GetLanguage($languageID);
-        $languageName = $language[NAME_IDENTIFIER];
+        $languageName = $language[GetNameIdentifier()];
         
         $levelInfo = new LevelInfo();
         $levelInfo->Initialize($_POST);
@@ -1141,16 +1141,16 @@
         
         if ($levelInfoVI->IsValid())
         {
-            if (isset($_POST[LEVELINFOID_IDENTIFIER]))
+            if (isset($_POST[GetLevelInfoIdIdentifier()]))
             {//We are doing an edit.
-                if (userIsAuthorized(LEVELINFOEDIT_ACTION))
+                if (userIsAuthorized(GetLevelInfoEditAction()))
                 {
                     UpdateLevelInfo($levelInfo);
                     $levelInfoID = $levelInfo->GetId();
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
@@ -1163,51 +1163,51 @@
                 {
                     $message = 'The inforamtion for this level already exists';
                     
-                    include(ADDEDITLEVELINFOFORM_FILE);
+                    include(GetAddEditLevelInfoFormFile());
                     exit();
                 }
                 
-                if (userIsAuthorized(LEVELINFOADD_ACTION))
+                if (userIsAuthorized(GetLevelInfoAddAction()))
                 {
                     $levelInfoID = AddLevelInfo($levelInfo);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOVIEW_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . urlencode($levelInfoID));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetLevelInfoViewAction()) . '&' . GetLevelInfoIdIdentifier() . '=' . urlencode($levelInfoID));
         }
         
         $message = 'Errors';
         $collection = $levelInfoVI->GetErrors();
         
-        include(ADDEDITLEVELINFOFORM_FILE);
+        include(GetAddEditLevelInfoFormFile());
     }
     
     function LevelInfoDelete()
     {
-        if(!userIsAuthorized(LEVELINFODELETE_ACTION))
+        if(!userIsAuthorized(GetLevelInfoDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No language I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1226,88 +1226,88 @@
             }
         }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageLevelInfosAction()) . '&' . GetLanguageIdIdentifier() . '=' . urlencode($languageID));
     }
     
     function LanguageActivate()
     {
-        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        if(!userIsAuthorized(GetLanguageEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         ActivateLanguage($languageID);
             
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageLanguagesAction()));
     }
     
     function LanguageDeactivate()
     {
-        if(!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        if(!userIsAuthorized(GetLanguageEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         DeactivateLanguage($languageID);
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageLanguagesAction()));
     }
     
     function ContactActivate()
     {
-        if(!userIsAuthorized(CONTACTEDIT_ACTION))
+        if(!userIsAuthorized(GetContactEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        if(isset($_POST[GetContactsIdIdentifier()]))
         {
-            $contactID = $_POST[CONTACTID_IDENTIFIER];
+            $contactID = $_POST[GetContactsIdIdentifier()];
         }
-        else if (isset($_GET[CONTACTID_IDENTIFIER]))
+        else if (isset($_GET[GetContactsIdIdentifier()]))
         {
-            $contactID = $_GET[CONTACTID_IDENTIFIER];
+            $contactID = $_GET[GetContactsIdIdentifier()];
         }
         else
         {
             $message = 'No contact I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1320,72 +1320,72 @@
 
         ActivateContact($contactID);
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageContactsAction()));
     }
     
     function ContactDeactivate()
     {
-        if(!userIsAuthorized(CONTACTEDIT_ACTION))
+        if(!userIsAuthorized(GetContactEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        if(isset($_POST[GetContactsIdIdentifier()]))
         {
-            $contactID = $_POST[CONTACTID_IDENTIFIER];
+            $contactID = $_POST[GetContactsIdIdentifier()];
         }
-        else if (isset($_GET[CONTACTID_IDENTIFIER]))
+        else if (isset($_GET[GetContactsIdIdentifier()]))
         {
-            $contactID = $_GET[CONTACTID_IDENTIFIER];
+            $contactID = $_GET[GetContactsIdIdentifier()];
         }
         else
         {
             $message = 'No contact I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         DeactivateContact($contactID);
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageContactsAction()));
     }
     
     function ContactAdd()
     {
-        if (!userIsAuthorized(CONTACTADD_ACTION))
+        if (!userIsAuthorized(GetContactAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $contact = new Contact();
         
-        include(ADDEDITCONTACTFORM_FILE);
+        include(GetAddEditContactFormFile());
     }
     
     function ContactEdit()
     {
-        if (!userIsAuthorized(CONTACTEDIT_ACTION))
+        if (!userIsAuthorized(GetContactEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        if(isset($_POST[GetContactsIdIdentifier()]))
         {
-            $contactID = $_POST[CONTACTID_IDENTIFIER];
+            $contactID = $_POST[GetContactsIdIdentifier()];
         }
-        else if (isset($_GET[CONTACTID_IDENTIFIER]))
+        else if (isset($_GET[GetContactsIdIdentifier()]))
         {
-            $contactID = $_GET[CONTACTID_IDENTIFIER];
+            $contactID = $_GET[GetContactsIdIdentifier()];
         }
         else
         {
             $message = 'No contact I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1393,20 +1393,20 @@
         
         if ($contact->GetId() > 0)
         {
-            include(ADDEDITCONTACTFORM_FILE);
+            include(GetAddEditContactFormFile());
         }
         else
         {
             $message = 'The contact you wish to edit does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessContactAddEdit()
     {
-        if(isset($_POST[CONTACTID_IDENTIFIER]))
+        if(isset($_POST[GetContactsIdIdentifier()]))
         {
-            $contactID = $_POST[CONTACTID_IDENTIFIER];
+            $contactID = $_POST[GetContactsIdIdentifier()];
         }
                 
         $contact = new Contact();
@@ -1419,44 +1419,44 @@
             $message = 'Errors';
             $collection = $contactVI->GetErrors();
             
-            include(ADDEDITCONTACTFORM_FILE);
+            include(GetAddEditContactFormFile());
         }
         else
         {
             if(isset($contactID))
             {
-                if(userIsAuthorized(CONTACTEDIT_ACTION))
+                if(userIsAuthorized(GetContactEditAction()))
                 {
                     UpdateContact($contactID, $contact);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             else
             {
-                if(userIsAuthorized(CONTACTADD_ACTION))
+                if(userIsAuthorized(GetContactAddAction()))
                 {
                     AddContact($contact);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetManageContactsAction()));
         }
     }
     
     function ContactDelete()
     {
-        if (!userIsAuthorized(CONTACTDELETE_ACTION))
+        if (!userIsAuthorized(GetContactDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -1475,43 +1475,43 @@
             }
         }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageContactsAction()));
     }
     
     function ManageContacts()
     {
-        if(!userIsAuthorized(MANAGECONTACTS_ACTION))
+        if(!userIsAuthorized(GetManageContactsAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $contacts = GetContacts();
         
-        include(MANAGECONTACTSFORM_FILE);
+        include(GetManageContactsFormFile());
     }
     
     function LanguageImport()
     {
-        if(!userIsAuthorized(LANGUAGEIMPORT_ACTION))
+        if(!userIsAuthorized(GetLanguageImportAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1526,32 +1526,32 @@
         else
         {
             $message = 'Could not reslove import type.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
     }
     
     function LanguageImportAdd()
     {
-        if(!userIsAuthorized(LANGUAGEIMPORT_ACTION))
+        if(!userIsAuthorized(GetLanguageImportAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1589,7 +1589,7 @@
                 {
                     $fileConents = GetWordDocContents($filePath);
                     
-                    include(PROCESSLANGUAGEIMPORTWORD_FILE);
+                    include(GetProcessLanguageImportWordFile());
                 }
                 
                 if (count($errors) == 0)
@@ -1598,13 +1598,13 @@
                     {
                         $level = $question['Level'];
                         $instructions = $question['Instructions'];
-                        $quesName = $question[NAME_IDENTIFIER];
+                        $quesName = $question[GetNameIdentifier()];
                         $answers = $question['Answers'];
 
                         AddQuestion($languageID, $quesName, $instructions, $level, $answers);
                     }
 
-                    Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
+                    Redirect(GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction()) . '&' . GetLanguageIdIdentifier() . '=' . $languageID);
                 }
             }
         }
@@ -1615,7 +1615,7 @@
         
         AppendQuestionAvgScores($questions);
         
-        $language = $lang[NAME_IDENTIFIER];
+        $language = $lang[GetNameIdentifier()];
         
         $message = 'Error Adding Questions.';
         $collection = $errors;
@@ -1625,30 +1625,30 @@
             unset($name);
         }
         
-        include(MANAGEQUESTIONSFORM_FILE);
+        include(GetMangageQuestionsFormFile());
     }
     
     function LanguageImportUpdate()
     {
-        if(!userIsAuthorized(LANGUAGEIMPORT_ACTION))
+        if(!userIsAuthorized(GetLanguageImportAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1686,17 +1686,17 @@
                 {
                     $objPHPExcel = OpenExcelFile($filePath);
                     
-                    include(PROCESSLANGUAGEIMPORTEXCEL_FILE);
+                    include(GetProcessLanguageImportExcelFile());
                 }
                 
                 if (count($errors) == 0)
                 {
                     foreach($questions as $question)
                     {
-                        $questionID = $question[QUESTIONID_IDENTIFIER];
+                        $questionID = $question[GetQuestionIdIdentifier()];
                         $level = $question['Level'];
                         $instructions = $question['Instructions'];
-                        $quesName = $question[NAME_IDENTIFIER];
+                        $quesName = $question[GetNameIdentifier()];
                         $answers = $question['Answers'];
 
                         if($questionID > 0)
@@ -1705,7 +1705,7 @@
                         }
                     }
 
-                    Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
+                    Redirect(GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction()) . '&' . GetLanguageIdIdentifier() . '=' . $languageID);
                 }
             }
         }
@@ -1716,7 +1716,7 @@
         
         AppendQuestionAvgScores($questions);
         
-        $language = $lang[NAME_IDENTIFIER];
+        $language = $lang[GetNameIdentifier()];
         
         $message = 'Error Updating Questions.';
         $collection = $errors;
@@ -1726,30 +1726,30 @@
             unset($name);
         }
         
-        include(MANAGEQUESTIONSFORM_FILE);
+        include(GetMangageQuestionsFormFile());
     }
     
     function LanguageExport()
     {
-        if(!userIsAuthorized(LANGUAGEEXPORT_ACTION))
+        if(!userIsAuthorized(GetLanguageExportAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1757,7 +1757,7 @@
         
         if ($language != FALSE)
         {
-            $languageName = $language[NAME_IDENTIFIER];
+            $languageName = $language[GetNameIdentifier()];
 
             ignore_user_abort(true);
 
@@ -1773,31 +1773,31 @@
         else
         {
             $message = 'The language you wish to export does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function LanguageStatisticsExport()
     {
-        if(!userIsAuthorized(LANGUAGESTATISTICSEXPORT_ACTION))
+        if(!userIsAuthorized(GetLanguageStatisticsExportAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No lanugage I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1805,7 +1805,7 @@
         
         if ($language != FALSE)
         {
-            $languageName = $language[NAME_IDENTIFIER];
+            $languageName = $language[GetNameIdentifier()];
 
             ignore_user_abort(true);
 
@@ -1821,15 +1821,15 @@
         else
         {
             $message = 'The language you wish to export does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function TestEntryView()
     {
-        if(!userIsAuthorized(TESTENTRYVIEW_ACTION))
+        if(!userIsAuthorized(GetTestEntryViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -1848,7 +1848,7 @@
         {
             $message = 'No test I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -1857,20 +1857,20 @@
         
         if ($testInfo->GetId() > 0)
         {
-            include(VIEWTESTENTRYFORM_FILE);
+            include(GetViewTestEntryFormFile());
         }
         else
         {
             $message = 'The test you wish to view does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function TestEntryDelete()
     {
-        if (!userIsAuthorized(TESTENTRYDELETE_ACTION))
+        if (!userIsAuthorized(GetTestEntryDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -1889,14 +1889,14 @@
             }
         }
         
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGETESTENTRIES_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageTestEntriesAction()));
     }
     
     function TestEntrySearch()
     {
-        if(!userIsAuthorized(TESTENTRYSEARCH_ACTION))
+        if(!userIsAuthorized(GetTestEntrySearchAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -1941,14 +1941,14 @@
         
         $testInfos = SearchForTestEntry($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
-        include(MANAGETESTENTRIESFORM_FILE);
+        include(GetManageTestentriesFormFile());
     }
     
     function ManageTestEntries()
     {
-        if(!userIsAuthorized(MANAGETESTENTRIES_ACTION))
+        if(!userIsAuthorized(GetManageTestEntriesAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -1963,14 +1963,14 @@
         
         $testInfos = SearchForTestEntry($name, $language, $minScore, $maxScore, $minDate, $maxDate);
         
-        include(MANAGETESTENTRIESFORM_FILE);
+        include(GetManageTestentriesFormFile());
     }
     
     function ExamParametersView()
     {
-        if(!userIsAuthorized(EXAMPARAMETERSVIEW_ACTION))
+        if(!userIsAuthorized(GetExamParametersViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -1982,14 +1982,14 @@
         $decLevelScore = $parameters->GetDecLevelScorePercent();
         $spokenAtHomeInitLevel = $parameters->GetSpokenAtHomeInitLevel();
         
-        include(VIEWEXAMPARAMETERSFORM_FILE);
+        include(GetViewExamParametersFormFile());
     }
     
     function ExamParametersEdit()
     {
-        if(!userIsAuthorized(EXAMPARAMETERSEDIT_ACTION))
+        if(!userIsAuthorized(GetExamParametersEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -2001,14 +2001,14 @@
         $decLevelScore =  $parameters->GetDecLevelScorePercent();
         $spokenAtHomeInitLevel = $parameters->GetSpokenAtHomeInitLevel();
         
-        include(EDITEXAMPARAMETERSFORM_FILE);
+        include(GetEditExamParametersFormFile());
     }
     
     function ProcessExamParametersEdit()
     {
-        if(!userIsAuthorized(EXAMPARAMETERSEDIT_ACTION))
+        if(!userIsAuthorized(GetExamParametersEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -2030,7 +2030,7 @@
         if($parametersVI->IsValid())
         {
             SetExamParameters($parameters);
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetExamParametersViewAction()));
         }
         
         $message = 'Errors';
@@ -2042,14 +2042,14 @@
         $decLevelScore =  $parameters->GetDecLevelScorePercent();
         $spokenAtHomeInitLevel = $parameters->GetSpokenAtHomeInitLevel();
         
-        include(EDITEXAMPARAMETERSFORM_FILE);
+        include(GetEditExamParametersFormFile());
     }
     
     function HandleLogin( )
     {
         if(loggedIn())
         {
-            Redirect(GetControllerScript(MAINCONTROLLER_FILE,HOME_ACTION));
+            Redirect(GetControllerScript(GetMainControllerFile(),GetHomeAction()));
         }
         
         if (!isset($_SERVER['HTTPS']))
@@ -2058,7 +2058,7 @@
             exit();
         }
         
-        include(LOGINFORM_FILE);
+        include(GetLoginFormFile());
     }
     
     function ProcessLogin()
@@ -2075,45 +2075,45 @@
             }
             else
             {
-                $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION ) . "&LoginFailure" . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . urlencode($_POST["RequestedPage"]);
+                $url = GetControllerScript(GetAdminControllerFile(), GetLoginAction() ) . "&LoginFailure" . '&' . GetRequestedPageIdentifier() . '=' . urlencode($_POST["RequestedPage"]);
                 Redirect( $url );
             }
         }
         else
         {
-            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+            Redirect(GetControllerScript(GetMainControllerFile(), GetHomeAction()));
         }
     }
     
     function ManageQuestions()
     {
-        if (!userIsAuthorized(MANAGEQUESTIONS_ACTION))
+        if (!userIsAuthorized(GetManageQuestionsAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
-        else if(isset($_GET[QUESTIONID_IDENTIFIER]))
+        else if(isset($_GET[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+            $questionID = $_GET[GetQuestionIdIdentifier()];
         }
-        else if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        else if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
         else
         {
             $message = 'No question or languge I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2121,7 +2121,7 @@
         {
             $question = GetQuestion($questionID);
             $language = GetQuestionLanguage($questionID);
-            $languageID = $language[LANGUAGEID_IDENTIFIER];
+            $languageID = $language[GetLanguageIdIdentifier()];
             
             if (isset($question['Level']))
             {
@@ -2150,7 +2150,7 @@
         if ($lang == FALSE)
         {
             $message = 'The language of the questions you are trying to manage does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2158,48 +2158,48 @@
         
         AppendQuestionAvgScores($questions);
         
-        $language = $lang[NAME_IDENTIFIER];
+        $language = $lang[GetNameIdentifier()];
         
-        include(MANAGEQUESTIONSFORM_FILE);
+        include(GetMangageQuestionsFormFile());
     }
     
     
     function ProcessQuestionAdd()
     {
-        if(!userIsAuthorized(QUESTIONADD_ACTION))
+        if(!userIsAuthorized(GetQuestionAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if(isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if(isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
-        else if(isset($_GET[QUESTIONID_IDENTIFIER]))
+        else if(isset($_GET[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+            $questionID = $_GET[GetQuestionIdIdentifier()];
         }
-        else if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        else if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
         else
         {
             $message = 'No question or languge I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
         if(isset($questionID))
         {
             $language = GetQuestionLanguage($questionID);
-            $languageID = $language[LANGUAGEID_IDENTIFIER];
+            $languageID = $language[GetLanguageIdIdentifier()];
             unset($questionID);
         }
         
@@ -2208,7 +2208,7 @@
         if ($lang == FALSE)
         {
             $message = 'The language of the questions you are trying to manage does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2216,32 +2216,32 @@
         $level = '1';
         $instructions = '';
         $answers = array();
-        $answers[] = array(NAME_IDENTIFIER => '');
+        $answers[] = array(GetNameIdentifier() => '');
         
-        include(ADDEDITQUESTIONFORM_FILE);
+        include(GetAddEditQuestionFormFile());
     }
     
     function ProcessQuestionEdit()
     {
-        if (!userIsAuthorized(CONTACTEDIT_ACTION))
+        if (!userIsAuthorized(GetContactEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
-        else if (isset ($_GET[QUESTIONID_IDENTIFIER]))
+        else if (isset ($_GET[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+            $questionID = $_GET[GetQuestionIdIdentifier()];
         }
         else
         {
             $message = 'No question I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2249,42 +2249,42 @@
         
         if ($question != FALSE)
         {
-            $name = $question[NAME_IDENTIFIER];
+            $name = $question[GetNameIdentifier()];
             $level = $question['Level'];
             $instructions = $question['Instructions'];
 
             $answers = GetQuestionAnswers($questionID);
 
-            include(ADDEDITQUESTIONFORM_FILE);
+            include(GetAddEditQuestionFormFile());
         }
         else
         {
             $message = 'The question you wish to edit does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessQuestionView()
     {
-        if (!userIsAuthorized(QUESTIONVIEW_ACTION))
+        if (!userIsAuthorized(GetQuestionViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
-        else if (isset($_GET[QUESTIONID_IDENTIFIER]))
+        else if (isset($_GET[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+            $questionID = $_GET[GetQuestionIdIdentifier()];
         }
         else
         {
             $message = 'Question I.D. not provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2292,7 +2292,7 @@
         
         if ($question != FALSE)
         {
-            $name = $question[NAME_IDENTIFIER];
+            $name = $question[GetNameIdentifier()];
             $level = $question['Level'];
             $instructions = $question['Instructions'];
             $totalTimesFlagged = $question['Flagged'];
@@ -2314,26 +2314,26 @@
                 }
             }
             
-            include(VIEWQUESTIONFORM_FILE);
+            include(GetViewQuestionFormFile());
         }
         else
         {
             $message = 'The question you wish to view does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessQuestionDelete()
     {
-        if (!userIsAuthorized(QUESTIONDELETE_ACTION))
+        if (!userIsAuthorized(GetQuestionDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
         
         if (isset($languageID))
@@ -2353,35 +2353,35 @@
                 }
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . $languageID);
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction()) . '&' . GetLanguageIdIdentifier() . '=' . $languageID);
         }
         
         $message = 'Error retrieving language I.D.';
-        include(MESSAGEFORM_FILE);
+        include(GetMessageFormFile());
     }
     
     function ProcessQuestionAddEdit()
     {
         $errors = array();
         
-        if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
-        else if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'Could not resolve question or language I.D.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
-        if (isset($_POST[NAME_IDENTIFIER]))
+        if (isset($_POST[GetNameIdentifier()]))
         {
-            $name = trim($_POST[NAME_IDENTIFIER]);
+            $name = trim($_POST[GetNameIdentifier()]);
             
             if (empty($name))
             {
@@ -2449,56 +2449,56 @@
         {
             if (isset($questionID))
             {
-                if(userIsAuthorized(QUESTIONEDIT_ACTION))
+                if(userIsAuthorized(GetQuestionEditAction()))
                 {
                     UpdateQuestion($questionID, $name, $instructions, $level, $answers);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             else
             {
-                $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+                $languageID = $_POST[GetLanguageIdIdentifier()];
                 
-                if (userIsAuthorized(QUESTIONADD_ACTION))
+                if (userIsAuthorized(GetQuestionAddAction()))
                 {
                     $questionID = AddQuestion($languageID, $name, $instructions, $level, $answers);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONVIEW_ACTION . '&' . QUESTIONID_IDENTIFIER . '=' . urlencode($questionID)));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetQuestionViewAction() . '&' . GetQuestionIdIdentifier() . '=' . urlencode($questionID)));
         }
         
         $message = 'Errors';
         $collection = $errors;
         
-        include(ADDEDITQUESTIONFORM_FILE);
+        include(GetAddEditQuestionFormFile());
     }
     
     function ProcessQuestionSearch()
     {
-        if (!userIsAuthorized(QUESTIONSEARCH_ACTION))
+        if (!userIsAuthorized(GetQuestionSearchAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if(isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No language I.D. was provided.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2508,15 +2508,15 @@
             $flagged = TRUE;
         }
         
-        if (isset($_POST[NAME_IDENTIFIER]))
+        if (isset($_POST[GetNameIdentifier()]))
         {
-            $name = $_POST[NAME_IDENTIFIER];
+            $name = $_POST[GetNameIdentifier()];
         }
         
         if ($flagged == FALSE && !isset($name))
         {
             $message = 'The search criteria could not be resolved.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2525,7 +2525,7 @@
         if ($lang == FALSE)
         {
             $message = 'The language of the questions you are trying to search for does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2539,45 +2539,45 @@
         }
         
         AppendQuestionAvgScores($questions);
-        $language = $lang[NAME_IDENTIFIER];
+        $language = $lang[GetNameIdentifier()];
         
-        include(MANAGEQUESTIONSFORM_FILE);
+        include(GetMangageQuestionsFormFile());
     }
     
     function ProcessLanguageAdd()
     {
-        if (!userIsAuthorized(LANGUAGEADD_ACTION))
+        if (!userIsAuthorized(GetLanguageAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $name = "";
         
-        include(ADDEDITLANGUAGEFORM_FILE);
+        include(GetAddEditLangaugeFormFile());
     }
     
     function ProcessLanguageEdit()
     {
-        if (!userIsAuthorized(LANGUAGEEDIT_ACTION))
+        if (!userIsAuthorized(GetLanguageEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if (isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if (isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
         else
         {
             $message = 'No language I.D. provided.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2585,48 +2585,48 @@
         
         if ($language != FALSE)
         {
-            $name = $language[NAME_IDENTIFIER];
+            $name = $language[GetNameIdentifier()];
             $active = $language['Active'];
             $feedback = $language['Feedback'];
             
-            include(ADDEDITLANGUAGEFORM_FILE);
+            include(GetAddEditLangaugeFormFile());
         }
         else
         {
             $message = 'The language you wish to edit does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessLanguageView()
     {
-        if (!userIsAuthorized(LANGUAGEVIEW_ACTION))
+        if (!userIsAuthorized(GetLanguageViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        if (isset($_POST[LANGUAGEID_IDENTIFIER]))
+        if (isset($_POST[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+            $languageID = $_POST[GetLanguageIdIdentifier()];
         }
-        else if(isset($_GET[LANGUAGEID_IDENTIFIER]))
+        else if(isset($_GET[GetLanguageIdIdentifier()]))
         {
-            $languageID = $_GET[LANGUAGEID_IDENTIFIER];
+            $languageID = $_GET[GetLanguageIdIdentifier()];
         }
-        else if(isset($_GET[QUESTIONID_IDENTIFIER]))
+        else if(isset($_GET[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_GET[QUESTIONID_IDENTIFIER];
+            $questionID = $_GET[GetQuestionIdIdentifier()];
         }
-        else if (isset($_POST[QUESTIONID_IDENTIFIER]))
+        else if (isset($_POST[GetQuestionIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
         }
         else
         {
             $message = 'The language or question I.D. could not be resolved.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -2637,30 +2637,30 @@
         else if(isset($questionID))
         {
             $language = GetQuestionLanguage($questionID);
-            $languageID = $language[LANGUAGEID_IDENTIFIER];
+            $languageID = $language[GetLanguageIdIdentifier()];
             unset($questionID);
         }
         
         if ($language != FALSE)
         {
-            $name = $language[NAME_IDENTIFIER];
+            $name = $language[GetNameIdentifier()];
             $active = $language['Active'];
             $feedback = $language['Feedback'];
         
-            include(VIEWLANGUAGEFORM_FILE);
+            include(GetViewLanguageFormFile());
         }
         else
         {
             $message = 'The language you wish to view does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessLanguageDelete()
     {
-        if (!userIsAuthorized(LANGUAGEDELETE_ACTION))
+        if (!userIsAuthorized(GetLanguageDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
@@ -2679,16 +2679,16 @@
             }
         }
 
-        Redirect(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION));
+        Redirect(GetControllerScript(GetAdminControllerFile(), GetManageLanguagesAction()));
     }
     
     function ProcessLanguageAddEdit()
     {
         $errors = array();
         
-        if (isset($_POST[NAME_IDENTIFIER]))
+        if (isset($_POST[GetNameIdentifier()]))
         {
-            $name = trim($_POST[NAME_IDENTIFIER]);
+            $name = trim($_POST[GetNameIdentifier()]);
             
             if (empty($name))
             {
@@ -2709,23 +2709,23 @@
         
         if(count($errors) < 1)
         {
-            if(isset($_POST[LANGUAGEID_IDENTIFIER]))
+            if(isset($_POST[GetLanguageIdIdentifier()]))
             {
-                $languageID = $_POST[LANGUAGEID_IDENTIFIER];
+                $languageID = $_POST[GetLanguageIdIdentifier()];
                 
-                if (userIsAuthorized(LANGUAGEEDIT_ACTION))
+                if (userIsAuthorized(GetLanguageEditAction()))
                 {
                     UpdateLanguage($languageID, $name, $active, $feedback);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             else
             {
-                if (userIsAuthorized(LANGUAGEADD_ACTION))
+                if (userIsAuthorized(GetLanguageAddAction()))
                 {
                     $languageID = AddLanguage($name);
                     
@@ -2733,48 +2733,48 @@
                     {
                         unset($languageID);
                         $message = 'The language already exists.';
-                        include(ADDEDITLANGUAGEFORM_FILE);
+                        include(GetAddEditLangaugeFormFile());
                         exit();
                     }
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                     exit();
                 }
             }
             
-            Redirect(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID)));
+            Redirect(GetControllerScript(GetAdminControllerFile(), GetLanguageViewAction() . '&' . GetLanguageIdIdentifier() . '=' . urlencode($languageID)));
         }
         
         $message = 'Errors';
         $collection = $errors;
         
-        include(ADDEDITLANGUAGEFORM_FILE);
+        include(GetAddEditLangaugeFormFile());
     }
     
     function ManageLanguages()
     {
-        if (!userIsAuthorized(MANAGELANGUAGES_ACTION))
+        if (!userIsAuthorized(GetManageLanguagesAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $languages = GetAllLanguages();
         
-        include(MANAGELANGUAGESFORM_FILE);
+        include(GetManageLanguagesFormFile());
     }
     
     function ProcessUserView()
     {
-        if (!userIsAuthorized(USERVIEW_ACTION))
+        if (!userIsAuthorized(GetUserViewAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        $userID = $_GET[USERID_IDENTIFIER];
+        $userID = $_GET[GetUserIdIdentifier()];
         
         $row = getUser($userID);
         
@@ -2782,67 +2782,67 @@
         {
             $hasAttrResults = getUserRoles($userID);
         
-            $userName = $row[USERNAME_IDENTIFIER];
+            $userName = $row[GetUserNameIdentifier()];
         
-            include(VIEWUSERFORM_FILE);
+            include(GetViewUserFormFile());
         }
         else
         {
             $message = 'The user you wish to view does not exist.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
         }
     }
     
     function ProcessUserSearch()
     {
-        if (!userIsAuthorized(USERSEARCH_ACTION))
+        if (!userIsAuthorized(GetUserSearchAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        $name = $_POST[NAME_IDENTIFIER];
+        $name = $_POST[GetNameIdentifier()];
         
         $results = SearchForUser($name);
         
-        include(MANAGEUSERSFORM_FILE);
+        include(GetManageUsersFormFile());
     }
     
     function ManageUsers()
     {
-        if (!userIsAuthorized(MANAGEUSERS_ACTION))
+        if (!userIsAuthorized(GetManageUsersAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $results = getAllUsers();
         
-        include(MANAGEUSERSFORM_FILE);
+        include(GetManageUsersFormFile());
     }
     
     function UserAdd()
     {
-        if (!userIsAuthorized(USERADD_ACTION))
+        if (!userIsAuthorized(GetUserAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
         $userName = "";
         
-        include(ADDUSERFORM_FILE);
+        include(GetAddUserFormFile());
     }
     
     function UserEdit()
     {
-        if (!userIsAuthorized(USEREDIT_ACTION))
+        if (!userIsAuthorized(GetUserEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
         }
         else
         {
-            $id = $_GET[USERID_IDENTIFIER];
+            $id = $_GET[GetUserIdIdentifier()];
             
             if (empty($id))
             {
@@ -2861,23 +2861,23 @@
                     $hasAttrResults = getUserRoles($id);
                     $hasNotAttrResults = getNotUserRoles($id);
                     
-                    $userID = $row[USERID_IDENTIFIER];
-                    $userName = $row[USERNAME_IDENTIFIER];
+                    $userID = $row[GetUserIdIdentifier()];
+                    $userName = $row[GetUserNameIdentifier()];
                     $vital = $row['Vital'];
                     
-                    include(EDITUSERFORM_FILE);
+                    include(GetEditUserFormFile());
                 }
             }
         }
         
-        Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+        Redirect(GetControllerScript(GetMainControllerFile(), GetHomeAction()));
     }
     
     function UserDelete()
     {
-        if (!userIsAuthorized(USERDELETE_ACTION))
+        if (!userIsAuthorized(GetUserDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
         }
         else
         {
@@ -2904,23 +2904,23 @@
             
             $results = getAllUsers();
             
-            include(MANAGEUSERSFORM_FILE);
+            include(GetManageUsersFormFile());
         }
     }
     
     function ProcessUserAdd()
     {
-        if(!userIsAuthorized(USERADD_ACTION))
+        if(!userIsAuthorized(GetUserAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
         }
         else
         {
             $errors = array();
 
-            $userName = trim($_POST[USERNAME_IDENTIFIER]);
-            $password = $_POST[PASSWORD_IDENTIFIER];
-            $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
+            $userName = trim($_POST[GetUserNameIdentifier()]);
+            $password = $_POST[GetPasswordIdentifier()];
+            $passwordRetype = $_POST[GetPasswordRetypeIdentifier()];
             
             if (empty($userName))
             {
@@ -2965,27 +2965,27 @@
             {
                 $userID = addUser($userName, $password);
 
-                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+                Redirect(GetControllerScript(GetAdminControllerFile(), GetUserViewAction() . '&' . GetUserIdIdentifier() . '=' . urlencode($userID)));
             }
 
-            include(ADDUSERFORM_FILE);
+            include(GetAddUserFormFile());
         }
     }
     
     function ProcessUserEdit()
     {
-        if(!userIsAuthorized(USEREDIT_ACTION))
+        if(!userIsAuthorized(GetUserEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
         }
         else
         {
             $errors = array();
-            $userName = trim($_POST[USERNAME_IDENTIFIER]);
+            $userName = trim($_POST[GetUserNameIdentifier()]);
             
-            if(!empty($_POST[USERID_IDENTIFIER]))
+            if(!empty($_POST[GetUserIdIdentifier()]))
             {
-                $userID = $_POST[USERID_IDENTIFIER];
+                $userID = $_POST[GetUserIdIdentifier()];
             }
             else
             {
@@ -3005,16 +3005,16 @@
                     $errors[] = 'The username is too long.';
                 }
                 
-                if ($userName != $user[USERNAME_IDENTIFIER] && UserNameExists($userName))
+                if ($userName != $user[GetUserNameIdentifier()] && UserNameExists($userName))
                 {
                     $errors[] = 'The user name already exists.';
                 }
             }
 
-            if(!empty($_POST[PASSWORD_IDENTIFIER]))
+            if(!empty($_POST[GetPasswordIdentifier()]))
             {
-                $password = $_POST[PASSWORD_IDENTIFIER];
-                $passwordRetype = $_POST[PASSWORDRETYPE_IDENTIFIER];
+                $password = $_POST[GetPasswordIdentifier()];
+                $passwordRetype = $_POST[GetPasswordRetypeIdentifier()];
                 
                 if (strlen($password) > 40)
                 {
@@ -3052,52 +3052,52 @@
                 
                 UpdateUser($userID, $userName, $password);
 
-                Redirect(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . '&' . USERID_IDENTIFIER . '=' . urlencode($userID)));
+                Redirect(GetControllerScript(GetAdminControllerFile(), GetUserViewAction() . '&' . GetUserIdIdentifier() . '=' . urlencode($userID)));
             }
             
             $vital = $user['Vital'];
             $hasAttrResults = getUserRoles($userID);
             $hasNotAttrResults = getNotUserRoles($userID);
             
-            include(EDITUSERFORM_FILE);
+            include(GetEditUserFormFile());
         }
     }
 
     function ManageRoles()
     {
-        if (!userIsAuthorized(MANAGEROLES_ACTION))
+        if (!userIsAuthorized(GetManageRolesAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
         }
         else
         {
             $results = getAllRoles();
             
-            include(MANAGEROLESFORM_FILE);
+            include(GetMangageRolesFormFile());
         }
     }
     
     function RoleAdd()
     {
-        if (!userIsAuthorized(ROLEADD_ACTION))
+        if (!userIsAuthorized(GetRoleAddAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
         }
         else
         {
-            include(ADDROLEFORM_FILE);
+            include(GetAddRoleFormFile());
         }
     }
     
     function RoleEdit()
     {
-        if (!userIsAuthorized(ROLEEDIT_ACTION))
+        if (!userIsAuthorized(GetRoleEditAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
             exit();
         }
         
-        $id = $_GET[ROLEID_IDENTIFIER];
+        $id = $_GET[GetRoleIdIDentifier()];
         if (empty($id))
         {
             displayError("An ID is required for this function.");
@@ -3121,16 +3121,16 @@
                 $name = $row["Name"];
                 $desc = $row["Description"];
                 
-                include(EDITROLEFORM_FILE);
+                include(GetEditRoleFormFile());
             }
         }
     }
     
     function RoleDelete()
     {
-        if (!userIsAuthorized(ROLEDELETE_ACTION))
+        if (!userIsAuthorized(GetRoleDeleteAction()))
         {
-            include(NOTAUTHORIZED_FILE);
+            include(GetNotAuthorizedFile());
         }
         else
         {
@@ -3157,7 +3157,7 @@
             
             $results = getAllRoles();
             
-            include(MANAGEROLESFORM_FILE);
+            include(GetMangageRolesFormFile());
         }
     }
     
@@ -3183,18 +3183,18 @@
             
             if (empty($RoleID))
             {   // No RoleID means we are processing an ADD
-                if(userIsAuthorized(ROLEADD_ACTION))
+                if(userIsAuthorized(GetRoleAddAction()))
                 {
                     $RoleID = addRole($name, $desc);
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                 }
             }
             else
             {
-                if(userIsAuthorized(ROLEEDIT_ACTION))
+                if(userIsAuthorized(GetRoleEditAction()))
                 {
                     if (!RoleIsVital($RoleID))
                     {
@@ -3210,19 +3210,19 @@
                     else
                     {
                         $message = 'Cannot edit a vital role.';
-                        include(MESSAGEFORM_FILE);
+                        include(GetMessageFormFile());
                         exit();
                     }
                 }
                 else
                 {
-                    include(NOTAUTHORIZED_FILE);
+                    include(GetNotAuthorizedFile());
                 }
             }
             
             $results = getAllRoles();
             
-            include(MANAGEROLESFORM_FILE);
+            include(GetMangageRolesFormFile());
         }
         else
         {

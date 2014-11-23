@@ -1,9 +1,9 @@
 <?php
 
     //Need this because functions from this file will be called.
-    require_once(MODEL_FILE);
-    require_once(QUESTIONANSWERCLASS_FILE);
-    require_once(EXPERIENCEOPTIONCLASS_FILE);
+    require_once(GetModelFile());
+    require_once(GetQuestionAnswerClassFile());
+    require_once(GetExperienceOptionClassFile());
     
     /**
      * Gets all language experiences with their options.
@@ -45,8 +45,8 @@
             $options = array();
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM '  . EXPERIENCEOPTIONS_IDENTIFIER
-                    . ' ORDER BY ' . EXPERIENCEOPTIONID_IDENTIFIER . ';';
+            $query = 'SELECT * FROM '  . GetExperinceOptionsIdentifier()
+                    . ' ORDER BY ' . GetExperienceOptionIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
             
@@ -91,7 +91,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . QUESTIONCOMMENTS_IDENTIFIER
+            $query = 'INSERT INTO ' . GetQuestionCommentsIdentifier()
                     . ' (' . $questionIdKey
                     . ', ' . $commentKey . ') VALUES'
                     . ' (:' . $questionIdKey . '0'
@@ -155,15 +155,15 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . QUESTIONS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetQuestionsIdentifier() . ' SET'
                     . ' ' . 'Flagged'
                     . ' = '. 'Flagged' . ' + 1' . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . '0';
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . '0';
             
             for($count = 1; $count < count($questionIDs); $count++)
             {
-                $query .= ' OR ' . QUESTIONID_IDENTIFIER . ' = :' . QUESTIONID_IDENTIFIER . $count;
+                $query .= ' OR ' . GetQuestionIdIdentifier() . ' = :' . GetQuestionIdIdentifier() . $count;
             }
             
             $query .= ';';
@@ -173,7 +173,7 @@
             for($count = 0; $count < count($questionIDs); $count++)
             {
                 $questionID = $questionIDs[$count];
-                $statement->bindValue(':' . QUESTIONID_IDENTIFIER . $count, $questionID);
+                $statement->bindValue(':' . GetQuestionIdIdentifier() . $count, $questionID);
             }
             
             $statement->execute();
@@ -199,15 +199,15 @@
             $levelExists = FALSE;
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . QUESTIONID_IDENTIFIER . ' FROM'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
+            $query = 'SELECT ' . GetQuestionIdIdentifier() . ' FROM'
+                    . ' ' . GetQuestionsIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ' AND'
                     . ' ' . 'Level'
                     . ' = :' . 'Level' . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             $statement->bindValue(':' . 'Level', $level);
             
             $statement->execute();
@@ -241,13 +241,13 @@
             $initLevel = 1;
             $db = GetDBConnection();
             
-            $query = 'SELECT InitLevel FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' INNER JOIN'
-                    . ' ' . EXPERIENCEOPTIONS_IDENTIFIER . ' ON'
-                    . ' ' . EXPERIENCEOPTIONS_IDENTIFIER . '.' . LANGUAGEEXPERIENCEID_IDENTIFIER
-                    . ' = ' . LANGUAGEEXPERIENCES_IDENTIFIER . '.' . LANGUAGEEXPERIENCEID_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEEXPERIENCES_IDENTIFIER . '.' . NAME_IDENTIFIER
+            $query = 'SELECT InitLevel FROM ' . GetLanguageExperiencesIdentifier() . ' INNER JOIN'
+                    . ' ' . GetExperinceOptionsIdentifier() . ' ON'
+                    . ' ' . GetExperinceOptionsIdentifier() . '.' . GetLanguageExperienceIdIdentifier()
+                    . ' = ' . GetLanguageExperiencesIdentifier() . '.' . GetLanguageExperienceIdIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageExperiencesIdentifier() . '.' . GetNameIdentifier()
                     . ' = :' . 'ExperienceName' . ' AND'
-                    . ' ' . EXPERIENCEOPTIONS_IDENTIFIER . '.' . NAME_IDENTIFIER
+                    . ' ' . GetExperinceOptionsIdentifier() . '.' . GetNameIdentifier()
                     . ' = :' . 'OptionName' . ';';
             
             $statement = $db->prepare($query);
@@ -288,15 +288,15 @@
             
             $db = GetDBConnection();
             
-            $query = 'UPDATE ' . ANSWERS_IDENTIFIER . ' SET'
+            $query = 'UPDATE ' . GetAnswersIdentifier() . ' SET'
                     . ' ' . 'Chosen'
                     . ' = '. 'Chosen' . ' + 1' . ' WHERE'
-                    . ' ' . ANSWERID_IDENTIFIER
-                    . ' = :' . ANSWERID_IDENTIFIER . '0';
+                    . ' ' . GetAnswerIdIdentifier()
+                    . ' = :' . GetAnswerIdIdentifier() . '0';
             
             for($count = 1; $count < count($answerIDs); $count++)
             {
-                $query .= ' OR ' . ANSWERID_IDENTIFIER . ' = :' . ANSWERID_IDENTIFIER . $count;
+                $query .= ' OR ' . GetAnswerIdIdentifier() . ' = :' . GetAnswerIdIdentifier() . $count;
             }
             
             $query .= ';';
@@ -306,7 +306,7 @@
             for($count = 0; $count < count($answerIDs); $count++)
             {
                 $answerID = $answerIDs[$count];
-                $statement->bindValue(':' . ANSWERID_IDENTIFIER . $count, $answerID);
+                $statement->bindValue(':' . GetAnswerIdIdentifier() . $count, $answerID);
             }
             
             $statement->execute();
@@ -330,12 +330,12 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . TESTENTIRES_IDENTIFIER . ' WHERE'
-                    . ' ' . TESTID_IDENTIFIER
-                    . ' = :' . TESTID_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetTestEntriesIdentifier() . ' WHERE'
+                    . ' ' . GetTestIdIdentifier()
+                    . ' = :' . GetTestIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . TESTID_IDENTIFIER, $testID);
+            $statement->bindValue(':' . GetTestIdIdentifier(), $testID);
             
             $statement->execute();
             
@@ -364,18 +364,18 @@
             $correctAnswer = FALSE;
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . ANSWERID_IDENTIFIER . ' FROM'
-                    . ' ' . ANSWERS_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER . ' AND'
-                    . ' ' . ANSWERID_IDENTIFIER
-                    . ' = :' . ANSWERID_IDENTIFIER . ' AND'
+            $query = 'SELECT ' . GetAnswerIdIdentifier() . ' FROM'
+                    . ' ' . GetAnswersIdentifier() . ' WHERE'
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() . ' AND'
+                    . ' ' . GetAnswerIdIdentifier()
+                    . ' = :' . GetAnswerIdIdentifier() . ' AND'
                     . ' ' . 'Correct'
                     . ' = :' . 'Correct';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':'. QUESTIONID_IDENTIFIER, $questionID);
-            $statement->bindValue(':' . ANSWERID_IDENTIFIER, $answerID);
+            $statement->bindValue(':'. GetQuestionIdIdentifier(), $questionID);
+            $statement->bindValue(':' . GetAnswerIdIdentifier(), $answerID);
             $statement->bindValue(':' . 'Correct', 1);
             
             $statement->execute();
@@ -412,37 +412,37 @@
             $questionIDs = array();
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . QUESTIONID_IDENTIFIER . ' FROM'
-                    . ' ' . QUESTIONS_IDENTIFIER . ' WHERE';
+            $query = 'SELECT ' . GetQuestionIdIdentifier() . ' FROM'
+                    . ' ' . GetQuestionsIdentifier() . ' WHERE';
             
             if (count($idsToExclude) > 0)
             {
-                $query .= ' ' . QUESTIONID_IDENTIFIER . ' NOT IN (';
+                $query .= ' ' . GetQuestionIdIdentifier() . ' NOT IN (';
                 
-                $query .= ':' . QUESTIONID_IDENTIFIER . 0;
+                $query .= ':' . GetQuestionIdIdentifier() . 0;
                 
                 for ($index = 1; $index < count($idsToExclude); $index++)
                 {
-                    $query .= ', :' . QUESTIONID_IDENTIFIER . $index;
+                    $query .= ', :' . GetQuestionIdIdentifier() . $index;
                 }
                 
                 $query .= ') AND';
             }
             
-            $query .= ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
+            $query .= ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ' AND'
                     . ' ' . 'Level'
                     . ' = :' . 'Level' . ' ORDER BY RAND() LIMIT'
                     . ' :' . 'Limit' ;
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, (int)$languageID, PDO::PARAM_INT);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), (int)$languageID, PDO::PARAM_INT);
             $statement->bindValue(':' . 'Level', (int)$level, PDO::PARAM_INT);
             $statement->bindValue(':' . 'Limit', (int)$limit, PDO::PARAM_INT);
             
             for ($index = 0; $index < count($idsToExclude); $index++)
             {
-                $statement->bindValue(':' . QUESTIONID_IDENTIFIER . $index, (int)$idsToExclude[$index], PDO::PARAM_INT);
+                $statement->bindValue(':' . GetQuestionIdIdentifier() . $index, (int)$idsToExclude[$index], PDO::PARAM_INT);
             }
             
             $statement->execute();
@@ -453,7 +453,7 @@
             
             foreach ($questions as $question)
             {
-                $questionIDs[] = $question[QUESTIONID_IDENTIFIER];
+                $questionIDs[] = $question[GetQuestionIdIdentifier()];
             }
             
             return $questionIDs;
@@ -472,7 +472,7 @@
     {
         StartSession();
         
-        $_SESSION[TESTID_IDENTIFIER] = $testID;
+        $_SESSION[GetTestIdIdentifier()] = $testID;
     }
     
     /**
@@ -481,9 +481,9 @@
      */
     function GetTestId()
     {
-        if (isset($_SESSION[TESTID_IDENTIFIER]))
+        if (isset($_SESSION[GetTestIdIdentifier()]))
         {
-            return $_SESSION[TESTID_IDENTIFIER];
+            return $_SESSION[GetTestIdIdentifier()];
         }
         
         return FALSE;
@@ -495,9 +495,9 @@
      */
     function GetCurrentExam()
     {
-        if(isset($_SESSION[EXAM_IDENTIFIER]))
+        if(isset($_SESSION[GetExamIdentifier()]))
         {
-            return $_SESSION[EXAM_IDENTIFIER];
+            return $_SESSION[GetExamIdentifier()];
         }
         
         return FALSE;
@@ -509,7 +509,7 @@
     function SetCurrentExam($exam)
     {
         StartSession();
-        $_SESSION[EXAM_IDENTIFIER] = $exam;
+        $_SESSION[GetExamIdentifier()] = $exam;
     }
     
     /**
@@ -517,9 +517,9 @@
      */
     function DisposeCurrentExam()
     {
-        if(isset($_SESSION[EXAM_IDENTIFIER]))
+        if(isset($_SESSION[GetExamIdentifier()]))
         {
-            unset($_SESSION[EXAM_IDENTIFIER]);
+            unset($_SESSION[GetExamIdentifier()]);
         }
     }
 
@@ -550,7 +550,7 @@
     function UserIsClear()
     {
         StartSession();
-        $isClear = isset($_SESSION[EXAM_IDENTIFIER]);
+        $isClear = isset($_SESSION[GetExamIdentifier()]);
         
         return $isClear;
     }
@@ -589,7 +589,7 @@
                         $answer = $answers[$i];
                         $answer['AnswerNo'] = $aCount;
                         
-                        if ($answer[ANSWERID_IDENTIFIER] == $qa->GetAnswerId())
+                        if ($answer[GetAnswerIdIdentifier()] == $qa->GetAnswerId())
                         {
                             $chosen = '1';
                         }
@@ -610,15 +610,15 @@
                 }
             }
             
-            $qQuery = 'INSERT INTO ' . TESTEEQUESTIONS_IDENTIFIER
-                            . ' (' . TESTID_IDENTIFIER
+            $qQuery = 'INSERT INTO ' . GetTesteeQuestionsIdentifier()
+                            . ' (' . GetTestIdIdentifier()
                             . ', ' . 'QuestionNo'
                             . ', ' . 'Level'
                             . ', ' . 'Instructions'
                             . ', ' . 'Question' . ') VALUES';
             
-            $aQuery = 'INSERT INTO ' . TESTEEANSWERS_IDENTIFIER
-                                . ' (' . TESTID_IDENTIFIER
+            $aQuery = 'INSERT INTO ' . GetTesteeAnswersIdentifier()
+                                . ' (' . GetTestIdIdentifier()
                                 . ', ' . 'QuestionNo'
                                 . ', ' . 'AnswerNo'
                                 . ', ' . 'Answer'
@@ -630,7 +630,7 @@
                 $answers = $question['Answers'];
                 $questionNo = $question['QuestionNo'];
                 
-                $qQuery .= ' (:' . TESTID_IDENTIFIER
+                $qQuery .= ' (:' . GetTestIdIdentifier()
                         . ', :' . 'QuestionNo' . $questionNo
                         . ', :' . 'Level' . $questionNo
                         . ', :' . 'Instructions' . $questionNo
@@ -640,7 +640,7 @@
                 {
                     $answerNo = $answer['AnswerNo'];
                     
-                    $aQuery .= ' (:' . TESTID_IDENTIFIER
+                    $aQuery .= ' (:' . GetTestIdIdentifier()
                                 . ', :' . 'QuestionNo' . $questionNo . $answerNo
                                 . ', :' . 'AnswerNo' . $questionNo . $answerNo
                                 . ', :' . 'Answer' . $questionNo . $answerNo
@@ -664,19 +664,19 @@
                 {
                     $answerNo = $answer['AnswerNo'];
                     
-                    $aStatement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
+                    $aStatement->bindValue(':' . GetTestIdIdentifier(), $testEntryID);
                     $aStatement->bindValue(':' . 'QuestionNo' . $questionNo . $answerNo, $questionNo);
                     $aStatement->bindValue(':' . 'AnswerNo' . $questionNo . $answerNo, $answerNo);
-                    $aStatement->bindValue(':' . 'Answer' . $questionNo . $answerNo, $answer[NAME_IDENTIFIER]);
+                    $aStatement->bindValue(':' . 'Answer' . $questionNo . $answerNo, $answer[GetNameIdentifier()]);
                     $aStatement->bindValue(':' . 'Chosen' . $questionNo . $answerNo, $answer['Chosen']);
                     $aStatement->bindValue(':' . 'Correct' . $questionNo . $answerNo, $answer['Correct']);
                 }
                 
-                $qStatement->bindValue(':' . TESTID_IDENTIFIER, $testEntryID);
+                $qStatement->bindValue(':' . GetTestIdIdentifier(), $testEntryID);
                 $qStatement->bindValue(':' . 'QuestionNo' . $questionNo, $questionNo);
                 $qStatement->bindValue(':' . 'Level' . $questionNo, $question['Level']);
                 $qStatement->bindValue(':' . 'Instructions' . $questionNo, $question['Instructions']);
-                $qStatement->bindValue(':' . 'Question' . $questionNo, $question[NAME_IDENTIFIER]);
+                $qStatement->bindValue(':' . 'Question' . $questionNo, $question[GetNameIdentifier()]);
             }
             
             $qStatement->execute();
@@ -705,7 +705,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . TESTENTIRES_IDENTIFIER
+            $query = 'INSERT INTO ' . GetTestEntriesIdentifier()
                     . ' (' . 'Language'
                     . ', ' . '`Date`'
                     . ', ' . 'Score' . ') VALUES'
@@ -750,15 +750,15 @@
             
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . TESTEES_IDENTIFIER
-                    . ' ('  . TESTID_IDENTIFIER
+            $query = 'INSERT INTO ' . GetTesteesIdentifier()
+                    . ' ('  . GetTestIdIdentifier()
                     . ', ' . $spokenAtHomeIndex
                     . ', ' . $firstNameIndex
                     . ', ' . $lastNameIndex
                     . ', ' . $emailIndex
                     . ', ' . $majorIndex
                     . ', ' . $highSchoolIndex . ') VALUES'
-                    . ' (:' . TESTID_IDENTIFIER
+                    . ' (:' . GetTestIdIdentifier()
                     . ', :' . $spokenAtHomeIndex
                     . ', :' . $firstNameIndex
                     . ', :' . $lastNameIndex
@@ -767,7 +767,7 @@
                     . ', :' . $highSchoolIndex . ');';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . TESTID_IDENTIFIER, $testentryID);
+            $statement->bindValue(':' . GetTestIdIdentifier(), $testentryID);
             $statement->bindValue(':' . $spokenAtHomeIndex, $profile->GetSpokenAtHome());
             $statement->bindValue(':' . $firstNameIndex, $profile->GetFirstName());
             $statement->bindValue(':' . $lastNameIndex, $profile->GetLastName());
@@ -807,14 +807,14 @@
             
             $db = GetDBConnection();
             
-            $query = 'INSERT INTO ' . TESTEEEXPERIENCES_IDENTIFIER
-                    . ' ('  . TESTID_IDENTIFIER
+            $query = 'INSERT INTO ' . GetTesteeExperiencesIdentifier()
+                    . ' ('  . GetTestIdIdentifier()
                     . ', ' . $experienceNameKey
                     . ', ' . $optionNameKey . ') VALUES';
             
             for ($i = 0; $i < count($leopairs); $i++)
             {
-                $query .= ' (:' . TESTID_IDENTIFIER
+                $query .= ' (:' . GetTestIdIdentifier()
                         . ', :' . $experienceNameKey . $i
                         . ', :' . $optionNameKey . $i . '),';
             }
@@ -823,7 +823,7 @@
             
             $statement = $db->prepare($query);
             
-            $statement->bindValue(':' . TESTID_IDENTIFIER, $testeeID);
+            $statement->bindValue(':' . GetTestIdIdentifier(), $testeeID);
             
             $count = 0;
             foreach($leopairs as $leopair)

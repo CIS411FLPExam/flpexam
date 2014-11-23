@@ -1,9 +1,9 @@
              <footer id="mainFooter">
                 <div class="divider"></div>
                 [ 
-                <a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION)); ?>">Home</a> | 
-                <a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, ABOUT_ACTION)); ?>">About us</a> | 
-                <a href="<?php echo(GetControllerScript(MAINCONTROLLER_FILE, CONTACT_ACTION)); ?>">Contact us</a>
+                <a href="<?php echo(GetControllerScript(GetMainControllerFile(), GetHomeAction())); ?>">Home</a> | 
+                <a href="<?php echo(GetControllerScript(GetMainControllerFile(), GetAboutAction())); ?>">About us</a> | 
+                <a href="<?php echo(GetControllerScript(GetMainControllerFile(), GetContactAction())); ?>">Contact us</a>
                  ]
             </footer>
             </article>

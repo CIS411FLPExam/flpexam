@@ -1,5 +1,5 @@
 <?php
-    require_once(PHPEXCELCLASS_FILE);
+    require_once(GetPHPExcelClassFile());
     
     foreach ($objPHPExcel->getWorksheetIterator() as $worksheet)
     {
@@ -76,7 +76,7 @@
                     $errors[] = 'Row "' . $row . '" must have at least one answer.';
                 }
 
-                $questions[] = array(QUESTIONID_IDENTIFIER => $questionID, 'Level' => $level, 'Instructions' => $instructions, NAME_IDENTIFIER => $quesName, 'Answers' => $answers);
+                $questions[] = array(GetQuestionIdIdentifier() => $questionID, 'Level' => $level, 'Instructions' => $instructions, GetNameIdentifier() => $quesName, 'Answers' => $answers);
             }
             
             unset($questionID);

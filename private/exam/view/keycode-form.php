@@ -1,12 +1,12 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
 <h1>Test Clearance</h1>
 
 <div class="formGroup">
-    <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, PROCESSKEYCODE_ACTION));?>" method="post">
+    <form action="<?php echo(GetControllerScript(GetExamControllerFile(), GetProcessKeyCodeAction()));?>" method="post">
         <div class="formSection">
             <label>Enter Key Code:</label>
             <input name="KeyCode"  type="password" class="formInput" autofocus />
@@ -30,5 +30,5 @@
 
 <!-- End main content here -->
 <?php
-    include( PLAINFOOTER_FILE );
+    include( GetPlainFooterFile() );
 ?>

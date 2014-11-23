@@ -1,9 +1,9 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

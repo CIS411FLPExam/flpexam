@@ -1,11 +1,11 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
 <h1>Login</h1>
 
-<form action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLOGIN_ACTION ) ); ?>" method="post">
+<form action="<?php echo( GetControllerScript(GetAdminControllerFile(), GetProcessLoginAction() ) ); ?>" method="post">
     <div class="formGroup">
         <div class="formSection">
             <label>Username:</label><input class="formInput" type="text" name="username" autofocus required maxlength="32"/>
@@ -17,8 +17,8 @@
             <div class="clear"></div>
         </div>
 
-        <?php if (isset($_GET[REQUESTEDPAGE_IDENTIFIER])) { ?>
-            <input type="hidden" name="<?php echo(REQUESTEDPAGE_IDENTIFIER); ?>" value="<?php echo($_GET[REQUESTEDPAGE_IDENTIFIER]); ?>" />
+        <?php if (isset($_GET[GetRequestedPageIdentifier()])) { ?>
+            <input type="hidden" name="<?php echo(GetRequestedPageIdentifier()); ?>" value="<?php echo($_GET[GetRequestedPageIdentifier()]); ?>" />
         <?php } ?>
         <input type="submit" value="Login"/>
     </div>
@@ -30,5 +30,5 @@
 </form>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

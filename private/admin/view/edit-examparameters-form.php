@@ -1,18 +1,18 @@
 <?php
-    include(HEADER_FILE);
+    include(GetHeaderFile());
 ?>
 <!-- Start main content here -->
 
 <?php
     if(isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
 
 <h1>Exam Parameters</h1>
 <div class="formGroup">
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSEXAMPARAMETERSEDIT_ACTION)) ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetProcessExamParametersEditAction())) ?>" method="post">
         <div class="formSection">
             <label>Key Code:</label>
             <input name="<?php echo($parameters->GetKeyCodeIndex()); ?>" type="text" value="<?php echo(htmlspecialchars($keyCode)); ?>" autofocus maxlength="40"/>
@@ -61,11 +61,11 @@
         
         <input type="submit" value="Submit" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSVIEW_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetExamParametersViewAction())); ?>" method="post">
         <input type="submit" value="Cancel" />
     </form>
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

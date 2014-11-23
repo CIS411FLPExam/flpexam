@@ -1,12 +1,12 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
 <?php
     if (isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
 
@@ -17,9 +17,9 @@
 <?php } ?>
 
 <div class="formGroup">
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLANGUAGEADDEDIT_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetProcessLanguageAddEditAction())); ?>" method="post">
         <?php if (isset($languageID)) { ?>
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
         <?php } ?>
 
         <div class="formSection">
@@ -48,11 +48,11 @@
 
         <input type="submit" value="Submit" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGES_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageLanguagesAction())); ?>" method="post">
         <input type="submit" value="Cancel" />
     </form>
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

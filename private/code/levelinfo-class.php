@@ -1,5 +1,5 @@
 <?php
-require_once(VALIDATIONINFOCLASS_FILE);
+require_once(GetValidationInfoClassFile());
 
 /**
  * The level info class.
@@ -250,7 +250,7 @@ class LevelInfo
      */
     public function GetLanguageIdKey()
     {
-        return LANGUAGEID_IDENTIFIER;
+        return GetLanguageIdIdentifier();
     }
     
     /**

@@ -1,27 +1,27 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!--Start main content-->
 
 <?php
-    $userCanAdd = userIsAuthorized(LANGUAGEEXPERIENCESADD_ACTION);
-    $userCanView = userIsAuthorized(LANGUAGEEXPERIENCESVIEW_ACTION);
-    $userCanEdit = userIsAuthorized(LANGUAGEEXPERIENCESEDIT_ACTION);
-    $userCanDelete = userIsAuthorized(LANGUAGEEXPERIENCESDELETE_ACTION);
-    $userCanManageOptions = userIsAuthorized(MANAGEEXPERIENCEOPTIONS_ACTION);
+    $userCanAdd = userIsAuthorized(GetLanguageExperieneceAddAction());
+    $userCanView = userIsAuthorized(GetLanguageExperienceViewAction());
+    $userCanEdit = userIsAuthorized(GetLanguageExperienceEditAction());
+    $userCanDelete = userIsAuthorized(GetLanguageExperienceDeleteAction());
+    $userCanManageOptions = userIsAuthorized(GetManageExperienceOptionsAction());
 ?>
 
 <h1>Language Experiences</h1>
 
 <?php if ($userCanAdd) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESADD_ACTION)); ?>" method="post">
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageExperieneceAddAction())); ?>" method="post">
         <input type="submit" value="Add Experience" />
     </form>
 <?php } ?>
 <div class="formGroup">
     <?php if (count($experiences) > 0) { ?>
-        <form onsubmit="return ConfirmationPrompt('Delete the selected language experiences?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESDELETE_ACTION)); ?>" method="post">
+        <form onsubmit="return ConfirmationPrompt('Delete the selected language experiences?');" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageExperienceDeleteAction())); ?>" method="post">
             <div class="datatable">
                 <table id="experiences" class="tablesorter">
                     <thead>
@@ -45,17 +45,17 @@
                                 <td><?php echo(htmlspecialchars($name)); ?></td>
                                 <?php if ($userCanManageOptions) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="Options" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEEXPERIENCEOPTIONS_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($id)); ?>');" />
+                                        <input type="button" value="Options" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageExperienceOptionsAction()) . '&' . GetLanguageExperienceIdIdentifier() . '=' . urlencode($id)); ?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanView) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESVIEW_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($id));?>');" />
+                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageExperienceViewAction()) . '&' . GetLanguageExperienceIdIdentifier() . '=' . urlencode($id));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanEdit) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION) . '&' . LANGUAGEEXPERIENCEID_IDENTIFIER . '=' . urlencode($id));?>');" />
+                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageExperienceEditAction()) . '&' . GetLanguageExperienceIdIdentifier() . '=' . urlencode($id));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanDelete) { ?>
@@ -85,7 +85,7 @@
 
 <!--End main content-->
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>
 <script>
     $( document ).ready( function( ) 

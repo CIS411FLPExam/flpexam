@@ -1,6 +1,6 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!-- Start main content here -->
 <div class="formGroup">
@@ -41,10 +41,10 @@
     
 </div>
 
-<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXAMPARAMETERSEDIT_ACTION)); ?>" method="post">
+<form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetExamParametersEditAction())); ?>" method="post">
     <input type="submit" value="Edit" />
 </form>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

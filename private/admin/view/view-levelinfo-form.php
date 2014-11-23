@@ -1,6 +1,6 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!--Start main content-->
 
@@ -38,18 +38,18 @@
         
         <br />
         
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOEDIT_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LEVELINFOID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($levelInfo->GetId())); ?>" />
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLevelInfoEditAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLevelInfoIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($levelInfo->GetId())); ?>" />
             <input type="submit" value="Edit" />
         </form>
         
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($levelInfo->GetLanguageId())); ?>" />
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageLevelInfosAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($levelInfo->GetLanguageId())); ?>" />
             <input type="submit" value="Levels Info" />
         </form>
 </div>
 
 <!--End main content-->
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>

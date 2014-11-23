@@ -1,21 +1,21 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!--Start main content-->
 
 <?php
-    $userCanAdd = userIsAuthorized(EXPERIENCEOPTIONADD_ACTION);
-    $userCanView = userIsAuthorized(EXPERIENCEOPTIONVIEW_ACTION);
-    $userCanEdit = userIsAuthorized(EXPERIENCEOPTIONEDIT_ACTION);
-    $userCanDelete = userIsAuthorized(EXPERIENCEOPTIONDELETE_ACTION);
+    $userCanAdd = userIsAuthorized(GetExperienceOptionAddAction());
+    $userCanView = userIsAuthorized(GetExperienceOptionViewAction());
+    $userCanEdit = userIsAuthorized(GetExperienceOptionEditAction());
+    $userCanDelete = userIsAuthorized(GetExperienceOptionDeleteAction());
 ?>
 
 <h1><?php echo(htmlspecialchars($experienceName)); ?> Experience Options</h1>
 
 <?php if ($userCanAdd) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXPERIENCEOPTIONADD_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(LANGUAGEEXPERIENCEID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($experienceID)); ?>" />
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetExperienceOptionAddAction())); ?>" method="post">
+        <input type="hidden" name="<?php echo(GetLanguageExperienceIdIdentifier()) ?>" value="<?php echo(htmlspecialchars($experienceID)); ?>" />
         <input type="submit" value="Add Option" />
     </form>
 
@@ -23,8 +23,8 @@
 <?php } ?>
 <div class="formGroup">
     <?php if (count($options) > 0) { ?>
-        <form onsubmit="return ConfirmationPrompt('Delete the selected experience options?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXPERIENCEOPTIONDELETE_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEEXPERIENCEID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($experienceID)); ?>" />
+        <form onsubmit="return ConfirmationPrompt('Delete the selected experience options?');" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetExperienceOptionDeleteAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageExperienceIdIdentifier()) ?>" value="<?php echo(htmlspecialchars($experienceID)); ?>" />
             <div class="datatable">
                 <table id="options" class="tablesorter">
                     <thead>
@@ -50,12 +50,12 @@
                                 <td class="centerText"><?php echo(htmlspecialchars($initLevel)); ?></td>
                                 <?php if ($userCanView) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXPERIENCEOPTIONVIEW_ACTION) . '&' . EXPERIENCEOPTIONID_IDENTIFIER . '=' . urlencode($id));?>');" />
+                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetExperienceOptionViewAction()) . '&' . GetExperienceOptionIdIdentifier() . '=' . urlencode($id));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanEdit) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, EXPERIENCEOPTIONEDIT_ACTION) . '&' . EXPERIENCEOPTIONID_IDENTIFIER . '=' . urlencode($id));?>');" />
+                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetExperienceOptionEditAction()) . '&' . GetExperienceOptionIdIdentifier() . '=' . urlencode($id));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanDelete) { ?>
@@ -85,7 +85,7 @@
 
 <!--End main content-->
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>
 <script>
     $( document ).ready( function( ) 

@@ -1,5 +1,5 @@
 <?php
-    include(HEADER_FILE);
+    include(GetHeaderFile());
 ?>
 <!--Start main content-->
 <h1>Test Results</h1>
@@ -45,10 +45,10 @@
         </p>
     <?php } ?>
         
-    <input type="button" onclick="Relocate('<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION)); ?>');" value="Start New Exam" autofocus />
+    <input type="button" onclick="Relocate('<?php echo(GetControllerScript(GetExamControllerFile(), GetEnterKeyCodeAction())); ?>');" value="Start New Exam" autofocus />
 </div>
 
 <!--End main content-->
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>

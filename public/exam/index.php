@@ -1,73 +1,73 @@
 <?php
     require_once('../../private/definitions/paths.php');
-    require_once(PATHS_FILE);
-    require_once(IDENTIFIER_FILE);
-    require_once(GENERALFUNCTIONS_FILE);
-    require_once(ACTIONS_FILE);
-    require_once(MODEL_FILE);
-    require_once(EXAMMODEL_FILE);
-    require_once(EXAMCLASS_FILE);
-    require_once(LANGUAGECLASS_FILE);
-    require_once(PROFILECLASS_FILE);
-    require_once(QUESTIONANSWERCLASS_FILE);
-    require_once(QUESTIONCOMMENTCLASS_FILE);
-    require_once(LEOPAIRCLASS_FILE);
+    require_once(GetPathsFile());
+    require_once(GetIdentifierFile());
+    require_once(GetGeneralFunctionsFile());
+    require_once(GetActionsFile());
+    require_once(GetModelFile());
+    require_once(GetExamModelFile());
+    require_once(GetExamClassFile());
+    require_once(GetLanguageClassFile());
+    require_once(GetProfileClassFile());
+    require_once(GetQuestionAnswerClassFile());
+    require_once(GetQuestionCommentClassFile());
+    require_once(GetLeoPairClassFile());
 
     error_reporting(0);
     
     StartSession( );
     AdjustQuotes();
     
-    if (isset($_POST[ACTION_KEYWORD]))
+    if (isset($_POST[GetActionKeyWord()]))
     {
-        $action = $_POST[ACTION_KEYWORD];
+        $action = $_POST[GetActionKeyWord()];
     }
-    else if (isset($_GET[ACTION_KEYWORD]))
+    else if (isset($_GET[GetActionKeyWord()]))
     {
-        $action = $_GET[ACTION_KEYWORD];
+        $action = $_GET[GetActionKeyWord()];
     }
     else
     {
         $action = "";
     }
     
-    if (!UserIsClear() && $action!= ENTERKEYCODE_ACTION && $action != PROCESSKEYCODE_ACTION && $action != TESTRESULTSVIEW_ACTION)
+    if (!UserIsClear() && $action!= GetEnterKeyCodeAction() && $action != GetProcessKeyCodeAction() && $action != GetTestResultsViewAction())
     {
-        Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
+        Redirect(GetControllerScript(GetExamControllerFile(), GetEnterKeyCodeAction()));
     }
     else
     {
         switch ($action)
         {
-            case ENTERKEYCODE_ACTION :
+            case GetEnterKeyCodeAction() :
                 EnterKeyCode();
                 break;
-            case PROCESSKEYCODE_ACTION :
+            case GetProcessKeyCodeAction() :
                 ProcessKeyCode();
                 break;
-            case LANGUAGESELECT_ACTION :
+            case GetLanguageSelectAction() :
                 SelectLanguage();
                 break;
-            case PROCESSLANGUAGESELECT_ACTION :
+            case GetProcessLanguageSelectAction() :
                 ProcessLanguageSelect();
                 break;
-            case PROFILECREATE_ACTION :
+            case GetProfileCreateAction() :
                 ProfileCreate();
                 break;
-            case PROCESSPROFILECREATE_ACTION :
+            case GetProcessProfileCreateAction() :
                 ProcessProfileCreate();
                 break;
-            case STARTEXAM_ACTION :
+            case GetStartExamAction() :
                 StartExam();
                 break;
-            case SUBMITANSWER_ACTION :
+            case GetSubmitAnswerAction() :
                 SubmitAnswer();
                 break;
-            case TESTRESULTSVIEW_ACTION :
+            case GetTestResultsViewAction() :
                 TestResultsView();
                 break;
             default :
-                Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+                Redirect(GetControllerScript(GetMainControllerFile(), GetHomeAction()));
         }
     }
     
@@ -75,17 +75,17 @@
     {
         if(UserIsClear())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetLanguageSelectAction()));
         }
         
-        include(KEYCODEFORM_FILE);
+        include(GetKeyCodeFormFile());
     }
     
     function ProcessKeyCode()
     {
         if(UserIsClear())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetLanguageSelectAction()));
         }
         
         if (isset($_POST['KeyCode']))
@@ -94,13 +94,13 @@
 
             if(ClearUser($keyCode))
             {
-                Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
+                Redirect(GetControllerScript(GetExamControllerFile(), GetLanguageSelectAction()));
             }
         }
         
         $contact = GetPrimaryContact();
         
-        include(KEYCODEFORM_FILE);
+        include(GetKeyCodeFormFile());
     }
     
     function SelectLanguage()
@@ -109,16 +109,16 @@
         
         if($exam == FALSE || !$exam->IsParametersSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetEnterKeyCodeAction()));
         }
         else if ($exam->IsLanguageSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetProfileCreateAction()));
         }
         
         $languageNames = GetActiveLanguageNames();
         
-        include(SELECTLANGUAGEFORM_FILE);
+        include(GetSelectLanguageFormFile());
     }
     
     function ProcessLanguageSelect()
@@ -127,16 +127,16 @@
         
         if($exam == FALSE || !$exam->IsParametersSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetEnterKeyCodeAction()));
         }
         else if ($exam->IsLanguageSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetProfileCreateAction()));
         }
         
-        if(isset($_POST[NAME_IDENTIFIER]))
+        if(isset($_POST[GetNameIdentifier()]))
         {
-            $languageName = $_POST[NAME_IDENTIFIER];
+            $languageName = $_POST[GetNameIdentifier()];
             
             $languageID = GetLanguageID($languageName);
             $isActive = IsActive($languageID);
@@ -150,7 +150,7 @@
                 
                 $exam->SetLanguage($language);
                 
-                Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
+                Redirect(GetControllerScript(GetExamControllerFile(), GetProfileCreateAction()));
             }
         }
         
@@ -158,7 +158,7 @@
         
         $message = "An error occured when selecting the language.";
         
-        include(SELECTLANGUAGEFORM_FILE);
+        include(GetSelectLanguageFormFile());
     }
     
     function ProfileCreate()
@@ -167,11 +167,11 @@
         
         if($exam == FALSE || !$exam->IsLanguageSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetLanguageSelectAction()));
         }
         else if ($exam->IsProfileSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetStartExamAction()));
         }
         
         $languageExperiences = GetAllLanguageExperiencesWithOptions();
@@ -182,7 +182,7 @@
         
         $profile->InitializeLEOs();
         
-        include(CREATEPROFILEFORM_FILE);
+        include(GetCreateProfileFormFile());
     }
     
     function ProcessProfileCreate()
@@ -191,11 +191,11 @@
         
         if($exam == FALSE || !$exam->IsLanguageSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, LANGUAGESELECT_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetLanguageSelectAction()));
         }
         else if ($exam->IsProfileSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetStartExamAction()));
         }
         
         $language = $exam->GetLanguage();
@@ -208,7 +208,7 @@
         if ($profileVI->IsValid())
         {
             $exam->SetProfile($profile);
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetStartExamAction()));
         }
         
         $message = 'Profile Errors';
@@ -217,7 +217,7 @@
         $profile->InitializeLEOs();
         $languageExperiences = GetAllLanguageExperiencesWithOptions();
         
-        include(CREATEPROFILEFORM_FILE);
+        include(GetCreateProfileFormFile());
     }
     
     function StartExam()
@@ -226,7 +226,7 @@
         
         if ($exam == FALSE || !$exam->IsProfileSet())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, PROFILECREATE_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetProfileCreateAction()));
         }
         
         if(!$exam->IsStarted())
@@ -241,7 +241,7 @@
         else
         {
             $message = 'Sorry for the inconvenience, but there are no questions for this exam.';
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
     }
@@ -252,7 +252,7 @@
         
         if($exam == FALSE || !$exam->IsStarted())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetStartExamAction()));
         }
         
         $language = $exam->GetLanguage();
@@ -260,14 +260,14 @@
         
         $question = GetQuestion($questionID);
         
-        $name = $question[NAME_IDENTIFIER];
+        $name = $question[GetNameIdentifier()];
         $instructions = $question['Instructions'];
         
         $answers = GetQuestionAnswers($questionID);
         
         shuffle($answers);
         
-        include(TESTQUESTIONVIEWFORM_FILE);
+        include(GetTestQuestionViewFormFile());
     }
     
     function SubmitAnswer()
@@ -276,13 +276,13 @@
         
         if($exam == FALSE || !$exam->IsStarted())
         {
-            Redirect(GetControllerScript(EXAMCONTROLLER_FILE, STARTEXAM_ACTION));
+            Redirect(GetControllerScript(GetExamControllerFile(), GetStartExamAction()));
         }
         
-        if (isset($_POST[QUESTIONID_IDENTIFIER]) && isset($_POST[ANSWERID_IDENTIFIER]))
+        if (isset($_POST[GetQuestionIdIdentifier()]) && isset($_POST[GetAnswerIdIdentifier()]))
         {
-            $questionID = $_POST[QUESTIONID_IDENTIFIER];
-            $answerID = $_POST[ANSWERID_IDENTIFIER];
+            $questionID = $_POST[GetQuestionIdIdentifier()];
+            $answerID = $_POST[GetAnswerIdIdentifier()];
             
             if (isset($_POST['FlagQuestion']))
             {
@@ -325,7 +325,7 @@
         
         if ($exam == FALSE)
         {
-            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+            Redirect(GetControllerScript(GetMainControllerFile(), GetHomeAction()));
         }
         
         DisposeCurrentExam();
@@ -372,9 +372,9 @@
         
         StoreTestId($testEntryID);
         
-        //EmailTestResults($exam);//TODO: Uncomment this because it is for testing purposes only.
+        //EmailTestResults($exam);//TODO: Uncomment this when testing is done.
         
-        Redirect(GetControllerScript(EXAMCONTROLLER_FILE, TESTRESULTSVIEW_ACTION));
+        Redirect(GetControllerScript(GetExamControllerFile(), GetTestResultsViewAction()));
     }
     
     function TestResultsView()
@@ -383,7 +383,7 @@
         
         if ($testID == FALSE)
         {
-            Redirect(GetControllerScript(MAINCONTROLLER_FILE, HOME_ACTION));
+            Redirect(GetControllerScript(GetMainControllerFile(), GetHomeAction()));
         }
         
         $testEntry = GetTestResults($testID);
@@ -392,7 +392,7 @@
         {
             $message = 'Test not found.';
             
-            include(MESSAGEFORM_FILE);
+            include(GetMessageFormFile());
             exit();
         }
         
@@ -408,7 +408,7 @@
         $levelInfo = GetLevelInfo($levelInfoID);
         $contact = GetPrimaryContact();
         
-        include(VIEWTESTRESULTSFORM_FILE);
+        include(GetViewTestResultsFormFile());
     }
     
     function EmailTestResults($exam = FALSE)
@@ -418,6 +418,8 @@
             $level = $exam->GetLevel();
             $profile = $exam->GetProfile();
             $language = $exam->GetLanguage();
+            
+            $levelExists = LevelExists($language->GetId(), $level);
             
             $name = $profile->GetFirstName();
             $email = $profile->GetEmail();
@@ -431,21 +433,38 @@
             $message = "Hello " . $name . ",";
             $message .= "\r\n";
             $message .= "\r\n";
-            $message .= "\tYou scored a " . $level . " on the " . $languageName . " placement exam.";
-            $message .= " ";
-            $message .= "This score, along with the additional information you submitted, will allow us to assess your " . $languageName;
-            $message .= " ";
-            $message .= "language skills. More importantly, it will help us with placing you in the appropriate level " . $languageName . " class.";
-            $message .= " ";
             
-            if ($contact->GetId() > 0)
+            if ($levelExists == TRUE)
             {
-                $message .= "If you have any further questions or comments, please contact " . $contact->GetFirstName() . " " . $contact->GetLastName();
+                $message .= "\tYou scored a " . $level . " on the " . $languageName . " placement exam.";
                 $message .= " ";
-                $message .= "at \"" . $contact->GetEmail() . "\".";
+                $message .= "This score, along with the additional information you submitted, will allow us to assess your " . $languageName;
                 $message .= " ";
+                $message .= "language skills. More importantly, it will help us with placing you in the appropriate level " . $languageName . " class.";
+
+                if ($contact->GetId() > 0)
+                {
+                    $message .= " ";
+                    $message .= "If you have any further questions or comments, please contact " . $contact->GetFirstName() . " " . $contact->GetLastName();
+                    $message .= " ";
+                    $message .= "at \"" . $contact->GetEmail() . "\".";
+                }
+            }
+            else
+            {
+                if ($contact->GetId() > 0)
+                {
+                    $message .= "\tPlease contact " . $contact->GetFirstName() . " " . $contact->GetLastName();
+                    $message .= " ";
+                    $message .= "at \"" . $contact->GetEmail() . "\" for your test results.";
+                }
+                else
+                {
+                    $message .= "\tPlease contact an administrator for your test results.";
+                }
             }
             
+            $message .= " ";
             $message .= "Thank you for taking one of Clarion University's Foreign Language placement exams.";
             $message .= "\r\n";
             $message .= "\r\n";

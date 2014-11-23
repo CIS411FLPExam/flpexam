@@ -1,6 +1,6 @@
 <?php
-    include( HEADER_FILE );
-    include( CONTROLPANEL_FILE );
+    include( GetHeaderFile() );
+    include( GetControlPanelFile() );
 ?>
 <!-- Start main content here -->
 <h1>View Language Experience</h1>
@@ -20,19 +20,19 @@
     
     <br />
     
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEXPERIENCESEDIT_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(LANGUAGEEXPERIENCEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($experience->GetId())); ?>" />
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageExperienceEditAction())); ?>" method="post">
+        <input type="hidden" name="<?php echo(GetLanguageExperienceIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($experience->GetId())); ?>" />
         <input type="submit" value="Edit" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEEXPERIENCEOPTIONS_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(LANGUAGEEXPERIENCEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($experience->GetId())); ?>" />
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageExperienceOptionsAction())); ?>" method="post">
+        <input type="hidden" name="<?php echo(GetLanguageExperienceIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($experience->GetId())); ?>" />
         <input type="submit" value="Options" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGEEXPERIENCES_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageLanguageExperiencesAction())); ?>" method="post">
         <input type="submit" value="Experiences" />
     </form>
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

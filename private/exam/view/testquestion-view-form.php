@@ -1,5 +1,5 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 <div class="formGroup">
@@ -17,8 +17,8 @@
         <div class="question">
             <pre class="questionText"><b><?php echo(htmlspecialchars($name)); ?></b></pre>
             <div class="clear"></div>
-            <form onsubmit="return IsOneRadChecked('You must select an answer.');" action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, SUBMITANSWER_ACTION)); ?>" method="post">
-                <input type="hidden" name ="<?php echo(QUESTIONID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+            <form onsubmit="return IsOneRadChecked('You must select an answer.');" action="<?php echo(GetControllerScript(GetExamControllerFile(), GetSubmitAnswerAction())); ?>" method="post">
+                <input type="hidden" name ="<?php echo(GetQuestionIdIdentifier()) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
                 <?php if (!empty($message)) { ?>
                     <span class="redText"><b><?php echo(htmlspecialchars($message)); ?></b></span>
                 <?php } ?>
@@ -29,7 +29,7 @@
                         {
                             $answer = $answers[$index];
                     ?>
-                        <input class="floatLeft" type="radio" name="<?php echo(ANSWERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($answer[ANSWERID_IDENTIFIER])) ?>" />
+                        <input class="floatLeft" type="radio" name="<?php echo(GetAnswerIdIdentifier()) ?>" value="<?php echo(htmlspecialchars($answer[GetAnswerIdIdentifier()])) ?>" />
                         <span class="floatLeft">
                             <b>
                                 <?php
@@ -38,7 +38,7 @@
                             </b>
                         </span>
                         <div class="inline floatLeft">&nbsp;</div>
-                        <div class="displayBox"><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></div>
+                        <div class="displayBox"><?php echo(htmlspecialchars($answer[GetNameIdentifier()])); ?></div>
                         <div class="clear"></div>
                         <br />
                     <?php
@@ -69,5 +69,5 @@
 </script>
 <!-- End main content here -->
 <?php
-    include( PLAINFOOTER_FILE );
+    include( GetPlainFooterFile() );
 ?>

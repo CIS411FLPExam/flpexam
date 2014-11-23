@@ -6,354 +6,629 @@
 
     //Base directories.
     /**
-     * The file path of the public directory.
+     * Gets the file path of the public directory.
+     * @return string The directory.
      */
-    define("PUBLIC_DIR", "../../public/");
+    function GetPublicDir()
+    {
+        return "../../public/";
+    }
     
     /**
-     * The file path of the private directory.
+     * Gets the file path of the private directory.
+     * @return string The directory.
      */
-    define("PRIVATE_DIR", "../../private/");
+    function GetPrivateDir()
+    {
+        return "../../private/";
+    }
     
     /**
-     * The file path of the CSS directory.
+     * Gets the file path of the css directory.
+     * @return string The directory.
      */
-    define("CSS_DIR", PRIVATE_DIR . "css/");
+    function GetCssDir()
+    {
+        return GetPrivateDir() . "css/";
+    }
     
     /**
-     * The file path of the javascript directory.
+     * Gets the file path of the javascript directory.
+     * @return string The directory.
      */
-    define("JAVASCRIPT_DIR", PRIVATE_DIR . "js/");
+    function GetJavascriptDir()
+    {
+        return GetPrivateDir() . "js/";
+    }
     
     /**
-     * The file path of the includes directory.
+     * Gets the file path of the includes directory.
+     * @return string The directory.
      */
-    define("INCLUDES_DIR", PRIVATE_DIR . "includes/");
+    function GetIncludesDir()
+    {
+        return GetPrivateDir() . "includes/";
+    }
     
     /**
-     * The file path of the definitions directory.
+     * Gets the file path of the definitions directory.
+     * @return string the Directory.
      */
-    define("DEFINITIONS_DIR", PRIVATE_DIR . "definitions/");
+    function GetDefinitionsDir()
+    {
+        return GetPrivateDir() . "definitions/";
+    }
     
     /**
-     * The file path of the main controller directory.
+     * Gets the file path of the main controller directory.
+     * @return string The file path.
      */
-    define("MAINCONTROLLER_DIR", PUBLIC_DIR . "main/");
+    function GetMainControllerDir()
+    {
+        return GetPublicDir() . "main/";
+    }
     
     /**
-     * The file path of the exam controller directory.
+     * Gets the file path of the exam controller directory.
+     * @return string The directory.
      */
-    define("EXAMCONTROLLER_DIR", PUBLIC_DIR . "exam/");
+    function GetExamControllerDir()
+    {
+        return GetPublicDir() . "exam/";
+    }
     
     /**
-     * The file path of the admin controller directory.
+     * Gets the file path of the admin controller directory.
+     * @return string The directory.
      */
-    define("ADMINCONTROLLER_DIR", PUBLIC_DIR . "admin/");
+    function GetAdminControllerDir()
+    {
+        return GetPublicDir() . "admin/";
+    }
+    
     /**
      * The file path of the image directory.
+     * @return string The directory.
      */
-    define("IMAGE_DIR", PRIVATE_DIR . "images/");
+    function GetImageDir()
+    {
+        return GetPrivateDir() . "images/";
+    }
     
     /**
-     * The file path of the icons directory.
+     * Gets the file path of the icons directory.
+     * @return string The directory.
      */
-    define("ICONS_DIR", IMAGE_DIR . "icons/");
+    function GetIconsDir()
+    {
+        return GetImageDir() . "icons/";
+    }
     
     /**
-     * The file path of the model directory.
+     * Gets the file path of the model directory.
+     * @return string The directory.
      */
-    define("MODEL_DIR", PRIVATE_DIR . "model/");
+    function GetModelDir()
+    {
+        return GetPrivateDir() . "model/";
+    }
     
     /**
-     * The file path of the view directory.
+     * Gets the file path of the view directory.
+     * @return string The directory.
      */
-    define("VIEW_DIR", PRIVATE_DIR . "view/");
+    function GetViewDir()
+    {
+        return GetPrivateDir() . "view/";
+    }
     
     /**
-     * The file path of the code directory.
+     * Gets the file path of the code directory.
+     * @return string The directory.
      */
-    define("CODE_DIR", PRIVATE_DIR . "code/");
+    function GetCodeDir()
+    {
+        return GetPrivateDir() . "code/";
+    }
     
     /**
-     * The file path of the PHPExcel code directory.
+     * Gets the file path of the PHPExcel code directory.
+     * @return string The directory.
      */
-    define("PHPEXCELCODE_DIR", CODE_DIR . "PHPExcel/Classes/");
+    function GetPHPExcelCodeDir()
+    {
+        return GetCodeDir() . "PHPExcel/Classes/";
+    }
     
     /**
-     * The file path of the PHPExcel classes code directory.
+     * Gets the file path of the PHPExcel classes code directory.
+     * @return string The directory.
      */
-    define("PHPEXCELCLASSESCODE_DIR", PHPEXCELCODE_DIR . "PHPExcel/");
+    function GetPHPExcelClassesCodeDir()
+    {
+        return GetPHPExcelCodeDir() . "PHPExcel/";
+    }
     
     /**
-     * The file path of the temporary files directory.
+     * Gets the file path of the temp directory.
+     * @return string The directory.
      */
-    define("TEMP_DIR", PRIVATE_DIR . "temp/");
+    function GetTempDir()
+    {
+        return GetPrivateDir() . "temp/";
+    }
     
     /**
-     * The file path of the error log directory.
+     * Gets the file path of the error log directory.
+     * @return string The directory.
      */
-    define("ERRORLOG_DIR", PRIVATE_DIR . "log/");
+    function GetErrorLogDir()
+    {
+        return GetPrivateDir() . "log/";
+    }
     
     //Base file paths.
     /**
-     * The file path of the PHPExcell class file.
+     * Gets the file path of the PHPExcel class file.
+     * @return string The file path.
      */
-    define("PHPEXCELCLASS_FILE", PHPEXCELCODE_DIR . "PHPExcel.php");
+    function GetPHPExcelClassFile()
+    {
+        return GetPHPExcelCodeDir() . "PHPExcel.php";
+    }
     
     /**
-     * The file path of the PHPExcell IOFactory class file.
+     * Gets the file path of the PHPExcel IOFactory class file.
+     * @return string The file path.
      */
-    define("PHPEXCELIOFACTORYCLASS_FILE", PHPEXCELCLASSESCODE_DIR . "IOFactory.php");
+    function GetPHPExcelIOFactoryClassFile()
+    {
+        return GetPHPExcelClassesCodeDir() . "IOFactory.php";
+    }
     
     /**
-     * The file path of the base model file.
+     * Gets the file path of the base model file.
+     * @return string The file path.
      */
-    define("MODEL_FILE", MODEL_DIR . "model.php");
+    function GetModelFile()
+    {
+        return GetModelDir() . "model.php";
+    }
     
     /**
-     * The file path of the main CSS file.
+     * Gets the file path of the main CSS file.
+     * @return string The file path.
      */
-    define("MAINCSS_FILE", CSS_DIR . "main.css");
+    function GetMainCssFile()
+    {
+        return GetCssDir() . "main.css";
+    }
     
     /**
-     * The file path of the navbar's CSS file.
+     * Gets the file path of the navbar CSS file.
+     * @return string The file path.
      */
-    define("NAVBARCSS_FILE", CSS_DIR . "navbar.css");
+    function GetNavbarCssFile()
+    {
+        return GetCssDir() . "navbar.css";
+    }
     
     /**
-     * The file path of the validateion CSS file.
+     * Gets the file path of the validation CSS file.
+     * @return string The file path.
      */
-    define("VALIDATIONCSS_FILE", CSS_DIR . "validation.css");
+    function GetValidationCssFile()
+    {
+        return GetCssDir() . "validation.css";
+    }
     
     /**
-     * The file path of the site's icon image file.
+     * Gets the file path of the icon file.
+     * @return string The file path.
      */
-    define("ICON_FILE", ICONS_DIR . "icon.ico");
+    function GetIconFile()
+    {
+        return GetIconsDir() . "icon.ico";
+    }
     
     /**
-     * The file path of the sites logo image file.
+     * Gets the file path of the logo file.
+     * @return string The file path.
      */
-    define("LOGO_FILE", IMAGE_DIR . "logo1.gif");
+    function GetLogoFile()
+    {
+        return GetImageDir() . "logo1.gif";
+    }
     
     /**
-     * The file path of the control panel contentes file.
+     * The file path of the control panel content file.
+     * @return string The file path.
      */
-    define("CONTROLPANEL_FILE", INCLUDES_DIR . "control-panel.php");
+    function GetControlPanelFile()
+    {
+        return GetIncludesDir() . "control-panel.php";
+    }
     
     /**
-     * The file path of the default page template.
+     * Gets the file path of the default template file.
+     * @return string The file path.
      */
-    define("DEFAULTTEMPLATE_FILE", INCLUDES_DIR . "default-template.php");
+    function GetDefaultTemplateFile()
+    {
+        return GetIncludesDir() . "default-template.php";
+    }
     
     /**
-     * The file path of the footer file.
+     * Gets the file path of the footer file.
+     * @return string The file path.
      */
-    define("FOOTER_FILE", INCLUDES_DIR . "footer.php");
+    function GetFooterFile()
+    {
+        return GetIncludesDir() . "footer.php";
+    }
     
     /**
-     * The file path of the plain footer file.
+     * Gets the file path of the plain footer file.
+     * @return string The file path.
      */
-    define("PLAINFOOTER_FILE", INCLUDES_DIR . "plain-footer.php");
+    function GetPlainFooterFile()
+    {
+        return GetIncludesDir() . "plain-footer.php";
+    }
     
     /**
-     * The file path of the header file.
+     * Gets the file path of the header file.
+     * @return string The file path.
      */
-    define("HEADER_FILE", INCLUDES_DIR . "header.php");
+    function GetHeaderFile()
+    {
+        return GetIncludesDir() . "header.php";
+    }
     
     /**
-     * The file path of the message contents file.
+     * Gets the file path of the message content file.
+     * @return string The file path.
      */
-    define("MESSAGE_FILE", INCLUDES_DIR . "message.php");
+    function GetMessageFile()
+    {
+        return GetIncludesDir() . "message.php";
+    }
     
     /**
-     * The file path of the navbars content file.
+     * Gets the file path of the navbar content file.
+     * @return string The file path.
      */
-    define("NAVBAR_FILE", INCLUDES_DIR . "navbar.php");
+    function GetNavbarFile()
+    {
+        return GetIncludesDir() . "navbar.php";
+    }
     
     /**
-     * The file path to the attributes javascript file.
+     * Gets the file path of the attributes file.
+     * @return string The file path.
      */
-    define("ATTRIBUTES_FILE", JAVASCRIPT_DIR . "attributes.js");
+    function GetAttributesFile()
+    {
+        return GetJavascriptDir() . "attributes.js";
+    }
     
     /**
-     * The file path of the jquery javascript file.
+     * Gets the file path of the JQuery file.
+     * @return string The file path.
      */
-    define("JQUERY_FILE", JAVASCRIPT_DIR . "jquery-1.11.1-min.js");
+    function GetJQueryFile()
+    {
+        return GetJavascriptDir() . "jquery-1.11.1-min.js";
+    }
     
     /**
-     * The file path of the jquery table sorter javasctipt file.
+     * Gets the file path of the JQuery table sorter file.
+     * @return string The file path.
      */
-    define("JQUERYTABLESORTER_FILE", JAVASCRIPT_DIR . "jquery.tablesorter.js");
+    function GetJQueryTableSorterFile()
+    {
+        return GetJavascriptDir() . "jquery.tablesorter.js";
+    }
     
     /**
-     * The file path of the jquery validation javascript file.
+     * Gets the file path of the JQuery validate file.
+     * @return string The file path.
      */
-    define("JQUERYVALIDATE_FILE", JAVASCRIPT_DIR . "jquery.validate.js");
+    function GetJQueryValidateFile()
+    {
+        return GetJavascriptDir() . "jquery.validate.js";
+    }
     
     /**
-     * The file path of the base javacript file.
+     * Gets the main javascript file.
+     * @return string The file path.
      */
-    define("MAINJS_FILE", JAVASCRIPT_DIR . "main.js");
+    function GetMainJSFile()
+    {
+        return GetJavascriptDir() . "main.js";
+    }
     
     /**
-     * The file path of the navbar's javascript file.
+     * Gets the file path of the navbar javascript file.
+     * @return string The file path.
      */
-    define("NAVBARJS_FILE", JAVASCRIPT_DIR . "navbar.js");
+    function GetNavbarJSFile()
+    {
+        return GetJavascriptDir() . "navbar.js";
+    }
     
     /**
-     * The file path of the dynamic collection javascript file.
+     * Gets the file path of the dynamic collection file.
+     * @return string The file path.
      */
-    define("DYNAMICCOLLECTIONJS_FILE", JAVASCRIPT_DIR . "dynamic-collection.js");
+    function GetDynamicCollectionsJSFile()
+    {
+        return GetJavascriptDir() . "dynamic-collection.js";
+    }
     
     /**
-     * The file path of the actions file.
+     * Gets the file path of the actions file.
+     * @return string The file path.
      */
-    define("ACTIONS_FILE", DEFINITIONS_DIR . "actions.php");
+    function GetActionsFile()
+    {
+        return GetDefinitionsDir() . "actions.php";
+    }
     
     /**
-     * The file path of the general functions file.
+     * Gets the file path of the general functions file.
+     * @return string The file path.
      */
-    define("GENERALFUNCTIONS_FILE", CODE_DIR . "general-functions.php");
+    function GetGeneralFunctionsFile()
+    {
+        return GetCodeDir() . "general-functions.php";
+    }
     
     /**
-     * The file path of the paths file.
+     * Gets the file path of the paths file.
+     * @return string The file path.
      */
-    define("PATHS_FILE", DEFINITIONS_DIR . "paths.php");
+    function GetPathsFile()
+    {
+        return GetDefinitionsDir() . "paths.php";
+    }
     
     /**
-     * The file path of the identifier file.
+     * Gets the file path of the identifier file.
+     * @return string The file path.
      */
-    define("IDENTIFIER_FILE", DEFINITIONS_DIR . "identifiers.php");
+    function GetIdentifierFile()
+    {
+        return GetDefinitionsDir() . "identifiers.php";
+    }
     
     /**
-     * The file path of the validitaion info class file.
+     * Gets the file path of the validation info class file.
+     * @return string The file path.
      */
-    define("VALIDATIONINFOCLASS_FILE", CODE_DIR . "validation-info-class.php");
+    function GetValidationInfoClassFile()
+    {
+        return GetCodeDir() . "validation-info-class.php";
+    }
     
     /**
-     * The file path of the message form file.
+     * Gets the file path of the messag form file.
+     * @return string The file path.
      */
-    define("MESSAGEFORM_FILE", VIEW_DIR . "message-form.php");
+    function GetMessageFormFile()
+    {
+        return GetViewDir() . "message-form.php";
+    }
     
     /**
-     * The file path of the not authorized form file.
+     * Gets the file path of the not authorized file.
+     * @return string The file path.
      */
-    define("NOTAUTHORIZED_FILE", VIEW_DIR . "not-authorized.php");
+    function GetNotAuthorizedFile()
+    {
+        return GetViewDir() . "not-authorized.php";
+    }
     
     /**
-     * The file path of the exam parameters class file.
+     * Gets the file path of the exam parameters class file.
+     * @return string The file path.
      */
-    define("EXAMPARAMETERSCLASS_FILE", CODE_DIR . "examparameters-class.php");
+    function GetExamParametersClassFile()
+    {
+        return GetCodeDir() . "examparameters-class.php";
+    }
     
     /**
-     * The file path of the exam class file.
+     * Gets the file path of the exam class file.
+     * @return string The file path.
      */
-    define("EXAMCLASS_FILE", CODE_DIR . "exam-class.php");
+    function GetExamClassFile()
+    {
+        return GetCodeDir() . "exam-class.php";
+    }
     
     /**
-     * The file path of the language class file.
+     * Gets the file path of the language class file.
+     * @return string The file path.
      */
-    define("LANGUAGECLASS_FILE", CODE_DIR . "language-class.php");
+    function GetLanguageClassFile()
+    {
+        return GetCodeDir() . "language-class.php";
+    }
     
     /**
-     * The file path of the profile class file.
+     * Gets the file path of the profile class file.
+     * @return string The file path.
      */
-    define("PROFILECLASS_FILE", CODE_DIR . "profile-class.php");
+    function GetProfileClassFile()
+    {
+        return GetCodeDir() . "profile-class.php";
+    }
     
     /**
-     * The file path of the test info class file.
+     * Gets the file path of the test info class file.
+     * @return string The file path.
      */
-    define("TESTINFOCLASS_FILE", CODE_DIR . "testinfo-class.php");
+    function GetTestInfoClassFile()
+    {
+        return GetCodeDir() . "testinfo-class.php";
+    }
     
     /**
-     * The file path of the detailed test info class file.
+     * Gets the file path of the detailed test info class file.
+     * @return string The file path.
      */
-    define("DETAILEDTESTINFOCLASS_FILE", CODE_DIR . "detailedtestinfo-class.php");
+    function GetDetailTestInfoClassFile()
+    {
+        return GetCodeDir() . "detailedtestinfo-class.php";
+    }
     
     /**
-     * The file path of the question answer class file.
+     * Gets the file path of the question answer class file.
+     * @return string The file path.
      */
-    define("QUESTIONANSWERCLASS_FILE", CODE_DIR . "questionanswer-class.php");
+    function GetQuestionAnswerClassFile()
+    {
+        return GetCodeDir() . "questionanswer-class.php";
+    }
     
     /**
-     * The file path of the contact class file.
+     * Gets the file path of the contact class file.
+     * @return string The file path.
      */
-    define("CONTACTCLASS_FILE", CODE_DIR . "contact-class.php");
+    function GetContactClassFile()
+    {
+        return GetCodeDir() . "contact-class.php";
+    }
     
     /**
-     * The file path of the level info class file.
+     * Gets the file path of the level info class file.
+     * @return string The file path.
      */
-    define("LEVELINFOCLASS_FILE", CODE_DIR . "levelinfo-class.php");
+    function GetLevelInfoClassFile()
+    {
+        return GetCodeDir() . "levelinfo-class.php";
+    }
     
     /**
-     * The file path of the language experience class file.
+     * Gets the file path of the language experience class file.
+     * @return string The file path.
      */
-    define("LANGUAGEEXPERIENCECLASS_FILE", CODE_DIR . "languageexperience-class.php");
+    function GetLanguageExperiencesClassFile()
+    {
+        return GetCodeDir() . "languageexperience-class.php";
+    }
     
     /**
      * The file path of the question comment class file.
+     * @return string The file path.
      */
-    define("QUESTIONCOMMENTCLASS_FILE", CODE_DIR . "questioncomment-class.php");
+    function GetQuestionCommentClassFile()
+    {
+        return GetCodeDir() . "questioncomment-class.php";
+    }
     
     /**
-     * The file path of the experience option class file.
+     * Gets the file path of the experience option class file.
+     * @return string The file path.
      */
-    define("EXPERIENCEOPTIONCLASS_FILE", CODE_DIR . "experienceoption-class.php");
+    function GetExperienceOptionClassFile()
+    {
+        return GetCodeDir() . "experienceoption-class.php";
+    }
     
     /**
-     * The file path of the leo pair class file.
+     * Gets the file path of the leo pair class file.
+     * @return string The file path.
      */
-    define("LEOPAIRCLASS_FILE", CODE_DIR . "leopair-class.php");
+    function GetLeoPairClassFile()
+    {
+        return GetCodeDir() . "leopair-class.php";
+    }
     
     /**
-     * The file path of the error log file.
+     * Gets the file path of the error log file.
+     * @return string The file path.
      */
-    define("ERRORLOG_FILE", ERRORLOG_DIR . 'log.txt');
+    function GetErrorLogFile()
+    {
+        return GetErrorLogDir() . "log.txt";
+    }
     
 //Main paths.
 /******************************************************************************/
     
-    //Main directories.
     /**
-     * The file path of the main directory.
+     * Gets the file path of the main directory.
+     * @return string The file path.
      */
-    define("MAIN_DIR", PRIVATE_DIR . "main/");
+    function GetMainDir()
+    {
+        return GetPrivateDir() . "main/";
+    }
     
     /**
-     * The file path of the main view directory.
+     * Gets the file path of the main view directory.
+     * @return string The file path.
      */
-    define("MAINVIEW_DIR", MAIN_DIR . "view/");
+    function GetMainViewDir()
+    {
+        return GetMainDir() . "view/";
+    }
     
     /**
-     * The file path of the main model directory.
+     * Gets the file path of the main model directory.
+     * @return string The file path.
      */
-    define("MAINMODEL_DIR", MAIN_DIR . "model/");
-    
-    //Main file paths.
-    /**
-     * The file path of the main controller file.
-     */
-    define("MAINCONTROLLER_FILE", MAINCONTROLLER_DIR . "index.php");
+    function GetMainModelDir()
+    {
+        return GetMainDir() . "model/";
+    }
     
     /**
-     * The file path of the main model file.
+     * Gets the file path of the main controller file.
+     * @return string The file path.
      */
-    define("MAINMODEL_FILE", MAINMODEL_DIR . "model.php");
+    function GetMainControllerFile()
+    {
+        return GetMainControllerDir() . "index.php";
+    }
     
     /**
-     * The file path of the about file.
+     * Gets the file path of the main model file.
+     * @return The file path.
      */
-    define("ABOUT_FILE", MAINVIEW_DIR . "about-form.php");
+    function GetMainModelFile()
+    {
+        return GetMainModelDir() . "model.php";
+    }
     
     /**
-     * The file path of the contact file.
+     * Gets the file path of the about form file.
+     * @return string The file path.
      */
-    define("CONTACT_FILE", MAINVIEW_DIR . "contact-form.php");
+    function GetAboutFormFile()
+    {
+        return GetMainViewDir() . "about-form.php";
+    }
     
     /**
-     * The file path of the home file.
+     * Gets the file path of the contact form file.
+     * @return string The file path.
      */
-    define("HOME_FILE", MAINVIEW_DIR . "home-form.php");
+    function GetContactFormFile()
+    {
+        return GetMainViewDir() . "contact-form.php";
+    }
+    
+    /**
+     * The file path of the home form file.
+     * @return string The file path.
+     */
+    function GetHomeFormFile()
+    {
+        return GetMainViewDir() . "home-form.php";
+    }
     
     
 //Admin paths.
@@ -361,251 +636,447 @@
     
     //Admin directories.
     /**
-     * The file path of the admin directory.
+     * Gets the file path of the admin directory.
+     * @return string The file path.
      */
-    define("ADMIN_DIR", PRIVATE_DIR . "admin/");
+    function GetAdminDir()
+    {
+        return GetPrivateDir() . "admin/";
+    }
     
     /**
-     * The file path of the admin view directory.
+     * Gets the file path of the admin view directory.
+     * @return string The file path.
      */
-    define("ADMINVIEW_DIR", ADMIN_DIR . "view/");
+    function GetAdminViewDir()
+    {
+        return GetAdminDir() . "view/";
+    }
     
     /**
-     * The file path of the admin model directory.
+     * Gets the file path of the admin model directory.
+     * @return string The file path.
      */
-    define("ADMINMODEL_DIR", ADMIN_DIR . "model/");
+    function GetAdminModelDir()
+    {
+        return GetAdminDir() . "model/";
+    }
     
     //Admin file paths.
     /**
-     * The file path of the admin model file.
+     * Gets the file path of the amdin model file.
+     * @return string The file path.
      */
-    define("ADMINMODEL_FILE", ADMINMODEL_DIR . "model.php");
+    function GetAdminModelFile()
+    {
+        return  GetAdminModelDir() . "model.php";
+    }
     
     /**
-     * The file path of the admin controller file.
+     * Gets the file path of the admin controller file.
+     * @return string The file path.
      */
-    define("ADMINCONTROLLER_FILE", ADMINCONTROLLER_DIR . "index.php");
+    function GetAdminControllerFile()
+    {
+        return GetAdminControllerDir() . "index.php";
+    }
     
     /**
-     * The file path of the login form file.
+     * Gets the file path of the login form file.
+     * @return string The file path.
      */
-    define("LOGINFORM_FILE", ADMINVIEW_DIR . "login-form.php");
+    function GetLoginFormFile()
+    {
+        return GetAdminViewDir() . "login-form.php";
+    }
     
     /**
-     * The file path of the add role form file.
+     * Gets the file path of the add role form file.
+     * @return string The file path.
      */
-    define("ADDROLEFORM_FILE", ADMINVIEW_DIR . "add-role-form.php");
+    function GetAddRoleFormFile()
+    {
+        return GetAdminViewDir() . "add-role-form.php";
+    }
     
     /**
-     * The file path of the add user form file.
+     * Gets the file path of the add user form file.
+     * @return string The file path.
      */
-    define("ADDUSERFORM_FILE", ADMINVIEW_DIR . "add-user-form.php");
+    function GetAddUserFormFile()
+    {
+        return GetAdminViewDir() . "add-user-form.php";
+    }
     
     /**
-     * The file path of the control panel form file.
+     * Gets the file path of the control panel form file.
+     * @return string The file path.
      */
-    define("CONTROLPANELFORM_FILE", ADMINVIEW_DIR . "control-panel-form.php");
+    function GetControlPanelFormFile()
+    {
+        return GetAdminViewDir() . "control-panel-form.php";
+    }
     
     /**
-     * The file path of the edit role form file.
+     * Gets the file path of the edit role form.
+     * @return string The file path.
      */
-    define("EDITROLEFORM_FILE", ADMINVIEW_DIR . "edit-role-form.php");
+    function GetEditRoleFormFile()
+    {
+        return GetAdminViewDir() . "edit-role-form.php";
+    }
     
     /**
-     * The file path of the edit user form file.
+     * Gets the file path of the edit user form file.
+     * @return string The file path.
      */
-    define("EDITUSERFORM_FILE", ADMINVIEW_DIR . "edit-user-form.php");
+    function GetEditUserFormFile()
+    {
+        return GetAdminViewDir() . "edit-user-form.php";
+    }
     
     /**
-     * The file path of the manage roles form file.
+     * Gets the file path of the manage roles form file.
+     * @return string The file path.
      */
-    define("MANAGEROLESFORM_FILE", ADMINVIEW_DIR . "manage-roles-form.php");
+    function GetMangageRolesFormFile()
+    {
+        return GetAdminViewDir() . "manage-roles-form.php";
+    }
     
     /**
-     * The file path of the manage users form file.
+     * Gets the file path of the manage users form file.
+     * @return string The file path.
      */
-    define("MANAGEUSERSFORM_FILE", ADMINVIEW_DIR . "manage-users-form.php");
+    function GetManageUsersFormFile()
+    {
+        return GetAdminViewDir() . "manage-users-form.php";
+    }
     
     /**
-     * The file path of the manage languages form file.
+     * Gets the file path of the manage languages form file.
+     * @return string The file path.
      */
-    define("MANAGELANGUAGESFORM_FILE", ADMINVIEW_DIR . "manage-languages-form.php");
+    function GetManageLanguagesFormFile()
+    {
+        return GetAdminViewDir() . "manage-languages-form.php";
+    }
     
     /**
-     * The path of the view user form file.
+     * Gets the file path of the view user form file.
+     * @return string The file path.
      */
-    define("VIEWUSERFORM_FILE", ADMINVIEW_DIR . "view-user-form.php");
+    function GetViewUserFormFile()
+    {
+        return GetAdminViewDir() . "view-user-form.php";
+    }
     
     /**
-     * The path of the add/edit language form file.
+     * Gets the file path of the add/edit langauge form file.
+     * @return string The file path.
      */
-    define("ADDEDITLANGUAGEFORM_FILE", ADMINVIEW_DIR . "add-edit-language-form.php");
+    function GetAddEditLangaugeFormFile()
+    {
+        return GetAdminViewDir() . "add-edit-language-form.php";
+    }
     
     /**
-     * The file path of the view language form file.
+     * The file path of the view langauge form file.
+     * @return string The file path.
      */
-    define("VIEWLANGUAGEFORM_FILE", ADMINVIEW_DIR . "view-language-form.php");
+    function GetViewLanguageFormFile()
+    {
+        return GetAdminViewDir() . "view-language-form.php";
+    }
     
     /**
-     * The file path of the manage languages form file.
+     * Gets the file path of the manage languages form file.
+     * @return string The file path.
      */
-    define("MANAGEQUESTIONSFORM_FILE", ADMINVIEW_DIR . "manage-questions-form.php");
+    function GetMangageQuestionsFormFile()
+    {
+        return GetAdminViewDir() . "manage-questions-form.php";
+    }
+   
+    /**
+     * Gets the file path of the view question form file.
+     * @return string The file path.
+     */
+    function GetViewQuestionFormFile()
+    {
+        return GetAdminViewDir() . "view-question-form.php";
+    }
     
     /**
-     * The file path of the view question form file.
+     * Gets the file path of the add/edit question form file.
+     * @return string The file path.
      */
-    define("VIEWQUESTIONFORM_FILE", ADMINVIEW_DIR . "view-question-form.php");
+    function GetAddEditQuestionFormFile()
+    {
+        return GetAdminViewDir() . "add-edit-question-form.php";
+    }
     
     /**
-     * The file path of the add/edit question form file.
+     * Gets the file path of the edit exam parameters form file.
+     * @return string The file path.
      */
-    define("ADDEDITQUESTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-question-form.php");
+    function GetEditExamParametersFormFile()
+    {
+        return GetAdminViewDir() . "edit-examparameters-form.php";
+    }
     
     /**
-     * The file path of the edit exam parameters form file.
+     * Gets the file path of the view exam parameters form file.
+     * @return string The file path.
      */
-    define("EDITEXAMPARAMETERSFORM_FILE", ADMINVIEW_DIR . "edit-examparameters-form.php");
+    function GetViewExamParametersFormFile()
+    {
+        return GetAdminViewDir() . "view-examparameters-form.php";
+    }
     
     /**
-     * The file path of the view exam parameters form file.
+     * Gets the file path of the manage test entries form file.
+     * @return string The file path.
      */
-    define("VIEWEXAMPARAMETERSFORM_FILE", ADMINVIEW_DIR . "view-examparameters-form.php");
+    function GetManageTestentriesFormFile()
+    {
+        return GetAdminViewDir() . "manage-testentries-form.php";
+    }
     
     /**
-     * The file path of the manage test entries form file.
+     * Gets the file path of the view test entry form file.
+     * @return string The file path.
      */
-    define("MANAGETESTENTRIESFORM_FILE", ADMINVIEW_DIR . "manage-testentries-form.php");
+    function GetViewTestEntryFormFile()
+    {
+        return GetAdminViewDir() . "view-testentry-form.php";
+    }
     
     /**
-     * The file path of the view test entry form file.
+     * Gets the file path of the view test form file.
+     * @return string The file path.
      */
-    define("VIEWTESTENTRYFORM_FILE", ADMINVIEW_DIR . "view-testentry-form.php");
+    function GetViewTestFormFile()
+    {
+        return GetAdminViewDir() . "view-test-form.php";
+    }
     
     /**
-     * The file path of the view test form file.
+     * Gets the file path of the manage contacts form file.
+     * @return string The file path.
      */
-    define("VIEWTESTFORM_FILE", ADMINVIEW_DIR . "view-test-form.php");
+    function GetManageContactsFormFile()
+    {
+        return GetAdminViewDir() . "manage-contacts-form.php";
+    }
     
     /**
-     * The file path of the manage contacts form file.
+     * Gets the file path of the add/edit contact form file.
+     * @return string The file path.
      */
-    define("MANAGECONTACTSFORM_FILE", ADMINVIEW_DIR . "manage-contacts-form.php");
+    function GetAddEditContactFormFile()
+    {
+        return GetAdminViewDir() . "add-edit-contact-form.php";
+    }
     
     /**
-     * The file path of the add/edit contact form file.
+     * Gets the file path of the process language import excel file.
+     * @return string The file path.
      */
-    define("ADDEDITCONTACTFORM_FILE", ADMINVIEW_DIR . "add-edit-contact-form.php");
+    function GetProcessLanguageImportExcelFile()
+    {
+        return GetAdminViewDir() . "process-languageimportexcel.php";
+    }
     
     /**
-     * The file path of the file to use to import languages via Excel sheets.
+     * Gets the file path of the process language import word file.
+     * @return string The file path.
      */
-    define("PROCESSLANGUAGEIMPORTEXCEL_FILE", ADMINVIEW_DIR . "process-languageimportexcel.php");
+    function GetProcessLanguageImportWordFile()
+    {
+        return GetAdminViewDir() . "process-languageimportword.php";
+    }
     
     /**
-     * The file path of the file to use to import languages via Word documents.
+     * Gets the file path of the add/edit level info form file.
+     * @return string The file path.
      */
-    define("PROCESSLANGUAGEIMPORTWORD_FILE", ADMINVIEW_DIR . "process-languageimportword.php");
+    function GetAddEditLevelInfoFormFile()
+    {
+        return GetAdminViewDir() . "add-edit-levelinfo-form.php";
+    }
     
     /**
-     * The file path of the add/edit level info form file.
+     * Gets the file path of the view level info form file.
+     * @return string The file path.
      */
-    define("ADDEDITLEVELINFOFORM_FILE", ADMINVIEW_DIR . "add-edit-levelinfo-form.php");
+    function GetViewLevelInfoFormFile()
+    {
+        return GetAdminViewDir() . "view-levelinfo-form.php";
+    }
     
     /**
-     * The file path of the view level info form file.
+     * Gets the file path of the manage level infos form file.
+     * @return string The file path.
      */
-    define("VIEWLEVELINFOFORM_FILE", ADMINVIEW_DIR . "view-levelinfo-form.php");
+    function GetManageLevelInfosFormFile()
+    {
+        return GetAdminViewDir() . "manage-levelinfos-form.php";
+    }
     
     /**
-     * The file path of the manage level infos form file.
+     * Gets the file path of the add/edit langauge experiences form file.
+     * @return string The file path.
      */
-    define("MANAGELEVELINFOSFORM_FILE", ADMINVIEW_DIR . "manage-levelinfos-form.php");
+    function GetAddEditLanguageExperienceFormFile()
+    {
+        return GetAdminViewDir() . "add-edit-languageexperiences-form.php";
+    }
     
     /**
-     * The file path of the edit language experiences form file.
+     * Gets the file path of the view language experiences form file.
+     * @return string The file path.
      */
-    define("ADDEDITLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "add-edit-languageexperiences-form.php");
+    function GetViewLanguageExperienceFormFile()
+    {
+        return GetAdminViewDir() . "view-languageexperiences-form.php";
+    }
     
     /**
-     * The file path of the view language experiences form file.
+     * Gets the file path of the manage language experiences form file.
+     * @return string The file path.
      */
-    define("VIEWLANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "view-languageexperiences-form.php");
+    function GetManageLanguageExperiencesFormFile()
+    {
+        return GetAdminViewDir() . "manage-languageexperiences-form.php";
+    }
     
     /**
-     * The file path of the manage language experiences form file.
+     * Gets the file path of the view question comments form file.
+     * @return string The file path.
      */
-    define("MANAGELANGUAGEEXPERIENCESFORM_FILE", ADMINVIEW_DIR . "manage-languageexperiences-form.php");
+    function GetViewQuestionCommentsFormFile()
+    {
+        return GetAdminViewDir() . "view-questioncomments-form.php";
+    }
     
     /**
-     * The file path of the view question comments form file.
+     * Gets the file path o fthe add/edit experience option form file.
+     * @return string The file path.
      */
-    define("VIEWQUESTIONCOMMENTSFORM_FILE", ADMINVIEW_DIR . "view-questioncomments-form.php");
+    function GetAddEditExperienceOptionFormFile()
+    {
+        return GetAdminViewDir() . "add-edit-experienceoption-form.php";
+    }
     
     /**
-     * The file path of the add/edit experience option form file.
+     * Gets the file path of the view experience option form file.
+     * @return string The file path.
      */
-    define("ADDEDITEXPERIENCEOPTIONFORM_FILE", ADMINVIEW_DIR . "add-edit-experienceoption-form.php");
+    function GetViewExperienceOptionFormFile()
+    {
+        return GetAdminViewDir() . "view-experienceoption-form.php";
+    }
     
     /**
-     * The file path of the view experience option form file.
+     * Gets the file path of the manage experience options form file.
+     * @return string The file path.
      */
-    define("VIEWEXPERIENCEOPTIONFORM_FILE", ADMINVIEW_DIR . "view-experienceoption-form.php");
-    
-    /**
-     * The file path of the manage experience options form file.
-     */
-    define("MANAGEEXPERIENCEOPTIONSFORM_FILE", ADMINVIEW_DIR . "manage-experienceoptions-form.php");
+    function GetManageExperienceOptionsFormFile()
+    {
+        return GetAdminViewDir() . "manage-experienceoptions-form.php";
+    }
     
 //Exam paths.
 /******************************************************************************/
     
     /**
      * The file path of the exam directory.
+     * @return string The file path.
      */
-    define("EXAM_DIR", PRIVATE_DIR . "exam/");
+    function GetExamDir()
+    {
+        return GetPrivateDir() . "exam/";
+    }
     
     /**
-     * The file path of the exam view directory.
+     * Gets the file path of th exam view directory.
+     * @return string The file path.
      */
-    define("EXAMVIEW_DIR", EXAM_DIR . "view/");
+    function GetExamViewDir()
+    {
+        return GetExamDir() . "view/";
+    }
     
     /**
-     * The file path of the exam model directory.
+     * Gets the file path of the exam model directory.
+     * @return string The file path.
      */
-    define("EXAMMODEL_DIR", EXAM_DIR . "model/");
+    function GetExamModelDir()
+    {
+        return GetExamDir() . "model/";
+    }
     
     /**
-     * The file path of the exam controller file.
+     * Gets the file path of the exam controller file.
+     * @return string The file path.
      */
-    define("EXAMCONTROLLER_FILE", EXAMCONTROLLER_DIR . "index.php");
+    function GetExamControllerFile()
+    {
+        return GetExamControllerDir() . "index.php";
+    }
     
     /**
-     * The file path of the exam model file.
+     * Gets the file path of the exam model file.
+     * @return string The file path.
      */
-    define("EXAMMODEL_FILE", EXAMMODEL_DIR . "model.php");
+    function GetExamModelFile()
+    {
+        return GetExamModelDir() . "model.php";
+    }
     
     /**
-     * The file path of the key code form file.
+     * Gets the file path of the key code form file.
+     * @return string The file path.
      */
-    define("KEYCODEFORM_FILE", EXAMVIEW_DIR . "keycode-form.php");
+    function GetKeyCodeFormFile()
+    {
+        return GetExamViewDir() . "keycode-form.php";
+    }
     
     /**
-     * The file path of the language select form file.
+     * Gets the file path of the language select form file.
+     * @return string The file path.
      */
-    define("SELECTLANGUAGEFORM_FILE", EXAMVIEW_DIR . "select-language-form.php");
+    function GetSelectLanguageFormFile()
+    {
+        return GetExamViewDir() . "select-language-form.php";
+    }
     
     /**
-     * The file path of the create profile form file.
+     * Gets the file path of the create profile form file.
+     * @return string The file path.
      */
-    define("CREATEPROFILEFORM_FILE", EXAMVIEW_DIR . "create-profile-form.php");
+    function GetCreateProfileFormFile()
+    {
+        return GetExamViewDir() . "create-profile-form.php";
+    }
     
     /**
-     * The file path of the view test quetsion form file.
+     * Gets the file path of the view test question form file.
+     * @return string The file path.
      */
-    define("TESTQUESTIONVIEWFORM_FILE", EXAMVIEW_DIR . "testquestion-view-form.php");
+    function GetTestQuestionViewFormFile()
+    {
+        return GetExamViewDir() . "testquestion-view-form.php";
+    }
     
     /**
-     * The file path of the vew test results form file.
+     * Gets the file path of the view test results form file.
+     * @return string The file path.
      */
-    define("VIEWTESTRESULTSFORM_FILE", EXAMVIEW_DIR . "view-testresults-form.php");
+    function GetViewTestResultsFormFile()
+    {
+        return GetExamViewDir() . "view-testresults-form.php";
+    }
 ?>

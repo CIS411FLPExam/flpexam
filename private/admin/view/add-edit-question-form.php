@@ -1,12 +1,12 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
 <?php
     if (isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
 
@@ -17,11 +17,11 @@
 <?php } ?>
 
 <div class="formGroup">
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSQUESTIONADDEDIT_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetProcessQuestionAddEditAction())); ?>" method="post">
         <?php if (isset($questionID)) { ?>
-            <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+            <input type="hidden" name="<?php echo(GetQuestionIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
         <?php } else {?>
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
         <?php } ?>
 
         <div class="formSection">
@@ -42,7 +42,7 @@
 
         <div class="formSection">
             <label>Question<span class="redText">*</span>:</label>
-            <textarea name="<?php echo(NAME_IDENTIFIER); ?>" class='qa' rows="5" cols="70" required><?php echo(htmlspecialchars($name)); ?></textarea>
+            <textarea name="<?php echo(GetNameIdentifier()); ?>" class='qa' rows="5" cols="70" required><?php echo(htmlspecialchars($name)); ?></textarea>
             <div class="clear"></div>
         </div>
 
@@ -59,9 +59,9 @@
                     <b>Answer:</b>
                     <br />
                     <textarea id='input<?php echo($i); ?>' type='text' class='qa' name='input<?php echo($i); ?>' required><?php
-                            if (isset($answer[NAME_IDENTIFIER]))
+                            if (isset($answer[GetNameIdentifier()]))
                             {
-                                echo(htmlspecialchars($answer[NAME_IDENTIFIER]));
+                                echo(htmlspecialchars($answer[GetNameIdentifier()]));
                             }
                             else if (is_string($answer))
                             {
@@ -86,11 +86,11 @@
     <?php
         if (isset($questionID))
         {
-            $cancelAction = GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . QUESTIONID_IDENTIFIER . '=' . urlencode($questionID);
+            $cancelAction = GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction()) . '&' . GetQuestionIdIdentifier() . '=' . urlencode($questionID);
         }
         else
         {
-            $cancelAction = GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION) . '&' . LANGUAGEID_IDENTIFIER . '=' . urlencode($languageID);
+            $cancelAction = GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction()) . '&' . GetLanguageIdIdentifier() . '=' . urlencode($languageID);
         }
     ?>
     <form class="inline" action="<?php echo($cancelAction) ?>" method="post">
@@ -101,5 +101,5 @@
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

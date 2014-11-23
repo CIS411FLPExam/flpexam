@@ -1,6 +1,6 @@
 <?php
-    include( HEADER_FILE );
-    include( CONTROLPANEL_FILE );
+    include( GetHeaderFile() );
+    include( GetControlPanelFile() );
 ?>
 <!-- Start main content here -->
 
@@ -8,26 +8,26 @@
 <?php
     if (isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
-<?php if (userIsAuthorized(ROLEADD_ACTION)) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, ROLEADD_ACTION)); ?>" method="post">
+<?php if (userIsAuthorized(GetRoleAddAction())) { ?>
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetRoleAddAction())); ?>" method="post">
         <input type="submit" value="Add Role" />
     </form>
     
     <br />
 <?php } ?>
-<form onsubmit="return ConfirmationPrompt('Delete the selected roles?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,ROLEDELETE_ACTION)) ?>" method="post">
+<form onsubmit="return ConfirmationPrompt('Delete the selected roles?');" action="<?php echo(GetControllerScript(GetAdminControllerFile(),GetRoleDeleteAction())) ?>" method="post">
     <div class="datatable">
         <table id="roles" class="tablesorter">
             <thead>
                 <tr>
                     <th><b>Name</b></th> <th><b>Description</b></th>
-                    <?php if (userIsAuthorized(ROLEEDIT_ACTION)) { ?>
+                    <?php if (userIsAuthorized(GetRoleEditAction())) { ?>
                         <th></th>
                     <?php } ?>
-                    <?php if (userIsAuthorized(ROLEDELETE_ACTION)) { ?>
+                    <?php if (userIsAuthorized(GetRoleDeleteAction())) { ?>
                         <th></th>
                     <?php } ?>
                 </tr>
@@ -43,16 +43,16 @@
 
                     echo "<tr>";
                     echo "<td>$name</td><td>$desc</td>";
-                    if (userIsAuthorized(ROLEEDIT_ACTION)) {
+                    if (userIsAuthorized(GetRoleEditAction())) {
             ?>
                 <td>
                     <?php if ($vital == '0') { ?>
-                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, ROLEEDIT_ACTION). '&' . ROLEID_IDENTIFIER . '=' . urlencode($role_ID)); ?>');" />
+                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetRoleEditAction()). '&' . GetRoleIdIDentifier() . '=' . urlencode($role_ID)); ?>');" />
                     <?php } ?>
                 </td>
             <?php
                     }
-                    if (userIsAuthorized(ROLEDELETE_ACTION)) {
+                    if (userIsAuthorized(GetRoleDeleteAction())) {
                         echo "<td>";
                         if ($vital == '0')
                         {
@@ -69,7 +69,7 @@
     </div>
     <br/>
     <input type="hidden" name="numListed" value="<?php echo count($results); ?>"/>
-    <?php if (userIsAuthorized(ROLEDELETE_ACTION)) { ?>
+    <?php if (userIsAuthorized(GetRoleDeleteAction())) { ?>
         <input type="submit" value="Delete Selected" />
         <input type="button" value="Select All" onclick="CheckAll();" />
     <?php } ?>
@@ -77,7 +77,7 @@
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>
 <script>
     $( document ).ready( function( ) 

@@ -1,19 +1,19 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!--Start main content-->
 
 <h1>Contacts</h1>
 
 <?php
-    $userCanAdd = userIsAuthorized(CONTACTADD_ACTION);
-    $userCanEdit = userIsAuthorized(CONTACTEDIT_ACTION);
-    $userCanDelete = userIsAuthorized(CONTACTDELETE_ACTION);
+    $userCanAdd = userIsAuthorized(GetContactAddAction());
+    $userCanEdit = userIsAuthorized(GetContactEditAction());
+    $userCanDelete = userIsAuthorized(GetContactDeleteAction());
 ?>
 
 <?php if($userCanAdd) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTADD_ACTION)); ?>" method="post">
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetContactAddAction())); ?>" method="post">
         <input type="submit" value="Add Contact" />
     </form>
 
@@ -21,7 +21,7 @@
 <?php } ?>
 
 <?php if(count($contacts) > 0) { ?>
-    <form onsubmit="return ConfirmationPrompt('Delete the selected contacts?');" action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, CONTACTDELETE_ACTION ) ); ?>" method="post">
+    <form onsubmit="return ConfirmationPrompt('Delete the selected contacts?');" action="<?php echo( GetControllerScript(GetAdminControllerFile(), GetContactDeleteAction() ) ); ?>" method="post">
         <div class="datatable">
             <table id="contacts" class="tablesorter">
                 <thead>
@@ -51,14 +51,14 @@
                             <?php if($active == TRUE) { ?>
                                 Yes
                             <?php } else if ($userCanEdit) { ?>
-                                <input type="button" value="Activate" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTACTIVATE_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>');" />
+                                <input type="button" value="Activate" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetContactActivateAction() . "&". GetContactsIdIdentifier() . "=" . urlencode($contactID))); ?>');" />
                             <?php } else { ?>
                                     No
                             <?php } ?>
                         </td>
                         <?php if ($userCanEdit) { ?>
                             <td>
-                                <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, CONTACTEDIT_ACTION . "&". CONTACTID_IDENTIFIER . "=" . urlencode($contactID))); ?>');" />
+                                <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetContactEditAction() . "&". GetContactsIdIdentifier() . "=" . urlencode($contactID))); ?>');" />
                             </td>
                         <?php } ?>
                         <?php if ($userCanDelete) { ?>
@@ -86,7 +86,7 @@
 <?php } ?>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>
 <script>
     $( document ).ready( function( ) 

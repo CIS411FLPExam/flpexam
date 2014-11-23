@@ -1,5 +1,5 @@
 <?php
-require_once(VALIDATIONINFOCLASS_FILE);
+require_once(GetValidationInfoClassFile());
 
 /**
  * The language experience option pair class.

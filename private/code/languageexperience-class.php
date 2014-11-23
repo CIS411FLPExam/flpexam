@@ -1,6 +1,6 @@
 <?php
 
-require_once(VALIDATIONINFOCLASS_FILE);
+require_once(GetValidationInfoClassFile());
 
 class LanguageExperience
 {

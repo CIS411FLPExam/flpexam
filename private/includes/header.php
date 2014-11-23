@@ -22,25 +22,25 @@
 
         <title><?php echo($dTitle); ?></title>
 
-        <link rel='shortcut icon' href='<?php echo(ICON_FILE); ?>' />
+        <link rel='shortcut icon' href='<?php echo(GetIconFile()); ?>' />
 
-        <link rel='stylesheet' href='<?php echo(VALIDATIONCSS_FILE); ?>' />
-        <link rel='stylesheet' href='<?php echo(MAINCSS_FILE); ?>' />
-        <link rel='stylesheet' href='<?php echo(NAVBARCSS_FILE); ?>' />
+        <link rel='stylesheet' href='<?php echo(GetValidationCssFile()); ?>' />
+        <link rel='stylesheet' href='<?php echo(GetMainCssFile()); ?>' />
+        <link rel='stylesheet' href='<?php echo(GetNavbarCssFile()); ?>' />
 
-        <script type='text/javascript' src='<?php echo(JQUERY_FILE); ?>'></script>
-        <script type='text/javascript' src='<?php echo(MAINJS_FILE); ?>'></script>
-        <script type='text/javascript' src='<?php echo(NAVBARJS_FILE); ?>'></script>
-        <script type='text/javascript' src='<?php echo(ATTRIBUTES_FILE); ?>'></script>
-        <script type='text/javascript' src='<?php echo(JQUERYTABLESORTER_FILE); ?>'></script>
-        <script type='text/javascript' src='<?php echo(JQUERYVALIDATE_FILE); ?>'></script>
-        <script type='text/javascript' src='<?php echo(DYNAMICCOLLECTIONJS_FILE); ?>'></script>
+        <script type='text/javascript' src='<?php echo(GetJQueryFile()); ?>'></script>
+        <script type='text/javascript' src='<?php echo(GetMainJSFile()); ?>'></script>
+        <script type='text/javascript' src='<?php echo(GetNavbarJSFile()); ?>'></script>
+        <script type='text/javascript' src='<?php echo(GetAttributesFile()); ?>'></script>
+        <script type='text/javascript' src='<?php echo(GetJQueryTableSorterFile()); ?>'></script>
+        <script type='text/javascript' src='<?php echo(GetJQueryValidateFile()); ?>'></script>
+        <script type='text/javascript' src='<?php echo(GetDynamicCollectionsJSFile()); ?>'></script>
     </head>
     <body>        
         <div id="wrapper">
             <header class="centerText">
                 <?php if(loggedIn()) { ?>
-                    <span class="username"><?php echo(htmlspecialchars($_SESSION[USERNAME_IDENTIFIER])); ?></span>
+                    <span class="username"><?php echo(htmlspecialchars($_SESSION[GetUserNameIdentifier()])); ?></span>
                 <?php }?>
                 <div class="clear"></div>
                 <div class="inlineBlock centerText logoDiv">
@@ -52,7 +52,7 @@
             </header>
             <?php if(loggedIn()) { ?>
             <nav id="navbar">
-                <?php include( NAVBAR_FILE ); ?>
+                <?php include( GetNavbarFile() ); ?>
             </nav>
             <?php } ?>
             <article id="content" class="<?php if(loggedIn()) { echo('shiftContent'); } ?>">

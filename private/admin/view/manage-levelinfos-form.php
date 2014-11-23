@@ -1,22 +1,22 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!--Start main content-->
 
 <?php
-    $userCanAdd = userIsAuthorized(LEVELINFOADD_ACTION);
-    $userCanView = userIsAuthorized(LEVELINFOVIEW_ACTION);
-    $userCanEdit = userIsAuthorized(LEVELINFOEDIT_ACTION);
-    $userCanDelete = userIsAuthorized(LEVELINFODELETE_ACTION);
+    $userCanAdd = userIsAuthorized(GetLevelInfoAddAction());
+    $userCanView = userIsAuthorized(GetLevelInfoViewAction());
+    $userCanEdit = userIsAuthorized(GetLevelInfoEditAction());
+    $userCanDelete = userIsAuthorized(GetLevelInfoDeleteAction());
 ?>
 
 <h1><?php echo(htmlspecialchars($languageName)); ?> Level Information</h1>
 
 <?php if ($userCanAdd) { ?>
     <div class="formGroup">
-        <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOADD_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
+        <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLevelInfoAddAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
             <input type="submit" value="Add Level Info" />
         </form>
     </div>
@@ -24,8 +24,8 @@
 
 <div class="formGroup">
     <?php if (count($levelinfos) > 0) { ?>
-        <form onsubmit="return ConfirmationPrompt('Delete the selected level\'s information?');" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFODELETE_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
+        <form onsubmit="return ConfirmationPrompt('Delete the selected level\'s information?');" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLevelInfoDeleteAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($languageID)); ?>" />
             <div class="datatable">
                 <table id="levelInfos" class="tablesorter">
                     <thead>
@@ -48,12 +48,12 @@
                                 <td><?php echo(htmlspecialchars($levelInfo->GetName())); ?></td>
                                 <?php if ($userCanView) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOVIEW_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . htmlspecialchars($levelInfo->GetId()));?>');" />
+                                        <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetLevelInfoViewAction()) . '&' . GetLevelInfoIdIdentifier() . '=' . htmlspecialchars($levelInfo->GetId()));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanEdit) { ?>
                                     <td class="centerText">
-                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LEVELINFOEDIT_ACTION) . '&' . LEVELINFOID_IDENTIFIER . '=' . htmlspecialchars($levelInfo->GetId()));?>');" />
+                                        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetLevelInfoEditAction()) . '&' . GetLevelInfoIdIdentifier() . '=' . htmlspecialchars($levelInfo->GetId()));?>');" />
                                     </td>
                                 <?php } ?>
                                 <?php if ($userCanDelete) { ?>
@@ -83,7 +83,7 @@
 
 <!--End main content-->
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>
 
 <script>

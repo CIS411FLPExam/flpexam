@@ -1,5 +1,5 @@
 <?php
-require_once(VALIDATIONINFOCLASS_FILE);
+require_once(GetValidationInfoClassFile());
 
 /**
  * The experience option class.

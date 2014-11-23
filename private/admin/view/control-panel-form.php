@@ -1,9 +1,9 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
-<?php include(CONTROLPANEL_FILE); ?>
+<?php include(GetControlPanelFile()); ?>
 
 <br />
 
@@ -11,5 +11,5 @@
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

@@ -1,6 +1,6 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!-- Start main content here -->
 <h1>Test Entry</h1>
@@ -60,11 +60,11 @@
             <label>Date Submitted:</label>
             <?php echo(htmlspecialchars($testInfo->GetDate())); ?>
         </div>
-        <?php if (userIsAuthorized(TESTVIEW_ACTION)) { ?>
+        <?php if (userIsAuthorized(GetTestViewAction())) { ?>
             <div class="divider"></div>
             <div class="formSection">
-                <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTVIEW_ACTION)); ?>" method="post">
-                    <input type="hidden" name="<?php echo(TESTID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
+                <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetTestViewAction())); ?>" method="post">
+                    <input type="hidden" name="<?php echo(GetTestIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
                     <input type="submit" value="View Test" />
                 </form>
             </div>
@@ -104,5 +104,5 @@
 <div class="clear"></div>
 <!-- End main content here -->
 <?php
-    include(FOOTER_FILE); 
+    include(GetFooterFile()); 
 ?>

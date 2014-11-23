@@ -1,6 +1,6 @@
 <?php
-    include( HEADER_FILE );
-    include( CONTROLPANEL_FILE );
+    include( GetHeaderFile() );
+    include( GetControlPanelFile() );
 ?>
 <!-- Start main content here -->
 <h1>Question</h1>
@@ -39,7 +39,7 @@
     ?>
         <div class="formSection">
             <label>Answer <?php echo(htmlspecialchars($i)); ?>:</label>
-            <div class="displayBox"><?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?></div>
+            <div class="displayBox"><?php echo(htmlspecialchars($answer[GetNameIdentifier()])); ?></div>
             <div class="clear"></div>
         </div>
 
@@ -79,8 +79,8 @@
             <?php echo(htmlspecialchars($totalTimesFlagged)); ?>
         </b>
         time(s).
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONCOMMENTSVIEW_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetQuestionCommentsViewAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetQuestionIdIdentifier()) ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
             <input type="submit" value="View Comments" />
         </form>
     </div>
@@ -88,13 +88,13 @@
         $i = 1;
         foreach ($answers as $answer)
         { 
-            $answerID = $answer[ANSWERID_IDENTIFIER];
+            $answerID = $answer[GetAnswerIdIdentifier()];
     ?>
         <div class="divider"></div>
         
         <div class="formSection">
             The answer
-            <b>"<?php echo(htmlspecialchars($answer[NAME_IDENTIFIER])); ?>"</b>
+            <b>"<?php echo(htmlspecialchars($answer[GetNameIdentifier()])); ?>"</b>
             has been chosen 
             <b><?php echo(htmlspecialchars($answer['Chosen'])); ?></b>
             time(s).
@@ -107,32 +107,32 @@
 
 <br />
 
-<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONEDIT_ACTION)); ?>" method="post">
-    <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+<form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetQuestionEditAction())); ?>" method="post">
+    <input type="hidden" name="<?php echo(GetQuestionIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
     <input type="submit" value="Edit" />
 </form>
 
-<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONSTATISTICSRESET_ACTION)) ?>" method="post">
-    <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+<form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetQuestionStatisticsResetAction())) ?>" method="post">
+    <input type="hidden" name="<?php echo(GetQuestionIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
     <input type="submit" value="Reset Stats" />
 </form>
 
-<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, QUESTIONADD_ACTION)); ?>" method="post">
-    <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+<form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetQuestionAddAction())); ?>" method="post">
+    <input type="hidden" name="<?php echo(GetQuestionIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
     <input type="submit" value="Add New Question" />
 </form>
 
-<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEVIEW_ACTION)); ?>" method="post">
-    <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+<form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageViewAction())); ?>" method="post">
+    <input type="hidden" name="<?php echo(GetQuestionIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
     <input type="submit" value="View Language" />
 </form>
 
-<form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
-    <input type="hidden" name="<?php echo(QUESTIONID_IDENTIFIER); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
+<form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction())); ?>" method="post">
+    <input type="hidden" name="<?php echo(GetQuestionIdIdentifier()); ?>" value="<?php echo(htmlspecialchars($questionID)); ?>" />
     <input type="hidden" name="Level" value="<?php echo(htmlspecialchars($level)); ?>" />
     <input type="submit" value="Manage Questions" />
 </form>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

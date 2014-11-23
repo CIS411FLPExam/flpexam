@@ -1,192 +1,326 @@
 <?php
 
     /**
-     * The language experience option I.D. identifier.
+     * Gets the experience option I.D. identifier.
+     * @return string The identifier.
      */
-    define("EXPERIENCEOPTIONID_IDENTIFIER", "OptionID");
+    function GetExperienceOptionIdIdentifier()
+    {
+        return "OptionID";
+    }
 
     /**
-     * The identifier of the language experience option records
+     * Gets the experience options identifier.
+     * @return string The identifier.
      */
-    define("EXPERIENCEOPTIONS_IDENTIFIER", "experienceoptions");
+    function GetExperinceOptionsIdentifier()
+    {
+        return "experienceoptions";
+    }
     
     /**
-     * The identifier of the question comment records.
+     * Gets the question comments identifier.
+     * @return string The identifier.
      */
-    define("QUESTIONCOMMENTS_IDENTIFIER", "questioncomments");
+    function GetQuestionCommentsIdentifier()
+    {
+        return "questioncomments";
+    }
 
     /**
-     * The identifier of the testee answer records.
+     * Gets the testee answers identifier.
+     * @return string The identifier.
      */
-    define("TESTEEANSWERS_IDENTIFIER", "testeeanswers");
+    function GetTesteeAnswersIdentifier()
+    {
+        return "testeeanswers";
+    }
     
     /**
-     * The identifier of the testee question records.
+     * Gets the testee questions identifier.
+     * @return string The identifier.
      */
-    define("TESTEEQUESTIONS_IDENTIFIER", "testeequestions");
+    function GetTesteeQuestionsIdentifier()
+    {
+        return "testeequestions";
+    }
     
     /**
-     * The identifier of the levelinfos records.
+     * Gets the level infos identifier.
+     * @return string The identifier.
      */
-    define("LEVELINFOS_IDENTIFIER", "levelinfos");
+    function GetLevelInfosIdentifier()
+    {
+        return "levelinfos";
+    }
 
     /**
-     * The level info I.D. indentifier.
+     * Gets the level info I.D. identifier.
+     * @return string The identifier.
      */
-    define("LEVELINFOID_IDENTIFIER", "LevelInfoID");
+    function GetLevelInfoIdIdentifier()
+    {
+        return "LevelInfoID";
+    }
     
     /**
-     * The identifier for the record of contacts.
+     * Gest the contacts identifier.
+     * @return string The identifier.
      */
-    define("CONTACTS_IDENTIFIER", "contacts");
+    function GetContactsIdentifier()
+    {
+        return "contacts";
+    }
 
     /**
-     * The contact I.D. identifier.
+     * Gets the contact I.D. identifier.
+     * @return string The identifier.
      */
-    define("CONTACTID_IDENTIFIER", "ContactID");
+    function GetContactsIdIdentifier()
+    {
+        return "ContactID";
+    }
 
     /**
-     * The test I.D. identifier.
+     * Gets the test I.D. identifier.
+     * @return string The identifier.
      */
-    define("TESTID_IDENTIFIER", "TestID");
+    function GetTestIdIdentifier()
+    {
+        return "TestID";
+    }
 
     /**
-     * The identifier for the record of testees experiences.
+     * Gets the testee experiences identifier.
+     * @return string The identifier.
      */
-    define("TESTEEEXPERIENCES_IDENTIFIER", "testeeexperiences");
+    function GetTesteeExperiencesIdentifier()
+    {
+        return "testeeexperiences";
+    }
     
     /**
-     * The identifier for the record of testees.
+     * Gets the testees identifier.
+     * @return string The identifier.
      */
-    define("TESTEES_IDENTIFIER", "testees");
+    function GetTesteesIdentifier()
+    {
+        return "testees";
+    }
     
     /**
-     * The identifier for the record of test etnries.
+     * Gets the test entries identifier.
+     * @return string The identifier.
      */
-    define("TESTENTIRES_IDENTIFIER", "testentries");
+    function GetTestEntriesIdentifier()
+    {
+        return "testentries";
+    }
     
     /**
-     * The exam identifier.
+     * Gets the exam identifier.
+     * @return string The identifier.
      */
-    define("EXAM_IDENTIFIER", "exam");
+    function GetExamIdentifier()
+    {
+        return "exam";
+    }
 
     /**
-     * The exam paramter I.D. identifier.
+     * Gets the exam paramets I.D. identifier.
+     * @return string The identifier.
      */
-    define("EXAMPARAMETERSID_IDENTIFIER", "ParameterID");
+    function GetExamParametersIdIdentifier()
+    {
+        return "ParameterID";
+    }
     
     /**
-     * The identifier for the record of exam parameters.
+     * Gets the exam parameters identifier.
+     * @return string The identifier.
      */
-    define("EXAMPARAMETERS_IDENTIFIER", "examparameters");
+    function GetExamParametersIdentifier()
+    {
+        return "examparameters";
+    }
 
     /**
-     * The identifier for a requested page.
+     * Gets the requested page identifier.
+     * @return string The identifier.
      */
-    define("REQUESTEDPAGE_IDENTIFIER", "RequestedPage");
+    function GetRequestedPageIdentifier()
+    {
+        return "RequestedPage";
+    }
 
     /**
-     * The question I.D. identifier.
+     * Gets the quetsion I.D. identifier.
+     * @return string The identifier.
      */
-    define("QUESTIONID_IDENTIFIER", "QuestionID");
+    function GetQuestionIdIdentifier()
+    {
+        return "QuestionID";
+    }
     
     /**
-     * The language I.D. identifier.
+     * Gets the language I.D. identifier.
+     * @return string The identifier.
      */
-    define("LANGUAGEID_IDENTIFIER", "LanguageID");
+    function GetLanguageIdIdentifier()
+    {
+        return "LanguageID";
+    }
     
     /**
-     * The answer I.D. identifier.
+     * Gets the answer I.D identifier.
+     * @return string The identifier.
      */
-    define("ANSWERID_IDENTIFIER", "AnswerID");
+    function GetAnswerIdIdentifier()
+    {
+        return "AnswerID";
+    }
     
     /**
-     * The record of answers identifier.
+     * Gets the answers identifier.
+     * @return string The identifier.
      */
-    define("ANSWERS_IDENTIFIER", "answers");
+    function GetAnswersIdentifier()
+    {
+        return "answers";
+    }
     
     /**
-     * The record of questions identifier.
+     * Gets the questions identifier.
+     * @return string The identifier.
      */
-    define("QUESTIONS_IDENTIFIER", "questions");
+    function GetQuestionsIdentifier()
+    {
+        return "questions";
+    }
     
     /**
-     * The record of language experiences identifier.
+     * Gets the langauge experiences identifier.
+     * @return string The identifier.
      */
-    define("LANGUAGEEXPERIENCES_IDENTIFIER", "languageexperiences");
+    function GetLanguageExperiencesIdentifier()
+    {
+        return "languageexperiences";
+    }
     
     /**
-     * The record of roles identifier.
+     * Gets the roles identifier.
+     * @return string The identifier.
      */
-    define("ROLES_IDENTIFIER", "roles");
+    function GetRolesIdentifier()
+    {
+        return "roles";
+    }
 
     /**
-     * The record of users identifier.
+     * Gets the users identifier.
+     * @return string The identifier.
      */
-    define("USERS_IDENTIFIER", "users");
+    function GetUsersIdentifier()
+    {
+        return "users";
+    }
     
     /**
-     * The record of user roles identifier.
+     * Gets the users roles identifier.
+     * @return string The identifier.
      */
-    define("USERROLES_IDENTIFIER", "userroles");
+    function GetUsersRolesIdentifier()
+    {
+        return "userroles";
+    }
     
     /**
-     * The record of languages identifier.
+     * Gets the languages identifier.
+     * @return string The identifier.
      */
-    define("LANGUAGES_IDENTIFIER", "languages");
+    function GetLanguagesIdentifier()
+    {
+        return "languages";
+    }
     
     /**
-     * The language experience ID identifier.
+     * Gets the langauge experience I.D. identifier.
+     * @return string The identifier.
      */
-    define("LANGUAGEEXPERIENCEID_IDENTIFIER", "ExperienceID");
+    function GetLanguageExperienceIdIdentifier()
+    {
+        return "ExperienceID";
+    }
     
     /**
-     * The role ID identifier.
+     * Gets the role I.D. identifier.
+     * @return string The identifier.
      */
-    define("ROLEID_IDENTIFIER", "RoleID");
+    function GetRoleIdIDentifier()
+    {
+        return "RoleID";
+    }
     
     /**
-     * The role name identifier
+     * Gets the user I.D. identifier.
+     * @return string The identifier.
      */
-    define("ROLENAME_IDENTIFIER", "Name");
+    function GetUserIdIdentifier()
+    {
+        return "UserID";
+    }
     
     /**
-     * The user ID identifier.
+     * Gets the name identifier.
+     * @return string  The identifier.
      */
-    define("USERID_IDENTIFIER", "UserID");
+    function GetNameIdentifier()
+    {
+        return "Name";
+    }
     
     /**
-     * The name identifier.
+     * Gets the first name identifier.
+     * @return string The identifier.
      */
-    define("NAME_IDENTIFIER", "Name");
+    function GetFirstNameIdentifier()
+    {
+        return "FirstName";
+    }
     
     /**
-     * The first name identifier.
+     * Gets the last name identifier.
+     * @return string The identifier.
      */
-    define("FIRSTNAME_IDENTIFIER", "FirstName");
+    function GetLastNameIdentifier()
+    {
+        return "LastName";
+    }
     
     /**
-     * The last name identifier.
+     * Gets the user name identifier.
+     * @return string The identifier.
      */
-    define("LASTNAME_IDENTIFIER", "LastName");
+    function GetUserNameIdentifier()
+    {
+        return "UserName";
+    }
     
     /**
-     * The user name identifier.
+     * Gets the password identifier.
+     * @return string The identifier.
      */
-    define("USERNAME_IDENTIFIER", "UserName");
+    function GetPasswordIdentifier()
+    {
+        return "Password";
+    }
     
     /**
-     * The password identifier.
+     * Gets the password retype identifier.
+     * @return string The identifier.
      */
-    define("PASSWORD_IDENTIFIER", "Password");
-    
-    /**
-     * The password re-type identifier.
-     */
-    define("PASSWORDRETYPE_IDENTIFIER", "PasswordRetype");
-    
-    /**
-     * The e-mail identifier.
-     */
-    define("EMAIL_IDENTIFIER", "Email")
+    function GetPasswordRetypeIdentifier()
+    {
+        return "PasswordRetype";
+    }
 ?>

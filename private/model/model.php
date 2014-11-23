@@ -1,10 +1,10 @@
 <?php
     
-    require_once(CONTACTCLASS_FILE);
-    require_once(LEVELINFOCLASS_FILE);
-    require_once(EXAMPARAMETERSCLASS_FILE);
-    require_once(VALIDATIONINFOCLASS_FILE);
-    require_once(LANGUAGEEXPERIENCECLASS_FILE);
+    require_once(GetContactClassFile());
+    require_once(GetLevelInfoClassFile());
+    require_once(GetExamParametersClassFile());
+    require_once(GetValidationInfoClassFile());
+    require_once(GetLanguageExperiencesClassFile());
     
     /**
      * Gets a connection fo the database.
@@ -62,7 +62,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetLevelInfosIdentifier() . ' WHERE'
                     . ' ' . $idKey
                     . ' = :' . $idKey;
             
@@ -97,7 +97,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetLevelInfosIdentifier() . ' WHERE'
                     . ' ' . $languageIdKey
                     . ' = :' . $languageIdKey . ' AND'
                     . ' ' . $levelKey
@@ -142,7 +142,7 @@
             $langaugeIdKey = $levelInfo->GetLanguageIdKey();
             $levelKey = $levelInfo->GetLevelKey();
             
-            $query = 'SELECT * FROM ' . LEVELINFOS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetLevelInfosIdentifier() . ' WHERE'
                     . ' ' . $langaugeIdKey
                     . ' = :' . $langaugeIdKey . ' AND'
                     . ' ' . $levelKey
@@ -182,7 +182,7 @@
             
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . CONTACTS_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetContactsIdentifier() . ' WHERE'
                     . '`' . $primaryIndex . '` = 1;';
             
             $statement = $db->prepare($query);
@@ -219,7 +219,7 @@
             $db = GetDBConnection();
             
             $query = 'SELECT * FROM'
-                    . ' ' . EXAMPARAMETERS_IDENTIFIER;
+                    . ' ' . GetExamParametersIdentifier();
             
             $statement = $db->prepare($query);
             
@@ -289,13 +289,13 @@
         {
             $authorized = true;                   // all Users have access even if not logged in. 
         }
-        else if(!isset($_SESSION[USERID_IDENTIFIER]))
+        else if(!isset($_SESSION[GetUserIdIdentifier()]))
         {   // If no current user then don't have access as a guest
             $authorized = false;
         }
         else
         {                  
-            $userID = $_SESSION[USERID_IDENTIFIER];       // Get current userid from session variable to check access.
+            $userID = $_SESSION[GetUserIdIdentifier()];       // Get current userid from session variable to check access.
 
             try
             {
@@ -430,10 +430,10 @@
     {
         StartSession();
         $result = validateUser($username,$password);
-        if($result[USERNAME_IDENTIFIER] == $username) // Make sure a User row was returned
+        if($result[GetUserNameIdentifier()] == $username) // Make sure a User row was returned
         {
-            $_SESSION[USERNAME_IDENTIFIER] = $result[USERNAME_IDENTIFIER];
-            $_SESSION[USERID_IDENTIFIER] = $result[USERID_IDENTIFIER];
+            $_SESSION[GetUserNameIdentifier()] = $result[GetUserNameIdentifier()];
+            $_SESSION[GetUserIdIdentifier()] = $result[GetUserIdIdentifier()];
             return true;
         }
         return false;
@@ -446,7 +446,7 @@
     function loggedIn()
     {
         StartSession();
-        return isset($_SESSION[USERID_IDENTIFIER]);
+        return isset($_SESSION[GetUserIdIdentifier()]);
     }
     
     /**
@@ -454,7 +454,7 @@
      */
     function logOut()
     {
-        unset($_SESSION[USERID_IDENTIFIER]);
+        unset($_SESSION[GetUserIdIdentifier()]);
         
         session_destroy();
     }
@@ -466,7 +466,7 @@
     function displayError($error)
     {
         $message = $error;
-        include(MESSAGEFORM_FILE);
+        include(GetMessageFormFile());
         
         exit();
     }
@@ -480,7 +480,7 @@
     {
         $collection = $errors;
         
-        include(MESSAGEFORM_FILE);
+        include(GetMessageFormFile());
         
         exit();
     }
@@ -491,7 +491,7 @@
      */
     function LogError($error)
     {
-        $handle = fopen(ERRORLOG_FILE, 'a');
+        $handle = fopen(GetErrorLogFile(), 'a');
         
         fwrite($handle, $error->getMessage());
         
@@ -512,14 +512,14 @@
             $isActive = FALSE;
             $db = GetDBConnection( );
             
-            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ' AND'
+            $query = 'SELECT * FROM ' . GetLanguagesIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ' AND'
                     . ' ' . 'Active'
                     . ' = :' . 'Active' . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             $statement->bindValue(':' . 'Active', 1); //"1" because "1" means true (or active).
             
             $statement->execute();
@@ -550,12 +550,12 @@
         {
             $db = GetDBConnection( );
             
-            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEID_IDENTIFIER
-                    . ' = :' . LANGUAGEID_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetLanguagesIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageIdIdentifier()
+                    . ' = :' . GetLanguageIdIdentifier() . ';';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEID_IDENTIFIER, $languageID);
+            $statement->bindValue(':' . GetLanguageIdIdentifier(), $languageID);
             
             $statement->execute();
             
@@ -583,13 +583,13 @@
             $languageID = 0;
             $db = GetDBConnection();
             
-            $query = 'SELECT ' . LANGUAGEID_IDENTIFIER . ' FROM'
-                    . ' ' . LANGUAGES_IDENTIFIER . ' WHERE'
-                    . ' ' . NAME_IDENTIFIER
-                    . ' = :' . NAME_IDENTIFIER;
+            $query = 'SELECT ' . GetLanguageIdIdentifier() . ' FROM'
+                    . ' ' . GetLanguagesIdentifier() . ' WHERE'
+                    . ' ' . GetNameIdentifier()
+                    . ' = :' . GetNameIdentifier();
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . NAME_IDENTIFIER, $language);
+            $statement->bindValue(':' . GetNameIdentifier(), $language);
             
             $statement->execute();
             
@@ -599,7 +599,7 @@
             
             if(!empty($language))
             {
-                $languageID = $language[LANGUAGEID_IDENTIFIER];
+                $languageID = $language[GetLanguageIdIdentifier()];
             }
             
             return $languageID;
@@ -620,7 +620,7 @@
         {
             $db = GetDBConnection( );
             
-            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER . ' WHERE'
+            $query = 'SELECT * FROM ' . GetLanguagesIdentifier() . ' WHERE'
                     . ' Active = TRUE;';
             
             $statement = $db->prepare($query);
@@ -648,7 +648,7 @@
         
         foreach ($activeLanguages as $language)
         {
-            $languageNames[] = $language[NAME_IDENTIFIER];
+            $languageNames[] = $language[GetNameIdentifier()];
         }
         
         return $languageNames;
@@ -664,7 +664,7 @@
         {
             $db = GetDBConnection( );
             
-            $query = 'SELECT * FROM ' . LANGUAGES_IDENTIFIER;
+            $query = 'SELECT * FROM ' . GetLanguagesIdentifier();
             
             $statement = $db->prepare($query);
             
@@ -691,7 +691,7 @@
         
         foreach ($languages as $language)
         {
-            $languageNames[] = $language[NAME_IDENTIFIER];
+            $languageNames[] = $language[GetNameIdentifier()];
         }
         
         return $languageNames;
@@ -708,12 +708,12 @@
         {
             $db = GetDBConnection();
         
-            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
-                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER 
-                    . ' = :' . LANGUAGEEXPERIENCEID_IDENTIFIER  . ';';
+            $query = 'SELECT * FROM ' . GetLanguageExperiencesIdentifier() . ' WHERE'
+                    . ' ' . GetLanguageExperienceIdIdentifier() 
+                    . ' = :' . GetLanguageExperienceIdIdentifier()  . ';';
 
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . LANGUAGEEXPERIENCEID_IDENTIFIER, $experienceID);
+            $statement->bindValue(':' . GetLanguageExperienceIdIdentifier(), $experienceID);
             
             $statement->execute();
             
@@ -740,8 +740,8 @@
             $experiences = array();
             $db = GetDBConnection();
         
-            $query = 'SELECT * FROM ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' ORDER BY'
-                    . ' ' . LANGUAGEEXPERIENCEID_IDENTIFIER . ';';
+            $query = 'SELECT * FROM ' . GetLanguageExperiencesIdentifier() . ' ORDER BY'
+                    . ' ' . GetLanguageExperienceIdIdentifier() . ';';
 
             $statement = $db->prepare($query);
             
@@ -796,13 +796,13 @@
             $experienceID = 0;
             $db = GetDBConnection();
         
-            $query = 'SELECT ' . LANGUAGEEXPERIENCEID_IDENTIFIER . ' FROM'
-                    . ' ' . LANGUAGEEXPERIENCES_IDENTIFIER . ' WHERE'
-                    . ' ' . NAME_IDENTIFIER
-                    . ' = :' . NAME_IDENTIFIER . ';';
+            $query = 'SELECT ' . GetLanguageExperienceIdIdentifier() . ' FROM'
+                    . ' ' . GetLanguageExperiencesIdentifier() . ' WHERE'
+                    . ' ' . GetNameIdentifier()
+                    . ' = :' . GetNameIdentifier() . ';';
 
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . NAME_IDENTIFIER, $experience);
+            $statement->bindValue(':' . GetNameIdentifier(), $experience);
             
             $statement->execute();
             
@@ -835,13 +835,13 @@
         {
             $db = GetDBConnection();
             
-            $query = 'SELECT * FROM ' . QUESTIONS_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER .';';
+            $query = 'SELECT * FROM ' . GetQuestionsIdentifier() . ' WHERE'
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier() .';';
             
             $statement = $db->prepare($query);
             
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier(), $questionID);
             
             $statement->execute();
             
@@ -869,13 +869,13 @@
             $db = GetDBConnection();
             
             //Order by Correct because WE ALWAYS WANT THE CORRECT ANSWER FIRST.
-            $query = 'SELECT * FROM ' . ANSWERS_IDENTIFIER . ' WHERE'
-                    . ' ' . QUESTIONID_IDENTIFIER
-                    . ' = :' . QUESTIONID_IDENTIFIER
+            $query = 'SELECT * FROM ' . GetAnswersIdentifier() . ' WHERE'
+                    . ' ' . GetQuestionIdIdentifier()
+                    . ' = :' . GetQuestionIdIdentifier()
                     . ' ORDER BY Correct DESC';
             
             $statement = $db->prepare($query);
-            $statement->bindValue(':' . QUESTIONID_IDENTIFIER, $questionID);
+            $statement->bindValue(':' . GetQuestionIdIdentifier(), $questionID);
             
             $statement->execute();
             

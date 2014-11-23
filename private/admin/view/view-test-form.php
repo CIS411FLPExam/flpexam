@@ -1,6 +1,6 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <h1><?php if (isset($testeeName)) { echo($testeeName . "'s"); } ?> Test</h1>
 <div class="formGroup">
@@ -70,11 +70,11 @@
     ?>
 </div>
 <div class="formGroup">
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, TESTENTRYVIEW_ACTION)); ?>" method="post">
-        <input type="hidden" name="<?php echo(TESTID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetTestEntryViewAction())); ?>" method="post">
+        <input type="hidden" name="<?php echo(GetTestIdIdentifier()) ?>" value="<?php echo(htmlspecialchars($testID)); ?>" />
         <input type="submit" value="View Test Entry" />
     </form>
 </div>
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>

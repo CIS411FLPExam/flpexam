@@ -1,20 +1,20 @@
 <?php
-    include(HEADER_FILE);
-    include(CONTROLPANEL_FILE);
+    include(GetHeaderFile());
+    include(GetControlPanelFile());
 ?>
 <!-- Start main content here -->
 
 <h2>Users</h2>
 
 <?php
-    $userCanAdd = userIsAuthorized(USERADD_ACTION);
-    $userCanEdit = userIsAuthorized(USEREDIT_ACTION);
-    $userCanView = userIsAuthorized(USERVIEW_ACTION);
-    $userCanDelete = userIsAuthorized(USERDELETE_ACTION);
-    $userCanSearch = userIsAuthorized(USERSEARCH_ACTION);
+    $userCanAdd = userIsAuthorized(GetUserAddAction());
+    $userCanEdit = userIsAuthorized(GetUserEditAction());
+    $userCanView = userIsAuthorized(GetUserViewAction());
+    $userCanDelete = userIsAuthorized(GetUserDeleteAction());
+    $userCanSearch = userIsAuthorized(GetUserSearchAction());
 ?>
 <?php if ($userCanAdd) { ?>
-    <form action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERADD_ACTION)); ?>" method="post">
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetUserAddAction())); ?>" method="post">
         <input type="submit" value="Add User" />
     </form>
 
@@ -22,11 +22,11 @@
 <?php } ?>
 
 <?php if (FALSE) { ?>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERSEARCH_ACTION)) ?>" method="post">
-        <label>Name:</label><input type="text" name="<?php echo(NAME_IDENTIFIER); ?>" />
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetUserSearchAction())) ?>" method="post">
+        <label>Name:</label><input type="text" name="<?php echo(GetNameIdentifier()); ?>" />
         <input type="submit" value="Search" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageUsersAction())) ?>" method="post">
         <input type="submit" value="Clear" />
     </form>
     <br />
@@ -39,10 +39,10 @@
 <?php
     if (isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
-<form onsubmit="return ConfirmationPrompt('Delete the selected users?');" action="<?php echo( GetControllerScript(ADMINCONTROLLER_FILE, USERDELETE_ACTION ) ); ?>" method="post">
+<form onsubmit="return ConfirmationPrompt('Delete the selected users?');" action="<?php echo( GetControllerScript(GetAdminControllerFile(), GetUserDeleteAction() ) ); ?>" method="post">
     <div class="datatable">
         <table id="users" class="tablesorter">
             <thead>
@@ -58,8 +58,8 @@
                     $j = 0;
                     foreach ($results as $record)
                     {
-                        $userName = $record[USERNAME_IDENTIFIER];
-                        $user_ID = $record[USERID_IDENTIFIER];
+                        $userName = $record[GetUserNameIdentifier()];
+                        $user_ID = $record[GetUserIdIdentifier()];
                         $vital = $record['Vital'];
                 ?>
 
@@ -69,12 +69,12 @@
 
                     <?php if ($userCanView) { ?>
                         <td>
-                            <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USERVIEW_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>');" />
+                            <input type="button" value="View" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetUserViewAction() . "&". GetUserIdIdentifier() . "=" . urlencode($user_ID))) ?>');" />
                         </td>
                     <?php } ?>
                     <?php if ($userCanEdit) { ?>
                         <td>
-                            <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($user_ID))) ?>');" />
+                            <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetUserEditAction() . "&". GetUserIdIdentifier() . "=" . urlencode($user_ID))) ?>');" />
                         </td>
                     <?php } ?>
                     <?php if ($userCanDelete) { ?>
@@ -102,7 +102,7 @@
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>
 <script>
     $( document ).ready( function( ) 

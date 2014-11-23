@@ -1,6 +1,6 @@
 <?php
-    include( HEADER_FILE );
-    include( CONTROLPANEL_FILE );
+    include( GetHeaderFile() );
+    include( GetControlPanelFile() );
 ?>
 <!-- Start main content here -->
 <h1>User</h1>
@@ -17,17 +17,17 @@
         <label>Roles:</label>
         <ul>
             <?php foreach ($hasAttrResults as $row) { ?>
-            <li><?php echo($row[NAME_IDENTIFIER]); ?></li>
+            <li><?php echo($row[GetNameIdentifier()]); ?></li>
             <?php } ?>
         </ul>
     </div>
     
-    <?php if(userIsAuthorized(USEREDIT_ACTION)) { ?>
-        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, USEREDIT_ACTION . "&". USERID_IDENTIFIER . "=" . urlencode($userID))) ?>');" />
+    <?php if(userIsAuthorized(GetUserEditAction())) { ?>
+        <input type="button" value="Edit" onclick="Relocate('<?php echo(GetControllerScript(GetAdminControllerFile(), GetUserEditAction() . "&". GetUserIdIdentifier() . "=" . urlencode($userID))) ?>');" />
     <?php } ?>
 </div>
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

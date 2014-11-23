@@ -1,49 +1,49 @@
 <?php
     require_once('../../private/definitions/paths.php');
-    require_once(PATHS_FILE);
-    require_once(IDENTIFIER_FILE);
-    require_once(GENERALFUNCTIONS_FILE);
-    require_once(ACTIONS_FILE);
-    require_once(MAINMODEL_FILE);
+    require_once(GetPathsFile());
+    require_once(GetIdentifierFile());
+    require_once(GetGeneralFunctionsFile());
+    require_once(GetActionsFile());
+    require_once(GetMainModelFile());
 
     error_reporting(0);
     
     StartSession( );
     AdjustQuotes();
     
-    if (isset($_POST[ACTION_KEYWORD]))
+    if (isset($_POST[GetActionKeyWord()]))
     {
-        $action = $_POST[ACTION_KEYWORD];
+        $action = $_POST[GetActionKeyWord()];
     }
-    else if (isset($_GET[ACTION_KEYWORD]))
+    else if (isset($_GET[GetActionKeyWord()]))
     {
-        $action = $_GET[ACTION_KEYWORD];
+        $action = $_GET[GetActionKeyWord()];
     }
     else
     {
         $action = "";
     }
     
-    if ($action != PROCESSLOGIN_ACTION && !userIsAuthorized($action))
+    if ($action != GetProcessLoginAction() && !userIsAuthorized($action))
     {
         if(!loggedIn())
         {
-            $url = GetControllerScript(ADMINCONTROLLER_FILE, LOGIN_ACTION) . '&' . REQUESTEDPAGE_IDENTIFIER . '=' . GetRequestedURI( );
+            $url = GetControllerScript(GetAdminControllerFile(), GetLoginAction()) . '&' . GetRequestedPageIdentifier() . '=' . GetRequestedURI( );
             Redirect( $url );
         }
         else
         {
-            include( NOTAUTHORIZED_FILE );
+            include( GetNotAuthorizedFile() );
         }
     }
     else
     {
         switch ($action)
         {
-            case ABOUT_ACTION :
+            case GetAboutAction() :
                 ProcessAboutUs();
                 break;
-            case CONTACT_ACTION :
+            case GetContactAction() :
                 ProcessContactUs();
                 break;
             default :
@@ -54,18 +54,18 @@
     
     function ProcessAboutUs()
     {
-        include(ABOUT_FILE);
+        include(GetAboutFormFile());
     }
     
     function ProcessContactUs()
     {
         $contact = GetPrimaryContact();
         
-        include(CONTACT_FILE);
+        include(GetContactFormFile());
     }
     
     function ProcessHome()
     {
-        include(HOME_FILE);
+        include(GetHomeFormFile());
     }
 ?>

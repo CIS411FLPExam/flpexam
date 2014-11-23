@@ -1,6 +1,6 @@
 <?php
-    include( HEADER_FILE );
-    include( CONTROLPANEL_FILE );
+    include( GetHeaderFile() );
+    include( GetControlPanelFile() );
 ?>
  <!-- Start main content here -->
  
@@ -27,26 +27,26 @@
             <div class="clear"></div>
         </div>
     </div>
-    <?php if (userIsAuthorized(LANGUAGEEDIT_ACTION)) {?>
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, LANGUAGEEDIT_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+    <?php if (userIsAuthorized(GetLanguageEditAction())) {?>
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageEditAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
             <input type="submit" value="Edit" />
         </form>
     <?php } ?>
-    <?php if (userIsAuthorized(MANAGEQUESTIONS_ACTION)) {?>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEQUESTIONS_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+    <?php if (userIsAuthorized(GetManageQuestionsAction())) {?>
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageQuestionsAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
             <input type="submit" value="Questions" />
         </form>
     <?php } ?>
-    <?php if (userIsAuthorized(MANAGELEVELINFOS_ACTION)) {?>
-        <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELEVELINFOS_ACTION)); ?>" method="post">
-            <input type="hidden" name="<?php echo(LANGUAGEID_IDENTIFIER); ?>" value="<?php echo($languageID); ?>" />
+    <?php if (userIsAuthorized(GetManageLevelInfosAction())) {?>
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageLevelInfosAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
             <input type="submit" value="Level Info" />
         </form>
     <?php } ?>
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

@@ -34,25 +34,25 @@
     }
     $select2 .= "</select>";
     
-    include( HEADER_FILE);
-    include( CONTROLPANEL_FILE );
+    include( GetHeaderFile());
+    include( GetControlPanelFile() );
 ?>
 <!-- Start main content here -->
 <?php
     if (isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
 <h2>Edit User</h2>
 
 <div class="formGroup">
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSUSEREDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
-        <input type="hidden" name="<?php echo(USERID_IDENTIFIER) ?>" value="<?php echo(htmlspecialchars($userID)); ?>"/>
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(),GetProcessUserEditAction())) ?>" method="post" onsubmit="selectAll('hasAttributes')">
+        <input type="hidden" name="<?php echo(GetUserIdIdentifier()) ?>" value="<?php echo(htmlspecialchars($userID)); ?>"/>
 
         <div class="formSection">
             <label>Username<span class="redText">*</span>:</label>
-            <input name="<?php echo(USERNAME_IDENTIFIER) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required maxlength="32"/>
+            <input name="<?php echo(GetUserNameIdentifier()) ?>" class="formInput" type="text" value="<?php echo(htmlspecialchars($userName)); ?>" autofocus required maxlength="32"/>
             <div class="clear"></div>
         </div>
 
@@ -60,7 +60,7 @@
 
         <div class="formSection">
             <label>Password:</label>
-            <input name="<?php echo(PASSWORD_IDENTIFIER) ?>" class="formInput" type="password" maxlength="40" />
+            <input name="<?php echo(GetPasswordIdentifier()) ?>" class="formInput" type="password" maxlength="40" />
             <div class="clear"></div>
         </div>
 
@@ -68,7 +68,7 @@
 
         <div class="formSection">
             <label>Password Retype:</label>
-            <input name="<?php echo(PASSWORDRETYPE_IDENTIFIER) ?>" class="formInput" type="password" maxlength="40" />
+            <input name="<?php echo(GetPasswordRetypeIdentifier()) ?>" class="formInput" type="password" maxlength="40" />
             <div class="clear"></div>
         </div>
 
@@ -96,11 +96,11 @@
         <br/>
         <input type="submit" value="Submit" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEUSERS_ACTION)) ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageUsersAction())) ?>" method="post">
         <input type="submit" value="Cancel" />
     </form>
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

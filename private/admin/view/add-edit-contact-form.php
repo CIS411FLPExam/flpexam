@@ -1,12 +1,12 @@
 <?php
-    include(HEADER_FILE);
+    include(GetHeaderFile());
 ?>
 <!--Start main content-->
 
 <?php
     if (isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
 <?php if(isset($contactID)) { ?>
@@ -15,7 +15,7 @@
     <h1>Add Contact</h1>
 <?php } ?>
 <div class="formGroup">
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSCONTACTADDEDIT_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetProcessContactAddEditAction())); ?>" method="post">
         <?php if(isset($contactID)) { ?>
             <input type="hidden" name="<?php echo($contact->GetIdIndex()); ?>" value="<?php echo(htmlspecialchars($contactID)); ?>" />
         <?php } ?>
@@ -48,12 +48,12 @@
         
         <input type="submit" value="Submit" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGECONTACTS_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageContactsAction())); ?>" method="post">
         <input type="submit" value="Cancel" />
     </form>
 </div>
 
 <!--End main content-->
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>

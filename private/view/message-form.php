@@ -1,11 +1,11 @@
 <?php
-    include(HEADER_FILE);
+    include(GetHeaderFile());
 ?>
 <!-- Start main content here -->
 
-<?php include(MESSAGE_FILE); ?>
+<?php include(GetMessageFile()); ?>
 
 <!-- End main content here -->
 <?php
-    include(FOOTER_FILE); 
+    include(GetFooterFile()); 
 ?>

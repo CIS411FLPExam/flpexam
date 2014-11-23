@@ -1,11 +1,11 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 <?php
     if (isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
 
@@ -15,7 +15,7 @@
     <h1>Add Language Experience</h1>
 <?php } ?>
 <div class="formGroup">
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, PROCESSLANGUAGEEXPERIENCESADDEDIT_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetProcessLanguageExperienceAddEditAction())); ?>" method="post">
         <?php if ($experience->GetId() > 0) { ?>
             <input type="hidden" name="<?php echo($experience->GetIdKey()); ?>" value="<?php echo(htmlspecialchars($experience->GetId())); ?>" />
         <?php } ?>
@@ -35,11 +35,11 @@
         
         <input type="submit" value="Submit" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGELANGUAGEEXPERIENCES_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageLanguageExperiencesAction())); ?>" method="post">
         <input type="submit" value="Cancel" />
     </form>
 </div>
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

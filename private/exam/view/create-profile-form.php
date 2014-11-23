@@ -1,18 +1,18 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
 <?php
     if(isset($message))
     {
-        include(MESSAGE_FILE);
+        include(GetMessageFile());
     }
 ?>
 
 <h1>Profile</h1>
 <div class="formGroup">
-    <form action="<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, PROCESSPROFILECREATE_ACTION)) ?>" method="post">
+    <form action="<?php echo(GetControllerScript(GetExamControllerFile(), GetProcessProfileCreateAction())) ?>" method="post">
         <div class="formSection">
             <label>First Name<span class="redText">*</span>:</label>
             <input name="<?php echo($profile->GetFirstNameIndex()); ?>" type="text" class="formInput" value="<?php echo(htmlspecialchars($profile->GetFirstName())); ?>" autofocus required maxlength="32"/>
@@ -106,5 +106,5 @@
 </div>
 <!-- End main content here -->
 <?php
-    include( PLAINFOOTER_FILE ); 
+    include( GetPlainFooterFile() ); 
 ?>

@@ -32,7 +32,7 @@
     }
     $select2 .= "</select>";
 
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
     include( CONTROLPANEL_FILE );
 ?>
 <!-- Start main content here -->
@@ -40,7 +40,7 @@
 <h2>Modify Role</h2>
 
 <div class="formGroup">
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE,PROCESSROLEADDEDIT_ACTION)) ?>" method="post" onsubmit="selectAll('hasAttributes')">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(),GetProcessRoleAddEditAction())) ?>" method="post" onsubmit="selectAll('hasAttributes')">
         <input type="hidden" name="RoleID" value="<?php echo htmlspecialchars($id); ?>"/>
         <div class="formSection">
             <label>Name<span class="redText">*</span>:</label><input type="text" name="Name" size="20" value="<?php echo htmlspecialchars($name); ?>" autofocus required />
@@ -78,12 +78,12 @@
         <br/>
         <input type="submit" value="Submit" />
     </form>
-    <form class="inline" action="<?php echo(GetControllerScript(ADMINCONTROLLER_FILE, MANAGEROLES_ACTION)); ?>" method="post">
+    <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetManageRolesAction())); ?>" method="post">
         <input type="submit" value="Cancel" />
     </form>
 </div>
 
 <!-- End main content here -->
 <?php
-    include( FOOTER_FILE ); 
+    include( GetFooterFile() ); 
 ?>

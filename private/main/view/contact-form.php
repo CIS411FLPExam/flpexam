@@ -1,5 +1,5 @@
 <?php
-    include(HEADER_FILE);
+    include(GetHeaderFile());
 ?>
 <!--Start main content-->
 <div class="formGroup">
@@ -14,5 +14,5 @@
 </div>
 <!--End main content-->
 <?php
-    include(FOOTER_FILE);
+    include(GetFooterFile());
 ?>

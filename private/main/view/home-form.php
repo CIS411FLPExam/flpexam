@@ -1,5 +1,5 @@
 <?php
-    include( HEADER_FILE );
+    include( GetHeaderFile() );
 ?>
 <!-- Start main content here -->
 
@@ -20,7 +20,7 @@
 
     <p>Good luck!</p>
 
-    <input type="button" onclick="Relocate('<?php echo(GetControllerScript(EXAMCONTROLLER_FILE, ENTERKEYCODE_ACTION)); ?>');" value="Start Exam" />
+    <input type="button" onclick="Relocate('<?php echo(GetControllerScript(GetExamControllerFile(), GetEnterKeyCodeAction())); ?>');" value="Start Exam" />
     
     <br />
     
@@ -28,5 +28,5 @@
 </div>
 <!-- End main content here -->
 <?php
-    include( PLAINFOOTER_FILE ); 
+    include( GetPlainFooterFile() ); 
 ?>

@@ -1,447 +1,801 @@
 <?php
     /**
-     * The action key word for all actions.
+     * Gets the action key word.
+     * @return string The key word.
      */
-    define("ACTION_KEYWORD", "action");
+    function GetActionKeyWord()
+    {
+        return "action";
+    }
     
 //Actions available through the main controller.
 /******************************************************************************/
 
     /**
-     * The action word to get to the home page.
+     * Gets the home action word.
+     * @return string The action word.
      */
-    define("HOME_ACTION", "Home");
+    function GetHomeAction()
+    {
+        return "Home";
+    }
     
     /**
-     * The action word to use to contact someone from the site.
+     * Gets the contact action word.
+     * @return string The action word.
      */
-    define("CONTACT_ACTION", "Contact");
+    function GetContactAction()
+    {
+        return "Contact";
+    }
     
     /**
-     * The action word to use to view the site's information.
+     * Gets the about action word.
+     * @return string The action word.
      */
-    define("ABOUT_ACTION", "About");
+    function GetAboutAction()
+    {
+        return "About";
+    }
     
     
 //Actions available through the admin controller.
 /******************************************************************************/
   
     /**
-     * The action word to use to login.
+     * Gets the login action word.
+     * @return string The action word.
      */
-    define("LOGIN_ACTION", "Login");
+    function GetLoginAction()
+    {
+        return "Login";
+    }
     
     /**
-     * The action word to use to logout.
+     * Gets the logout action word.
+     * @return string The action word.
      */
-    define("LOGOUT_ACTION", "LogOut");
+    function GetLogoutAction()
+    {
+        return "LogOut";
+    }
     
     /**
-     * The action word to use to process a login.
+     * Gets the process login action word.
+     * @return string The action word.
      */
-    define("PROCESSLOGIN_ACTION", "ProcessLogin");
+    function GetProcessLoginAction()
+    {
+        return "ProcessLogin";
+    }
     
     /**
-     * The action word to use to search for a users.
+     * Gets the user search action word.
+     * @return string The action word.
      */
-    define("USERSEARCH_ACTION", "UserSearch");
+    function GetUserSearchAction()
+    {
+        return "UserSearch";
+    }
     
     /**
-     * The action word to use to access the control panel.
+     * Gets the control panel action word.
+     * @return string The action word.
      */
-    define("CONTROLPANEL_ACTION", "ControlPanel");
+    function GetControlPanelAction()
+    {
+        return "ControlPanel";
+    }
     
     /**
-     * The action word to use to manage current user accounts.
+     * Gets the manage users action word.
+     * @return string The action word.
      */
-    define("MANAGEUSERS_ACTION", "ManageUsers");
+    function GetManageUsersAction()
+    {
+        return "ManageUsers";
+    }
     
     /**
-     * The action word to add a user.
+     * Gets the add user action word.
+     * @return string The action word.
      */
-    define("USERADD_ACTION", "UserAdd");
+    function GetUserAddAction()
+    {
+        return "UserAdd";
+    }
     
     /**
-     * The action word to use to edit a current user's information.
+     * Gets the user edit action word.
+     * @return string The action word.
      */
-    define("USEREDIT_ACTION", "UserEdit");
+    function GetUserEditAction()
+    {
+        return "UserEdit";
+    }
     
     /**
-     * The action word to use to delete a user's account.
+     * Gets the user delete action word.
+     * @return string The action word.
      */
-    define("USERDELETE_ACTION", "UserDelete");
+    function GetUserDeleteAction()
+    {
+        return "UserDelete";
+    }
     
     /**
-     * The action word to use to view a user's account information.
+     * Gets the user view action word.
+     * @return string Tha action word.
      */
-    define("USERVIEW_ACTION", "UserView");
+    function GetUserViewAction()
+    {
+        return "UserView";
+    }
     
     /**
-     * The action word to use to process a user add.
+     * Gets the process user add action word.
+     * @return string The action word.
      */
-    define("PROCESSUSERADD_ACTION", "ProcessUserAdd");
+    function GetProcessUserAddAction()
+    {
+        return "ProcessUserAdd";
+    }
     
     /**
-     * The action word to use to process a user edit.
+     * Gets the process user edit action word.
+     * @return string The action word.
      */
-    define("PROCESSUSEREDIT_ACTION", "ProcessUserEdit");
+    function GetProcessUserEditAction()
+    {
+        return "ProcessUserEdit";
+    }
     
     /**
-     * The action word to use to maange roles.
+     * Gets the manage roles action word.
+     * @return string The action word.
      */
-    define("MANAGEROLES_ACTION", "ManageRoles");
+    function GetManageRolesAction()
+    {
+        return "ManageRoles";
+    }
     
     /**
-     * The action word to use to add a new role.
+     * Gets the role add action word.
+     * @return string The action word.
      */
-    define("ROLEADD_ACTION", "RoleAdd");
+    function GetRoleAddAction()
+    {
+        return "RoleAdd";
+    }
     
     /**
-     * The action word to use to edit a role.
+     * Gets the role edit action word.
+     * @return string The action word.
      */
-    define("ROLEEDIT_ACTION", "RoleEdit");
+    function GetRoleEditAction()
+    {
+        return "RoleEdit";
+    }
     
     /**
-     * The action word to use to delete a role.
+     * Gets the role delete action word.
+     * @return string The action word.
      */
-    define("ROLEDELETE_ACTION", "RoleDelete");
+    function GetRoleDeleteAction()
+    {
+        return "RoleDelete";
+    }
     
     /**
-     * The action word to use to process a role add or edit.
+     * Gets the process role add/edit action word.
+     * @return string The action word.
      */
-    define("PROCESSROLEADDEDIT_ACTION", "PrcessRoleAddEdit");
+    function GetProcessRoleAddEditAction()
+    {
+        return "ProcessRoleAddEdit";
+    }
     
     /**
-     * The action word to use to manage languages.
+     * Gets the manage languages action word.
+     * @return string The action word.
      */
-    define("MANAGELANGUAGES_ACTION", "ManageLanguages");
+    function GetManageLanguagesAction()
+    {
+        return "ManageLanguages";
+    }
     
     /**
-     * The action word to use to add a language.
+     * Gets the language add action word.
+     * @return string The action word.
      */
-    define("LANGUAGEADD_ACTION", "LanguageAdd");
+    function GetLanguageAddAction()
+    {
+        return "LanguageAdd";
+    }
     
     /**
-     * The action to word to use to edit an existing language.
+     * Gets the language edit action word.
+     * @return string The action word.
      */
-    define("LANGUAGEEDIT_ACTION", "LanguageEdit");
+    function GetLanguageEditAction()
+    {
+        return "LanguageEdit";
+    }
     
     /**
-     * The action word to use to view a language.
+     * Gets the language view action word.
+     * @return string The action word.
      */
-    define("LANGUAGEVIEW_ACTION", "LanguageView");
+    function GetLanguageViewAction()
+    {
+        return "LanguageView";
+    }
     
     /**
-     * The action word to use to delete a language.
+     * Gets the language delete action word.
+     * @return string The action word.
      */
-    define("LANGUAGEDELETE_ACTION", "LanguageDelete");
+    function GetLanguageDeleteAction()
+    {
+        return "LanguageDelete";
+    }
     
     /**
-     * The action word to use to process a language add/edit.
+     * Gets the process language add/edit action word.
+     * @return string The action word.
      */
-    define("PROCESSLANGUAGEADDEDIT_ACTION", "ProcessLanguageAddEdit");
+    function GetProcessLanguageAddEditAction()
+    {
+        return "ProcessLanguageAddEdit";
+    }
     
     /**
-     * The action word to use to manage questions.
+     * Gets the manage questions action word.
+     * @return string The action word.
      */
-    define("MANAGEQUESTIONS_ACTION", "ManageQuestions");
+    function GetManageQuestionsAction()
+    {
+        return "ManageQuestions";
+    }
     
     /**
-     * The action word to use to add a question.
+     * Gets the question add action word.
+     * @return string The action word.
      */
-    define("QUESTIONADD_ACTION", "QuestionAdd");
+    function GetQuestionAddAction()
+    {
+        return "QuestionAdd";
+    }
     
     /**
-     * The action to word to use to edit an existing question.
+     * Gets the question edit action word.
+     * @return string The action word.
      */
-    define("QUESTIONEDIT_ACTION", "QuestionEdit");
+    function GetQuestionEditAction()
+    {
+        return "QuestionEdit";
+    }
     
     /**
-     * The action word to use to view a question.
+     * Gets the question view action word.
+     * @return string The action word.
      */
-    define("QUESTIONVIEW_ACTION", "QuestionView");
+    function GetQuestionViewAction()
+    {
+        return "QuestionView";
+    }
     
     /**
-     * The action word to use to delete a question.
+     * Gets the question delete action word.
+     * @return string The action word.
      */
-    define("QUESTIONDELETE_ACTION", "QuestionDelete");
+    function GetQuestionDeleteAction()
+    {
+        return "QuestionDelete";
+    }
     
     /**
-     * The action word to use to process a question add/edit.
+     * Gets the process question add/edit action word.
+     * @return string The action word.
      */
-    define("PROCESSQUESTIONADDEDIT_ACTION", "ProcessQuestionAddEdit");
+    function GetProcessQuestionAddEditAction()
+    {
+        return "ProcessQuestionAddEdit";
+    }
     
     /**
-     * The action word to use to search for question.
+     * Gets the question search action.
+     * @return string The action word.
      */
-    define("QUESTIONSEARCH_ACTION", "QuestionSearch");
+    function GetQuestionSearchAction()
+    {
+        return "QuestionSearch";
+    }
     
     /**
-     * The action word to use to view exam parameters.
+     * Gets the exam parameters view action word.
+     * @return string The action word.
      */
-    define("EXAMPARAMETERSVIEW_ACTION", "ExamParametersView");
+    function GetExamParametersViewAction()
+    {
+        return "ExamParametersView";
+    }
     
     /**
-     * The action word to use to edit exam parameters.
+     * Gets the exam parameters edit action word.
+     * @return string The action word.
      */
-    define("EXAMPARAMETERSEDIT_ACTION", "ExamParametersEdit");
+    function GetExamParametersEditAction()
+    {
+        return "ExamParametersEdit";
+    }
     
     /**
-     * The action word to use to process the edit of exam parameters.
+     * Gets the process exam parameters action word.
+     * @return string The action word.
      */
-    define("PROCESSEXAMPARAMETERSEDIT_ACTION", "ProccesExamParametersEdit");
+    function GetProcessExamParametersEditAction()
+    {
+        return "ProccesExamParametersEdit";
+    }
     
     /**
-     * The action word to use to manage test entries.
+     * Gets the manage test entries action word.
+     * @return string The action word.
      */
-    define("MANAGETESTENTRIES_ACTION", "ManageTestEntries");
+    function GetManageTestEntriesAction()
+    {
+        return "ManageTestEntries";
+    }
     
     /**
-     * The action word to use to view a test entry.
+     * Gets the test entry view action word.
+     * @return string The action word.
      */
-    define("TESTENTRYVIEW_ACTION", "TestEntryView");
+    function GetTestEntryViewAction()
+    {
+        return "TestEntryView";
+    }
     
     /**
-     * The action word to use to delete a test entry.
+     * Gets the test entry delete action word.
+     * @return string The action word.
      */
-    define("TESTENTRYDELETE_ACTION", "TestEntryDelete");
+    function GetTestEntryDeleteAction()
+    {
+        return "TestEntryDelete";
+    }
     
     /**
-     * The action word to use to search test entries by name.
+     * Gets the test entry seach action word.
+     * @return string The action word.
      */
-    define("TESTENTRYSEARCH_ACTION", "TestEntrySearch");
+    function GetTestEntrySearchAction()
+    {
+        return "TestEntrySearch";
+    }
     
     /**
-     * The action word to use to view a test.
+     * Gets the view test action word.
+     * @return string The action word.
      */
-    define("TESTVIEW_ACTION", "TestView");
+    function GetTestViewAction()
+    {
+        return "TestView";
+    }
     
     /**
-     * The action word to use to import the questions for a langauge.
+     * Gets the language import action word.
+     * @return string The action word.
      */
-    define("LANGUAGEIMPORT_ACTION", "LanguageImport");
+    function GetLanguageImportAction()
+    {
+        return "LanguageImport";
+    }
     
     /**
-     * The action word to use to export the questions for a language.
+     * Gets the language export action word.
+     * @return string The action word.
      */
-    define("LANGUAGEEXPORT_ACTION", "LanguageExport");
+    function GetLanguageExportAction()
+    {
+        return "LanguageExport";
+    }
     
     /**
-     * The action word to use to export the statistics of a language.
+     * Gets the langauge statistics export action.
+     * @return string The action word.
      */
-    define("LANGUAGESTATISTICSEXPORT_ACTION", "LanguageStatisticsExport");
+    function GetLanguageStatisticsExportAction()
+    {
+        return "LanguageStatisticsExport";
+    }
     
     /**
-     * The action word to use to add a contact.
+     * Gets the contact add action word.
+     * @return string The action word.
      */
-    define("CONTACTADD_ACTION", "ContactAdd");
+    function GetContactAddAction()
+    {
+        return "ContactAdd";
+    }
     
     /**
-     * The action word to use to edit a contact.
+     * Gets the contact edit action.
+     * @return string The action word.
      */
-    define("CONTACTEDIT_ACTION", "ConcactEdit");
+    function GetContactEditAction()
+    {
+        return "ConcactEdit";
+    }
     
     /**
-     * The action word to use to manage contacts.
+     * Gets the manage contacts action word.
+     * @return string The action word.
      */
-    define("MANAGECONTACTS_ACTION", "ManageContacts");
+    function GetManageContactsAction()
+    {
+        return "ManageContacts";
+    }
     
     /**
-     * The action word to use to delete a contact.
+     * Gets the contact delete action word.
+     * @return string The action word.
      */
-    define("CONTACTDELETE_ACTION", "ContactDelete");
+    function GetContactDeleteAction()
+    {
+        return "ContactDelete";
+    }
     
     /**
-     * The action word to use to process a contact add edit.
+     * Gets the process contact add/edit action word.
+     * @return string The action word.
      */
-    define("PROCESSCONTACTADDEDIT_ACTION", "ProcessContactAddEdit");
+    function GetProcessContactAddEditAction()
+    {
+        return "ProcessContactAddEdit";
+    }
     
     /**
-     * The action word to use to activate a language.
+     * Gets the activate language action word.
+     * @return string The action word.
      */
-    define("LANGUAGEACTIVATE_ACTION", "LanguageActivate");
+    function GetLanguageActivateAction()
+    {
+        return "LanguageActivate";
+    }
     
     /**
-     * The action word to use to deactivate a language.
+     * Gets the language deactivate action word.
+     * @return string The action word.
      */
-    define("LANGUAGEDEACTIVATE_ACTION", "LanguageDeactivate");
+    function GetLangaugeDeactivateAction()
+    {
+        return "LanguageDeactivate";
+    }
     
     /**
-     * The action word to use to activate a language's feedback option.
+     * Gets the language feedback activate action word.
+     * @return string The action word.
      */
-    define("LANGUAGEFEEDBACKACTIVATE_ACTION", "LanguageFeedbackActivate");
+    function GetLanguageFeedbackActivateAction()
+    {
+        return "LanguageFeedbackActivate";
+    }
     
     /**
-     * The action word to use to deactivate a language's feedback option.
+     * Gets the language feedback deactivate action word.
+     * @return string The action word.
      */
-    define("LANGUAGEFEEDBACKDEACTIVATE_ACTION", "LanguageFeedbackDeactivate");
+    function GetLanguageFeedbackDeactivateAction()
+    {
+        return "LanguageFeedbackDeactivate";
+    }
     
     /**
-     * The action word to use to activate a contact.
+     * Gets the contact activate action word.
+     * @return string The action word.
      */
-    define("CONTACTACTIVATE_ACTION", "ContactActivate");
+    function GetContactActivateAction()
+    {
+        return "ContactActivate";
+    }
     
     /**
-     * The action word to use to deactivate a contact.
+     * Gets the contact deactivate action word.
+     * @return string The action word.
      */
-    define("CONTACTDEACTIVATE_ACTION", "ContactDeactivate");
+    function GetContactDeactivateAction()
+    {
+        return "ContactDeactivate";
+    }
     
     /**
-     * The action word to use to manage level infos.
+     * Gets the manage level infos action word.
+     * @return string The action word.
      */
-    define("MANAGELEVELINFOS_ACTION", "ManageLevelInfos");
+    function GetManageLevelInfosAction()
+    {
+        return "ManageLevelInfos";
+    }
     
     /**
-     * The action word to use to add a level info.
+     * Gets the level info add action word.
+     * @return string The action word.
      */
-    define("LEVELINFOADD_ACTION", "LevelInfoAdd");
+    function GetLevelInfoAddAction()
+    {
+        return "LevelInfoAdd";
+    }
     
     /**
-     * The action word to use to view a level info.
+     * Gets the level info view action word.
+     * @return string The action word.
      */
-    define("LEVELINFOVIEW_ACTION", "LevelInfoView");
+    function GetLevelInfoViewAction()
+    {
+        return "LevelInfoView";
+    }
     
     /**
-     * The action word to use to edit a level info.
+     * Gets the level info edit action word.
+     * @return string The action word.
      */
-    define("LEVELINFOEDIT_ACTION", "LevelInfoEdit");
+    function GetLevelInfoEditAction()
+    {
+        return "LevelInfoEdit";
+    }
     
     /**
-     * The action word to use to delete a level info.
+     * Gets the level info delete action word.
+     * @return string The action word.
      */
-    define("LEVELINFODELETE_ACTION", "LevelInfoDelete");
+    function GetLevelInfoDeleteAction()
+    {
+        return "LevelInfoDelete";
+    }
     
     /**
-     * The action word to use to process a level info add/edit.
+     * Gets the process level info add/edit action word.
+     * @return string The action word.
      */
-    define("PROCESSLEVELINFOADDEDIT_ACTION", "ProcessLevelInfoAddEdit");
+    function GetProcessLevelInfoAddEditAction()
+    {
+        return "ProcessLevelInfoAddEdit";
+    }
     
     /**
-     * The action word to use to add a language experience.
+     * Gets the langauge experience add action word.
+     * @return string The action word.
      */
-    define("LANGUAGEEXPERIENCESADD_ACTION", "LanguageExperiencesAdd");
+    function GetLanguageExperieneceAddAction()
+    {
+        return "LanguageExperiencesAdd";
+    }
     
     /**
-     * The action word to use to edit a language experience.
+     * The langauge experience edit action word.
+     * @return string The action word.
      */
-    define("LANGUAGEEXPERIENCESEDIT_ACTION", "LanguageExperiencesEdit");
+    function GetLanguageExperienceEditAction()
+    {
+        return "LanguageExperiencesEdit";
+    }
     
     /**
-     * The action word to use to view a language experience.
+     * Gets the language experience view action word.
+     * @return string The action word.
      */
-    define("LANGUAGEEXPERIENCESVIEW_ACTION", "LanguageExperiencesView");
+    function GetLanguageExperienceViewAction()
+    {
+        return "LanguageExperiencesView";
+    }
     
     /**
-     * The action word to use to delete a language experience.
+     * Gets the language experience delete action word.
+     * @return string The action word.
      */
-    define("LANGUAGEEXPERIENCESDELETE_ACTION", "LanguageExperiencesDelete");
+    function GetLanguageExperienceDeleteAction()
+    {
+        return "LanguageExperiencesDelete";
+    }
     
     /**
-     * The action word to use to manage the language experiences.
+     * Gets the manage langauge experiences action word.
+     * @return string The action word.
      */
-    define("MANAGELANGUAGEEXPERIENCES_ACTION", "ManageLanguageExperiences");
+    function GetManageLanguageExperiencesAction()
+    {
+        return "ManageLanguageExperiences";
+    }
     
     /**
-     * The action word to use to process a language experience add edit.
+     * Gets the process language experience add/edit action word.
+     * @return string The actio word.
      */
-    define("PROCESSLANGUAGEEXPERIENCESADDEDIT_ACTION", "ProcessLanguageExperiencesAddEdit");
+    function GetProcessLanguageExperienceAddEditAction()
+    {
+        return "ProcessLanguageExperiencesAddEdit";
+    }
     
     /**
-     * The action word to use to rest a quetsion's statistics.
+     * Gets the question statistics reset action word.
+     * @return string The action word.
      */
-    define("QUESTIONSTATISTICSRESET_ACTION", "QuestionStatisticsReset");
+    function GetQuestionStatisticsResetAction()
+    {
+        return "QuestionStatisticsReset";
+    }
     
     /**
-     * The action word to view the comments submitted for a question.
+     * The question comments view action word.
+     * @return string The action word.
      */
-    define("QUESTIONCOMMENTSVIEW_ACTION", "QuestionCommentsView");
+    function GetQuestionCommentsViewAction()
+    {
+        return "QuestionCommentsView";
+    }
     
+    
     /**
-     * The action word to use to manage the experience options.
+     * Gets the manage experience options action word.
+     * @return string The action word.
      */
-    define("MANAGEEXPERIENCEOPTIONS_ACTION", "ManageExperienceOptions");
+    function GetManageExperienceOptionsAction()
+    {
+        return "ManageExperienceOptions";
+    }
     
     /**
-     * The action word to use to add an experience option.
+     * Gets the experience option add action word.
+     * @return string The action word.
      */
-    define("EXPERIENCEOPTIONADD_ACTION", "ExperienceOptionAdd");
+    function GetExperienceOptionAddAction()
+    {
+        return "ExperienceOptionAdd";
+    }
     
     /**
-     * The action word to use to edit an experience option.
+     * Gets the experience option edit action word.
+     * @return string The action word.
      */
-    define("EXPERIENCEOPTIONEDIT_ACTION", "ExperienceOptionEdit");
+    function GetExperienceOptionEditAction()
+    {
+        return "ExperienceOptionEdit";
+    }
     
     /**
-     * The action word to use to view an experience option.
+     * Gets the experience option view action word.
+     * @return string The action word.
      */
-    define("EXPERIENCEOPTIONVIEW_ACTION", "ExperienceOptionView");
+    function GetExperienceOptionViewAction()
+    {
+        return "ExperienceOptionView";
+    }
     
     /**
-     * The action word to use to delete an experience option.
+     * Gets the experience option delete action word.
+     * @return string The action word.
      */
-    define("EXPERIENCEOPTIONDELETE_ACTION", "ExperienceOptionDelete");
+    function GetExperienceOptionDeleteAction()
+    {
+        return "ExperienceOptionDelete";
+    }
     
     /**
-     * The action word to use to process an experience option add/edit.
+     * Gets the process experience option add edit actio word.
+     * @return string The action word.
      */
-    define("PROCESSEXPERIENCEOPTIONADDEDIT_ACTION", "ProcessExperienceOptionAddEdit");
+    function GetProcessExperienceOptionAddEditAction()
+    {
+        return "ProcessExperienceOptionAddEdit";
+    }
     
     /**
-     * The action word to use to export test results.
+     * Gets the test results export action word.
+     * @return string The action word.
      */
-    define("TESTRESULTSEXPORT_ACTION", "TestResultsExport");
+    function GetTestResultsExportAction()
+    {
+        return "TestResultsExport";
+    }
     
     /**
-     * The action word to use to upload the test entries.
+     * Gets the test entries upload action word.
+     * @return string The action word.
      */
-    define("TESTENTRIESUPLOAD_ACTION", "TestEntriesUpload");
+    function GetTestEntriesUploadAction()
+    {
+        return "TestEntriesUpload";
+    }
     
 //Actions available through the exam controller.
 /******************************************************************************/
     
     /**
-     * The action word to use to enter a key code.
+     * Gets the enter key code action word.
+     * @return string The action word.
      */
-    define("ENTERKEYCODE_ACTION", "EnterKeyCode");
+    function GetEnterKeyCodeAction()
+    {
+        return "EnterKeyCode";
+    }
     
     /**
-     * The action word to use to process a key code.
+     * Gets the process key code action word.
+     * @return string The action word.
      */
-    define("PROCESSKEYCODE_ACTION", "ProcessKeyCode");
+    function GetProcessKeyCodeAction()
+    {
+        return "ProcessKeyCode";
+    }
     
     /**
-     * The action word to use to select a language.
+     * Gets the language select action word.
+     * @return string The action word.
      */
-    define("LANGUAGESELECT_ACTION", "LanguageSelect");
+    function GetLanguageSelectAction()
+    {
+        return "LanguageSelect";
+    }
     
     /**
-     * The action word to use to process a language selection.
+     * Gets the process language select action word.
+     * @return string The action word.
      */
-    define("PROCESSLANGUAGESELECT_ACTION", "ProcessLanguageSelect");
+    function GetProcessLanguageSelectAction()
+    {
+        return "ProcessLanguageSelect";
+    }
     
     /**
      * The action word to use to create a profile.
      */
-    define("PROFILECREATE_ACTION", "ProfileCreate");
+    define("GetProfileCreateAction()", "ProfileCreate");
     
     /**
-     * The action word to use to process a created profile.
+     * Gets the profile create action word.
+     * @return string The action word.
      */
-    define("PROCESSPROFILECREATE_ACTION", "ProcessProfileCreate");
+    function GetProfileCreateAction()
+    {
+        return "ProfileCreate";
+    }
     
     /**
-     * The action word to use to start the exam.
+     * Gets the process profile create action word.
+     * @return string The action word.
      */
-    define("STARTEXAM_ACTION", "StartExam");
+    function GetProcessProfileCreateAction()
+    {
+        return "ProcessProfileCreate";
+    }
     
     /**
-     * The action word to process an exam question.
+     * Gets the start exam action word.
+     * @return string The action word.
      */
-    define("SUBMITANSWER_ACTION", "SubmitAnswer");
+    function GetStartExamAction()
+    {
+        return "StartExam";
+    }
     
     /**
-     * The action word to use to view test results.
+     * Gets the submit action word.
+     * @return string The action word.
      */
-    define("TESTRESULTSVIEW_ACTION", "TestResultsView");
+    function GetSubmitAnswerAction()
+    {
+        return "SubmitAnswer";
+    }
+    
+    /**
+     * Gets the test results view action word.
+     * @return string The action word.
+     */
+    function GetTestResultsViewAction()
+    {
+        return "TestResultsView";
+    }
     
 ?>

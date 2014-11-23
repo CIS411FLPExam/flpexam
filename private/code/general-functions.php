@@ -24,7 +24,7 @@
      */
     function GetControllerScript( $controller, $action )
     {
-        $script = $controller . "?" . ACTION_KEYWORD . "=" . $action;
+        $script = $controller . "?" . GetActionKeyWord() . "=" . $action;
         
         return $script;
     }
