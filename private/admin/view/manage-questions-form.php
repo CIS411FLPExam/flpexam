@@ -77,6 +77,11 @@
         </form>
         <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetQuestionSearchAction())); ?>" method="post">
             <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
+            <input type="hidden" name="<?php echo(GetNameIdentifier()) ?>" value="" />
+            <input type="submit" value="Show All" />
+        </form>
+        <form class="inline" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetQuestionSearchAction())); ?>" method="post">
+            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
             <input type="hidden" name="Flagged" />
             <input type="submit" value="View Flagged" />
         </form>
