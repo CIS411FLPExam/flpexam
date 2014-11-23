@@ -1578,9 +1578,10 @@
     /**
      * Creates an excel file of questions for the given language.
      * @param int $languageID The I.D. of the language to export.
+     * @param array $questionIDs The collection of questions to export.
      * @return string The file path of the file.
      */
-    function ExportLanguageQuestions($languageID)
+    function ExportLanguageQuestions($languageID, $questionIDs)
     {
         try
         {
@@ -1613,40 +1614,30 @@
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question');
             $workSheet->setCellValueByColumnAndRow($column++, $row, 'Correct Answer');
             
-            $levels = GetAllLevels($languageID);
-            
-            foreach ($levels as $level)
+            $questions = GetQuestionsFromIDs($questionIDs);
+
+            foreach ($questions as $question)
             {
-                $number = $level['Level'];
-                
-                $questions = GetQuestions($languageID, $number);
+                $row++;
+                $column = 0;
 
-                foreach ($questions as $question)
+                $questionID = $question[GetQuestionIdIdentifier()];
+                $level = $question['Level'];
+                $instructions = $question['Instructions'];
+                $quesName = $question[GetNameIdentifier()];
+
+                $answers = GetQuestionAnswers($questionID);
+
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $instructions);
+                $workSheet->setCellValueByColumnAndRow($column++, $row, $quesName);
+
+                foreach ($answers as $answer)
                 {
-                    $row++;
-                    $column = 0;
-
-                    $questionID = $question[GetQuestionIdIdentifier()];
-                    $level = $question['Level'];
-                    $instructions = $question['Instructions'];
-                    $quesName = $question[GetNameIdentifier()];
-
-                    $answers = GetQuestionAnswers($questionID);
-
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $instructions);
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $quesName);
-
-                    foreach ($answers as $answer)
-                    {
-                        $ansName = $answer[GetNameIdentifier()];
-                        $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
-                    }
+                    $ansName = $answer[GetNameIdentifier()];
+                    $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
                 }
-                
-                unset($questions);
-                $questions = NULL;
             }
             
             $workSheet->getProtection()->setSheet(true);
@@ -2234,6 +2225,62 @@
             $questions = $statement->fetchAll();
             
             $statement->closeCursor();
+            
+            return $questions;
+        }
+        catch (PDOException $ex)
+        {
+            LogError($ex);
+        }
+    }
+    
+    /**
+     * Gets a collection of questions given a collection of question I.D.s.
+     * @param array $questionIDs The collection of question I.D.s
+     * @return array The collection of questions.
+     */
+    function GetQuestionsFromIDs($questionIDs)
+    {
+        try
+        {
+            $questions = array();
+            
+            if (count($questionIDs) > 0)
+            {
+                $questionIdKey = GetQuestionIdIdentifier();
+                
+                $db = GetDBConnection();
+                $query = 'SELECT * FROM ' . GetQuestionsIdentifier() . ' WHERE'
+                        . ' ' . $questionIdKey . ' IN (';
+                
+                $query .= ':' . $questionIdKey . '0';
+                
+                for ($i = 1; $i < count($questionIDs); $i++)
+                {
+                    $query .= ', :' . $questionIdKey . $i;
+                }
+                
+                $query .= ') ORDER BY' . ' ' . 'Level' . ';';
+                
+                $statement = $db->prepare($query);
+                
+                for ($i = 0; $i < count($questionIDs); $i++)
+                {
+                    $questionID = $questionIDs[$i];
+                    $statement->bindValue(':' . $questionIdKey . $i, $questionID);
+                }
+                
+                $statement->execute();
+                
+                $results = $statement->fetchAll();
+                
+                $statement->closeCursor();
+                
+                if ($results != FALSE)
+                {
+                    $questions = $results;
+                }
+            }
             
             return $questions;
         }

@@ -30,12 +30,6 @@
             <input class="questionButton" type="submit" value="Add Question" />
         </form>
     <?php } ?>
-    <?php if ($userCanExport) { ?>
-        <form class="inlineBlock questionFormPad" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageExportAction())); ?>" method="post">
-            <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
-            <input class="questionButton" type="submit" value="Export Questions" />
-        </form>
-    <?php } ?>
     <?php if ($userCanExportStats) { ?>
         <form class="inlineBlock questionFormPad" action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetLanguageStatisticsExportAction())); ?>" method="post">
             <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
@@ -101,7 +95,7 @@
 </form>
     
 <?php if(count($questions) > 0) { ?>
-    <form onsubmit="return ConfirmationPrompt('Delete the selected questions?');" action="<?php echo( GetControllerScript(GetAdminControllerFile(), GetQuestionDeleteAction() ) ); ?>" method="post">
+    <form action="<?php echo(GetControllerScript(GetAdminControllerFile(), GetQuestionsUploadAction())); ?>" method="post">
         <input type="hidden" name="<?php echo(GetLanguageIdIdentifier()); ?>" value="<?php echo($languageID); ?>" />
         <div class="datatable">
             <table id="questions" class="tablesorter">
@@ -164,10 +158,15 @@
             </table>
         </div>
         <input type="hidden" name="numListed" value="<?php echo count($questions); ?>" />
+        <br />
         <?php if ($userCanDelete) { ?>
-                <br />
-                <input type="submit" value="Delete Selected" />
-                <input type="button" value="Select All" onclick="CheckAll();" />
+            <input type="submit" name="Delete" value="Delete Selected" onclick="return ConfirmationPrompt('Delete the selected questions?');" />
+        <?php } ?>
+        <?php if ($userCanExport) { ?>
+            <input type="submit" name="Export" value="Export Selected" />
+        <?php } ?>
+        <?php if ($userCanDelete || $userCanExport) { ?>
+            <input type="button" value="Select All" onclick="CheckAll();" />
         <?php } ?>
     </form>
 <?php } else { ?>

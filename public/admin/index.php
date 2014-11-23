@@ -123,9 +123,6 @@
             case GetQuestionViewAction():
                 ProcessQuestionView();
                 break;
-            case GetQuestionDeleteAction() :
-                ProcessQuestionDelete();
-                break;
             case GetProcessQuestionAddEditAction() :
                 ProcessQuestionAddEdit();
                 break;
@@ -147,9 +144,6 @@
             case GetTestEntryViewAction() :
                 TestEntryView();
                 break;
-            case GetTestEntryDeleteAction() :
-                TestEntryDelete();
-                break;
             case GetTestEntrySearchAction() :
                 TestEntrySearch();
                 break;
@@ -158,9 +152,6 @@
                 break;
             case GetLanguageImportAction() :
                 LanguageImport();
-                break;
-            case GetLanguageExportAction() :
-                LanguageExport();
                 break;
             case GetLanguageStatisticsExportAction() :
                 LanguageStatisticsExport();
@@ -258,14 +249,31 @@
             case GetProcessExperienceOptionAddEditAction() :
                 ProcessExperienceOptionAddEdit();
                 break;
-            case GetTestResultsExportAction() :
-                TestResultsExport();
-                break;
             case GetTestEntriesUploadAction() :
                 TestEntriesUpload();
                 break;
+            case GetQuestionsUploadAction() :
+                QuestionsUpload();
+                break;
             default:
                 Redirect(GetControllerScript(GetAdminControllerFile(), GetControlPanelAction()));
+        }
+    }
+    
+    function QuestionsUpload()
+    {
+        if (isset($_POST['Export']))
+        {
+            LanguageExport();
+        }
+        else if (isset($_POST['Delete']))
+        {
+            ProcessQuestionDelete();
+        }
+        else
+        {
+            $message = 'The action you wish to perform could not be resolved.';
+            include(GetMessageFormFile());
         }
     }
     
@@ -1753,6 +1761,23 @@
             exit();
         }
         
+        $questions = array();
+        
+        if(isset($_POST["numListed"]))
+        {
+            $numListed = $_POST["numListed"];
+
+            for($i = 0; $i < $numListed; ++$i)
+            {
+                if(isset($_POST["record$i"]))
+                {
+                    $questionID = $_POST["record$i"];
+
+                    $questions[] = $questionID;
+                }
+            }
+        }
+        
         $language = GetLanguage($languageID);
         
         if ($language != FALSE)
@@ -1761,7 +1786,7 @@
 
             ignore_user_abort(true);
 
-            $file = ExportLanguageQuestions($languageID);
+            $file = ExportLanguageQuestions($languageID, $questions);
 
             header('Content-type: application/octet-stream');
             header('Content-Length: ' . filesize($file));

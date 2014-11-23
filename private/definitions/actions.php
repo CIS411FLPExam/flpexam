@@ -709,6 +709,15 @@
         return "TestEntriesUpload";
     }
     
+    /**
+     * Gest the questions upload action word.
+     * @return string The action word.
+     */
+    function GetQuestionsUploadAction()
+    {
+        return "QuestionsUpload";
+    }
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     
