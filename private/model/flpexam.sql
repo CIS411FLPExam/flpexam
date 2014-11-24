@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 19, 2014 at 03:25 PM
+-- Generation Time: Nov 24, 2014 at 01:09 AM
 -- Server version: 5.6.14
 -- PHP Version: 5.5.6
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `answers` (
   PRIMARY KEY (`AnswerID`,`QuestionID`),
   UNIQUE KEY `AnswerID` (`AnswerID`),
   KEY `questionid_fk` (`QuestionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=65 ;
 
 -- --------------------------------------------------------
 
@@ -51,13 +51,6 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `Primary` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ContactID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `contacts`
---
-
-INSERT INTO `contacts` (`ContactID`, `FirstName`, `LastName`, `Email`, `Primary`) VALUES
-(1, 'Dr. Katy', 'O''Donnell', 'kodonnell@clarion.edu', 1);
 
 -- --------------------------------------------------------
 
@@ -129,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `functions` (
   `Name` varchar(32) NOT NULL,
   `Description` text,
   PRIMARY KEY (`FunctionID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=59 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
 
 --
 -- Dumping data for table `functions`
@@ -192,7 +185,8 @@ INSERT INTO `functions` (`FunctionID`, `Name`, `Description`) VALUES
 (55, 'ExperienceOptionView', 'Allows the user to view an experience option.'),
 (56, 'ExperienceOptionDelete', 'Allows the user to delete an experience option.'),
 (57, 'ManageExperienceOptions', 'Allows the user to manage the experience options.'),
-(58, 'TestResultsExport', 'Allows the user to export basic test information.');
+(58, 'TestResultsExport', 'Allows the user to export basic test information.'),
+(59, 'UserAdd', 'Allows the user to add users.');
 
 -- --------------------------------------------------------
 
@@ -230,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `Feedback` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Name`),
   UNIQUE KEY `LanguageID` (`LanguageID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -248,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `levelinfos` (
   PRIMARY KEY (`Level`,`LanguageID`),
   UNIQUE KEY `LevelInfoID` (`LevelInfoID`),
   KEY `levels_language_fk` (`LanguageID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -262,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `questioncomments` (
   `Com` varchar(110) NOT NULL DEFAULT '',
   PRIMARY KEY (`CommentID`),
   KEY `questioncomments_question_fk` (`QuestionID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -279,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `questions` (
   `Flagged` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`QuestionID`),
   KEY `question_language_fk` (`LanguageID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
@@ -395,7 +389,8 @@ INSERT INTO `rolefunctions` (`RoleID`, `FunctionID`) VALUES
 (3, 47),
 (3, 32),
 (3, 58),
-(3, 48);
+(3, 48),
+(1, 59);
 
 -- --------------------------------------------------------
 
@@ -409,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `Description` text,
   `Vital` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`RoleID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `roles`
@@ -496,7 +491,7 @@ CREATE TABLE IF NOT EXISTS `testentries` (
   PRIMARY KEY (`TestID`),
   UNIQUE KEY `TestID` (`TestID`),
   KEY `testentry_language_fk` (`Language`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -516,7 +511,6 @@ CREATE TABLE IF NOT EXISTS `userroles` (
 --
 
 INSERT INTO `userroles` (`UserID`, `RoleID`) VALUES
-(1, 1),
 (2, 1),
 (4, 3);
 
@@ -532,14 +526,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `Password` varchar(40) NOT NULL,
   `Vital` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`UserID`, `UserName`, `Password`, `Vital`) VALUES
-(1, 'wdgarey', '9c22f986c7a4149924fb8b016ef2958687f9f6b2', 0),
 (2, 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1),
 (4, 'manager', '1a8565a9dc72048ba03b4156be3e569f22771f23', 0);
 
