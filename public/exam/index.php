@@ -372,7 +372,7 @@
         
         StoreTestId($testEntryID);
         
-        //EmailTestResults($exam);//TODO: Uncomment this when testing is done.
+        EmailTestResults($exam);//TODO: Uncomment this when testing is done.
         
         Redirect(GetControllerScript(GetExamControllerFile(), GetTestResultsViewAction()));
     }
@@ -403,7 +403,7 @@
         $levelInfoID = GetLevelInfoID($languageID, $score);
         
         
-        $levelInfoID = 0;//TODO: Get rid of this because it is for testing purposes only.
+        //$levelInfoID = 0;//TODO: Get rid of this whole line because it is for testing purposes only.
         
         $levelInfo = GetLevelInfo($levelInfoID);
         $contact = GetPrimaryContact();
