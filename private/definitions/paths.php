@@ -167,7 +167,25 @@
         return GetPrivateDir() . "log/";
     }
     
+    /**
+     * Gets the file path of the docs directory.
+     * @return string The directory.
+     */
+    function GetDocsDir()
+    {
+        return GetPrivateDir() . "docs/";
+    }
+    
     //Base file paths.
+    /**
+     * Gets the file path of the manual file.
+     * @return string The file path.
+     */
+    function GetManualFile()
+    {
+        return GetDocsDir() . "manual.pdf";
+    }
+    
     /**
      * Gets the file path of the PHPExcel class file.
      * @return string The file path.
@@ -985,6 +1003,15 @@
     function GetManageExperienceOptionsFormFile()
     {
         return GetAdminViewDir() . "manage-experienceoptions-form.php";
+    }
+    
+    /**
+     * Gets the file path of the help form file.
+     * @return string The file path.
+     */
+    function GetHelpFormFile()
+    {
+        return GetAdminViewDir() . "help-form.php";
     }
     
 //Exam paths.

@@ -718,6 +718,15 @@
         return "QuestionsUpload";
     }
     
+    /**
+     * Gets the help action word.
+     * @return string The action word.
+     */
+    function GetHelpAction()
+    {
+        return "Help";
+    }
+    
 //Actions available through the exam controller.
 /******************************************************************************/
     

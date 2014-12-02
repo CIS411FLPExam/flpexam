@@ -255,9 +255,17 @@
             case GetQuestionsUploadAction() :
                 QuestionsUpload();
                 break;
+            case GetHelpAction() :
+                Help();
+                break;
             default:
                 Redirect(GetControllerScript(GetAdminControllerFile(), GetControlPanelAction()));
         }
+    }
+    
+    function Help()
+    {
+        include(GetHelpFormFile());
     }
     
     function QuestionsUpload()

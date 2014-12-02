@@ -30,6 +30,7 @@
                 <?php } ?>
             </ul>
             </li>
+            <li><a href="<?php echo( GetControllerScript( GetAdminControllerFile(), GetHelpAction() ) ) ?>" target="_blank"><span>Help</span></a></li>
             <li><a href="<?php echo( GetControllerScript( GetAdminControllerFile(), GetLogoutAction() ) ) ?>"><span>Logout</span></a></li>
         <?php } else { ?>
             <li><a href="<?php echo( GetControllerScript( GetAdminControllerFile(), GetLoginAction() ) . '&' . GetRequestedPageIdentifier() .'=' . GetRequestedURI( ) ); ?>"><span>Login</span></a></li>
