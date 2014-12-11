@@ -5,8 +5,6 @@
     require_once(GetIdentifierFile());
     require_once(GetGeneralFunctionsFile());
     require_once(GetActionsFile());
-    require_once(GetPHPExcelClassFile());
-    require_once(GetPHPExcelIOFactoryClassFile());
     require_once(GetLevelInfoClassFile());
     require_once(GetExperienceOptionClassFile());
 
@@ -333,9 +331,10 @@
         {
             ignore_user_abort(true);
 
-            header('Content-type: application/octet-stream');
+            header('Content-Encoding: UTF-8');
+            header('Content-type: application/vnd.ms-excel; charset=UTF-8');
             header('Content-Length: ' . filesize($file));
-            header('Content-Disposition: attachment; filename=Test_Results_' . date("m-d-Y-G-i-s") . '.xlsx');
+            header('Content-Disposition: attachment; filename=Test_Results_' . date("m-d-Y-G-i-s") . '.csv');
             readfile($file);
 
             DeleteFile($file);
@@ -1673,7 +1672,7 @@
         if(isset($_FILES['file']))
         {
             $file = $_FILES['file'];
-            $filePath = $file ['tmp_name'];
+            $filePath = $file['tmp_name'];
             $mime = $file['type'];
             $error = $file['error'];
             
@@ -1685,23 +1684,22 @@
             {
                 $errors[] = 'Error uploading file to server.';
             }
-            else if($mime == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            else if($mime == 'application/vnd.ms-excel')
             {
-                $type = 'Excel';
+                $type = 'CSV';
             }
             else
             {
-                $errors[] = 'The file type is not of a valid Excel format.';
+                $errors[] = 'The file type is not of a valid CSV format.';
             }
             
             if (count($errors) == 0)
             {
                 $questions = array();
                 
-                if ($type == 'Excel')
+                if ($type == 'CSV')
                 {
-                    $objPHPExcel = OpenExcelFile($filePath);
-                    
+                    $list = GetCSVs($filePath);
                     include(GetProcessLanguageImportExcelFile());
                 }
                 
@@ -1796,9 +1794,10 @@
 
             $file = ExportLanguageQuestions($languageID, $questions);
 
-            header('Content-type: application/octet-stream');
+            header('Content-Encoding: UTF-8');
+            header('Content-type: application/vnd.ms-excel; charset=UTF-8');
             header('Content-Length: ' . filesize($file));
-            header('Content-Disposition: attachment; filename=' . $languageName .'.xlsx');
+            header('Content-Disposition: attachment; filename=' . $languageName .'.csv');
             readfile($file);
 
             DeleteFile($file);
@@ -1844,9 +1843,10 @@
 
             $file = ExportLanguageStatistics($languageID);
 
-            header('Content-type: application/octet-stream');
+            header('Content-Encoding: UTF-8');
+            header('Content-type: application/vnd.ms-excel; charset=UTF-8');
             header('Content-Length: ' . filesize($file));
-            header('Content-Disposition: attachment; filename=' . $languageName .'_stats.xlsx');
+            header('Content-Disposition: attachment; filename=' . $languageName .'_stats.csv');
             readfile($file);
 
             DeleteFile($file);

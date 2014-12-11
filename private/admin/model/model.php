@@ -4,14 +4,33 @@
     require_once(GetModelFile());
     require_once(GetTestInfoClassFile());
     require_once(GetDetailTestInfoClassFile());
-    require_once(GetPHPExcelClassFile());
-    require_once(GetPHPExcelIOFactoryClassFile());
     require_once(GetContactClassFile());
     require_once(GetLevelInfoClassFile());
     require_once(GetLanguageExperiencesClassFile());
     require_once(GetQuestionCommentClassFile());
     require_once(GetExperienceOptionClassFile());
     require_once(GetLeoPairClassFile());
+    
+    /**
+     * Gets the collection of comma separated values from a file.
+     * @param string $filePath The file path.
+     * @return array The collection of comma seperated values.
+     */
+    function GetCSVs($filePath)
+    {
+        $list = array();
+        
+        $handle = fopen($filePath, 'r');
+                    
+        while (($data = fgetcsv($handle)) !== FALSE)
+        {
+            $list[] = $data;
+        }
+
+        fclose($handle);
+        
+        return $list;
+    }
     
     /**
      * Indicates whether or not a user is vital.
@@ -109,56 +128,35 @@
             return $testEntries;
         }
         
-        $fileName = GetTempDir() . 'test_results_' . date("m-d-Y-G-i-s") . '.xlsx';
-        $objPHPExcel = new PHPExcel();
-
-        // Set properties
-        $properties = $objPHPExcel->getProperties();
-        $properties->setCreator("FLPExam site");
-        $properties->setLastModifiedBy("FLPExam site");
-        $properties->setTitle("Test Results");
-        $properties->setSubject("Test Results");
-        $properties->setDescription("Test results.");
-        $properties->setKeywords("foreign language placement exam test results");
-        $properties->setCategory("Test Results");
-
-        $workSheet = $objPHPExcel->setActiveSheetIndex(0);
-        $workSheet->setTitle('Test Results');
-
+        $fileName = GetTempDir() . 'test_results_' . date("m-d-Y-G-i-s") . '.csv';
+        
+        $list = array();
+        $list[0] = array('First Name', 'Last Name', 'High School', 'Language', 'Score', 'Date');
+        
         $row = 1;
-        $column = 0;
-
-        $workSheet->setCellValueByColumnAndRow($column++, $row, 'First Name');
-        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Last Name');
-        $workSheet->setCellValueByColumnAndRow($column++, $row, 'High School');
-        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Language');
-        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Score');
-        $workSheet->setCellValueByColumnAndRow($column++, $row, 'Date');
-
-
         foreach ($testEntries as $testEntry)
         {
-            $row++;
-            $column = 0;
-
             $firstName = $testEntry[GetFirstNameIdentifier()];
             $lastName = $testEntry[GetLastNameIdentifier()];
             $highSchool = $testEntry['HighSchool'];
             $language = $testEntry['Language'];
             $score = $testEntry['Score'];
             $date = ToDisplayDate($testEntry['Date']);
-
-            $workSheet->setCellValueByColumnAndRow($column++, $row, $firstName);
-            $workSheet->setCellValueByColumnAndRow($column++, $row, $lastName);
-            $workSheet->setCellValueByColumnAndRow($column++, $row, $highSchool);
-            $workSheet->setCellValueByColumnAndRow($column++, $row, $language);
-            $workSheet->setCellValueByColumnAndRow($column++, $row, $score);
-            $workSheet->setCellValueByColumnAndRow($column++, $row, $date);
+            
+            $list[$row] = array($firstName, $lastName, $highSchool, $language, $score, $date);
+            
+            $row++;
         }
-
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-        $objWriter->save($fileName);
-
+        
+        $fp = fopen($fileName, 'w');
+        
+        foreach ($list as $fields)
+        {
+            fputcsv($fp, $fields);
+        }
+        
+        fclose($fp);
+        
         return $fileName;
     }
     
@@ -589,32 +587,16 @@
             $fileName = GetTempDir() . 'langauge_statistics_' . date("m-d-Y-G-i-s") . '.xlsx';
             $language = GetLanguage($languageID);
             $languageName = $language[GetNameIdentifier()];
-            $objPHPExcel = new PHPExcel();
-                
-            // Set properties
-            $properties = $objPHPExcel->getProperties();
-            $properties->setCreator("FLPExam site");
-            $properties->setLastModifiedBy("FLPExam site");
-            $properties->setTitle($languageName . " Exam Statistics");
-            $properties->setSubject($languageName . " Exam Statistics");
-            $properties->setDescription("Exam statistics for " . $languageName . ".");
-            $properties->setKeywords("foreign language placement exam " . $languageName);
-            $properties->setCategory("Exam Statistics");
             
-            $workSheet = $objPHPExcel->setActiveSheetIndex(0);
-            $workSheet->setTitle('Statistics');
             
-            $row = 1;
-            $column = 0;
             
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question I.D.');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Level');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Avg Score');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Flag Count');
+            
+            $list = array();
+            $list[0] = array('Question ID', 'Level', 'Question', 'Avg Score', 'Flag Count');
             
             $levels = GetAllLevels($languageID);
             
+            $row = 1;
             foreach ($levels as $level)
             {
                 $number = $level['Level'];
@@ -623,28 +605,28 @@
                 
                 foreach ($questions as $question)
                 {
-                    $row++;
-                    $column = 0;
-
                     $questionID = $question[GetQuestionIdIdentifier()];
                     $level = $question['Level'];
                     $questionName = $question[GetNameIdentifier()];
                     $avgScore = GetQuestionAvgScore($questionID);
                     $flagCount = $question['Flagged'];
 
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $questionName);
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, number_format($avgScore, 2));
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $flagCount);
+                    $list[$row] = array($questionID, $level, $questionName, number_format($avgScore, 2), $flagCount);
+                    
+                    $row++;
                 }
                 
                 unset($questions);
-                $questions = NULL;
             }
             
-            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-            $objWriter->save($fileName);
+            $fp = fopen($fileName, 'w');
+
+            foreach ($list as $fields)
+            {
+                fputcsv($fp, $fields);
+            }
+
+            fclose($fp);
             
             return $fileName;
         }
@@ -1588,67 +1570,49 @@
             $fileName = GetTempDir() . 'langauge_questions_' . date("m-d-Y-G-i-s") . '.xlsx';
             $language = GetLanguage($languageID);
             $languageName = $language[GetNameIdentifier()];
-            $objPHPExcel = new PHPExcel();
-                
-            // Set properties
-            $properties = $objPHPExcel->getProperties();
-            $properties->setCreator("FLPExam site");
-            $properties->setLastModifiedBy("FLPExam site");
-            $properties->setTitle($languageName . " Exam Questions");
-            $properties->setSubject($languageName . " Exam Questions");
-            $properties->setDescription("Exam questions for " . $languageName . ".");
-            $properties->setKeywords("foreign language placement exam " . $languageName);
-            $properties->setCategory("Exam Questions");
             
-            $workSheet = $objPHPExcel->setActiveSheetIndex(0);
-            $workSheet->setTitle('Questions');
-            
-            $workSheet->getColumnDimensionByColumn(0)->setVisible(false);
-            
-            $row = 1;
-            $column = 0;
-            
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question ID');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Level');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Instructions');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Question');
-            $workSheet->setCellValueByColumnAndRow($column++, $row, 'Correct Answer');
+            $list = array();
+            $list[0] = array('Question ID', 'Level', 'Instructions', 'Question', 'Correct Answer');
             
             $questions = GetQuestionsFromIDs($questionIDs);
 
+            $row = 1;
             foreach ($questions as $question)
             {
-                $row++;
                 $column = 0;
-
+                $columns = array();
+                
                 $questionID = $question[GetQuestionIdIdentifier()];
                 $level = $question['Level'];
                 $instructions = $question['Instructions'];
                 $quesName = $question[GetNameIdentifier()];
-
+                
+                $columns[$column++] = $questionID;
+                $columns[$column++] = $level;
+                $columns[$column++] = $instructions;
+                $columns[$column++] = $quesName;
+                
                 $answers = GetQuestionAnswers($questionID);
-
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $questionID);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $level);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $instructions);
-                $workSheet->setCellValueByColumnAndRow($column++, $row, $quesName);
-
+                
                 foreach ($answers as $answer)
                 {
                     $ansName = $answer[GetNameIdentifier()];
-                    $workSheet->setCellValueByColumnAndRow($column++, $row, $ansName);
+                    $columns[$column++] = $ansName;
                 }
+                
+                $list[$row] = $columns;
+                
+                $row++;
             }
             
-            $workSheet->getProtection()->setSheet(true);
-            
-            $highestCol = $workSheet->getHighestDataColumn();
-            $highestRow = $workSheet->getHighestDataRow();
-            
-            $workSheet->getStyle('B2:' . $highestCol . $highestRow)->getProtection()->setLocked(PHPExcel_Style_Protection::PROTECTION_UNPROTECTED); 
-            
-            $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-            $objWriter->save($fileName);
+            $fp = fopen($fileName, 'w');
+
+            foreach ($list as $fields)
+            {
+                fputcsv($fp, $fields);
+            }
+
+            fclose($fp);
             
             return $fileName;
         }

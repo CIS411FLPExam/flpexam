@@ -132,24 +132,6 @@
     }
     
     /**
-     * Gets the file path of the PHPExcel code directory.
-     * @return string The directory.
-     */
-    function GetPHPExcelCodeDir()
-    {
-        return GetCodeDir() . "PHPExcel/Classes/";
-    }
-    
-    /**
-     * Gets the file path of the PHPExcel classes code directory.
-     * @return string The directory.
-     */
-    function GetPHPExcelClassesCodeDir()
-    {
-        return GetPHPExcelCodeDir() . "PHPExcel/";
-    }
-    
-    /**
      * Gets the file path of the temp directory.
      * @return string The directory.
      */
@@ -184,24 +166,6 @@
     function GetManualFile()
     {
         return GetDocsDir() . "manual.pdf";
-    }
-    
-    /**
-     * Gets the file path of the PHPExcel class file.
-     * @return string The file path.
-     */
-    function GetPHPExcelClassFile()
-    {
-        return GetPHPExcelCodeDir() . "PHPExcel.php";
-    }
-    
-    /**
-     * Gets the file path of the PHPExcel IOFactory class file.
-     * @return string The file path.
-     */
-    function GetPHPExcelIOFactoryClassFile()
-    {
-        return GetPHPExcelClassesCodeDir() . "IOFactory.php";
     }
     
     /**
