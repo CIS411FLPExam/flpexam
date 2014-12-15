@@ -588,9 +588,6 @@
             $language = GetLanguage($languageID);
             $languageName = $language[GetNameIdentifier()];
             
-            
-            
-            
             $list = array();
             $list[0] = array('Question ID', 'Level', 'Question', 'Avg Score', 'Flag Count');
             
@@ -620,7 +617,8 @@
             }
             
             $fp = fopen($fileName, 'w');
-
+            
+            fprintf($fp, chr(0xEF).chr(0xBB).chr(0xBF));
             foreach ($list as $fields)
             {
                 fputcsv($fp, $fields);
@@ -1606,7 +1604,7 @@
             }
             
             $fp = fopen($fileName, 'w');
-
+            fprintf($fp, chr(0xEF).chr(0xBB).chr(0xBF));
             foreach ($list as $fields)
             {
                 fputcsv($fp, $fields);
